@@ -1,0 +1,20 @@
+{
+	"name": "addwiki/mediawiki-bot",
+	"type": "library",
+	"description": "A Mediawiki bot lib",
+	"keywords": ["Mediawiki"],
+	"authors": [
+		{
+			"name": "Addshore"
+		}
+	],
+	"require": {
+		"addwiki/mediawiki-datamodel": "dev-master",
+		"addwiki/mediawiki-api": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Mediawiki\\Bot\\": "src/"
+		}
+	}
+}
