@@ -8,6 +8,7 @@
 			"name": "Addshore"
 		}
 	],
+	"minimum-stability" : "dev",
 	"require": {
 		"addwiki/mediawiki-datamodel": "dev-master",
 		"addwiki/mediawiki-api": "dev-master"
