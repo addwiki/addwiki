@@ -8,10 +8,8 @@
 			"name": "Addshore"
 		}
 	],
-	"minimum-stability" : "dev",
 	"require": {
-		"addwiki/mediawiki-datamodel": "dev-master",
-		"addwiki/mediawiki-api": "dev-master"
+		"addwiki/mediawiki-api": "0.1.*"
 	},
 	"autoload": {
 		"psr-4": {
