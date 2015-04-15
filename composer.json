@@ -3,6 +3,7 @@
 	"type": "library",
 	"description": "A Mediawiki bot lib",
 	"keywords": ["Mediawiki"],
+	"license": "GPL-2.0+",
 	"authors": [
 		{
 			"name": "Addshore"
