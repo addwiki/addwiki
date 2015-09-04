@@ -72,7 +72,7 @@ class AppConfig {
 	}
 
 	public function has( $name ) {
-		return array_key_exists( $name, $this->data );
+		return $this->get( $name, null ) !== null;
 	}
 
 	private function loadIfNotLoaded() {
