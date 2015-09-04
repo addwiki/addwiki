@@ -2,7 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Mediawiki\Bot\Commands\CleanSandbox;
+use Mediawiki\Bot\Commands\RestoreRevisions;
 use Mediawiki\Bot\Commands\ListWikis;
 use Mediawiki\Bot\Commands\Setup;
 use Mediawiki\Bot\Config\AppConfig;
@@ -15,7 +15,7 @@ $awbApp = new Application( 'awb - addwiki bot' );
 $awbApp->addCommands( array(
 	new Setup( $awbConfig ),
 	new ListWikis( $awbConfig ),
-	new CleanSandbox( $awbConfig ),
+	new RestoreRevisions( $awbConfig ),
 ) );
 
 if( $awbConfig->isEmpty() ) {
