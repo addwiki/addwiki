@@ -9,6 +9,7 @@ use Mediawiki\Bot\Config\AppConfig;
 use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\EditInfo;
 use Mediawiki\DataModel\Revision;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,6 +50,13 @@ class RestoreRevisions extends Command {
 
 		$userDetails = $this->appConfig->get( 'users.' . $user );
 		$wikiDetails = $this->appConfig->get( 'wikis.' . $wiki );
+
+		if( $userDetails === null ) {
+			throw new RuntimeException( 'User not found in config' );
+		}
+		if( $wikiDetails === null ) {
+			throw new RuntimeException( 'Wiki not found in config' );
+		}
 
 		$api = new MediawikiApi( $wikiDetails['url'] );
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
