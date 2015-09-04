@@ -37,7 +37,7 @@ class RestoreRevisions extends Command {
 				'The configured user to use'
 			)->addArgument(
 				'revids',
-				InputArgument::IS_ARRAY,
+				InputArgument::IS_ARRAY | InputArgument::REQUIRED,
 				'Which revision ids do you want to restore (separate multiple names with a space)?'
 			);
 	}
