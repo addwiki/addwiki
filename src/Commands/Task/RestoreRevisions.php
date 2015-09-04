@@ -57,6 +57,12 @@ class RestoreRevisions extends Command {
 				InputOption::VALUE_OPTIONAL,
 				'Mark edits as bot',
 				true
+			)->addOption(
+				'summary',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Override the default edit summary',
+				'Restoring page to previous revision: $revid'
 			);
 	}
 
@@ -97,24 +103,16 @@ class RestoreRevisions extends Command {
 			$currentText = $currentRevision->getContent()->getData();
 
 			if( $goodText === $currentText ) {
-				$output->writeln( 'Page already at revision: ' . $revid );
+				$output->writeln( 'Page already has same content as revision: ' . $revid );
 				return null;
 			}
 
-			if( strstr( $currentText, $goodText ) ) {
-				$newText = str_replace( $goodText, '', $currentText );
-				//todo trim newlines from the top of new
-				$newText = $goodText . "\n\n" . $newText;
-			} else {
-				$newText = $goodText;
-			}
-
-			$newRevision = new Revision( new Content( $newText ), $page->getPageIdentifier() );
+			$newRevision = new Revision( new Content( $goodText ), $page->getPageIdentifier() );
 			$success =
 				$saver->save(
 					$newRevision,
 					new EditInfo(
-						"Restoring page to revision $revid",
+						$this->getEditSummary( $input->getOption( 'summary' ), $revid ),
 						$input->getOption( 'minor' ),
 						$input->getOption( 'bot' )
 					)
@@ -128,6 +126,10 @@ class RestoreRevisions extends Command {
 		}
 
 		return null;
+	}
+
+	private function getEditSummary( $rawSummary, $revid ) {
+		return str_replace( '$revid', $revid, $rawSummary );
 	}
 
 }
