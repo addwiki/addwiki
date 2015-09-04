@@ -3,7 +3,7 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Mediawiki\Bot\Commands\RestoreRevisions;
-use Mediawiki\Bot\Commands\ListWikis;
+use Mediawiki\Bot\Commands\ListConfig;
 use Mediawiki\Bot\Commands\Setup;
 use Mediawiki\Bot\Config\AppConfig;
 use Symfony\Component\Console\Application;
@@ -14,7 +14,7 @@ $awbApp = new Application( 'awb - addwiki bot' );
 
 $awbApp->addCommands( array(
 	new Setup( $awbConfig ),
-	new ListWikis( $awbConfig ),
+	new ListConfig( $awbConfig ),
 	new RestoreRevisions( $awbConfig ),
 ) );
 
