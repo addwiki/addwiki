@@ -63,6 +63,12 @@ class RestoreRevisions extends Command {
 				InputOption::VALUE_OPTIONAL,
 				'Override the default edit summary',
 				'Restoring page to previous revision: $revid'
+			)->addOption(
+				'asheader',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Only restore the revision as the page header',
+				false
 			);
 	}
 
@@ -105,6 +111,14 @@ class RestoreRevisions extends Command {
 			if( $goodText === $currentText ) {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
 				return null;
+			}
+
+			if( $input->getOption( 'asheader' ) ) {
+				if( strstr( $currentText, $goodText ) ) {
+					$goodText = $goodText . "\n\n" . trim( str_replace( $goodText, '', $currentText ) );
+				} else {
+					$goodText = $goodText . "\n\n" . $currentText;
+				}
 			}
 
 			$newRevision = new Revision( new Content( $goodText ), $page->getPageIdentifier() );

@@ -10,4 +10,8 @@ Install using composer!
 
 ## Example Usage
 
-    awb cleansandbox localwiki localadmin 555
+    awb config:setup
+    awb config:list
+
+    awb task:restore-revisions localwiki localadmin 555
+    awb task:restore-revisions localwiki localadmin 1 2 3
