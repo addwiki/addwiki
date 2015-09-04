@@ -13,6 +13,7 @@ use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RestoreRevisions extends Command {
@@ -32,21 +33,37 @@ class RestoreRevisions extends Command {
 				'wiki',
 				InputArgument::REQUIRED,
 				'The configured wiki to use'
-			)->addArgument(
+			)
+			->addArgument(
 				'user',
 				InputArgument::REQUIRED,
 				'The configured user to use'
-			)->addArgument(
-				'revids',
+			)
+			->addArgument(
+				'revid',
 				InputArgument::IS_ARRAY | InputArgument::REQUIRED,
 				'Which revision ids do you want to restore (separate multiple names with a space)?'
+			)
+			->addOption(
+				'minor',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Mark edits as minor',
+				true
+			)
+			->addOption(
+				'bot',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Mark edits as bot',
+				true
 			);
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$wiki = $input->getArgument( 'wiki' );
 		$user = $input->getArgument( 'user' );
-		$revids = $input->getArgument( 'revids' );
+		$revids = $input->getArgument( 'revid' );
 
 		$userDetails = $this->appConfig->get( 'users.' . $user );
 		$wikiDetails = $this->appConfig->get( 'wikis.' . $wiki );
@@ -93,7 +110,15 @@ class RestoreRevisions extends Command {
 			}
 
 			$newRevision = new Revision( new Content( $newText ), $page->getPageIdentifier() );
-			$success = $saver->save( $newRevision, new EditInfo( "Restoring page to revision $revid", EditInfo::MINOR, EditInfo::BOT ) );
+			$success =
+				$saver->save(
+					$newRevision,
+					new EditInfo(
+						"Restoring page to revision $revid",
+						$input->getOption( 'minor' ),
+						$input->getOption( 'bot' )
+					)
+				);
 
 			if( $success ) {
 				$output->writeln( 'Restored revision: ' . $revid );
