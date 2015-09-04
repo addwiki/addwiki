@@ -10,18 +10,25 @@ Install using composer!
 
 ## Example Usage
 
-Sample initial setup:
+Set the bot up:
 
     awb config:setup
+
+View your settings:
+
     awb config:list
 
-    awb config:set:default:wiki local
-    awb config:set:default:user localadmin
+Run your first scripts:
 
     awb task:restore-revisions --wiki localwiki --user localadmin 555
     awb task:restore-revisions --wiki localwiki --user localadmin 1 2 3
 
-If you have a default wiki and user set things get even easier:
+Configure a default user and wiki:
+
+    awb config:set:default:wiki local
+    awb config:set:default:user localadmin
+
+Run scripts using the defaults:
 
     awb task:restore-revisions 663
     awb task:restore-revisions --summary "Custom Summary with $revid" --minor 0 --bot 0 663 777
