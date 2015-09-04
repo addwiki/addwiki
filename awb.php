@@ -2,24 +2,17 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Mediawiki\Bot\Commands\RestoreRevisions;
-use Mediawiki\Bot\Commands\ListConfig;
-use Mediawiki\Bot\Commands\Setup;
-use Mediawiki\Bot\Config\AppConfig;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Yaml\Yaml;
-
-$awbConfig = new AppConfig( __DIR__  );
-$awbApp = new Application( 'awb - addwiki bot' );
+$awbConfig = new Mediawiki\Bot\Config\AppConfig( __DIR__  );
+$awbApp = new Symfony\Component\Console\Application( 'awb - addwiki bot' );
 
 $awbApp->addCommands( array(
-	new Setup( $awbConfig ),
-	new ListConfig( $awbConfig ),
-	new RestoreRevisions( $awbConfig ),
+	new Mediawiki\Bot\Commands\Config\Setup( $awbConfig ),
+	new Mediawiki\Bot\Commands\Config\ConfigList( $awbConfig ),
+	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awbConfig ),
 ) );
 
 if( $awbConfig->isEmpty() ) {
-	$awbApp->setDefaultCommand( 'setup' );
+	$awbApp->setDefaultCommand( 'config:setup' );
 }
 
 $awbApp->run();

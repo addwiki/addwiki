@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Bot\Commands;
+namespace Mediawiki\Bot\Commands\Task;
 
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
@@ -26,7 +26,7 @@ class RestoreRevisions extends Command {
 
 	protected function configure() {
 		$this
-			->setName( 'restore-revisions' )
+			->setName( 'task:restore-revisions' )
 			->setDescription( 'Restores the selected revisions' )
 			->addArgument(
 				'wiki',

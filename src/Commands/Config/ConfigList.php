@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Bot\Commands;
+namespace Mediawiki\Bot\Commands\Config;
 
 use Mediawiki\Bot\Config\AppConfig;
 use Symfony\Component\Console\Command\Command;
@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListConfig extends Command {
+class ConfigList extends Command {
 
 	private $appConfig;
 
@@ -19,19 +19,20 @@ class ListConfig extends Command {
 
 	protected function configure() {
 		$this
-			->setName( 'listconfig' )
+			->setName( 'config:list' )
 			->setDescription( 'Lists items stored in the config' )
 			->addArgument(
 				'items',
-				InputArgument::REQUIRED,
-				'The items to show (wikis, users)'
+				InputArgument::OPTIONAL,
+				'The items to show (wikis, users)',
+				null
 			);
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$items = $input->getArgument( 'items' );
 
-		if( $items === 'wikis' ) {
+		if( $items === 'wikis' || $items === null ) {
 			$wikis = $this->appConfig->get( 'wikis' );
 
 			if( empty( $wikis ) ) {
@@ -43,10 +44,9 @@ class ListConfig extends Command {
 			foreach( $wikis as $wikiCode => $wikiData ) {
 				$output->writeln( ' - ' . $wikiCode . ' => ' . $wikiData['url'] );
 			}
-			return null;
 		}
 
-		if( $items === 'users' ) {
+		if( $items === 'users' || $items === null ) {
 			$users = $this->appConfig->get( 'users' );
 
 			if( empty( $users ) ) {
@@ -58,11 +58,6 @@ class ListConfig extends Command {
 			foreach( $users as $userCode => $userData ) {
 				$output->writeln( ' - ' . $userCode . ' => ' . $userData['username'] . ' (password hidden)' );
 			}
-			return null;
 		}
-
-		$output->writeln( "Invalid selection" );
-		return -1;
-
 	}
 }

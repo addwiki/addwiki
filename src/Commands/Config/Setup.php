@@ -1,11 +1,10 @@
 <?php
 
-namespace Mediawiki\Bot\Commands;
+namespace Mediawiki\Bot\Commands\Config;
 
 use Mediawiki\Bot\Config\AppConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -22,25 +21,11 @@ class Setup extends Command {
 
 	protected function configure() {
 		$this
-			->setName( 'setup' )
-			->setDescription( 'Sets up awb' )
-			->addArgument(
-				'force',
-				InputArgument::OPTIONAL,
-				'Force the setup? Will overwrite previous things!',
-				false
-			);
+			->setName( 'config:setup' )
+			->setDescription( 'Easy setup of the application' );
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		if ( !$this->appConfig->isEmpty() && !$input->getArgument( 'force' ) ) {
-			$output->writeln( "Ready to go!" );
-
-			return null;
-		}
-
-		$output->writeln( "Welcome to your first time running addwiki bot!" );
-
 		$questionHelper = $this->getQuestionHelper();
 
 		//Add wikis?
@@ -96,7 +81,7 @@ class Setup extends Command {
 		}
 
 
-		$output->writeln( "Setup completed!" );
+		$output->writeln( "Setup complete" );
 	}
 
 	/**
