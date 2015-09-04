@@ -21,23 +21,30 @@ class RestoreRevisions extends Command {
 	private $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
-		parent::__construct( null );
 		$this->appConfig = $appConfig;
+		parent::__construct( null );
 	}
 
 	protected function configure() {
+		$defaultWiki = $this->appConfig->get( 'defaults.wiki' );
+		$defaultUser = $this->appConfig->get( 'defaults.user' );
+
 		$this
 			->setName( 'task:restore-revisions' )
 			->setDescription( 'Restores the selected revisions' )
-			->addArgument(
+			->addOption(
 				'wiki',
-				InputArgument::REQUIRED,
-				'The configured wiki to use'
+				null,
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				'The configured wiki to use',
+				$defaultWiki
 			)
-			->addArgument(
+			->addOption(
 				'user',
-				InputArgument::REQUIRED,
-				'The configured user to use'
+				null,
+				( $defaultUser === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				'The configured user to use',
+				$defaultUser
 			)
 			->addArgument(
 				'revid',
@@ -73,8 +80,8 @@ class RestoreRevisions extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$wiki = $input->getArgument( 'wiki' );
-		$user = $input->getArgument( 'user' );
+		$wiki = $input->getOption( 'wiki' );
+		$user = $input->getOption( 'user' );
 		$revids = $input->getArgument( 'revid' );
 
 		$userDetails = $this->appConfig->get( 'users.' . $user );
@@ -127,8 +134,8 @@ class RestoreRevisions extends Command {
 					$newRevision,
 					new EditInfo(
 						$this->getEditSummary( $input->getOption( 'summary' ), $revid ),
-						$input->getOption( 'minor' ),
-						$input->getOption( 'bot' )
+						boolval( $input->getOption( 'minor' ) ),
+						boolval( $input->getOption( 'bot' ) )
 					)
 				);
 

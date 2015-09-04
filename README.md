@@ -10,8 +10,18 @@ Install using composer!
 
 ## Example Usage
 
+Sample initial setup:
+
     awb config:setup
     awb config:list
 
-    awb task:restore-revisions localwiki localadmin 555
-    awb task:restore-revisions localwiki localadmin 1 2 3
+    awb config:set:default:wiki local
+    awb config:set:default:user localadmin
+
+    awb task:restore-revisions --wiki localwiki --user localadmin 555
+    awb task:restore-revisions --wiki localwiki --user localadmin 1 2 3
+
+If you have a default wiki and user set things get even easier:
+
+    awb task:restore-revisions 663
+    awb task:restore-revisions --summary "Custom Summary with $revid" --minor 0 --bot 0 663 777

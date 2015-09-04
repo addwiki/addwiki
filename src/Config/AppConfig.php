@@ -47,7 +47,7 @@ class AppConfig {
 		$paths = explode( '.', $name );
 		foreach( $paths as $i => $key ) {
 			if( ($i + 1) == count( $paths ) ) {
-				if( !array_key_exists( $key, $temp ) ) {
+				if( $temp === null || !array_key_exists( $key, $temp ) ) {
 					return $default;
 				} else {
 					return $temp[$key];
