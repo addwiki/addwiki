@@ -11,6 +11,7 @@ $awbApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Config\SetDefaultWiki( $awbConfig ),
 	new Mediawiki\Bot\Commands\Config\SetDefaultUser( $awbConfig ),
 	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awbConfig ),
+	new Mediawiki\Bot\Commands\Task\Purge( $awbConfig ),
 ) );
 
 if( $awbConfig->isEmpty() ) {
