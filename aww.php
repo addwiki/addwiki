@@ -22,7 +22,11 @@ $awwApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Task\Purge( $awwConfig ),
 ) );
 
-$awwApp->addCommands( $GLOBALS['awwCommands'] );
+foreach ( $GLOBALS['awwCommands'] as $callback ) {
+	if ( is_callable( $callback ) ) {
+		$awwApp->addCommands( call_user_func( $callback, $awwConfig ) );
+	}
+}
 
 if( $awwConfig->isEmpty() ) {
 	$awwApp->setDefaultCommand( 'config:setup' );
