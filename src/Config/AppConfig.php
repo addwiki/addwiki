@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Yaml;
 class AppConfig {
 
 	private $configDirectory;
-	private $configFilename = 'awb.yml';
+	private $configFilename = 'aww.yml';
 	private $path;
 
 	private $data;
