@@ -19,5 +19,8 @@
 		"psr-4": {
 			"Mediawiki\\Bot\\": "src/"
 		}
-	}
+	},
+	"bin": [
+		"awb"
+	]
 }

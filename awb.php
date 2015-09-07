@@ -1,8 +1,14 @@
 <?php
 
+// global variable to allow registering additional commands
 $GLOBALS['awbCommands'] = array();
 
-require __DIR__ . '/vendor/autoload.php';
+if( file_exists( __DIR__ . '/../../autoload.php' ) ) {
+    // addwiki is part of a composer installation
+    require_once __DIR__ . '/../../autoload.php';
+} else {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
 
 $awbConfig = new Mediawiki\Bot\Config\AppConfig( __DIR__  );
 $awbApp = new Symfony\Component\Console\Application( 'awb - addwiki bot' );
