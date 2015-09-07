@@ -1,5 +1,5 @@
 {
-	"name": "addwiki/mediawiki-bot",
+	"name": "addwiki/addwiki",
 	"type": "library",
 	"description": "A Mediawiki bot lib",
 	"keywords": ["Mediawiki"],
