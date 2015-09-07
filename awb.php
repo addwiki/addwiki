@@ -1,5 +1,7 @@
 <?php
 
+$GLOBALS['awbCommands'] = array();
+
 require __DIR__ . '/vendor/autoload.php';
 
 $awbConfig = new Mediawiki\Bot\Config\AppConfig( __DIR__  );
@@ -13,6 +15,8 @@ $awbApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awbConfig ),
 	new Mediawiki\Bot\Commands\Task\Purge( $awbConfig ),
 ) );
+
+$awbApp->addCommands( $GLOBALS['awbCommands'] );
 
 if( $awbConfig->isEmpty() ) {
 	$awbApp->setDefaultCommand( 'config:setup' );
