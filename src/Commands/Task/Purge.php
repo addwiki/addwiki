@@ -2,7 +2,11 @@
 
 namespace Mediawiki\Bot\Commands\Task;
 
+use Mediawiki\Api\MediawikiApi;
+use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
+use Mediawiki\DataModel\Page;
+use Mediawiki\DataModel\PageIdentifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,7 +25,7 @@ class Purge extends Command {
 		$defaultWiki = $this->appConfig->get( 'defaults.wiki' );
 
 		$this
-			->setName( 'task:restore-revisions' )
+			->setName( 'task:purge' )
 			->setDescription( 'Restores the selected revisions' )
 			->addOption(
 				'wiki',
@@ -29,33 +33,6 @@ class Purge extends Command {
 				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
 				'The configured wiki to use',
 				$defaultWiki
-			)
-			->addOption(
-				'forcelinkupdate',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Update the links tables',
-				false
-			)
-			->addOption(
-				'forcerecursivelinkupdate',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Update the links table, and update the links tables for any page that uses this page as a template',
-				false
-			)
-			->addOption(
-				'resolveredirects',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Automatically resolve redirects in titles, pageids, and revids',
-				false
-			)
-			->addOption(
-				'revid',
-				null,
-				InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-				'Which revision ids do you want to purge (separate multiple names with a space)?'
 			)
 			->addOption(
 				'pageid',
@@ -72,7 +49,36 @@ class Purge extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		//TODO implement me
+		$pageIdentifiers = array();
+		if( $input->hasOption( 'pageid' ) ) {
+			foreach( $input->getOption( 'pageid' ) as $pageId ) {
+				$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );
+			}
+		} elseif( $input->hasOption( 'title' ) ) {
+			foreach( $input->getOption( 'title' ) as $title ) {
+				$pageIdentifiers[] = new PageIdentifier( $title );
+			}
+		} else {
+			throw new \RuntimeException( 'No titles or pageids were set!' );
+		}
+
+		$wiki = $input->getOption( 'wiki' );
+		$wikiDetails = $this->appConfig->get( 'wikis.' . $wiki );
+		$api = new MediawikiApi( $wikiDetails['url'] );
+		$mwFactory = new MediawikiFactory( $api );
+		$purger = $mwFactory->newPagePurger();
+		/** @var PageIdentifier $identifier */
+		foreach( $pageIdentifiers as $identifier ) {
+			if( $identifier->getId() != null ) {
+				$output->writeln( 'Purging page with id ' . $identifier->getId() );
+			} elseif( $identifier->getTitle() != null ) {
+				$output->writeln( 'Purging page with title ' . $identifier->getTitle()->getText() );
+			}
+			$purger->purge( new Page( $identifier ) );
+		}
+
+		$output->writeln( 'Done' );
+
 	}
 
 }
