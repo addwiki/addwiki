@@ -7,6 +7,7 @@ use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
+use Mediawiki\DataModel\Title;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +27,7 @@ class Purge extends Command {
 
 		$this
 			->setName( 'task:purge' )
-			->setDescription( 'Restores the selected revisions' )
+			->setDescription( 'Purges the selected pages' )
 			->addOption(
 				'wiki',
 				null,
@@ -56,7 +57,7 @@ class Purge extends Command {
 			}
 		} elseif( $input->hasOption( 'title' ) ) {
 			foreach( $input->getOption( 'title' ) as $title ) {
-				$pageIdentifiers[] = new PageIdentifier( $title );
+				$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
 			}
 		} else {
 			throw new \RuntimeException( 'No titles or pageids were set!' );

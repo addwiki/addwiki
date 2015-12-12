@@ -31,7 +31,7 @@ class RestoreRevisions extends Command {
 
 		$this
 			->setName( 'task:restore-revisions' )
-			->setDescription( 'Restores the selected revisions' )
+			->setDescription( 'Restores the selected revisions of pages as their current revision' )
 			->addOption(
 				'wiki',
 				null,
