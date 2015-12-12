@@ -20,6 +20,7 @@ $awwApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Config\SetDefaultUser( $awwConfig ),
 	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awwConfig ),
 	new Mediawiki\Bot\Commands\Task\Purge( $awwConfig ),
+	new Mediawiki\Bot\Commands\Task\EditPage( $awwConfig ),
 ) );
 
 foreach ( $GLOBALS['awwCommands'] as $callback ) {
