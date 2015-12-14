@@ -330,6 +330,8 @@ class WikidataFilmRefs extends Command {
 		$regex = '#^https?://#';
 		$a = preg_replace($regex, '', $a);
 		$b = preg_replace($regex, '', $b);
+		$a = trim( $a, "/" );
+		$b = trim( $b, "/" );
 		return $a == $b;
 	}
 
