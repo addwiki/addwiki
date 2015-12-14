@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Bot\Commands\Wikimedia;
 
+use Asparagus\QueryBuilder;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
@@ -14,10 +15,9 @@ use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
+use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\EditInfo;
-use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Pages;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Title;
 use RuntimeException;
@@ -30,10 +30,11 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\ItemContent;
 use Wikibase\DataModel\Reference;
+use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Statement\Statement;
-use Wikibase\DataModel\Statement\StatementListProvider;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\DataModel\Term\FingerprintProvider;
 
@@ -54,19 +55,11 @@ class WikidataFilmRefs extends Command {
 			->setName( 'wm:wd:refs:films' )
 			->setDescription( 'Edits the page' )
 			->addOption(
-				'sourcewiki',
+				'wikibase',
 				null,
 				( $defaultWiki === null ? InputOption::VALUE_REQUIRED :
 					InputOption::VALUE_OPTIONAL ),
-				'The configured wiki to find extensions on (A Wikibase Client)',
-				$defaultWiki
-			)
-			->addOption(
-				'targetwiki',
-				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED :
-					InputOption::VALUE_OPTIONAL ),
-				'The configured wiki to acc data to (A Wikibase Repo)',
+				'The configured wiki to add data to (A Wikibase Repo)',
 				$defaultWiki
 			)
 			->addOption(
@@ -76,136 +69,52 @@ class WikidataFilmRefs extends Command {
 					InputOption::VALUE_OPTIONAL ),
 				'The configured user to use',
 				$defaultUser
-			)
-			->addOption(
-				'title',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Which title do you want to use as a source'
-			)
-			->addOption(
-				'category',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Which category do you want to use as a source'
 			);
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$output->writeln(
-			"THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong"
-		);
+		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
 
-		$sourceWiki = $input->getOption( 'sourcewiki' );
-		$targetWiki = $input->getOption( 'targetwiki' );
+		$wikibaseWikiName = $input->getOption( 'wikibase' );
 		$user = $input->getOption( 'user' );
 
 		$userDetails = $this->appConfig->get( 'users.' . $user );
-		$sourceWikiDetails = $this->appConfig->get( 'wikis.' . $sourceWiki );
-		$targetWikiDetails = $this->appConfig->get( 'wikis.' . $targetWiki );
+		$wikibaseDetails = $this->appConfig->get( 'wikis.' . $wikibaseWikiName );
 
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
-		if ( $sourceWikiDetails === null ) {
-			throw new RuntimeException( 'Wiki not found in config' );
-		}
-		if ( $targetWikiDetails === null ) {
-			throw new RuntimeException( 'Wiki not found in config' );
+		if ( $wikibaseDetails === null ) {
+			throw new RuntimeException( 'Wikibase wiki not found in config' );
 		}
 
-		$pageIdentifier = null;
-		if ( $input->getOption( 'title' ) != null ) {
-			$sourceTitle = $input->getOption( 'title' );
-			$pageIdentifier = new PageIdentifier( new Title( $sourceTitle ) );
-		} elseif ( $input->getOption( 'category' ) != null ) {
-			$sourceCategoryString = $input->getOption( 'category' );
-		} else {
-			throw new RuntimeException( 'No title or category was set!' );
+		$guzzleClient = new Client();
+
+		$output->writeln( "Running SPARQL query" );
+		$queryBuilder = new QueryBuilder( array(
+			'prov' => 'http://www.w3.org/ns/prov#',
+			'wd' => 'http://www.wikidata.org/entity/',
+			'wdt' => 'http://www.wikidata.org/prop/direct/',
+			'p' => 'http://www.wikidata.org/prop/',
+		) );
+		$query = $queryBuilder->select( '?film' )
+			->where( '?film', 'wdt:P31', 'wd:Q11424' )
+			->also( '?film', 'wdt:P57', '?director' )
+			->filterNotExists( '?director', 'prov:wasDerivedFrom', '?somewhere' );
+		$queryString = $query->getSPARQL();
+		//TODO sparql endpoint should be configurable
+		$sparqlResponse = $guzzleClient->get( 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' . urlencode( $queryString ) );
+		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
+		/** @var ItemId[] $itemIdsOfInterest */
+		$itemIdsOfInterest = array();
+		foreach( $sparqlArray['results']['bindings'] as $binding ) {
+			$itemIdsOfInterest[] = new ItemId( str_replace( 'http://www.wikidata.org/entity/', '', $binding['film']['value'] ) );
 		}
+		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " unreferenced film director statements" );
 
-		$sourceApi = new MediawikiApi( $sourceWikiDetails['url'] );
-		$targetApi = new MediawikiApi( $targetWikiDetails['url'] );
-		$output->writeln( "Logging in" );
-		$loggedIn =
-			$targetApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in to target wiki' );
-
-			return -1;
-		}
-
-		$sourceMwFactory = new MediawikiFactory( $sourceApi );
-
-		$pageList = new Pages();
-		if ( isset( $sourceCategoryString ) ) {
-			$pageList->addPages(
-				//TODO use recursion / continuation when implemented!
-				$sourceMwFactory->newPageListGetter()->getPageListFromCategoryName(
-					$sourceCategoryString,
-					array( 'cmlimit' => 500 )
-				)
-			);
-		} elseif ( isset( $pageIdentifier ) ) {
-			$pageList->addPage( new Page( $pageIdentifier ) );
-		}
-
-		foreach( $pageList->toArray() as $page ) {
-			$this->executeForPageIdentifier(
-				$output,
-				$sourceMwFactory,
-				$targetApi,
-				$sourceWiki,
-				$page->getPageIdentifier()
-			);
-		}
-
-	}
-
-	private function executeForPageIdentifier(
-		OutputInterface $output,
-		MediawikiFactory $sourceMwFactory,
-		MediawikiApi $targetApi,
-		$sourceWiki,
-		PageIdentifier $pageIdentifier
-	){
-
-		$sourceParser = $sourceMwFactory->newParser();
-		//TODO fix assumption of the title being here...
-		$output->writeln( "Parsing page " . $pageIdentifier->getTitle()->getText() );
-		$parseResult = $sourceParser->parsePage( $pageIdentifier );
-
-		//Get the wikibase item if it exists
-		$itemId = null;
-		if ( array_key_exists( 'properties', $parseResult ) ) {
-			foreach ( $parseResult['properties'] as $pageProp ) {
-				if ( $pageProp['name'] == 'wikibase_item' ) {
-					$itemId = new ItemId( $pageProp['*'] );
-				}
-			}
-		}
-
-		if ( $itemId === null ) {
-			$output->writeln( "Could not find item for wikipage" );
-
-			return -1;
-		}
-
-		$externalLinks = array();
-		if ( array_key_exists( 'externallinks', $parseResult ) ) {
-			foreach( $parseResult['externallinks'] as $externalLink ) {
-				$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
-			}
-		}
-
-		if ( empty( $externalLinks ) ) {
-			$output->writeln( "Could not find any external links for the given page" );
-
-			return -1;
-		}
-
-		$targetWbFactory = new WikibaseFactory(
-			$targetApi,
+		$wikibaseApi = new MediawikiApi( $wikibaseDetails['url'] );
+		$wikibaseFactory = new WikibaseFactory(
+			$wikibaseApi,
 			new DataValueDeserializer(
 				array(
 					'boolean' => 'DataValues\BooleanValue',
@@ -222,16 +131,89 @@ class WikidataFilmRefs extends Command {
 			),
 			new DataValueSerializer()
 		);
+		$itemLookup = $wikibaseFactory->newItemLookup();
 
-		$itemRevision = $targetWbFactory->newRevisionGetter()->getFromId( $itemId );
-		/** @var Item|FingerprintProvider|StatementListProvider $item */
-		$item = $itemRevision->getContent()->getData();
+		$output->writeln( "Logging in" );
+		$loggedIn =
+			$wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
+		if ( !$loggedIn ) {
+			$output->writeln( 'Failed to log in to wikibase wiki' );
+			return -1;
+		}
+
+		foreach( $itemIdsOfInterest as $itemId ) {
+			try{
+				$item = $itemLookup->getItemForId( $itemId );
+			} catch ( ItemLookupException $e ) {
+				continue;
+			}
+
+			$allowedWikiCodes = array( 'enwiki', 'dewiki' );
+			foreach( $allowedWikiCodes as $siteId ) {
+				if( $item->getSiteLinkList()->hasLinkWithSiteId( $siteId ) ) {
+					$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
+					$sourceWikiDetails = $this->appConfig->get( 'wikis.' . $siteId );
+					if ( $sourceWikiDetails === null ) {
+						throw new RuntimeException( 'Source wiki not found in config' );
+					}
+					$sourceApi = new MediawikiApi( $sourceWikiDetails['url'] );
+					$sourceMwFactory = new MediawikiFactory( $sourceApi );
+
+					$pageIdentifier = new PageIdentifier( new Title( $pageName ) );
+					$this->executeForPageIdentifier(
+						$output,
+						$sourceMwFactory,
+						$wikibaseFactory,
+						$guzzleClient,
+						$pageIdentifier,
+						$item,
+						$siteId
+					);
+
+				}
+
+			}
+		}
+
+		return 0;
+	}
+
+	private function executeForPageIdentifier(
+		OutputInterface $output,
+		MediawikiFactory $sourceMwFactory,
+		WikibaseFactory $wikibaseFactory,
+		Client $guzzleClient,
+		PageIdentifier $sourcePageIdentifier,
+		Item $item,
+		$sourceWikiCode
+	){
+
+		$sourceParser = $sourceMwFactory->newParser();
+		//TODO fix assumption of the title being here...?
+		$output->writeln( "-- Parsing page " . $sourcePageIdentifier->getTitle()->getText() . " from $sourceWikiCode --" );
+		$parseResult = $sourceParser->parsePage( $sourcePageIdentifier );
+
+		$externalLinks = array();
+		if ( array_key_exists( 'externallinks', $parseResult ) ) {
+			foreach( $parseResult['externallinks'] as $externalLink ) {
+				//TODO FIXME temporarily ignore imdb spam?
+				if( strstr( $externalLink, 'imdb.com' ) === false ) {
+					$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
+				}
+			}
+		}
+
+		if ( empty( $externalLinks ) ) {
+			$output->writeln( "Could not find any external links for the given page" );
+
+			return -1;
+		}
+
 		$startItemHash = md5( serialize( $item ) );
 
 		$movieMicrodatas = array();
 
 		//Make a bunch of requests
-		$guzzleClient = new Client();
 		/** @var FutureResponse[] $futureResponses */
 		$futureResponses = array();
 		$output->write( "Making requests" );
@@ -244,7 +226,7 @@ class WikidataFilmRefs extends Command {
 		$output->writeln( '' );
 
 		// Get structured data from the responses
-		$output->writeln( 'Getting responses' );
+		$output->write( 'Getting Movie microdata' );
 		foreach ( $futureResponses as $link => $futureResponse ) {
 			try {
 				$md = new MicrodataPhp( array( 'html' => $futureResponse->getBody() ) );
@@ -259,25 +241,23 @@ class WikidataFilmRefs extends Command {
 			foreach ( $data->items as $microdata ) {
 				//TODO also match https or protocol relative?
 				if ( in_array( 'http://schema.org/Movie', $microdata->type ) ) {
+					$output->write( '.' );
 					$microdata->url = $link;
 					$movieMicrodatas[] = $microdata;
 					$addedForThisLink++;
 				}
 			}
-			$output->writeln(
-				count( $data->items ) . " data items found, $addedForThisLink of use for $link"
-			);
 		}
+		$output->writeln( '' );
 
-		$output->writeln( "Got " . count( $movieMicrodatas ) . " microdata items" );
-
+		$output->write( 'Adding references' );
 		foreach ( $movieMicrodatas as $dataObject ) {
 			$sourceUrl = $dataObject->url;
 			/** @var array $dataProperty */
 			foreach ( $dataObject->properties as $dataPropertyName => $dataProperties ) {
 				if ( $dataPropertyName == 'director' ) {
 					foreach ( $dataProperties as $innerDataObject ) {
-						if ( array_key_exists( 'properties', $innerDataObject ) ) {
+						if ( is_object( $innerDataObject ) && array_key_exists( 'properties', $innerDataObject ) ) {
 							if ( array_key_exists( 'name', $innerDataObject->properties ) ) {
 								$directorName = $innerDataObject->properties['name'][0];
 								//TODO check this is right and if so add a ref?
@@ -291,7 +271,7 @@ class WikidataFilmRefs extends Command {
 									if ( $mainSnak->getType() == 'value' ) {
 										/** @var EntityIdValue $directorItemId */
 										$directorItemId = $mainSnak->getDataValue();
-										$directorItemRevision = $targetWbFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
+										$directorItemRevision = $wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
 										/** @var Item|FingerprintProvider $directorItem */
 										$directorItem = $directorItemRevision->getContent()->getData();
 										$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
@@ -318,7 +298,7 @@ class WikidataFilmRefs extends Command {
 
 											//If no ref already then add a ref
 											if( $alreadyHasRefForThisUrl == false ) {
-												$output->writeln( 'Adding a reference for ' . $sourceUrl );
+												$output->write( '.' );
 												$directorStatement->addNewReference(
 													// Source URL
 													new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
@@ -337,19 +317,21 @@ class WikidataFilmRefs extends Command {
 				}
 			}
 		}
+		$output->writeln( '' );
 
 		//If the item has changed
 		if( $startItemHash != md5( serialize( $item ) ) ) {
-			$output->writeln( 'Trying to save!' );
-			$targetWbFactory->newRevisionSaver()->save(
+			$output->writeln( 'Saving!' );
+			$wikibaseFactory->newRevisionSaver()->save(
 				new Revision(
-					$itemRevision->getContent(),
-					$itemRevision->getPageIdentifier()
+					new ItemContent( $item ),
+					//TODO fix the assumption of item page namespace?
+					new PageIdentifier( new Title( $item->getId()->getSerialization() ) )
 				),
-				new EditInfo( "Test import references from Wikipedia ($sourceWiki)" )
+				new EditInfo( "Test import references from Wikipedia ($sourceWikiCode)" )
 			);
 		} else {
-			$output->writeln( 'No changes were made!' );
+			$output->writeln( 'No changes made!' );
 		}
 
 	}
