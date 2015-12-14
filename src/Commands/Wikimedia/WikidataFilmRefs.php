@@ -6,6 +6,8 @@ use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
 use DataValues\TimeValue;
+use GuzzleHttp\Client;
+use GuzzleHttp\Message\FutureResponse;
 use linclark\MicrodataPHP\MicrodataPhp;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
@@ -81,7 +83,6 @@ class WikidataFilmRefs extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
-		sleep(5);
 
 		$sourceWiki = $input->getOption( 'sourcewiki' );
 		$targetWiki = $input->getOption( 'targetwiki' );
@@ -178,10 +179,33 @@ class WikidataFilmRefs extends Command {
 
 		$movieMicrodatas = array();
 
-		foreach ( $externalLinks as $link ) {
+		//Make a bunch of requests
+		$guzzleClient = new Client();
+		/** @var FutureResponse[] $futureResponses */
+		$futureResponses = array();
+		$output->write( "Making requests" );
+		foreach( $externalLinks as $link ) {
+			if( strpos( $link, '//' ) === 0 ) {
+				$link = 'http' . $link;
+			}
 			//TODO ignore PDFs
 			//TODO make a blacklist of URLS that provide no microformat data?
-			$md = new MicrodataPhp( $link );
+			$futureResponses[$link] = $guzzleClient->get( $link, array( 'future' => true ) );
+			$output->write( '.' );
+		}
+		$output->writeln( '' );
+
+		// Get structured data from the responses
+		$output->writeln( 'Getting responses' );
+		foreach ( $futureResponses as $link => $futureResponse ) {
+			try {
+				$md = new MicrodataPhp( array( 'html' => $futureResponse->getBody() ) );
+			}
+			catch ( \Exception $e ) {
+				$output->writeln( $e->getMessage() );
+				continue;
+			}
+
 			$data = $md->obj();
 			$addedForThisLink = 0;
 			foreach ( $data->items as $microdata ) {

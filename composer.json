@@ -21,7 +21,8 @@
 		"data-values/interfaces": "~0.2.0|~0.1.5",
 		"data-values/number": "~0.6.0",
 		"data-values/time": "~0.8.2",
-		"linclark/microdata-php": "~2.0"
+		"linclark/microdata-php": "~2.0",
+		"guzzlehttp/guzzle": "~5.3"
 	},
 	"autoload": {
 		"psr-4": {
