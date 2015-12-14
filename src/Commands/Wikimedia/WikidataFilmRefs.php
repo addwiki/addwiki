@@ -15,7 +15,9 @@ use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
 use Mediawiki\DataModel\EditInfo;
+use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
+use Mediawiki\DataModel\Pages;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Title;
 use RuntimeException;
@@ -80,11 +82,19 @@ class WikidataFilmRefs extends Command {
 				null,
 				InputOption::VALUE_OPTIONAL,
 				'Which title do you want to use as a source'
+			)
+			->addOption(
+				'category',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Which category do you want to use as a source'
 			);
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
+		$output->writeln(
+			"THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong"
+		);
 
 		$sourceWiki = $input->getOption( 'sourcewiki' );
 		$targetWiki = $input->getOption( 'targetwiki' );
@@ -108,8 +118,10 @@ class WikidataFilmRefs extends Command {
 		if ( $input->getOption( 'title' ) != null ) {
 			$sourceTitle = $input->getOption( 'title' );
 			$pageIdentifier = new PageIdentifier( new Title( $sourceTitle ) );
+		} elseif ( $input->getOption( 'category' ) != null ) {
+			$sourceCategoryString = $input->getOption( 'category' );
 		} else {
-			throw new RuntimeException( 'No titles was set!' );
+			throw new RuntimeException( 'No title or category was set!' );
 		}
 
 		$sourceApi = new MediawikiApi( $sourceWikiDetails['url'] );
@@ -124,8 +136,43 @@ class WikidataFilmRefs extends Command {
 		}
 
 		$sourceMwFactory = new MediawikiFactory( $sourceApi );
+
+		$pageList = new Pages();
+		if ( isset( $sourceCategoryString ) ) {
+			$pageList->addPages(
+				//TODO use recursion / continuation when implemented!
+				$sourceMwFactory->newPageListGetter()->getPageListFromCategoryName(
+					$sourceCategoryString,
+					array( 'cmlimit' => 500 )
+				)
+			);
+		} elseif ( isset( $pageIdentifier ) ) {
+			$pageList->addPage( new Page( $pageIdentifier ) );
+		}
+
+		foreach( $pageList->toArray() as $page ) {
+			$this->executeForPageIdentifier(
+				$output,
+				$sourceMwFactory,
+				$targetApi,
+				$sourceWiki,
+				$page->getPageIdentifier()
+			);
+		}
+
+	}
+
+	private function executeForPageIdentifier(
+		OutputInterface $output,
+		MediawikiFactory $sourceMwFactory,
+		MediawikiApi $targetApi,
+		$sourceWiki,
+		PageIdentifier $pageIdentifier
+	){
+
 		$sourceParser = $sourceMwFactory->newParser();
-		$output->writeln( "Parsing page" );
+		//TODO fix assumption of the title being here...
+		$output->writeln( "Parsing page " . $pageIdentifier->getTitle()->getText() );
 		$parseResult = $sourceParser->parsePage( $pageIdentifier );
 
 		//Get the wikibase item if it exists
@@ -333,7 +380,7 @@ class WikidataFilmRefs extends Command {
 				// Ignore!
 			}
 			try{
-				$strings[] = $fingerprint->getAliasGroup( $lang )->getAliases();
+				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );
 			} catch ( Exception $e ) {
 				// Ignore!
 			}
