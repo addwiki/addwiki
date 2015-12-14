@@ -21,6 +21,7 @@ $awwApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awwConfig ),
 	new Mediawiki\Bot\Commands\Task\Purge( $awwConfig ),
 	new Mediawiki\Bot\Commands\Task\EditPage( $awwConfig ),
+	new Mediawiki\Bot\Commands\Wikimedia\ExtensionToWikidata( $awwConfig ),
 ) );
 
 foreach ( $GLOBALS['awwCommands'] as $callback ) {
