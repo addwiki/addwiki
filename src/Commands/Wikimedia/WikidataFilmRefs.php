@@ -6,6 +6,7 @@ use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
 use DataValues\TimeValue;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\FutureResponse;
 use linclark\MicrodataPHP\MicrodataPhp;
@@ -31,6 +32,7 @@ use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementListProvider;
+use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\DataModel\Term\FingerprintProvider;
 
 class WikidataFilmRefs extends Command {
@@ -142,12 +144,14 @@ class WikidataFilmRefs extends Command {
 			return -1;
 		}
 
-		$externalLinks = null;
+		$externalLinks = array();
 		if ( array_key_exists( 'externallinks', $parseResult ) ) {
-			$externalLinks = $parseResult['externallinks'];
+			foreach( $parseResult['externallinks'] as $externalLink ) {
+				$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
+			}
 		}
 
-		if ( $externalLinks === null || empty( $externalLinks ) ) {
+		if ( empty( $externalLinks ) ) {
 			$output->writeln( "Could not find any external links for the given page" );
 
 			return -1;
@@ -185,9 +189,6 @@ class WikidataFilmRefs extends Command {
 		$futureResponses = array();
 		$output->write( "Making requests" );
 		foreach( $externalLinks as $link ) {
-			if( strpos( $link, '//' ) === 0 ) {
-				$link = 'http' . $link;
-			}
 			//TODO ignore PDFs
 			//TODO make a blacklist of URLS that provide no microformat data?
 			$futureResponses[$link] = $guzzleClient->get( $link, array( 'future' => true ) );
@@ -201,7 +202,7 @@ class WikidataFilmRefs extends Command {
 			try {
 				$md = new MicrodataPhp( array( 'html' => $futureResponse->getBody() ) );
 			}
-			catch ( \Exception $e ) {
+			catch ( Exception $e ) {
 				$output->writeln( $e->getMessage() );
 				continue;
 			}
@@ -246,11 +247,8 @@ class WikidataFilmRefs extends Command {
 										$directorItemRevision = $targetWbFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
 										/** @var Item|FingerprintProvider $directorItem */
 										$directorItem = $directorItemRevision->getContent()->getData();
-										if(
-											// If we match the label or an alias
-											strcasecmp( $directorName, $directorItem->getFingerprint()->getLabel( 'en' )->getText() ) == 0 ||
-											in_array( $directorName, $directorItem->getFingerprint()->getAliasGroups()->getWithLanguages( array( 'en' ) )->toTextArray() )
-										) {
+										$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
+										if( in_array( strtolower( $directorName ), $englishTerms ) ) {
 
 											$currentReferences = $directorStatement->getReferences();
 											$alreadyHasRefForThisUrl = false;
@@ -301,11 +299,46 @@ class WikidataFilmRefs extends Command {
 					$itemRevision->getContent(),
 					$itemRevision->getPageIdentifier()
 				),
-				new EditInfo( "Test import references from Wikipedia" )
+				new EditInfo( "Test import references from Wikipedia ($sourceWiki)" )
 			);
 		} else {
 			$output->writeln( 'No changes were made!' );
 		}
+
+	}
+
+	/**
+	 * @param string $link
+	 *
+	 * @return string
+	 */
+	private function normalizeWikipediaExternalLink( $link ) {
+		if ( strpos( $link, '//' ) === 0 ) {
+			$link = 'http' . $link;
+		}
+		if( strpos( $link, '#' ) !== false ) {
+			$link = strstr( $link, '#', true );
+		}
+		$link = trim( $link, '/' );
+		return $link;
+	}
+
+	private function getTermsAsStrings( Fingerprint $fingerprint ) {
+		$strings = array();
+		$englishLangs = array( 'en', 'en-gb' );
+		foreach( $englishLangs as $lang ) {
+			try{
+				$strings[] = $fingerprint->getLabel( $lang )->getText();
+			} catch ( Exception $e ) {
+				// Ignore!
+			}
+			try{
+				$strings[] = $fingerprint->getAliasGroup( $lang )->getAliases();
+			} catch ( Exception $e ) {
+				// Ignore!
+			}
+		}
+		return $strings;
 
 	}
 
