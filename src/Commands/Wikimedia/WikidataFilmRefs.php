@@ -15,10 +15,8 @@ use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
-use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\EditInfo;
 use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Title;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -30,7 +28,6 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\ItemContent;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
@@ -148,7 +145,7 @@ class WikidataFilmRefs extends Command {
 				continue;
 			}
 
-			$allowedWikiCodes = array( 'enwiki', 'dewiki' );
+			$allowedWikiCodes = array( 'enwiki', 'dewiki', 'svwiki', 'nlwiki', 'frwiki', 'ruwiki', 'itwiki', 'eswiki', 'plwiki', 'ptwiki' );
 			foreach( $allowedWikiCodes as $siteId ) {
 				if( $item->getSiteLinkList()->hasLinkWithSiteId( $siteId ) ) {
 					$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
@@ -197,7 +194,7 @@ class WikidataFilmRefs extends Command {
 		if ( array_key_exists( 'externallinks', $parseResult ) ) {
 			foreach( $parseResult['externallinks'] as $externalLink ) {
 				//TODO FIXME temporarily ignore imdb spam?
-				if( strstr( $externalLink, 'imdb.com' ) === false ) {
+				if( strstr( $externalLink, '.imdb.' ) === false ) {
 					$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
 				}
 			}
@@ -205,11 +202,8 @@ class WikidataFilmRefs extends Command {
 
 		if ( empty( $externalLinks ) ) {
 			$output->writeln( "Could not find any external links for the given page" );
-
 			return -1;
 		}
-
-		$startItemHash = md5( serialize( $item ) );
 
 		$movieMicrodatas = array();
 
@@ -232,7 +226,6 @@ class WikidataFilmRefs extends Command {
 				$md = new MicrodataPhp( array( 'html' => $futureResponse->getBody() ) );
 			}
 			catch ( Exception $e ) {
-				$output->writeln( $e->getMessage() );
 				continue;
 			}
 
@@ -299,13 +292,17 @@ class WikidataFilmRefs extends Command {
 											//If no ref already then add a ref
 											if( $alreadyHasRefForThisUrl == false ) {
 												$output->write( '.' );
-												$directorStatement->addNewReference(
+												$newRef = new Reference( array(
 													// Source URL
 													new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
 													// Date retrieved
 													new PropertyValueSnak( new PropertyId( 'P813' ), $this->getWikidataNowTimeValue() )
 													// TODO date published?
-												);
+												) );
+												$editInfo = new EditInfo( "From $sourceWikiCode with love" );
+												$wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
+												//NOTE: keep our in memory item copy up to date
+												$directorStatement->addNewReference( $newRef->getSnaks() );
 											}
 										}
 									}
@@ -318,21 +315,6 @@ class WikidataFilmRefs extends Command {
 			}
 		}
 		$output->writeln( '' );
-
-		//If the item has changed
-		if( $startItemHash != md5( serialize( $item ) ) ) {
-			$output->writeln( 'Saving!' );
-			$wikibaseFactory->newRevisionSaver()->save(
-				new Revision(
-					new ItemContent( $item ),
-					//TODO fix the assumption of item page namespace?
-					new PageIdentifier( new Title( $item->getId()->getSerialization() ) )
-				),
-				new EditInfo( "Test import references from Wikipedia ($sourceWikiCode)" )
-			);
-		} else {
-			$output->writeln( 'No changes made!' );
-		}
 
 	}
 
