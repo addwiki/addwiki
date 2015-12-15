@@ -122,6 +122,7 @@ class WikidataReferencerCommand extends Command {
 			'Movie' => array(
 				new MovieDirectorReferencer( $this->wikibaseFactory ),
 				new MovieActorReferencer( $this->wikibaseFactory ),
+				new MovieProducerReferencer( $this->wikibaseFactory ),
 			),
 		);
 		$this->referencers = $allReferencers[$microdataType];
