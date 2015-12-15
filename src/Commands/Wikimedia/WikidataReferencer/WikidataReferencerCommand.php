@@ -25,6 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
+use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
@@ -36,6 +37,31 @@ use Wikibase\DataModel\Term\FingerprintProvider;
 class WikidataReferencerCommand extends Command {
 
 	private $appConfig;
+
+	/**
+	 * @var SparqlQueryLibrary
+	 */
+	private $sparqlQueryLibrary;
+
+	/**
+	 * @var SparqlQueryRunner
+	 */
+	private $sparqlQueryRunner;
+
+	/**
+	 * @var WikibaseFactory
+	 */
+	private $wikibaseFactory;
+
+	/**
+	 * @var MediawikiApi
+	 */
+	private $wikibaseApi;
+
+	/**
+	 * @var WikimediaMediawikiFactoryFactory
+	 */
+	private $wmFactoryFactory;
 
 	public function __construct( AppConfig $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -58,23 +84,12 @@ class WikidataReferencerCommand extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
-
-		// Get options
-		$user = $input->getOption( 'user' );
-		$userDetails = $this->appConfig->get( 'users.' . $user );
-		if ( $userDetails === null ) {
-			throw new RuntimeException( 'User not found in config' );
-		}
-
-		// Create a pile of services
-		$guzzleClient = new Client();
-		$sparqlQueryLibrary = new SparqlQueryLibrary();
-		$sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
-		$wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
-		$wikibaseFactory = new WikibaseFactory(
-			$wikibaseApi,
+	private function initExecutionServices() {
+		$this->sparqlQueryLibrary = new SparqlQueryLibrary();
+		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
+		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
+		$this->wikibaseFactory = new WikibaseFactory(
+			$this->wikibaseApi,
 			new DataValueDeserializer(
 				array(
 					'boolean' => 'DataValues\BooleanValue',
@@ -91,48 +106,85 @@ class WikidataReferencerCommand extends Command {
 			),
 			new DataValueSerializer()
 		);
-		$itemLookup = $wikibaseFactory->newItemLookup();
+		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
+	}
+
+	protected function execute( InputInterface $input, OutputInterface $output ) {
+		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
+
+		// Get options
+		$user = $input->getOption( 'user' );
+		$userDetails = $this->appConfig->get( 'users.' . $user );
+		if ( $userDetails === null ) {
+			throw new RuntimeException( 'User not found in config' );
+		}
+
+		// Init the command execution services
+		$this->initExecutionServices();
 
 		// Run the query
 		$output->writeln( "Running SPARQL query" );
-		$itemIdsOfInterest = $sparqlQueryRunner->getItemIdsFromQuery(
-			$sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
+		$itemIdsOfInterest = $this->sparqlQueryRunner->getItemIdsFromQuery(
+			$this->sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
 		);
 		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " items of interest" );
 
 		// Log in to Wikidata
 		$output->writeln( "Logging in" );
 		$loggedIn =
-			$wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
+			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in to wikibase wiki' );
 			return -1;
 		}
 
-		foreach( $itemIdsOfInterest as $itemId ) {
-			try{
+		$this->executeForItemIds(
+			$output,
+			$itemIdsOfInterest
+		);
+
+		return 0;
+	}
+
+	/**
+	 * @param OutputInterface $output
+	 * @param ItemId[] $itemIdsOfInterest
+	 */
+	private function executeForItemIds(
+		OutputInterface $output,
+		array $itemIdsOfInterest
+	) {
+		$itemLookup = $this->wikibaseFactory->newItemLookup();
+		foreach ( $itemIdsOfInterest as $itemId ) {
+			try {
 				$item = $itemLookup->getItemForId( $itemId );
-			} catch ( ItemLookupException $e ) {
+			}
+			catch ( ItemLookupException $e ) {
 				continue;
 			}
 
-			$allowedWikiCodes = array( 'enwiki', 'dewiki', 'svwiki', 'nlwiki', 'frwiki', 'ruwiki', 'itwiki', 'eswiki', 'plwiki', 'ptwiki' );
-			foreach( $allowedWikiCodes as $siteId ) {
-				if( $item->getSiteLinkList()->hasLinkWithSiteId( $siteId ) ) {
+			$allowedWikiCodes =
+				array(
+					'enwiki',
+					'dewiki',
+					'svwiki',
+					'nlwiki',
+					'frwiki',
+					'ruwiki',
+					'itwiki',
+					'eswiki',
+					'plwiki',
+					'ptwiki'
+				);
+			foreach ( $allowedWikiCodes as $siteId ) {
+				if ( $item->getSiteLinkList()->hasLinkWithSiteId( $siteId ) ) {
 					$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
-					$sourceWikiDetails = $this->appConfig->get( 'wikis.' . $siteId );
-					if ( $sourceWikiDetails === null ) {
-						throw new RuntimeException( 'Source wiki not found in config' );
-					}
-					$sourceApi = new MediawikiApi( $sourceWikiDetails['url'] );
-					$sourceMwFactory = new MediawikiFactory( $sourceApi );
+					$sourceMwFactory = $this->wmFactoryFactory->getFactory( $siteId );
 
 					$pageIdentifier = new PageIdentifier( new Title( $pageName ) );
 					$this->executeForPageIdentifier(
 						$output,
 						$sourceMwFactory,
-						$wikibaseFactory,
-						$guzzleClient,
 						$pageIdentifier,
 						$item,
 						$siteId
@@ -142,19 +194,16 @@ class WikidataReferencerCommand extends Command {
 
 			}
 		}
-
-		return 0;
 	}
 
 	private function executeForPageIdentifier(
 		OutputInterface $output,
 		MediawikiFactory $sourceMwFactory,
-		WikibaseFactory $wikibaseFactory,
-		Client $guzzleClient,
 		PageIdentifier $sourcePageIdentifier,
 		Item $item,
 		$sourceWikiCode
 	){
+		$guzzleClient = new Client();
 
 		$sourceParser = $sourceMwFactory->newParser();
 		//TODO fix assumption of the title being here...?
@@ -235,7 +284,7 @@ class WikidataReferencerCommand extends Command {
 									if ( $mainSnak->getType() == 'value' ) {
 										/** @var EntityIdValue $directorItemId */
 										$directorItemId = $mainSnak->getDataValue();
-										$directorItemRevision = $wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
+										$directorItemRevision = $this->wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
 										/** @var Item|FingerprintProvider $directorItem */
 										$directorItem = $directorItemRevision->getContent()->getData();
 										$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
@@ -271,7 +320,7 @@ class WikidataReferencerCommand extends Command {
 													// TODO date published?
 												) );
 												$editInfo = new EditInfo( "From $sourceWikiCode with love" );
-												$wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
+												$this->wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
 												//NOTE: keep our in memory item copy up to date
 												$directorStatement->addNewReference( $newRef->getSnaks() );
 											}
