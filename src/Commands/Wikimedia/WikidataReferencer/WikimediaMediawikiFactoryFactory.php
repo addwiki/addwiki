@@ -24,7 +24,7 @@ class WikimediaMediawikiFactoryFactory {
 			$firstPart = substr($siteID, 0, -4);
 			if( strlen( $firstPart ) >= 2 ) {
 				return new MediawikiFactory(
-					new MediawikiApi( "https://.$firstPart.wikipedia.org/w/api.php" )
+					new MediawikiApi( "https://$firstPart.wikipedia.org/w/api.php" )
 				);
 			}
 		}

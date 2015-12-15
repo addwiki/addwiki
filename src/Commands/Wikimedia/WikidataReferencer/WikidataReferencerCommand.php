@@ -9,7 +9,6 @@ use DataValues\TimeValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\FutureResponse;
-use linclark\MicrodataPHP\MicrodataPhp;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
@@ -214,7 +213,7 @@ class WikidataReferencerCommand extends Command {
 		if ( array_key_exists( 'externallinks', $parseResult ) ) {
 			foreach( $parseResult['externallinks'] as $externalLink ) {
 				//TODO FIXME temporarily ignore imdb spam?
-				if( strstr( $externalLink, '.imdb.' ) === false ) {
+				if( strstr( $externalLink, 'imdb.' ) === false ) {
 					$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
 				}
 			}
@@ -225,9 +224,7 @@ class WikidataReferencerCommand extends Command {
 			return -1;
 		}
 
-		$movieMicrodatas = array();
-
-		//Make a bunch of requests
+		// Make a bunch of requests
 		/** @var FutureResponse[] $futureResponses */
 		$futureResponses = array();
 		$output->write( "Making requests" );
@@ -239,95 +236,94 @@ class WikidataReferencerCommand extends Command {
 		}
 		$output->writeln( '' );
 
-		// Get structured data from the responses
-		$output->write( 'Getting Movie microdata' );
+		// Get the request responses
+		$output->write( "Getting all HTML responses" );
+		$linkToHtmlMap = array();
 		foreach ( $futureResponses as $link => $futureResponse ) {
 			try {
-				$md = new MicrodataPhp( array( 'html' => $futureResponse->getBody() ) );
+				$output->write( '.' );
+				$linkToHtmlMap[$link] = $futureResponse->getBody();
 			}
 			catch ( Exception $e ) {
 				continue;
 			}
-
-			$data = $md->obj();
-			$addedForThisLink = 0;
-			foreach ( $data->items as $microdata ) {
-				//TODO also match https or protocol relative?
-				if ( in_array( 'http://schema.org/Movie', $microdata->type ) ) {
-					$output->write( '.' );
-					$microdata->url = $link;
-					$movieMicrodatas[] = $microdata;
-					$addedForThisLink++;
-				}
-			}
 		}
 		$output->writeln( '' );
 
-		$output->write( 'Adding references' );
-		foreach ( $movieMicrodatas as $dataObject ) {
-			$sourceUrl = $dataObject->url;
-			/** @var array $dataProperty */
-			foreach ( $dataObject->properties as $dataPropertyName => $dataProperties ) {
-				if ( $dataPropertyName == 'director' ) {
-					foreach ( $dataProperties as $innerDataObject ) {
-						if ( is_object( $innerDataObject ) && array_key_exists( 'properties', $innerDataObject ) ) {
-							if ( array_key_exists( 'name', $innerDataObject->properties ) ) {
-								$directorName = $innerDataObject->properties['name'][0];
-								//TODO check this is right and if so add a ref?
+		// Get structured data from the responses
+		$output->writeln( 'Getting microdata from HTML' );
+		$microDataMap = array();
+		$microDataExtractor = new MicrodataExtractor();
+		foreach( $linkToHtmlMap as $link => $html ) {
+			$microDataMap[$link] = $microDataExtractor->extract( $html, 'Movie' );
+		}
 
-								//NOTE: P57 is director
-								$directorStatements = $item->getStatements()->getByPropertyId( new PropertyId( 'P57' ) );
-								/** @var Statement $directorStatement */
-								foreach ( $directorStatements as $directorStatement ) {
-									/** @var PropertyValueSnak $mainSnak */
-									$mainSnak = $directorStatement->getMainSnak();
-									if ( $mainSnak->getType() == 'value' ) {
-										/** @var EntityIdValue $directorItemId */
-										$directorItemId = $mainSnak->getDataValue();
-										$directorItemRevision = $this->wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
-										/** @var Item|FingerprintProvider $directorItem */
-										$directorItem = $directorItemRevision->getContent()->getData();
-										$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
-										if( in_array( strtolower( $directorName ), $englishTerms ) ) {
+		// Try to add references for the microdata stuff
+		$output->write( 'Attempting to add references' );
+		foreach ( $microDataMap as $sourceUrl => $microDataObjects ) {
+			foreach( $microDataObjects as $dataObject ) {
+				/** @var array $dataProperty */
+				foreach ( $dataObject->properties as $dataPropertyName => $dataProperties ) {
+					if ( $dataPropertyName == 'director' ) {
+						foreach ( $dataProperties as $innerDataObject ) {
+							if ( is_object( $innerDataObject ) && array_key_exists( 'properties', $innerDataObject ) ) {
+								if ( array_key_exists( 'name', $innerDataObject->properties ) ) {
+									$directorName = $innerDataObject->properties['name'][0];
+									//TODO check this is right and if so add a ref?
 
-											$currentReferences = $directorStatement->getReferences();
-											$alreadyHasRefForThisUrl = false;
-											/** @var Reference $currentReference */
-											foreach( $currentReferences as $currentReference ) {
-												//TODO fix the value snak assumption below
-												/** @var PropertyValueSnak $currentReferenceSnak */
-												foreach( $currentReference->getSnaks() as $currentReferenceSnak ) {
-													//Note: P854 is reference URL
-													if( $currentReferenceSnak->getPropertyId()->getSerialization() == 'P854' ) {
-														/** @var StringValue $currentReferenceValue */
-														$currentReferenceValue = $currentReferenceSnak->getDataValue();
-														$currentReferenceUrl = $currentReferenceValue->getValue();
-														if( $this->urlsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
-															$alreadyHasRefForThisUrl = true;
+									//NOTE: P57 is director
+									$directorStatements = $item->getStatements()->getByPropertyId( new PropertyId( 'P57' ) );
+									/** @var Statement $directorStatement */
+									foreach ( $directorStatements as $directorStatement ) {
+										/** @var PropertyValueSnak $mainSnak */
+										$mainSnak = $directorStatement->getMainSnak();
+										if ( $mainSnak->getType() == 'value' ) {
+											/** @var EntityIdValue $directorItemId */
+											$directorItemId = $mainSnak->getDataValue();
+											$directorItemRevision = $this->wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
+											/** @var Item|FingerprintProvider $directorItem */
+											$directorItem = $directorItemRevision->getContent()->getData();
+											$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
+											if( in_array( strtolower( $directorName ), $englishTerms ) ) {
+
+												$currentReferences = $directorStatement->getReferences();
+												$alreadyHasRefForThisUrl = false;
+												/** @var Reference $currentReference */
+												foreach( $currentReferences as $currentReference ) {
+													//TODO fix the value snak assumption below
+													/** @var PropertyValueSnak $currentReferenceSnak */
+													foreach( $currentReference->getSnaks() as $currentReferenceSnak ) {
+														//Note: P854 is reference URL
+														if( $currentReferenceSnak->getPropertyId()->getSerialization() == 'P854' ) {
+															/** @var StringValue $currentReferenceValue */
+															$currentReferenceValue = $currentReferenceSnak->getDataValue();
+															$currentReferenceUrl = $currentReferenceValue->getValue();
+															if( $this->urlsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
+																$alreadyHasRefForThisUrl = true;
+															}
 														}
 													}
 												}
-											}
 
-											//If no ref already then add a ref
-											if( $alreadyHasRefForThisUrl == false ) {
-												$output->write( '.' );
-												$newRef = new Reference( array(
-													// Source URL
-													new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
-													// Date retrieved
-													new PropertyValueSnak( new PropertyId( 'P813' ), $this->getWikidataNowTimeValue() )
-													// TODO date published?
-												) );
-												$editInfo = new EditInfo( "From $sourceWikiCode with love" );
-												$this->wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
-												//NOTE: keep our in memory item copy up to date
-												$directorStatement->addNewReference( $newRef->getSnaks() );
+												//If no ref already then add a ref
+												if( $alreadyHasRefForThisUrl == false ) {
+													$output->write( '.' );
+													$newRef = new Reference( array(
+														// Source URL
+														new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
+														// Date retrieved
+														new PropertyValueSnak( new PropertyId( 'P813' ), $this->getWikidataNowTimeValue() )
+														// TODO date published?
+													) );
+													$editInfo = new EditInfo( "From $sourceWikiCode with love" );
+													$this->wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
+													//NOTE: keep our in memory item copy up to date
+													$directorStatement->addNewReference( $newRef->getSnaks() );
+												}
 											}
 										}
 									}
 								}
-
 							}
 						}
 					}
