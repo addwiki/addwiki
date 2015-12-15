@@ -22,7 +22,7 @@ $awwApp->addCommands( array(
 	new Mediawiki\Bot\Commands\Task\Purge( $awwConfig ),
 	new Mediawiki\Bot\Commands\Task\EditPage( $awwConfig ),
 	new Mediawiki\Bot\Commands\Wikimedia\ExtensionToWikidata( $awwConfig ),
-	new Mediawiki\Bot\Commands\Wikimedia\WikidataFilmRefs( $awwConfig ),
+	new Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer\WikidataReferencerCommand( $awwConfig ),
 ) );
 
 foreach ( $GLOBALS['awwCommands'] as $callback ) {

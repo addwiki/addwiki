@@ -1,8 +1,7 @@
 <?php
 
-namespace Mediawiki\Bot\Commands\Wikimedia;
+namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
-use Asparagus\QueryBuilder;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
@@ -26,7 +25,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
-use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
@@ -35,7 +33,7 @@ use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Term\Fingerprint;
 use Wikibase\DataModel\Term\FingerprintProvider;
 
-class WikidataFilmRefs extends Command {
+class WikidataReferencerCommand extends Command {
 
 	private $appConfig;
 
@@ -45,20 +43,11 @@ class WikidataFilmRefs extends Command {
 	}
 
 	protected function configure() {
-		$defaultWiki = $this->appConfig->get( 'defaults.wiki' );
 		$defaultUser = $this->appConfig->get( 'defaults.user' );
 
 		$this
-			->setName( 'wm:wd:refs:films' )
-			->setDescription( 'Edits the page' )
-			->addOption(
-				'wikibase',
-				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED :
-					InputOption::VALUE_OPTIONAL ),
-				'The configured wiki to add data to (A Wikibase Repo)',
-				$defaultWiki
-			)
+			->setName( 'wm:wd:ref' )
+			->setDescription( 'Adds references to Wikidata items' )
 			->addOption(
 				'user',
 				null,
@@ -72,44 +61,18 @@ class WikidataFilmRefs extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
 
-		$wikibaseWikiName = $input->getOption( 'wikibase' );
+		// Get options
 		$user = $input->getOption( 'user' );
-
 		$userDetails = $this->appConfig->get( 'users.' . $user );
-		$wikibaseDetails = $this->appConfig->get( 'wikis.' . $wikibaseWikiName );
-
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
-		if ( $wikibaseDetails === null ) {
-			throw new RuntimeException( 'Wikibase wiki not found in config' );
-		}
 
+		// Create a pile of services
 		$guzzleClient = new Client();
-
-		$output->writeln( "Running SPARQL query" );
-		$queryBuilder = new QueryBuilder( array(
-			'prov' => 'http://www.w3.org/ns/prov#',
-			'wd' => 'http://www.wikidata.org/entity/',
-			'wdt' => 'http://www.wikidata.org/prop/direct/',
-			'p' => 'http://www.wikidata.org/prop/',
-		) );
-		$query = $queryBuilder->select( '?film' )
-			->where( '?film', 'wdt:P31', 'wd:Q11424' )
-			->also( '?film', 'wdt:P57', '?director' )
-			->filterNotExists( '?director', 'prov:wasDerivedFrom', '?somewhere' );
-		$queryString = $query->getSPARQL();
-		//TODO sparql endpoint should be configurable
-		$sparqlResponse = $guzzleClient->get( 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' . urlencode( $queryString ) );
-		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
-		/** @var ItemId[] $itemIdsOfInterest */
-		$itemIdsOfInterest = array();
-		foreach( $sparqlArray['results']['bindings'] as $binding ) {
-			$itemIdsOfInterest[] = new ItemId( str_replace( 'http://www.wikidata.org/entity/', '', $binding['film']['value'] ) );
-		}
-		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " unreferenced film director statements" );
-
-		$wikibaseApi = new MediawikiApi( $wikibaseDetails['url'] );
+		$sparqlQueryLibrary = new SparqlQueryLibrary();
+		$sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
+		$wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
 		$wikibaseFactory = new WikibaseFactory(
 			$wikibaseApi,
 			new DataValueDeserializer(
@@ -130,6 +93,14 @@ class WikidataFilmRefs extends Command {
 		);
 		$itemLookup = $wikibaseFactory->newItemLookup();
 
+		// Run the query
+		$output->writeln( "Running SPARQL query" );
+		$itemIdsOfInterest = $sparqlQueryRunner->getItemIdsFromQuery(
+			$sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
+		);
+		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " items of interest" );
+
+		// Log in to Wikidata
 		$output->writeln( "Logging in" );
 		$loggedIn =
 			$wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
