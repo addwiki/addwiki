@@ -32,36 +32,28 @@ class MovieDirectorReferencer implements Referencer {
 		$this->directorPropertyId = new PropertyId( 'P57' );
 	}
 
-	/**
-	 * @param MicroData $microData
-	 *
-	 * @return bool
-	 */
 	public function canAddReferences( MicroData $microData ) {
 		return
 			$microData->hasType( 'Movie' ) &&
 			$microData->hasProperty( 'director', MicroData::PROP_DATA ) &&
-			$microData->getFirstProperty( 'director', MicroData::PROP_DATA )->hasProperty( 'name' );
+			$microData->getFirstProperty( 'director', MicroData::PROP_DATA )->hasProperty( 'name', MicroData::PROP_STRING );
 	}
 
-	/**
-	 * @param MicroData $microData
-	 * @param Item $item
-	 * @param string $sourceUrl
-	 * @param string|null $sourceWiki
-	 */
 	public function addReferences( MicroData $microData, $item, $sourceUrl, $sourceWiki = null ) {
-		foreach( $microData->getProperty( 'director' ) as $directorMicroData ) {
-			foreach( $directorMicroData->getProperty( 'name' ) as $directorName ) {
-				$this->addReferencesForDirector(
-					$directorName,
+		$referenceCounter = 0;
+		foreach( $microData->getProperty( 'director', MicroData::PROP_DATA ) as $directorMicroData ) {
+			foreach( $directorMicroData->getProperty( 'name', MicroData::PROP_STRING ) as $directorName ) {
+				$addedRefs = $this->addReferencesForDirector(
+					trim( $directorName ),
 					$item,
 					$sourceUrl,
 					$sourceWiki
 				);
-
+				$referenceCounter = $referenceCounter + $addedRefs;
 			}
 		}
+
+		return $referenceCounter;
 	}
 
 	/**
@@ -69,6 +61,8 @@ class MovieDirectorReferencer implements Referencer {
 	 * @param Item $item
 	 * @param string $sourceUrl
 	 * @param string|null $sourceWiki
+	 *
+	 * @return int number of references added
 	 */
 	private function addReferencesForDirector(
 		$directorName,
@@ -76,6 +70,8 @@ class MovieDirectorReferencer implements Referencer {
 		$sourceUrl,
 		$sourceWiki = null
 	) {
+		$referenceCounter = 0;
+
 		$directorStatements = $item->getStatements()->getByPropertyId( $this->directorPropertyId );
 		foreach ( $directorStatements->getIterator() as $directorStatement ) {
 
@@ -95,6 +91,8 @@ class MovieDirectorReferencer implements Referencer {
 					'strtolower',
 					$this->getTermsAsStrings( $directorItem->getFingerprint() )
 				);
+			var_dump($englishTerms);
+			var_dump(strtolower( $directorName ));
 			if ( !in_array( strtolower( $directorName ), $englishTerms ) ) {
 				continue; // Ignore things that dont appear to have the correct value
 			}
@@ -141,7 +139,10 @@ class MovieDirectorReferencer implements Referencer {
 
 			//NOTE: keep our in memory item copy up to date (yay such reference passing)
 			$directorStatement->addNewReference( $newRef->getSnaks() );
+			$referenceCounter++;
 		}
+
+		return $referenceCounter;
 	}
 
 	/**

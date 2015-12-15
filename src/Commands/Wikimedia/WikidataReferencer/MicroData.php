@@ -90,14 +90,20 @@ class MicroData {
 
 	/**
 	 * @param string $name
+	 * @param int|null $propType self::PROP_* constant
 	 *
 	 * @return self[]|string[]
 	 */
-	public function getProperty( $name ) {
-		if( $this->hasProperty( $name ) ) {
-			return $this->properties[$name];
+	public function getProperty( $name, $propType = null ) {
+		$properties = array();
+		if( array_key_exists( $name, $this->properties ) ) {
+			foreach( $this->properties[$name] as $property ) {
+				if( $this->propertyIsOfPropType( $property, $propType ) ) {
+					$properties[] = $property;
+				}
+			}
 		}
-		return array();
+		return $properties;
 	}
 
 	/**

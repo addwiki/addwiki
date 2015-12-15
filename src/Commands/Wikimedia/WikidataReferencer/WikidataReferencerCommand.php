@@ -52,6 +52,16 @@ class WikidataReferencerCommand extends Command {
 	 */
 	private $wmFactoryFactory;
 
+	/**
+	 * @var MicrodataExtractor
+	 */
+	private $microDataExtractor;
+
+	/**
+	 * @var array[]
+	 */
+	private $referencers;
+
 	public function __construct( AppConfig $appConfig ) {
 		$this->appConfig = $appConfig;
 		parent::__construct( null );
@@ -96,10 +106,16 @@ class WikidataReferencerCommand extends Command {
 			new DataValueSerializer()
 		);
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
+		$this->referencers = array(
+			'Movie' => array(
+				new MovieDirectorReferencer( $this->wikibaseFactory ),
+			),
+		);
+		$this->microDataExtractor = new MicrodataExtractor();
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something does wrong!)" );
+		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something goes wrong!)" );
 
 		// Get options
 		$user = $input->getOption( 'user' );
@@ -112,10 +128,11 @@ class WikidataReferencerCommand extends Command {
 		$this->initExecutionServices();
 
 		// Run the query
-		$itemIdsOfInterest = $this->sparqlQueryRunner->getItemIdsFromQuery(
+		$output->writeln( "Running initial query" );
+		$itemIds = $this->sparqlQueryRunner->getItemIdsFromQuery(
 			$this->sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
 		);
-		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " items to investigate" );
+		$output->writeln( "Got " . count( $itemIds ) . " items to investigate" );
 
 		// Log in to Wikidata
 		$loggedIn =
@@ -127,7 +144,7 @@ class WikidataReferencerCommand extends Command {
 
 		$this->executeForItemIds(
 			$output,
-			$itemIdsOfInterest
+			$itemIds
 		);
 
 		return 0;
@@ -139,13 +156,22 @@ class WikidataReferencerCommand extends Command {
 	 */
 	private function executeForItemIds( OutputInterface $output, array $itemIds ) {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
+		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		foreach ( $itemIds as $itemId ) {
+			$output->write( $itemId->getSerialization() . ", " );
+			if( in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
+				$output->writeln( "Already processed!" );
+				continue;
+			}
+
 			try {
 				$item = $itemLookup->getItemForId( $itemId );
 			}
 			catch ( ItemLookupException $e ) {
 				continue;
 			}
+
+			$output->writeln( "" );
 
 			$allowedWikiCodes =
 				array(
@@ -177,6 +203,7 @@ class WikidataReferencerCommand extends Command {
 				}
 
 			}
+			$this->markIdAsProcessed( $itemId );
 		}
 	}
 
@@ -191,7 +218,7 @@ class WikidataReferencerCommand extends Command {
 
 		$sourceParser = $sourceMwFactory->newParser();
 		//TODO fix assumption of the title being here...?
-		$output->writeln( "-- Parsing page " . $sourcePageIdentifier->getTitle()->getText() . " from $sourceWikiCode --" );
+		$output->write( "Parsing " . $sourcePageIdentifier->getTitle()->getText() . " from $sourceWikiCode, " );
 		$parseResult = $sourceParser->parsePage( $sourcePageIdentifier );
 
 		$externalLinks = array();
@@ -205,24 +232,20 @@ class WikidataReferencerCommand extends Command {
 		}
 
 		if ( empty( $externalLinks ) ) {
-			$output->writeln( "Could not find any external links for the given page" );
-			return -1;
+			$output->writeln( "No external links!" );
+			return;
 		}
 
 		// Make a bunch of requests
 		/** @var FutureResponse[] $futureResponses */
 		$futureResponses = array();
-		$output->write( "Making requests" );
+		$output->write( "Requesting & getting data" );
 		foreach( $externalLinks as $link ) {
 			//TODO ignore PDFs
 			//TODO make a blacklist of URLS that provide no microformat data?
 			$futureResponses[$link] = $guzzleClient->get( $link, array( 'future' => true ) );
-			$output->write( '.' );
 		}
-		$output->writeln( '' );
-
 		// Get the request responses
-		$output->write( "Getting all HTML responses" );
 		$linkToHtmlMap = array();
 		foreach ( $futureResponses as $link => $futureResponse ) {
 			try {
@@ -233,29 +256,23 @@ class WikidataReferencerCommand extends Command {
 				continue;
 			}
 		}
-		$output->writeln( '' );
+		$output->write( ', ' );
 
 		// Get structured data from the responses
-		$output->writeln( 'Getting microdata from HTML' );
-		$microDataMap = array();
-		$microDataExtractor = new MicrodataExtractor();
+		$referenceCounter = 0;
 		foreach( $linkToHtmlMap as $link => $html ) {
-			$microDataMap[$link] = $microDataExtractor->extract( $html, 'Movie' );
-		}
-
-		// Try to add references for the microdata stuff
-		$output->write( 'Attempting to add references' );
-		/** @var MicroData[] $microDataObjects */
-		foreach ( $microDataMap as $sourceUrl => $microDataObjects ) {
-			foreach( $microDataObjects as $microData ) {
-				$referencer = new MovieDirectorReferencer( $this->wikibaseFactory );
-				if( $referencer->canAddReferences( $microData ) ) {
-					$referencer->addReferences( $microData, $item, $sourceUrl, $sourceWikiCode );
+			foreach( $this->microDataExtractor->extract( $html, 'Movie' ) as $microData ) {
+				/** @var Referencer $referencer */
+				foreach( $this->referencers['Movie'] as $referencer ) {
+					if( $referencer->canAddReferences( $microData ) ) {
+						$addedReferences = $referencer->addReferences( $microData, $item, $link, $sourceWikiCode );
+						$referenceCounter = $referenceCounter + $addedReferences;
+					}
 				}
 			}
 		}
-		$output->writeln( '' );
 
+		$output->writeln( "$referenceCounter references added to " . $item->getId()->getSerialization() );
 	}
 
 	/**
@@ -272,6 +289,25 @@ class WikidataReferencerCommand extends Command {
 		}
 		$link = trim( $link, '/' );
 		return $link;
+	}
+
+	/**
+	 * @return string[] ItemId serializations Q12 etc
+	 */
+	private function getProcessedItemIdStrings() {
+		$path = $this->getProcessedListPath();
+		if( file_exists( $path ) ) {
+			return explode( "\n", file_get_contents( $path ) );
+		}
+		return array();
+	}
+
+	private function markIdAsProcessed( ItemId $itemId ) {
+		file_put_contents( $this->getProcessedListPath(), $itemId->getSerialization() . "\n", FILE_APPEND );
+	}
+
+	private function getProcessedListPath() {
+		return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'addwiki-wikidatareferencer-alreadydone.txt';
 	}
 
 }
