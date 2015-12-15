@@ -4,8 +4,6 @@ namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\FutureResponse;
@@ -13,7 +11,6 @@ use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
-use Mediawiki\DataModel\EditInfo;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
 use RuntimeException;
@@ -22,16 +19,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
-use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
-use Wikibase\DataModel\Snak\PropertyValueSnak;
-use Wikibase\DataModel\Statement\Statement;
-use Wikibase\DataModel\Term\Fingerprint;
-use Wikibase\DataModel\Term\FingerprintProvider;
 
 class WikidataReferencerCommand extends Command {
 
@@ -109,7 +99,7 @@ class WikidataReferencerCommand extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$output->writeln( "THIS SCRIPT IS IN TESTING, if you use it it is your fault if anything goes wrong" );
+		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something does wrong!)" );
 
 		// Get options
 		$user = $input->getOption( 'user' );
@@ -122,14 +112,12 @@ class WikidataReferencerCommand extends Command {
 		$this->initExecutionServices();
 
 		// Run the query
-		$output->writeln( "Running SPARQL query" );
 		$itemIdsOfInterest = $this->sparqlQueryRunner->getItemIdsFromQuery(
 			$this->sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
 		);
-		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " items of interest" );
+		$output->writeln( "Got " . count( $itemIdsOfInterest ) . " items to investigate" );
 
 		// Log in to Wikidata
-		$output->writeln( "Logging in" );
 		$loggedIn =
 			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
@@ -147,14 +135,11 @@ class WikidataReferencerCommand extends Command {
 
 	/**
 	 * @param OutputInterface $output
-	 * @param ItemId[] $itemIdsOfInterest
+	 * @param ItemId[] $itemIds
 	 */
-	private function executeForItemIds(
-		OutputInterface $output,
-		array $itemIdsOfInterest
-	) {
+	private function executeForItemIds( OutputInterface $output, array $itemIds ) {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
-		foreach ( $itemIdsOfInterest as $itemId ) {
+		foreach ( $itemIds as $itemId ) {
 			try {
 				$item = $itemLookup->getItemForId( $itemId );
 			}
@@ -263,62 +248,9 @@ class WikidataReferencerCommand extends Command {
 		/** @var MicroData[] $microDataObjects */
 		foreach ( $microDataMap as $sourceUrl => $microDataObjects ) {
 			foreach( $microDataObjects as $microData ) {
-				foreach( $microData->getProperty( 'director' ) as $directorMicroData ) {
-					foreach( $directorMicroData->getProperty( 'name' ) as $directorName ) {
-						$directorPropertyId = new PropertyId( 'P57' );
-						$directorStatements = $item->getStatements()->getByPropertyId( $directorPropertyId );
-						/** @var Statement $directorStatement */
-						foreach ( $directorStatements as $directorStatement ) {
-							/** @var PropertyValueSnak $mainSnak */
-							$mainSnak = $directorStatement->getMainSnak();
-							if ( $mainSnak->getType() == 'value' ) {
-								/** @var EntityIdValue $directorItemId */
-								$directorItemId = $mainSnak->getDataValue();
-								$directorItemRevision = $this->wikibaseFactory->newRevisionGetter()->getFromId( $directorItemId->getEntityId() );
-								/** @var Item|FingerprintProvider $directorItem */
-								$directorItem = $directorItemRevision->getContent()->getData();
-								$englishTerms = array_map( 'strtolower', $this->getTermsAsStrings( $directorItem->getFingerprint() ) );
-								if( in_array( strtolower( $directorName ), $englishTerms ) ) {
-
-									$currentReferences = $directorStatement->getReferences();
-									$alreadyHasRefForThisUrl = false;
-									/** @var Reference $currentReference */
-									foreach( $currentReferences as $currentReference ) {
-										//TODO fix the value snak assumption below
-										/** @var PropertyValueSnak $currentReferenceSnak */
-										foreach( $currentReference->getSnaks() as $currentReferenceSnak ) {
-											//Note: P854 is reference URL
-											if( $currentReferenceSnak->getPropertyId()->getSerialization() == 'P854' ) {
-												/** @var StringValue $currentReferenceValue */
-												$currentReferenceValue = $currentReferenceSnak->getDataValue();
-												$currentReferenceUrl = $currentReferenceValue->getValue();
-												if( $this->urlsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
-													$alreadyHasRefForThisUrl = true;
-												}
-											}
-										}
-									}
-
-									//If no ref already then add a ref
-									if( $alreadyHasRefForThisUrl == false ) {
-										$output->write( '.' );
-										$newRef = new Reference( array(
-											// Source URL
-											new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
-											// Date retrieved
-											new PropertyValueSnak( new PropertyId( 'P813' ), $this->getWikidataNowTimeValue() )
-											// TODO date published?
-										) );
-										$editInfo = new EditInfo( "From $sourceWikiCode with love" );
-										$this->wikibaseFactory->newReferenceSetter()->set( $newRef, $directorStatement, null, $editInfo );
-										//NOTE: keep our in memory item copy up to date
-										$directorStatement->addNewReference( $newRef->getSnaks() );
-									}
-								}
-							}
-						}
-
-					}
+				$referencer = new MovieDirectorReferencer( $this->wikibaseFactory );
+				if( $referencer->canAddReferences( $microData ) ) {
+					$referencer->addReferences( $microData, $item, $sourceUrl, $sourceWikiCode );
 				}
 			}
 		}
@@ -340,51 +272,6 @@ class WikidataReferencerCommand extends Command {
 		}
 		$link = trim( $link, '/' );
 		return $link;
-	}
-
-	private function getTermsAsStrings( Fingerprint $fingerprint ) {
-		$strings = array();
-		$englishLangs = array( 'en', 'en-gb' );
-		foreach( $englishLangs as $lang ) {
-			try{
-				$strings[] = $fingerprint->getLabel( $lang )->getText();
-			} catch ( Exception $e ) {
-				// Ignore!
-			}
-			try{
-				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );
-			} catch ( Exception $e ) {
-				// Ignore!
-			}
-		}
-		return $strings;
-
-	}
-
-	private function getWikidataNowTimeValue() {
-		return new TimeValue(
-			"+" . date( 'Y-m-d' ) . "T00:00:00Z",
-			0,//TODO dont assume UTC
-			0,
-			0,
-			TimeValue::PRECISION_DAY,
-			TimeValue::CALENDAR_JULIAN
-		);
-	}
-
-	/**
-	 * @param string $a
-	 * @param string $b
-	 *
-	 * @return bool
-	 */
-	private function urlsAreSame( $a, $b ) {
-		$regex = '#^https?://#';
-		$a = preg_replace($regex, '', $a);
-		$b = preg_replace($regex, '', $b);
-		$a = trim( $a, "/" );
-		$b = trim( $b, "/" );
-		return $a == $b;
 	}
 
 }

@@ -9,6 +9,9 @@ use stdClass;
  */
 class MicroData {
 
+	const PROP_STRING = 1;
+	const PROP_DATA = 2;
+
 	/**
 	 * @var array[]
 	 */
@@ -38,7 +41,11 @@ class MicroData {
 		if( isset( $object->properties ) ) {
 			foreach( $object->properties as $name => $values ) {
 				foreach( $values as $value ) {
-					$this->properties[$name][] = new self( $value );
+					if( is_string( $value ) ) {
+						$this->properties[$name][] = $value;
+					} else {
+						$this->properties[$name][] = new self( $value );
+					}
 				}
 			}
 		}
@@ -75,7 +82,7 @@ class MicroData {
 	}
 
 	/**
-	 * @return array
+	 * @return array[]
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -84,7 +91,7 @@ class MicroData {
 	/**
 	 * @param string $name
 	 *
-	 * @return self[]
+	 * @return self[]|string[]
 	 */
 	public function getProperty( $name ) {
 		if( $this->hasProperty( $name ) ) {
@@ -95,23 +102,50 @@ class MicroData {
 
 	/**
 	 * @param string $name
+	 * @param int|null $propType self::PROP_* constant
 	 *
-	 * @return self|null
+	 * @return self|string|null
 	 */
-	public function getFirstProperty( $name ) {
-		if( $this->hasProperty( $name ) ) {
-			return $this->properties[$name][0];
+	public function getFirstProperty( $name, $propType = null ) {
+		if( array_key_exists( $name, $this->properties ) ) {
+			foreach( $this->properties[$name] as $property ) {
+				if( $this->propertyIsOfPropType( $property, $propType ) ) {
+					return $property;
+				}
+			}
 		}
 		return null;
 	}
 
 	/**
 	 * @param string $name
+	 * @param int|null $propType self::PROP_* constant
 	 *
 	 * @return bool
 	 */
-	public function hasProperty( $name ) {
-		return array_key_exists( $name, $this->properties );
+	public function hasProperty( $name, $propType = null ) {
+		return
+			array_key_exists( $name, $this->properties ) &&
+			$this->getFirstProperty( $name, $propType ) !== null;
+	}
+
+	/**
+	 * @param string|MicroData $property
+	 * @param int| null $type self::PROP_* constant
+	 *
+	 * @return bool
+	 */
+	private function propertyIsOfPropType( $property, $type = null ) {
+		if( $type === null ) {
+			return true;
+		}
+		if( $type === self::PROP_STRING && is_string( $property ) ) {
+			return true;
+		}
+		if( $type === self::PROP_DATA && $property instanceof self ) {
+			return true;
+		}
+		return false;
 	}
 
 }
