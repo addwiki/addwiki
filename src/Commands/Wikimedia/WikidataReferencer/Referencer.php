@@ -20,10 +20,9 @@ interface Referencer {
 	 * @param MicroData $microData
 	 * @param Item $item
 	 * @param string $sourceUrl
-	 * @param string|null $sourceWiki
 	 *
 	 * @return int the number of references added
 	 */
-	public function addReferences( MicroData $microData, $item, $sourceUrl, $sourceWiki = null );
+	public function addReferences( MicroData $microData, $item, $sourceUrl );
 
 }

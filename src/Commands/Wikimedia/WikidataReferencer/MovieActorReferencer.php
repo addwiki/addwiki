@@ -37,7 +37,7 @@ class MovieActorReferencer implements Referencer {
 			$microData->getFirstProperty( 'actor', MicroData::PROP_DATA )->hasProperty( 'name', MicroData::PROP_STRING );
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl, $sourceWiki = null ) {
+	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
 		$referenceCounter = 0;
 
 		$actorNames = array();
@@ -73,14 +73,11 @@ class MovieActorReferencer implements Referencer {
 
 				// Add the new reference!
 				$newReference = DataModelUtils::getReferenceForUrl( $sourceUrl );
-				$editInfo = new EditInfo( "From $sourceWiki with love" );
 
 				try {
 					$this->wikibaseFactory->newReferenceSetter()->set(
 						$newReference,
-						$actorStatement,
-						null,
-						$editInfo
+						$actorStatement
 					);
 					//NOTE: keep our in memory item copy up to date (yay such reference passing)
 					$actorStatement->addNewReference( $newReference->getSnaks() );

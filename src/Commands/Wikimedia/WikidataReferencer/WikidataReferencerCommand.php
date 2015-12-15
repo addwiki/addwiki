@@ -214,8 +214,7 @@ class WikidataReferencerCommand extends Command {
 						$output,
 						$sourceMwFactory,
 						$pageIdentifier,
-						$item,
-						$siteId
+						$item
 					);
 
 				}
@@ -229,14 +228,13 @@ class WikidataReferencerCommand extends Command {
 		OutputInterface $output,
 		MediawikiFactory $sourceMwFactory,
 		PageIdentifier $sourcePageIdentifier,
-		Item $item,
-		$sourceWikiCode
+		Item $item
 	){
 		$guzzleClient = new Client();
 
 		$sourceParser = $sourceMwFactory->newParser();
 		//TODO fix assumption of the title being here...?
-		$output->write( "Parsing " . $sourcePageIdentifier->getTitle()->getText() . " from $sourceWikiCode, " );
+		$output->write( "Parsing " . $sourcePageIdentifier->getTitle()->getText() . ", " );
 		$parseResult = $sourceParser->parsePage( $sourcePageIdentifier );
 
 		$externalLinks = array();
@@ -282,7 +280,7 @@ class WikidataReferencerCommand extends Command {
 			foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
 				foreach( $this->referencers as $referencer ) {
 					if( $referencer->canAddReferences( $microData ) ) {
-						$addedReferences = $referencer->addReferences( $microData, $item, $link, $sourceWikiCode );
+						$addedReferences = $referencer->addReferences( $microData, $item, $link );
 						$referenceCounter = $referenceCounter + $addedReferences;
 					}
 				}
