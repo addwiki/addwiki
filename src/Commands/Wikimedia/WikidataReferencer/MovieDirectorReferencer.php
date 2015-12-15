@@ -5,6 +5,7 @@ namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 use DataValues\StringValue;
 use DataValues\TimeValue;
 use Exception;
+use Mediawiki\Api\UsageException;
 use Mediawiki\DataModel\EditInfo;
 use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
@@ -73,7 +74,7 @@ class MovieDirectorReferencer implements Referencer {
 		$referenceCounter = 0;
 
 		$directorStatements = $item->getStatements()->getByPropertyId( $this->directorPropertyId );
-		foreach ( $directorStatements->getIterator() as $directorStatement ) {
+		foreach ( $directorStatements->getIterator() as &$directorStatement ) {
 
 			$mainSnak = $directorStatement->getMainSnak();
 			if ( !$mainSnak instanceof PropertyValueSnak ) {
@@ -91,8 +92,6 @@ class MovieDirectorReferencer implements Referencer {
 					'strtolower',
 					$this->getTermsAsStrings( $directorItem->getFingerprint() )
 				);
-			var_dump($englishTerms);
-			var_dump(strtolower( $directorName ));
 			if ( !in_array( strtolower( $directorName ), $englishTerms ) ) {
 				continue; // Ignore things that dont appear to have the correct value
 			}
@@ -130,16 +129,19 @@ class MovieDirectorReferencer implements Referencer {
 
 			$editInfo = new EditInfo( "From $sourceWiki with love" );
 
-			$this->wikibaseFactory->newReferenceSetter()->set(
-				$newRef,
-				$directorStatement,
-				null,
-				$editInfo
-			);
-
-			//NOTE: keep our in memory item copy up to date (yay such reference passing)
-			$directorStatement->addNewReference( $newRef->getSnaks() );
-			$referenceCounter++;
+			try {
+				$this->wikibaseFactory->newReferenceSetter()->set(
+					$newRef,
+					$directorStatement,
+					null,
+					$editInfo
+				);
+				//NOTE: keep our in memory item copy up to date (yay such reference passing)
+				$directorStatement->addNewReference( $newRef->getSnaks() );
+				$referenceCounter++;
+			} catch( UsageException $e ) {
+				//Ignore
+			}
 		}
 
 		return $referenceCounter;
