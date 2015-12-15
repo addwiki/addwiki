@@ -110,7 +110,7 @@ class MovieDirectorReferencer implements Referencer {
 						$currentReferenceValue = $currentReferenceSnak->getDataValue();
 						$currentReferenceUrl = $currentReferenceValue->getValue();
 						if ( $this->urlsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
-							continue; // Ignore statements that already look like they have this reference URL
+							continue 3; // Ignore statements that already look like they have this reference URL
 						}
 					}
 				}
