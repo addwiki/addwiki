@@ -10,6 +10,9 @@ use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
+/**
+ * @author Addshore
+ */
 class MovieDirectorReferencer implements Referencer {
 
 	/**

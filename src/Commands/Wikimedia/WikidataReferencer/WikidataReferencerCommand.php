@@ -23,6 +23,9 @@ use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 
+/**
+ * @author Addshore
+ */
 class WikidataReferencerCommand extends Command {
 
 	private $appConfig;
@@ -58,7 +61,7 @@ class WikidataReferencerCommand extends Command {
 	private $microDataExtractor;
 
 	/**
-	 * @var array[]
+	 * @var Referencer[]
 	 */
 	private $referencers;
 
@@ -80,10 +83,19 @@ class WikidataReferencerCommand extends Command {
 					InputOption::VALUE_OPTIONAL ),
 				'The configured user to use',
 				$defaultUser
+			)
+			->addOption(
+				'type',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'The schema type to target'
 			);
 	}
 
-	private function initExecutionServices() {
+	/**
+	 * @param string $microdataType eg. "Movie"
+	 */
+	private function initExecutionServices( $microdataType ) {
 		$this->sparqlQueryLibrary = new SparqlQueryLibrary();
 		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
 		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
@@ -106,18 +118,23 @@ class WikidataReferencerCommand extends Command {
 			new DataValueSerializer()
 		);
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
-		$this->referencers = array(
+		$allReferencers = array(
 			'Movie' => array(
 				new MovieDirectorReferencer( $this->wikibaseFactory ),
 			),
 		);
-		$this->microDataExtractor = new MicrodataExtractor();
+		$this->referencers = $allReferencers[$microdataType];
+		$this->microDataExtractor = new MicrodataExtractor( $microdataType );
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something goes wrong!)" );
 
 		// Get options
+		$type = $input->getOption( 'type' );
+		if( $type === null ) {
+			throw new RuntimeException( 'You must pass a type' );
+		}
 		$user = $input->getOption( 'user' );
 		$userDetails = $this->appConfig->get( 'users.' . $user );
 		if ( $userDetails === null ) {
@@ -125,12 +142,12 @@ class WikidataReferencerCommand extends Command {
 		}
 
 		// Init the command execution services
-		$this->initExecutionServices();
+		$this->initExecutionServices( $type );
 
 		// Run the query
 		$output->writeln( "Running initial query" );
 		$itemIds = $this->sparqlQueryRunner->getItemIdsFromQuery(
-			$this->sparqlQueryLibrary->getQueryForSchemaType( "Movie" )
+			$this->sparqlQueryLibrary->getQueryForSchemaType( $type )
 		);
 		$output->writeln( "Got " . count( $itemIds ) . " items to investigate" );
 
@@ -261,9 +278,8 @@ class WikidataReferencerCommand extends Command {
 		// Get structured data from the responses
 		$referenceCounter = 0;
 		foreach( $linkToHtmlMap as $link => $html ) {
-			foreach( $this->microDataExtractor->extract( $html, 'Movie' ) as $microData ) {
-				/** @var Referencer $referencer */
-				foreach( $this->referencers['Movie'] as $referencer ) {
+			foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
+				foreach( $this->referencers as $referencer ) {
 					if( $referencer->canAddReferences( $microData ) ) {
 						$addedReferences = $referencer->addReferences( $microData, $item, $link, $sourceWikiCode );
 						$referenceCounter = $referenceCounter + $addedReferences;

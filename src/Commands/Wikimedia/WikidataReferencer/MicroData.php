@@ -77,7 +77,6 @@ class MicroData {
 	 * @return bool
 	 */
 	public function hasType( $type ) {
-		//TODO do we need to check https here too?
 		return in_array( $type, $this->types ) || in_array( "http://schema.org/" . $type, $this->types );
 	}
 

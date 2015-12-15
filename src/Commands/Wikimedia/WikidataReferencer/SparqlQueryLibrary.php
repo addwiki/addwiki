@@ -33,11 +33,11 @@ class SparqlQueryLibrary {
 	 */
 	public function getQueryForSchemaType( $type ) {
 		if( $type === 'Movie' ) {
+			// Find films that have unreferenced directors
 			return $this->queryBuilder
 				->select( '?item' )
 				->where( '?item', 'wdt:P31', 'wd:Q11424' )
 				->also( '?item', 'wdt:P57', '?director' )
-				//NOTE: does this filter even exist?
 				->filterNotExists( '?director', 'prov:wasDerivedFrom', '?somewhere' )
 				->__toString();
 		}
