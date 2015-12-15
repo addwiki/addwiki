@@ -2,19 +2,13 @@
 
 namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use Exception;
 use Mediawiki\Api\UsageException;
 use Mediawiki\DataModel\EditInfo;
 use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
-use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
-use Wikibase\DataModel\Term\Fingerprint;
 
 class MovieDirectorReferencer implements Referencer {
 
@@ -42,154 +36,59 @@ class MovieDirectorReferencer implements Referencer {
 
 	public function addReferences( MicroData $microData, $item, $sourceUrl, $sourceWiki = null ) {
 		$referenceCounter = 0;
+
+		$directorNames = array();
 		foreach( $microData->getProperty( 'director', MicroData::PROP_DATA ) as $directorMicroData ) {
 			foreach( $directorMicroData->getProperty( 'name', MicroData::PROP_STRING ) as $directorName ) {
-				$addedRefs = $this->addReferencesForDirector(
-					trim( $directorName ),
-					$item,
-					$sourceUrl,
-					$sourceWiki
-				);
-				$referenceCounter = $referenceCounter + $addedRefs;
+				$directorNames[] = $directorName;
 			}
 		}
-
-		return $referenceCounter;
-	}
-
-	/**
-	 * @param string $directorName
-	 * @param Item $item
-	 * @param string $sourceUrl
-	 * @param string|null $sourceWiki
-	 *
-	 * @return int number of references added
-	 */
-	private function addReferencesForDirector(
-		$directorName,
-		$item,
-		$sourceUrl,
-		$sourceWiki = null
-	) {
-		$referenceCounter = 0;
 
 		$directorStatements = $item->getStatements()->getByPropertyId( $this->directorPropertyId );
-		foreach ( $directorStatements->getIterator() as &$directorStatement ) {
 
-			$mainSnak = $directorStatement->getMainSnak();
-			if ( !$mainSnak instanceof PropertyValueSnak ) {
-				continue; // Ignore some and no value statements
-			}
+		foreach( $directorNames as $name ) {
+			foreach ( $directorStatements->getIterator() as &$directorStatement ) {
 
-			/** @var EntityIdValue $directorEntityIdValue */
-			$directorEntityIdValue = $mainSnak->getDataValue();
-			/** @var ItemId $directorItemId */
-			$directorItemId = $directorEntityIdValue->getEntityId();
-			$directorItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $directorItemId );
-
-			$englishTerms =
-				array_map(
-					'strtolower',
-					$this->getTermsAsStrings( $directorItem->getFingerprint() )
-				);
-			if ( !in_array( strtolower( $directorName ), $englishTerms ) ) {
-				continue; // Ignore things that dont appear to have the correct value
-			}
-
-			/** @var Reference[] $currentReferences */
-			$currentReferences = $directorStatement->getReferences();
-			foreach ( $currentReferences as $currentReference ) {
-				foreach ( $currentReference->getSnaks() as $currentReferenceSnak ) {
-					if ( !$currentReferenceSnak instanceof PropertyValueSnak ) {
-						continue; // Ignore some and no value snaks
-					}
-
-					//Note: P854 is reference URL
-					if ( $currentReferenceSnak->getPropertyId()->getSerialization() == 'P854' ) {
-						/** @var StringValue $currentReferenceValue */
-						$currentReferenceValue = $currentReferenceSnak->getDataValue();
-						$currentReferenceUrl = $currentReferenceValue->getValue();
-						if ( $this->urlsDomainsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
-							continue 3; // Ignore statements that already look like they have this reference URL
-						}
-					}
+				$mainSnak = $directorStatement->getMainSnak();
+				if ( !$mainSnak instanceof PropertyValueSnak ) {
+					continue; // Ignore some and no value statements
 				}
-			}
 
-			// Add the new reference!
-			$newRef = new Reference(
-				array(
-					// Refernce URL
-					new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $sourceUrl ) ),
-					// Date retrieved
-					new PropertyValueSnak( new PropertyId( 'P813' ), $this->getWikidataNowTimeValue() )
-					// TODO date published?
-				)
-			);
+				/** @var EntityIdValue $directorEntityIdValue */
+				$directorEntityIdValue = $mainSnak->getDataValue();
+				/** @var ItemId $directorItemId */
+				$directorItemId = $directorEntityIdValue->getEntityId();
+				$directorItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $directorItemId );
 
-			$editInfo = new EditInfo( "From $sourceWiki with love" );
+				if ( !in_array( strtolower( $name ), DataModelUtils::getMainTermsAsLowerCaseStrings( $directorItem->getFingerprint() ) ) ) {
+					continue; // Ignore things that don't appear to have the correct value
+				}
 
-			try {
-				$this->wikibaseFactory->newReferenceSetter()->set(
-					$newRef,
-					$directorStatement,
-					null,
-					$editInfo
-				);
-				//NOTE: keep our in memory item copy up to date (yay such reference passing)
-				$directorStatement->addNewReference( $newRef->getSnaks() );
-				$referenceCounter++;
-			} catch( UsageException $e ) {
-				//Ignore
+				if( DataModelUtils::statementHasReferenceForUrlWithSameDomain( $directorStatement, $sourceUrl ) ) {
+					continue; // Ignore statements that already have this URL domain as a ref
+				}
+
+				// Add the new reference!
+				$newReference = DataModelUtils::getReferenceForUrl( $sourceUrl );
+				$editInfo = new EditInfo( "From $sourceWiki with love" );
+
+				try {
+					$this->wikibaseFactory->newReferenceSetter()->set(
+						$newReference,
+						$directorStatement,
+						null,
+						$editInfo
+					);
+					//NOTE: keep our in memory item copy up to date (yay such reference passing)
+					$directorStatement->addNewReference( $newReference->getSnaks() );
+					$referenceCounter++;
+				} catch( UsageException $e ) {
+					//Ignore
+				}
 			}
 		}
 
 		return $referenceCounter;
-	}
-
-	/**
-	 * @param Fingerprint $fingerprint
-	 *
-	 * @return string[]
-	 */
-	private function getTermsAsStrings( Fingerprint $fingerprint ) {
-		$strings = array();
-		$englishLangs = array( 'en', 'en-gb' );
-		foreach( $englishLangs as $lang ) {
-			try{
-				$strings[] = $fingerprint->getLabel( $lang )->getText();
-			} catch ( Exception $e ) {
-				// Ignore!
-			}
-			try{
-				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );
-			} catch ( Exception $e ) {
-				// Ignore!
-			}
-		}
-		return $strings;
-
-	}
-
-	private function getWikidataNowTimeValue() {
-		return new TimeValue(
-			"+" . date( 'Y-m-d' ) . "T00:00:00Z",
-			0,//TODO dont assume UTC
-			0,
-			0,
-			TimeValue::PRECISION_DAY,
-			TimeValue::CALENDAR_JULIAN
-		);
-	}
-
-	/**
-	 * @param string $a a URL
-	 * @param string $b a URL
-	 *
-	 * @return bool
-	 */
-	private function urlsDomainsAreSame( $a, $b ) {
-		return parse_url( $a, PHP_URL_HOST ) == parse_url( $b, PHP_URL_HOST );
 	}
 
 }
