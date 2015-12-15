@@ -109,7 +109,7 @@ class MovieDirectorReferencer implements Referencer {
 						/** @var StringValue $currentReferenceValue */
 						$currentReferenceValue = $currentReferenceSnak->getDataValue();
 						$currentReferenceUrl = $currentReferenceValue->getValue();
-						if ( $this->urlsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
+						if ( $this->urlsDomainsAreSame( $currentReferenceUrl, $sourceUrl ) ) {
 							continue 3; // Ignore statements that already look like they have this reference URL
 						}
 					}
@@ -183,20 +183,13 @@ class MovieDirectorReferencer implements Referencer {
 	}
 
 	/**
-	 * @todo improve this comparison...
-	 *
-	 * @param string $a
-	 * @param string $b
+	 * @param string $a a URL
+	 * @param string $b a URL
 	 *
 	 * @return bool
 	 */
-	private function urlsAreSame( $a, $b ) {
-		$regex = '#^https?://#';
-		$a = preg_replace($regex, '', $a);
-		$b = preg_replace($regex, '', $b);
-		$a = trim( $a, "/" );
-		$b = trim( $b, "/" );
-		return $a == $b;
+	private function urlsDomainsAreSame( $a, $b ) {
+		return parse_url( $a, PHP_URL_HOST ) == parse_url( $b, PHP_URL_HOST );
 	}
 
 }
