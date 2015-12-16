@@ -6,7 +6,7 @@ use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\FutureResponse;
+use GuzzleHttp\Promise\PromiseInterface;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
@@ -254,26 +254,24 @@ class WikidataReferencerCommand extends Command {
 		}
 
 		// Make a bunch of requests
-		/** @var FutureResponse[] $futureResponses */
-		$futureResponses = array();
-		$output->write( "Requesting & getting data" );
+		/** @var PromiseInterface[] $promises */
+		$promises = array();
+		$output->write( "Requesting data, " );
 		foreach( $externalLinks as $link ) {
 			//TODO ignore PDFs
 			//TODO make a blacklist of URLS that provide no microformat data?
-			$futureResponses[$link] = $guzzleClient->get( $link, array( 'future' => true ) );
+			$promises[$link] = $guzzleClient->getAsync( $link );
 		}
-		// Get the request responses
+
 		$linkToHtmlMap = array();
-		foreach ( $futureResponses as $link => $futureResponse ) {
-			try {
-				$output->write( '.' );
-				$linkToHtmlMap[$link] = $futureResponse->getBody();
+		foreach( $promises as $link => $promise ) {
+			try{
+				$linkToHtmlMap[$link] = $promise->wait();
 			}
 			catch ( Exception $e ) {
-				continue;
+				// Ignore failed requests
 			}
 		}
-		$output->write( ', ' );
 
 		// Get structured data from the responses
 		$referenceCounter = 0;

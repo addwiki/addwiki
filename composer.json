@@ -12,8 +12,8 @@
 	"require": {
 		"symfony/console": "~3.0",
 		"symfony/yaml": "~3.0",
-		"addwiki/wikibase-api": "dev-master as 0.6.1",
-		"addwiki/mediawiki-api": "dev-master as 0.6.0",
+		"addwiki/wikibase-api": "~0.7.0-dev",
+		"addwiki/mediawiki-api": "~0.6.0-dev",
 		"addwiki/mediawiki-datamodel": "~0.6.0",
 		"data-values/data-values": "~1.0",
 		"data-values/common": "~0.3.0",
@@ -22,9 +22,11 @@
 		"data-values/number": "~0.6.0",
 		"data-values/time": "~0.8.2",
 		"linclark/microdata-php": "~2.0",
-		"guzzlehttp/guzzle": "~5.3",
+		"guzzlehttp/guzzle": "~6.0",
 		"benestar/asparagus": "~0.4"
 	},
+	"minimum-stability":"dev",
+	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"Mediawiki\\Bot\\": "src/"
