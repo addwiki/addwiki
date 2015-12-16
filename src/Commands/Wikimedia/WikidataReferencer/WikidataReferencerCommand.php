@@ -6,13 +6,16 @@ use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Request;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
+use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -177,7 +180,7 @@ class WikidataReferencerCommand extends Command {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		foreach ( $itemIds as $itemId ) {
-			$output->write( $itemId->getSerialization() . ", " );
+			$output->write( $itemId->getSerialization() . ' ' );
 			if( in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
 				$output->writeln( "Already processed!" );
 				continue;
@@ -187,106 +190,84 @@ class WikidataReferencerCommand extends Command {
 				$item = $itemLookup->getItemForId( $itemId );
 			}
 			catch ( ItemLookupException $e ) {
+				$output->writeln( "Failed to get item!" );
 				continue;
 			}
 
-			$output->writeln( "" );
-
-			$allowedWikiCodes =
-				array(
-					'enwiki',
-					'dewiki',
-					'svwiki',
-					'nlwiki',
-					'frwiki',
-					'ruwiki',
-					'itwiki',
-					'eswiki',
-					'plwiki',
-					'ptwiki',
-				);
-			foreach ( $allowedWikiCodes as $siteId ) {
-				if ( $item->getSiteLinkList()->hasLinkWithSiteId( $siteId ) ) {
+			$output->write( "Parsing pages" );
+			/** @var PromiseInterface[] $parsePromises */
+			$parsePromises = array();
+			foreach ( $item->getSiteLinkList()->getIterator() as $siteLink ) {
+				$siteId = $siteLink->getSiteId();
+				//Note: only load Wikipedias
+				if( substr($siteId, -4) == 'wiki' ) {
 					$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
 					$sourceMwFactory = $this->wmFactoryFactory->getFactory( $siteId );
-
+					$sourceParser = $sourceMwFactory->newParser();
 					$pageIdentifier = new PageIdentifier( new Title( $pageName ) );
-					$this->executeForPageIdentifier(
-						$output,
-						$sourceMwFactory,
-						$pageIdentifier,
-						$item
-					);
-
-				}
-
-			}
-			$this->markIdAsProcessed( $itemId );
-		}
-	}
-
-	private function executeForPageIdentifier(
-		OutputInterface $output,
-		MediawikiFactory $sourceMwFactory,
-		PageIdentifier $sourcePageIdentifier,
-		Item $item
-	){
-		$guzzleClient = new Client();
-
-		$sourceParser = $sourceMwFactory->newParser();
-		//TODO fix assumption of the title being here...?
-		$output->write( "Parsing " . $sourcePageIdentifier->getTitle()->getText() . ", " );
-		$parseResult = $sourceParser->parsePage( $sourcePageIdentifier );
-
-		$externalLinks = array();
-		if ( array_key_exists( 'externallinks', $parseResult ) ) {
-			foreach( $parseResult['externallinks'] as $externalLink ) {
-				//TODO FIXME temporarily ignore imdb spam?
-				if( strstr( $externalLink, 'imdb.' ) === false ) {
-					$externalLinks[] = $this->normalizeWikipediaExternalLink( $externalLink );
+					$parsePromises[$siteId] = $sourceParser->parsePageAsync( $pageIdentifier );
 				}
 			}
-		}
-
-		if ( empty( $externalLinks ) ) {
-			$output->writeln( "No external links!" );
-			return;
-		}
-
-		// Make a bunch of requests
-		/** @var PromiseInterface[] $promises */
-		$promises = array();
-		$output->write( "Requesting data, " );
-		foreach( $externalLinks as $link ) {
-			//TODO ignore PDFs
-			//TODO make a blacklist of URLS that provide no microformat data?
-			$promises[$link] = $guzzleClient->getAsync( $link );
-		}
-
-		$linkToHtmlMap = array();
-		foreach( $promises as $link => $promise ) {
-			try{
-				$linkToHtmlMap[$link] = $promise->wait();
+			/** @var Request[] $linkRequests */
+			$linkRequests = array();
+			foreach( $parsePromises as $siteId => $promise ) {
+				try{
+					$parseResult = $promise->wait();
+					if ( array_key_exists( 'externallinks', $parseResult ) ) {
+						foreach( $parseResult['externallinks'] as $externalLink ) {
+							//TODO FIXME temporarily ignore imdb spam?
+							if( strstr( $externalLink, 'imdb.' ) === false ) {
+								$linkRequests[] = new Request( 'GET',  $this->normalizeWikipediaExternalLink( $externalLink ) );
+							}
+						}
+					}
+					$output->write( '.' );
+				}
+				catch ( Exception $e ) {
+					// Ignore failed requests
+					$output->write( 'e' );
+				}
 			}
-			catch ( Exception $e ) {
-				// Ignore failed requests
-			}
-		}
+			$output->write( ' ' );
 
-		// Get structured data from the responses
-		$referenceCounter = 0;
-		foreach( $linkToHtmlMap as $link => $html ) {
-			foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
-				foreach( $this->referencers as $referencer ) {
-					if( $referencer->canAddReferences( $microData ) ) {
-						$addedReferences = $referencer->addReferences( $microData, $item, $link );
-						$referenceCounter = $referenceCounter + $addedReferences;
+			if ( empty( $linkRequests ) ) {
+				$output->writeln( "No external links!" );
+				continue;
+			}
+
+			// Make a bunch of requests
+			$output->write( "Loading " . count( $linkRequests ) . " links" );
+			// TODO we want to somehow output the progress of this pool batch...
+			$linkResponses = Pool::batch( new Client(), $linkRequests );
+
+			$linkToHtmlMap = array();
+			foreach( $linkResponses as $responseKey => $response ) {
+				$link = $linkRequests[$responseKey]->getUri()->__toString();
+				if( $response instanceof ResponseInterface ) {
+					$linkToHtmlMap[$link] = $response->getBody();
+					$output->write( '.' );
+				} else {
+					$output->write( 'e' );
+				}
+			}
+			$output->write( ' ' );
+
+			// Get structured data from the responses
+			$output->write( "Adding refs" );
+			foreach( $linkToHtmlMap as $link => $html ) {
+				foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
+					foreach( $this->referencers as $referencer ) {
+						if( $referencer->canAddReferences( $microData ) ) {
+							$addedReferences = $referencer->addReferences( $microData, $item, $link );
+							$output->write( str_repeat( '.', $addedReferences ) );
+						}
 					}
 				}
 			}
-		}
 
-		$output->writeln( "$referenceCounter references added to " . $item->getId()->getSerialization() );
+			$output->writeln('');
+			$this->markIdAsProcessed( $itemId );
+		}
 	}
 
 	/**
