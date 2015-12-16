@@ -123,13 +123,27 @@ class WikidataReferencerCommand extends Command {
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
 		$allReferencers = array(
 			'Movie' => array(
-				new MovieDirectorReferencer( $this->wikibaseFactory ),
-				new MovieActorReferencer( $this->wikibaseFactory ),
-				new MovieProducerReferencer( $this->wikibaseFactory ),
+				new MoviePersonReferencer( $this->wikibaseFactory ),
 			),
 		);
 		$this->referencers = $allReferencers[$microdataType];
 		$this->microDataExtractor = new MicrodataExtractor( $microdataType );
+	}
+
+	/**
+	 * @param string $link
+	 *
+	 * @return string
+	 */
+	private function normalizeWikipediaExternalLink( $link ) {
+		if ( strpos( $link, '//' ) === 0 ) {
+			$link = 'http' . $link;
+		}
+		if( strpos( $link, '#' ) !== false ) {
+			$link = strstr( $link, '#', true );
+		}
+		$link = trim( $link, '/' );
+		return $link;
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
@@ -257,7 +271,7 @@ class WikidataReferencerCommand extends Command {
 			foreach( $linkToHtmlMap as $link => $html ) {
 				foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
 					foreach( $this->referencers as $referencer ) {
-						if( $referencer->canAddReferences( $microData ) ) {
+						if( $referencer->canLookForReferences( $microData ) ) {
 							$addedReferences = $referencer->addReferences( $microData, $item, $link );
 							$output->write( str_repeat( '.', $addedReferences ) );
 						}
@@ -268,22 +282,6 @@ class WikidataReferencerCommand extends Command {
 			$output->writeln('');
 			$this->markIdAsProcessed( $itemId );
 		}
-	}
-
-	/**
-	 * @param string $link
-	 *
-	 * @return string
-	 */
-	private function normalizeWikipediaExternalLink( $link ) {
-		if ( strpos( $link, '//' ) === 0 ) {
-			$link = 'http' . $link;
-		}
-		if( strpos( $link, '#' ) !== false ) {
-			$link = strstr( $link, '#', true );
-		}
-		$link = trim( $link, '/' );
-		return $link;
 	}
 
 	/**
