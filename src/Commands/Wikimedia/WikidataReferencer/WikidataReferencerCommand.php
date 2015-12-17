@@ -11,7 +11,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Bot\Config\AppConfig;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
@@ -194,7 +193,9 @@ class WikidataReferencerCommand extends Command {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		foreach ( $itemIds as $itemId ) {
+
 			$output->write( $itemId->getSerialization() . ' ' );
+
 			if( in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
 				$output->writeln( "Already processed!" );
 				continue;
@@ -208,41 +209,16 @@ class WikidataReferencerCommand extends Command {
 				continue;
 			}
 
-			$output->write( "Parsing pages" );
-			/** @var PromiseInterface[] $parsePromises */
-			$parsePromises = array();
-			foreach ( $item->getSiteLinkList()->getIterator() as $siteLink ) {
-				$siteId = $siteLink->getSiteId();
-				//Note: only load Wikipedias
-				if( substr($siteId, -4) == 'wiki' ) {
-					$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
-					$sourceMwFactory = $this->wmFactoryFactory->getFactory( $siteId );
-					$sourceParser = $sourceMwFactory->newParser();
-					$pageIdentifier = new PageIdentifier( new Title( $pageName ) );
-					$parsePromises[$siteId] = $sourceParser->parsePageAsync( $pageIdentifier );
-				}
-			}
+			$links = $this->getExternalLinksFromItemWikipediaSitelinks( $item );
+
 			/** @var Request[] $linkRequests */
 			$linkRequests = array();
-			foreach( $parsePromises as $siteId => $promise ) {
-				try{
-					$parseResult = $promise->wait();
-					if ( array_key_exists( 'externallinks', $parseResult ) ) {
-						foreach( $parseResult['externallinks'] as $externalLink ) {
-							//TODO FIXME temporarily ignore imdb spam?
-							if( strstr( $externalLink, 'imdb.' ) === false ) {
-								$linkRequests[] = new Request( 'GET',  $this->normalizeWikipediaExternalLink( $externalLink ) );
-							}
-						}
-					}
-					$output->write( '.' );
-				}
-				catch ( Exception $e ) {
-					// Ignore failed requests
-					$output->write( 'e' );
+			foreach( $links as $link ) {
+				//TODO FIXME temporarily ignore imdb spam?
+				if( strstr( $link, 'imdb.' ) === false ) {
+					$linkRequests[] = new Request( 'GET', $link );
 				}
 			}
-			$output->write( ' ' );
 
 			if ( empty( $linkRequests ) ) {
 				$output->writeln( "No external links!" );
@@ -282,6 +258,49 @@ class WikidataReferencerCommand extends Command {
 			$output->writeln('');
 			$this->markIdAsProcessed( $itemId );
 		}
+	}
+
+	/**
+	 * Parses wikipedia sitelinks for external links
+	 * TODO also get links currently used as references!
+	 *
+	 * @param Item $item
+	 *
+	 * @return string[]
+	 */
+	private function getExternalLinksFromItemWikipediaSitelinks( Item $item ) {
+		/** @var PromiseInterface[] $parsePromises */
+		$parsePromises = array();
+		foreach ( $item->getSiteLinkList()->getIterator() as $siteLink ) {
+			$siteId = $siteLink->getSiteId();
+			//Note: only load Wikipedias
+			if ( substr( $siteId, -4 ) == 'wiki' ) {
+				$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
+				$sourceMwFactory = $this->wmFactoryFactory->getFactory( $siteId );
+				$sourceParser = $sourceMwFactory->newParser();
+				$pageIdentifier = new PageIdentifier( new Title( $pageName ) );
+				$parsePromises[$siteId] = $sourceParser->parsePageAsync( $pageIdentifier );
+			}
+		}
+		$links = array();
+		foreach ( $parsePromises as $siteId => $promise ) {
+			try {
+				$parseResult = $promise->wait();
+				if ( array_key_exists( 'externallinks', $parseResult ) ) {
+					foreach ( $parseResult['externallinks'] as $externalLink ) {
+						//TODO FIXME temporarily ignore imdb spam?
+						if ( strstr( $externalLink, 'imdb.' ) === false ) {
+							$links[] = $this->normalizeWikipediaExternalLink( $externalLink );
+						}
+					}
+				}
+			}
+			catch ( Exception $e ) {
+				// Ignore failed requests
+			}
+		}
+
+		return $links;
 	}
 
 	/**
