@@ -6,6 +6,7 @@ use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
@@ -76,6 +77,10 @@ class WikidataReferencerCommand extends Command {
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
 		$this->microDataExtractor = new MicrodataExtractor();
 		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
+
+		$stack = HandlerStack::create();
+		$stack->push( EffectiveUrlMiddleware::middleware() );
+		$this->externalLinkClient = new Client( array( 'handler' => $stack ) );
 
 		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
 		$this->wikibaseFactory = new WikibaseFactory(
@@ -250,7 +255,11 @@ class WikidataReferencerCommand extends Command {
 			foreach( $links as $link ) {
 				//TODO FIXME temporarily ignore imdb spam?
 				if( strstr( $link, 'imdb.' ) === false ) {
-					$linkRequests[] = new Request( 'GET', $link );
+					$linkRequests[] = new Request(
+						'GET',
+						$link,
+						array( 'allow_redirects' => array( 'track_redirects' => true ) )
+					);
 				}
 			}
 
@@ -262,13 +271,13 @@ class WikidataReferencerCommand extends Command {
 			// Make a bunch of requests
 			$output->write( "Loading " . count( $linkRequests ) . " links" );
 			// TODO we want to somehow output the progress of this pool batch...
-			$linkResponses = Pool::batch( new Client(), $linkRequests );
+			$linkResponses = Pool::batch( $this->externalLinkClient, $linkRequests );
 
 			$linkToHtmlMap = array();
-			foreach( $linkResponses as $responseKey => $response ) {
-				$link = $linkRequests[$responseKey]->getUri()->__toString();
+			foreach( $linkResponses as $response ) {
 				if( $response instanceof ResponseInterface ) {
-					$linkToHtmlMap[$link] = $response->getBody();
+					$effectiveUrl = $response->getHeaderLine( 'X-GUZZLE-EFFECTIVE-URL' );
+					$linkToHtmlMap[$effectiveUrl] = $response->getBody();
 					$output->write( '.' );
 				} else {
 					$output->write( 'e' );
