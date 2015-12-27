@@ -11,13 +11,6 @@ interface Referencer {
 
 	/**
 	 * @param MicroData $microData
-	 *
-	 * @return bool
-	 */
-	public function canLookForReferences( MicroData $microData );
-
-	/**
-	 * @param MicroData $microData
 	 * @param Item $item
 	 * @param string $sourceUrl
 	 *

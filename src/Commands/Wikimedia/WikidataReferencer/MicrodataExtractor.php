@@ -10,15 +10,6 @@ use linclark\MicrodataPHP\MicrodataPhp;
 class MicrodataExtractor {
 
 	/**
-	 * @var string Type of microdata to extract eg. "Movie"
-	 */
-	private $type;
-
-	public function __construct( $type ) {
-		$this->type = $type;
-	}
-
-	/**
 	 * @param string $html raw HTML
 	 *
 	 * @return MicroData[] array of microdata things
@@ -29,10 +20,7 @@ class MicrodataExtractor {
 
 		$data = $md->obj();
 		foreach ( $data->items as $microData ) {
-			$microData = new MicroData( $microData );
-			if ( $microData->hasType( $this->type ) ) {
-				$microDatas[] = $microData;
-			}
+			$microDatas[] = new MicroData( $microData );
 		}
 		return $microDatas;
 	}

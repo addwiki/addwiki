@@ -21,9 +21,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
+use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
+use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
+use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**
  * @author Addshore
@@ -63,9 +66,16 @@ class WikidataReferencerCommand extends Command {
 	private $microDataExtractor;
 
 	/**
-	 * @var Referencer[]
+	 * @var array 'type' => Referencer[]
 	 */
-	private $referencers;
+	private $referencerMap;
+
+	/**
+	 * @var string[]
+	 */
+	private $instanceMap = array(
+		'Q11424' => 'Movie',
+	);
 
 	public function __construct( AppConfig $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -87,17 +97,14 @@ class WikidataReferencerCommand extends Command {
 				$defaultUser
 			)
 			->addOption(
-				'type',
+				'instance',
 				null,
 				InputOption::VALUE_REQUIRED,
-				'The schema type to target'
+				'Instance of item to target'
 			);
 	}
 
-	/**
-	 * @param string $microdataType eg. "Movie"
-	 */
-	private function initExecutionServices( $microdataType ) {
+	private function initExecutionServices() {
 		$this->sparqlQueryLibrary = new SparqlQueryLibrary();
 		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
 		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
@@ -120,13 +127,10 @@ class WikidataReferencerCommand extends Command {
 			new DataValueSerializer()
 		);
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
-		$allReferencers = array(
-			'Movie' => array(
-				new MoviePersonReferencer( $this->wikibaseFactory ),
-			),
+		$this->referencerMap = array(
+			'Movie' => array( new MoviePersonReferencer( $this->wikibaseFactory ) ),
 		);
-		$this->referencers = $allReferencers[$microdataType];
-		$this->microDataExtractor = new MicrodataExtractor( $microdataType );
+		$this->microDataExtractor = new MicrodataExtractor();
 	}
 
 	/**
@@ -149,9 +153,11 @@ class WikidataReferencerCommand extends Command {
 		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something goes wrong!)" );
 
 		// Get options
-		$type = $input->getOption( 'type' );
-		if( $type === null ) {
-			throw new RuntimeException( 'You must pass a type' );
+		$instanceOfString = $input->getOption( 'instance' );
+		if( $instanceOfString === null ) {
+			throw new RuntimeException( 'You must pass an instance' );
+		} else {
+			$instanceOf = new ItemId( $instanceOfString );
 		}
 		$user = $input->getOption( 'user' );
 		$userDetails = $this->appConfig->get( 'users.' . $user );
@@ -160,13 +166,12 @@ class WikidataReferencerCommand extends Command {
 		}
 
 		// Init the command execution services
-		$this->initExecutionServices( $type );
+		$this->initExecutionServices();
 
 		// Run the query
 		$output->writeln( "Running initial query" );
-		$itemIds = $this->sparqlQueryRunner->getItemIdsFromQuery(
-			$this->sparqlQueryLibrary->getQueryForSchemaType( $type )
-		);
+		//TODO allow the requiring of one or more property ids for statements!
+		$itemIds = $this->sparqlQueryRunner->getItemIdsForInstanceOf( $instanceOf );
 		$output->writeln( "Got " . count( $itemIds ) . " items to investigate" );
 
 		// Log in to Wikidata
@@ -209,6 +214,24 @@ class WikidataReferencerCommand extends Command {
 				continue;
 			}
 
+			// Get the item types..
+			$types = array();
+			foreach( $item->getStatements()->getByPropertyId( new PropertyId( 'P31' ) )->toArray() as $instanceStatement ) {
+				$mainSnak = $instanceStatement->getMainSnak();
+				if( $mainSnak instanceof PropertyValueSnak ) {
+					/** @var EntityIdValue $instanceItemIdValue */
+					$instanceItemIdValue = $mainSnak->getDataValue();
+					$idSerialization = $instanceItemIdValue->getEntityId()->getSerialization();
+					if( array_key_exists( $idSerialization, $this->instanceMap ) ) {
+						$types[] = $this->instanceMap[$idSerialization];
+					}
+				}
+			}
+			if( empty( $types ) ) {
+				$output->writeln( "No matches instance ofs for item!" );
+				continue;
+			}
+
 			$links = $this->getExternalLinksFromItemWikipediaSitelinks( $item );
 
 			/** @var Request[] $linkRequests */
@@ -246,11 +269,13 @@ class WikidataReferencerCommand extends Command {
 			$output->write( "Adding refs" );
 			foreach( $linkToHtmlMap as $link => $html ) {
 				foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
-					foreach( $this->referencers as $referencer ) {
-						if( $referencer->canLookForReferences( $microData ) ) {
-							$addedReferences = $referencer->addReferences( $microData, $item, $link );
-							$output->write( str_repeat( '.', $addedReferences ) );
-						}
+					foreach( $types as $type ) {
+						if( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) )
+							foreach( $this->referencerMap[$type] as $referencer ) {
+								/** @var Referencer $referencer */
+								$addedReferences = $referencer->addReferences( $microData, $item, $link );
+								$output->write( str_repeat( '.', $addedReferences ) );
+							}
 					}
 				}
 			}

@@ -58,12 +58,6 @@ class MoviePersonReferencer implements Referencer {
 		);
 	}
 
-	public function canLookForReferences( MicroData $microData ) {
-		return
-			$microData->hasType( 'Movie' ) &&
-			$microData->hasProperty( 'director', MicroData::PROP_DATA );
-	}
-
 	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
 		$referenceCounter = 0;
 

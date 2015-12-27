@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
+use Asparagus\QueryBuilder;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\ItemId;
@@ -22,6 +23,20 @@ class SparqlQueryRunner {
 	 */
 	public function __construct( Client $guzzleClient ) {
 		$this->client = $guzzleClient;
+	}
+
+	public function getItemIdsForInstanceOf( ItemId $instanceOf ) {
+		$queryBuilder = new QueryBuilder( array(
+			'prov' => 'http://www.w3.org/ns/prov#',
+			'wd' => 'http://www.wikidata.org/entity/',
+			'wdt' => 'http://www.wikidata.org/prop/direct/',
+			'p' => 'http://www.wikidata.org/prop/',
+		) );
+		$query = $queryBuilder
+			->select( '?item' )
+			->where( '?item', 'wdt:P31', 'wd:' . $instanceOf->getSerialization() )
+			->__toString();
+		return $this->getItemIdsFromQuery( $query );
 	}
 
 	/**
