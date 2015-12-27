@@ -12,7 +12,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 /**
  * @author Addshore
  */
-class MoviePersonReferencer implements Referencer {
+class PersonReferencer implements Referencer {
 
 	/**
 	 * @var WikibaseFactory
@@ -22,40 +22,27 @@ class MoviePersonReferencer implements Referencer {
 	/**
 	 * @var callable[]
 	 */
-	private $map;
+	private $map = array();
 
-	public function __construct( WikibaseFactory $wikibaseFactory ) {
+	/**
+	 * @param WikibaseFactory $wikibaseFactory
+	 * @param string[] $map of propertyId strings to schema.org properties
+	 *          eg. 'P57' => 'director'
+	 */
+	public function __construct( WikibaseFactory $wikibaseFactory, array $map ) {
 		$this->wikibaseFactory = $wikibaseFactory;
 
-		$this->map = array(
-			'P57' => function( MicroData $microData ) {
+		foreach( $map as $propertyIdSerialization => $schemaPropertyString ) {
+			$this->map[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
 				$values = array();
-				foreach( $microData->getProperty( 'director', MicroData::PROP_DATA ) as $innerMicrodata ) {
+				foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
 					foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
 						$values[] = $value;
 					}
 				}
 				return $values;
-			},
-			'P161' => function( MicroData $microData ) {
-				$values = array();
-				foreach( $microData->getProperty( 'actor', MicroData::PROP_DATA ) as $innerMicrodata ) {
-					foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
-						$values[] = $value;
-					}
-				}
-				return $values;
-			},
-			'P162' => function( MicroData $microData ) {
-				$values = array();
-				foreach( $microData->getProperty( 'producer', MicroData::PROP_DATA ) as $innerMicrodata ) {
-					foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
-						$values[] = $value;
-					}
-				}
-				return $values;
-			},
-		);
+			};
+		}
 	}
 
 	public function addReferences( MicroData $microData, $item, $sourceUrl ) {

@@ -36,11 +36,6 @@ class WikidataReferencerCommand extends Command {
 	private $appConfig;
 
 	/**
-	 * @var SparqlQueryLibrary
-	 */
-	private $sparqlQueryLibrary;
-
-	/**
 	 * @var SparqlQueryRunner
 	 */
 	private $sparqlQueryRunner;
@@ -68,17 +63,56 @@ class WikidataReferencerCommand extends Command {
 	/**
 	 * @var array 'type' => Referencer[]
 	 */
-	private $referencerMap;
+	private $referencerMap = array();
 
 	/**
 	 * @var string[]
 	 */
-	private $instanceMap = array(
-		'Q11424' => 'Movie',
-	);
+	private $instanceMap = array();
 
 	public function __construct( AppConfig $appConfig ) {
 		$this->appConfig = $appConfig;
+
+		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
+		$this->microDataExtractor = new MicrodataExtractor();
+		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
+
+		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
+		$this->wikibaseFactory = new WikibaseFactory(
+			$this->wikibaseApi,
+			new DataValueDeserializer(
+				array(
+					'boolean' => 'DataValues\BooleanValue',
+					'number' => 'DataValues\NumberValue',
+					'string' => 'DataValues\StringValue',
+					'unknown' => 'DataValues\UnknownValue',
+					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
+					'monolingualtext' => 'DataValues\MonolingualTextValue',
+					'multilingualtext' => 'DataValues\MultilingualTextValue',
+					'quantity' => 'DataValues\QuantityValue',
+					'time' => 'DataValues\TimeValue',
+					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+				)
+			),
+			new DataValueSerializer()
+		);
+
+		$this->instanceMap = array(
+			'Q11424' => 'Movie',
+		);
+		$this->referencerMap = array(
+			'Movie' => array(
+				new PersonReferencer(
+					$this->wikibaseFactory,
+					array(
+						'P57' => 'director',
+						'P161' => 'actor',
+						'P162' => 'producer',
+					)
+				)
+			),
+		);
+
 		parent::__construct( null );
 	}
 
@@ -99,38 +133,15 @@ class WikidataReferencerCommand extends Command {
 			->addOption(
 				'instance',
 				null,
-				InputOption::VALUE_REQUIRED,
+				InputOption::VALUE_OPTIONAL,
 				'Instance of item to target'
+			)
+			->addOption(
+				'item',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Item to target'
 			);
-	}
-
-	private function initExecutionServices() {
-		$this->sparqlQueryLibrary = new SparqlQueryLibrary();
-		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
-		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
-		$this->wikibaseFactory = new WikibaseFactory(
-			$this->wikibaseApi,
-			new DataValueDeserializer(
-				array(
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-				)
-			),
-			new DataValueSerializer()
-		);
-		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
-		$this->referencerMap = array(
-			'Movie' => array( new MoviePersonReferencer( $this->wikibaseFactory ) ),
-		);
-		$this->microDataExtractor = new MicrodataExtractor();
 	}
 
 	/**
@@ -153,25 +164,25 @@ class WikidataReferencerCommand extends Command {
 		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something goes wrong!)" );
 
 		// Get options
-		$instanceOfString = $input->getOption( 'instance' );
-		if( $instanceOfString === null ) {
-			throw new RuntimeException( 'You must pass an instance' );
-		} else {
-			$instanceOf = new ItemId( $instanceOfString );
-		}
 		$user = $input->getOption( 'user' );
 		$userDetails = $this->appConfig->get( 'users.' . $user );
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
+		$instanceOfString = $input->getOption( 'instance' );
+		$item = $input->getOption( 'item' );
 
-		// Init the command execution services
-		$this->initExecutionServices();
-
-		// Run the query
-		$output->writeln( "Running initial query" );
-		//TODO allow the requiring of one or more property ids for statements!
-		$itemIds = $this->sparqlQueryRunner->getItemIdsForInstanceOf( $instanceOf );
+		// Get a list of ItemIds
+		if( $item !== null ) {
+			$itemIds = array( new ItemId( $item ) );
+		} elseif( $instanceOfString !== null ) {
+			$output->writeln( "Running SPARQL query" );
+			//TODO allow the requiring of one or more property ids for statements!
+			$itemIds = $this->sparqlQueryRunner->getItemIdsForInstanceOf( new ItemId( $instanceOfString ) );
+		} else {
+			throw new RuntimeException( 'You must pass an instance id or an item' );
+		}
+		shuffle( $itemIds );
 		$output->writeln( "Got " . count( $itemIds ) . " items to investigate" );
 
 		// Log in to Wikidata
@@ -325,7 +336,7 @@ class WikidataReferencerCommand extends Command {
 			}
 		}
 
-		return $links;
+		return array_unique( $links );
 	}
 
 	/**
