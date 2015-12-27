@@ -7,6 +7,7 @@ use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**
@@ -45,7 +46,7 @@ class PersonReferencer implements Referencer {
 		}
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
+	public function addReferences( MicroData $microData, $item, $sourceUrl, InMemoryEntityLookup $inMemoryEntityLookup ) {
 		$referenceCounter = 0;
 
 		foreach( $this->map as $propertyIdString => $valueGetterFunction ) {
@@ -64,7 +65,13 @@ class PersonReferencer implements Referencer {
 					$valueEntityIdValue = $mainSnak->getDataValue();
 					/** @var ItemId $valueItemId */
 					$valueItemId = $valueEntityIdValue->getEntityId();
-					$valueItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $valueItemId );
+
+					if( $inMemoryEntityLookup->hasEntity( $valueItemId ) ) {
+						$valueItem = $inMemoryEntityLookup->getEntity( $valueItemId );
+					} else {
+						$valueItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $valueItemId );
+						$inMemoryEntityLookup->addEntity( $valueItem );
+					}
 
 					if ( !in_array( strtolower( $value ), DataModelUtils::getMainTermsAsLowerCaseStrings( $valueItem->getFingerprint() ) ) ) {
 						continue; // Ignore things that don't appear to have the correct value

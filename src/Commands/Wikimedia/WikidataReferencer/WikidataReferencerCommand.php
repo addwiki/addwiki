@@ -26,6 +26,7 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
@@ -113,6 +114,7 @@ class WikidataReferencerCommand extends Command {
 						'P57' => 'director',
 						'P161' => 'actor',
 						'P162' => 'producer',
+						'P1040' => 'editor'
 					)
 				)
 			),
@@ -154,7 +156,7 @@ class WikidataReferencerCommand extends Command {
 	 *
 	 * @return string
 	 */
-	private function normalizeWikipediaExternalLink( $link ) {
+	private function normalizeExternalLink( $link ) {
 		if ( strpos( $link, '//' ) === 0 ) {
 			$link = 'http' . $link;
 		}
@@ -162,6 +164,12 @@ class WikidataReferencerCommand extends Command {
 			$link = strstr( $link, '#', true );
 		}
 		$link = trim( $link, '/' );
+
+		// Normalize some domain specific stuff
+		if( strstr( $link, '.imdb.' ) ) {
+			$link = preg_replace( '#\/\/[^.]+\.imdb\.[^/]+\/#i', '//www.imdb.com/', $link );
+		}
+
 		return $link;
 	}
 
@@ -249,53 +257,57 @@ class WikidataReferencerCommand extends Command {
 			}
 
 			$links = $this->getExternalLinksFromItemWikipediaSitelinks( $item );
+			shuffle( $links );
 
 			/** @var Request[] $linkRequests */
 			$linkRequests = array();
 			foreach( $links as $link ) {
-				//TODO FIXME temporarily ignore imdb spam?
-				if( strstr( $link, 'imdb.' ) === false ) {
-					$linkRequests[] = new Request(
-						'GET',
-						$link,
-						array( 'allow_redirects' => array( 'track_redirects' => true ) )
-					);
-				}
+				$linkRequests[] = new Request(
+					'GET',
+					$link,
+					array( 'allow_redirects' => array( 'track_redirects' => true ) )
+				);
 			}
 
 			if ( empty( $linkRequests ) ) {
 				$output->writeln( "No external links!" );
 				continue;
+			} else {
+				$output->write( count( $linkRequests ) . ' links: ' );
 			}
 
-			// Make a bunch of requests
-			$output->write( "Loading " . count( $linkRequests ) . " links" );
-			// TODO we want to somehow output the progress of this pool batch...
-			$linkResponses = Pool::batch( $this->externalLinkClient, $linkRequests );
+			// We make one of these per item we are investigating (no point in keeping everything in mem for ever...)
+			$inMemoryEntityLookup = new InMemoryEntityLookup();
 
-			$linkToHtmlMap = array();
-			foreach( $linkResponses as $response ) {
-				if( $response instanceof ResponseInterface ) {
-					$effectiveUrl = $response->getHeaderLine( 'X-GUZZLE-EFFECTIVE-URL' );
-					$linkToHtmlMap[$effectiveUrl] = $response->getBody();
-					$output->write( '.' );
-				} else {
-					$output->write( 'e' );
+			// Make a bunch of requests and act on the responses
+			foreach( array_chunk( $linkRequests, 100 ) as $linkRequestChunk ) {
+				$linkResponses = Pool::batch(
+					$this->externalLinkClient,
+					$linkRequestChunk,
+					array(
+						'fulfilled' => function () use ( $output ) { $output->write( 'l' ); },
+						'rejected' => function () use ( $output ) { $output->write( 'e' ); },
+					)
+				);
+				$linkToHtmlMap = array();
+				foreach( $linkResponses as $response ) {
+					if( $response instanceof ResponseInterface ) {
+						$effectiveUrl = $response->getHeaderLine( 'X-GUZZLE-EFFECTIVE-URL' );
+						$linkToHtmlMap[$effectiveUrl] = $response->getBody();
+					}
 				}
-			}
-			$output->write( ' ' );
 
-			// Get structured data from the responses
-			$output->write( "Adding refs" );
-			foreach( $linkToHtmlMap as $link => $html ) {
-				foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
-					foreach( $types as $type ) {
-						if( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) )
-							foreach( $this->referencerMap[$type] as $referencer ) {
-								/** @var Referencer $referencer */
-								$addedReferences = $referencer->addReferences( $microData, $item, $link );
-								$output->write( str_repeat( '.', $addedReferences ) );
-							}
+				// Get structured data from the responses
+				foreach( $linkToHtmlMap as $link => $html ) {
+					foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
+						foreach( $types as $type ) {
+							if( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) )
+								foreach( $this->referencerMap[$type] as $referencer ) {
+									/** @var Referencer $referencer */
+									$addedReferences = $referencer->addReferences( $microData, $item, $link, $inMemoryEntityLookup );
+									$output->write( str_repeat( 'R', $addedReferences ) );
+								}
+						}
 					}
 				}
 			}
@@ -333,9 +345,9 @@ class WikidataReferencerCommand extends Command {
 				$parseResult = $promise->wait();
 				if ( array_key_exists( 'externallinks', $parseResult ) ) {
 					foreach ( $parseResult['externallinks'] as $externalLink ) {
-						//TODO FIXME temporarily ignore imdb spam?
-						if ( strstr( $externalLink, 'imdb.' ) === false ) {
-							$links[] = $this->normalizeWikipediaExternalLink( $externalLink );
+						// Ignore archive.org links
+						if ( strstr( $externalLink, 'archive.org' ) === false ) {
+							$links[] = $this->normalizeExternalLink( $externalLink );
 						}
 					}
 				}
