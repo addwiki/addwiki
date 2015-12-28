@@ -192,10 +192,10 @@ class WikidataReferencerCommand extends Command {
 				$defaultUser
 			)
 			->addOption(
-				'instance',
+				'sparql',
 				null,
-				InputOption::VALUE_OPTIONAL,
-				'Instance of item to target'
+				InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+				'SPARQL query part'
 			)
 			->addOption(
 				'item',
@@ -237,16 +237,18 @@ class WikidataReferencerCommand extends Command {
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
-		$instanceOfString = $input->getOption( 'instance' );
+		$sparqlQueryParts = $input->getOption( 'sparql' );
 		$item = $input->getOption( 'item' );
+		$force = false;
 
 		// Get a list of ItemIds
 		if( $item !== null ) {
 			$itemIds = array( new ItemId( $item ) );
-		} elseif( $instanceOfString !== null ) {
-			$output->writeln( "Running SPARQL query" );
-			//TODO allow the requiring of one or more property ids for statements!
-			$itemIds = $this->sparqlQueryRunner->getItemIdsForInstanceOf( new ItemId( $instanceOfString ) );
+			// Force if explicitly passed an ItemId
+			$force = true;
+		} elseif( !empty( $sparqlQueryParts ) ) {
+			$output->writeln( "Running SPARQL query with " . count( $sparqlQueryParts ) . ' parts' );
+			$itemIds = $this->sparqlQueryRunner->getItemIdsForSimpleQueryParts( $sparqlQueryParts );
 		} else {
 			throw new RuntimeException( 'You must pass an instance id or an item' );
 		}
@@ -263,7 +265,8 @@ class WikidataReferencerCommand extends Command {
 
 		$this->executeForItemIds(
 			$output,
-			$itemIds
+			$itemIds,
+			$force
 		);
 
 		return 0;
@@ -272,15 +275,16 @@ class WikidataReferencerCommand extends Command {
 	/**
 	 * @param OutputInterface $output
 	 * @param ItemId[] $itemIds
+	 * @param bool $force
 	 */
-	private function executeForItemIds( OutputInterface $output, array $itemIds ) {
+	private function executeForItemIds( OutputInterface $output, array $itemIds, $force ) {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		foreach ( $itemIds as $itemId ) {
 
 			$output->write( $itemId->getSerialization() . ' ' );
 
-			if( in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
+			if( !$force && in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
 				$output->writeln( "Already processed!" );
 				continue;
 			}
@@ -308,7 +312,7 @@ class WikidataReferencerCommand extends Command {
 				}
 			}
 			if( empty( $types ) ) {
-				$output->writeln( "No matches instance ofs for item!" );
+				$output->writeln( " No matches instance ofs for item!" );
 				continue;
 			}
 
@@ -326,7 +330,7 @@ class WikidataReferencerCommand extends Command {
 			}
 
 			if ( empty( $linkRequests ) ) {
-				$output->writeln( "No external links!" );
+				$output->writeln( " No external links!" );
 				continue;
 			} else {
 				$output->write( ' ' . count( $linkRequests ) . ' external links: ' );

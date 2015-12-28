@@ -25,18 +25,34 @@ class SparqlQueryRunner {
 		$this->client = $guzzleClient;
 	}
 
-	public function getItemIdsForInstanceOf( ItemId $instanceOf ) {
+	/**
+	 * @param array $simpleQueryParts
+	 *     eg. 'P1:Q2' OR 'P5:?'
+	 *
+	 * @return ItemId[]
+	 */
+	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ) {
+		if( empty( $simpleQueryParts ) ) {
+			throw new InvalidArgumentException( "Can't run a SPARQL query with no simple parts" );
+		}
+
 		$queryBuilder = new QueryBuilder( array(
 			'prov' => 'http://www.w3.org/ns/prov#',
 			'wd' => 'http://www.wikidata.org/entity/',
 			'wdt' => 'http://www.wikidata.org/prop/direct/',
 			'p' => 'http://www.wikidata.org/prop/',
 		) );
-		$query = $queryBuilder
-			->select( '?item' )
-			->where( '?item', 'wdt:P31', 'wd:' . $instanceOf->getSerialization() )
-			->__toString();
-		return $this->getItemIdsFromQuery( $query );
+		$queryBuilder->select( '?item' );
+		foreach( $simpleQueryParts as $key => $simpleQueryPart ) {
+			list( $propertyIdString, $entityIdString ) = explode( ':', $simpleQueryPart );
+			if( $entityIdString == '?' ) {
+				$queryBuilder->where( '?item', "wdt:$propertyIdString", '?' . str_repeat( 'z', $key ) );
+			} else {
+				$queryBuilder->where( '?item', "wdt:$propertyIdString", "wd:$entityIdString" );
+			}
+		}
+
+		return $this->getItemIdsFromQuery( $queryBuilder->__toString() );
 	}
 
 	/**
