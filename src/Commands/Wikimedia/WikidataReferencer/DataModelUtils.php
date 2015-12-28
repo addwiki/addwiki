@@ -40,7 +40,7 @@ class DataModelUtils {
 			0,
 			0,
 			TimeValue::PRECISION_DAY,
-			TimeValue::CALENDAR_JULIAN
+			TimeValue::CALENDAR_GREGORIAN
 		);
 	}
 
