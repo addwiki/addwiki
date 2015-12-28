@@ -26,8 +26,4 @@ foreach ( $GLOBALS['awwCommands'] as $callback ) {
 	}
 }
 
-if( $awwConfig->isEmpty() ) {
-	$awwApp->setDefaultCommand( 'config:setup' );
-}
-
 $awwApp->run();
