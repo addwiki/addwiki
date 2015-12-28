@@ -103,9 +103,37 @@ class WikidataReferencerCommand extends Command {
 		);
 
 		$this->instanceMap = array(
+			'Q5' => 'Person',
 			'Q11424' => 'Movie',
 		);
 		$this->referencerMap = array(
+			'Person' => array(
+				new ThingReferencer(
+					$this->wikibaseFactory,
+					array(
+						'sibling' => 'P7',//brother
+						//TODO fix this? maping needs to be many to many
+						'sibling' => 'P9',//sister
+						'birthPlace' => 'P19',
+						'deathPlace' => 'P20',
+						'gender' => 'P21',
+						'parent' => 'P22',//father
+						//TODO fix this? maping needs to be many to many
+						'parent' => 'P25',//mother
+						'spouse' => 'P26',
+						'nationality' => 'P27',
+						'familyName' => 'P734',
+						'givenName' => 'P735',
+					)
+				),
+				new DateReferencer(
+					$this->wikibaseFactory,
+					array(
+						'P569' => 'birthDate',
+						'P570' => 'deathDate',
+					)
+				)
+			),
 			'Movie' => array(
 				new ThingReferencer(
 					$this->wikibaseFactory,
