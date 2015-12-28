@@ -1,8 +1,8 @@
 <?php
 
-namespace Mediawiki\Bot\Commands\Config;
+namespace Addwiki\Commands\Config;
 
-use Mediawiki\Bot\Config\AppConfig;
+use Addwiki\Config\AppConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Bot\Config;
+namespace Addwiki\Config;
 
 use LogicException;
 use Symfony\Component\Yaml\Yaml;

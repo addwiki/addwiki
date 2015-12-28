@@ -11,27 +11,17 @@
 	],
 	"require": {
 		"symfony/console": "~3.0",
-		"symfony/yaml": "~3.0",
-		"addwiki/wikibase-api": "~0.7.0-dev",
-		"addwiki/mediawiki-api": "~0.6.0-dev",
-		"addwiki/mediawiki-datamodel": "~0.6.0",
-		"wikibase/data-model": "~4.0",
-		"wikibase/data-model-services": "~2.0|~3.0",
-		"data-values/data-values": "~1.0",
-		"data-values/common": "~0.3.0",
-		"data-values/geo": "~1.0",
-		"data-values/interfaces": "~0.2.0|~0.1.5",
-		"data-values/number": "~0.6.0",
-		"data-values/time": "~0.8.2",
-		"linclark/microdata-php": "~2.0",
-		"guzzlehttp/guzzle": "~6.0",
-		"benestar/asparagus": "~0.4"
+		"symfony/yaml": "~3.0"
+	},
+	"suggest": {
+		"addwiki/mediawiki-commands": "Provides commands for use on Mediawiki sites",
+		"addwiki/wikimedia-commands": "Provides commands for use on Wikimedia sites"
 	},
 	"minimum-stability":"dev",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
-			"Mediawiki\\Bot\\": "src/"
+			"Addwiki\\": "src/"
 		}
 	},
 	"bin": [

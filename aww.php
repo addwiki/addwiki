@@ -10,19 +10,14 @@ if( file_exists( __DIR__ . '/../../autoload.php' ) ) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-$awwConfig = new Mediawiki\Bot\Config\AppConfig( __DIR__  );
-$awwApp = new Symfony\Component\Console\Application( 'aww - addwiki bot' );
+$awwConfig = new Addwiki\Config\AppConfig( __DIR__  );
+$awwApp = new Symfony\Component\Console\Application( 'aww - addwiki cli tool' );
 
 $awwApp->addCommands( array(
-	new Mediawiki\Bot\Commands\Config\Setup( $awwConfig ),
-	new Mediawiki\Bot\Commands\Config\ConfigList( $awwConfig ),
-	new Mediawiki\Bot\Commands\Config\SetDefaultWiki( $awwConfig ),
-	new Mediawiki\Bot\Commands\Config\SetDefaultUser( $awwConfig ),
-	new Mediawiki\Bot\Commands\Task\RestoreRevisions( $awwConfig ),
-	new Mediawiki\Bot\Commands\Task\Purge( $awwConfig ),
-	new Mediawiki\Bot\Commands\Task\EditPage( $awwConfig ),
-	new Mediawiki\Bot\Commands\Wikimedia\ExtensionToWikidata( $awwConfig ),
-	new Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer\WikidataReferencerCommand( $awwConfig ),
+	new Addwiki\Commands\Config\Setup( $awwConfig ),
+	new Addwiki\Commands\Config\ConfigList( $awwConfig ),
+	new Addwiki\Commands\Config\SetDefaultWiki( $awwConfig ),
+	new Addwiki\Commands\Config\SetDefaultUser( $awwConfig ),
 ) );
 
 foreach ( $GLOBALS['awwCommands'] as $callback ) {
