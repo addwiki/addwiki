@@ -72,15 +72,20 @@ class WikidataReferencerCommand extends Command {
 	private $instanceMap = array();
 
 	public function __construct( AppConfig $appConfig ) {
+		$stack = HandlerStack::create();
+		$stack->push( EffectiveUrlMiddleware::middleware() );
+		$defaultGuzzleConf = array(
+			'headers' => array( 'User-Agent' => 'addwiki - Wikidata Referencer' ),
+			'handler' => $stack,
+		);
+		$guzzleClient = new Client( $defaultGuzzleConf );
+
 		$this->appConfig = $appConfig;
 
 		$this->wmFactoryFactory = new WikimediaMediawikiFactoryFactory();
 		$this->microDataExtractor = new MicrodataExtractor();
-		$this->sparqlQueryRunner = new SparqlQueryRunner( new Client() );
-
-		$stack = HandlerStack::create();
-		$stack->push( EffectiveUrlMiddleware::middleware() );
-		$this->externalLinkClient = new Client( array( 'handler' => $stack ) );
+		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
+		$this->externalLinkClient = $guzzleClient;
 
 		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
 		$this->wikibaseFactory = new WikibaseFactory(
@@ -111,19 +116,17 @@ class WikidataReferencerCommand extends Command {
 				new ThingReferencer(
 					$this->wikibaseFactory,
 					array(
-						'sibling' => 'P7',//brother
-						//TODO fix this? maping needs to be many to many
-						'sibling' => 'P9',//sister
-						'birthPlace' => 'P19',
-						'deathPlace' => 'P20',
-						'gender' => 'P21',
-						'parent' => 'P22',//father
-						//TODO fix this? maping needs to be many to many
-						'parent' => 'P25',//mother
-						'spouse' => 'P26',
-						'nationality' => 'P27',
-						'familyName' => 'P734',
-						'givenName' => 'P735',
+						'P7' => 'sibling',//brother
+						'P9' => 'sibling',//sister
+						'P19' => 'birthPlace',
+						'P20' => 'deathPlace',
+						'P21' => 'gender',
+						'P22' => 'parent',//father
+						'P25' => 'parent',//mother
+						'P26' => 'spouse',
+						'P27' => 'nationality',
+						'P734' => 'familyName',
+						'P735' => 'givenName',
 					)
 				),
 				new DateReferencer(
@@ -139,14 +142,13 @@ class WikidataReferencerCommand extends Command {
 					$this->wikibaseFactory,
 					array(
 						// Person
-						'director' => 'P57',
-						'actor' => 'P161',
-						'producer' => 'P162',
-						'editor' => 'P1040',
-						'author' => 'P58',
+						'P57' => 'director',
+						'P161' => 'actor',
+						'P162' => 'producer',
+						'P1040' => 'editor',
+						'P58' => 'author',
 						// Organization
-						'creator' => 'P272',
-						'productionCompany' => 'P272',
+						'P272' => array( 'creator', 'productionCompany' ),
 					)
 				),
 				new MultiTextReferencer(
@@ -285,6 +287,7 @@ class WikidataReferencerCommand extends Command {
 
 			try {
 				$item = $itemLookup->getItemForId( $itemId );
+				$output->write( 'I' );
 			}
 			catch ( ItemLookupException $e ) {
 				$output->writeln( "Failed to get item!" );
@@ -309,7 +312,7 @@ class WikidataReferencerCommand extends Command {
 				continue;
 			}
 
-			$links = $this->getExternalLinksFromItemWikipediaSitelinks( $item );
+			$links = $this->getExternalLinksFromItemWikipediaSitelinks( $item, $output );
 			shuffle( $links );
 
 			/** @var Request[] $linkRequests */
@@ -326,7 +329,7 @@ class WikidataReferencerCommand extends Command {
 				$output->writeln( "No external links!" );
 				continue;
 			} else {
-				$output->write( count( $linkRequests ) . ' links: ' );
+				$output->write( ' ' . count( $linkRequests ) . ' external links: ' );
 			}
 
 			// Make a bunch of requests and act on the responses
@@ -372,10 +375,13 @@ class WikidataReferencerCommand extends Command {
 	 * TODO also get links currently used as references!
 	 *
 	 * @param Item $item
+	 * @param OutputInterface $output
 	 *
-	 * @return string[]
+	 * @return \string[]
 	 */
-	private function getExternalLinksFromItemWikipediaSitelinks( Item $item ) {
+	private function getExternalLinksFromItemWikipediaSitelinks( Item $item, OutputInterface $output ) {
+		$output->write( ' ' . $item->getSiteLinkList()->count() . ' site links: ' );
+
 		/** @var PromiseInterface[] $parsePromises */
 		$parsePromises = array();
 		foreach ( $item->getSiteLinkList()->getIterator() as $siteLink ) {
@@ -393,6 +399,7 @@ class WikidataReferencerCommand extends Command {
 		foreach ( $parsePromises as $siteId => $promise ) {
 			try {
 				$parseResult = $promise->wait();
+				$output->write( 'p' );
 				if ( array_key_exists( 'externallinks', $parseResult ) ) {
 					foreach ( $parseResult['externallinks'] as $externalLink ) {
 						// Ignore archive.org links
@@ -403,6 +410,7 @@ class WikidataReferencerCommand extends Command {
 				}
 			}
 			catch ( Exception $e ) {
+				$output->write( 'e' );
 				// Ignore failed requests
 			}
 		}

@@ -24,7 +24,7 @@ class ThingReferencer implements Referencer {
 	/**
 	 * @var callable[]
 	 */
-	private $map = array();
+	private $callbackMap = array();
 
 	/**
 	 * @var InMemoryEntityLookup
@@ -39,22 +39,27 @@ class ThingReferencer implements Referencer {
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[] $propMap of propertyId strings to schema.org properties
-	 *          eg. 'director' => 'P57'
+	 *          eg. 'P57' => 'director'
 	 */
 	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
 		$this->inMemoryEntityLookup = new InMemoryEntityLookup();;
 
-		foreach( $propMap as $schemaPropertyString => $propertyIdSerialization ) {
-			$this->map[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
-				$values = array();
-				foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
-					foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
-						$values[] = $value;
+		foreach( $propMap as $propertyIdSerialization => $schemaPropertyStrings ) {
+			if( is_string( $schemaPropertyStrings ) ) {
+				$schemaPropertyStrings = array( $schemaPropertyStrings );
+			}
+			foreach( $schemaPropertyStrings as $schemaPropertyString ) {
+				$this->callbackMap[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
+					$values = array();
+					foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
+						foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
+							$values[] = $value;
+						}
 					}
-				}
-				return $values;
-			};
+					return $values;
+				};
+			}
 		}
 	}
 
@@ -67,7 +72,7 @@ class ThingReferencer implements Referencer {
 
 		$referenceCounter = 0;
 
-		foreach( $this->map as $propertyIdString => $valueGetterFunction ) {
+		foreach( $this->callbackMap as $propertyIdString => $valueGetterFunction ) {
 			$values = $valueGetterFunction( $microData );
 			$statements = $item->getStatements()->getByPropertyId( new PropertyId( $propertyIdString ) );
 
