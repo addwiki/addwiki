@@ -15,4 +15,4 @@ chdir( $pwd );
 
 $autoloader = require_once( __DIR__ . '/../vendor/autoload.php' );
 
-$autoloader->addPsr4( 'Mediawiki\\Bot\\Test\\', __DIR__ );
+$autoloader->addPsr4( 'Addwiki\\Test\\', __DIR__ );
