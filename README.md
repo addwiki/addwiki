@@ -10,15 +10,18 @@ Issue tracker: https://phabricator.wikimedia.org/project/profile/1490/
 
 ## Installation
 
-If composer is not installed:
+Download and use a phar:
 
-    php -r "readfile('https://getcomposer.org/installer');" | php
+    NOT YET IMPLEMENTED!
 
-Download and install addwiki:
+You can build a phar of this repo using https://github.com/clue/phar-composer
 
-    php composer.phar require "addwiki/addwiki:~0.1@dev"
+    ~/phar-composer.phar build ~/git/github/addwiki/addwiki/ ~/aww.phar
 
-Any extension package can be installed in the same way.
+Download and install using composer:
+
+    composer require "addwiki/addwiki:dev-master"
+
 The binary can be found at `./vendor/bin/aww`.
 
 ## Example Usage
@@ -31,17 +34,9 @@ View your settings:
 
     aww config:list
 
-Run your first scripts:
-
-    aww task:restore-revisions --wiki localwiki --user localadmin 555
-    aww task:restore-revisions --wiki localwiki --user localadmin 1 2 3
-
 Configure a default user and wiki:
 
     aww config:set:default:wiki local
     aww config:set:default:user localadmin
 
-Run scripts using the defaults:
-
-    aww task:restore-revisions 663
-    aww task:restore-revisions --summary "Custom Summary with $revid" --minor 0 --bot 0 663 777
+For docs of extra specific commands please see the commands repos README files!

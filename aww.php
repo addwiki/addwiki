@@ -1,6 +1,7 @@
 <?php
 
 // global variable to allow registering additional commands
+// each callback should take a single parameter implementing ArrayAccess (the app config)
 $GLOBALS['awwCommands'] = array();
 
 if( file_exists( __DIR__ . '/../../autoload.php' ) ) {

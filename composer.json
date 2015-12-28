@@ -11,11 +11,10 @@
 	],
 	"require": {
 		"symfony/console": "~3.0",
-		"symfony/yaml": "~3.0"
-	},
-	"suggest": {
-		"addwiki/mediawiki-commands": "Provides commands for use on Mediawiki sites",
-		"addwiki/wikimedia-commands": "Provides commands for use on Wikimedia sites"
+		"symfony/yaml": "~3.0",
+		"zendframework/zend-config": "~2.5",
+		"addwiki/mediawiki-commands" : "dev-master",
+		"addwiki/wikimedia-commands" : "dev-master"
 	},
 	"minimum-stability":"dev",
 	"prefer-stable": true,
