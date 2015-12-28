@@ -39,13 +39,13 @@ class ThingReferencer implements Referencer {
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[] $propMap of propertyId strings to schema.org properties
-	 *          eg. 'P57' => 'director'
+	 *          eg. 'director' => 'P57'
 	 */
 	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
 		$this->inMemoryEntityLookup = new InMemoryEntityLookup();;
 
-		foreach( $propMap as $propertyIdSerialization => $schemaPropertyString ) {
+		foreach( $propMap as $schemaPropertyString => $propertyIdSerialization ) {
 			$this->map[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
 				$values = array();
 				foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {

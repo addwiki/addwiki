@@ -26,7 +26,6 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
@@ -112,13 +111,14 @@ class WikidataReferencerCommand extends Command {
 					$this->wikibaseFactory,
 					array(
 						// Person
-						'P57' => 'director',
-						'P161' => 'actor',
-						'P162' => 'producer',
-						'P1040' => 'editor',
-						'P58' => 'author',
+						'director' => 'P57',
+						'actor' => 'P161',
+						'producer' => 'P162',
+						'editor' => 'P1040',
+						'author' => 'P58',
 						// Organization
-						'P272' => 'creator',
+						'creator' => 'P272',
+						'productionCompany' => 'P272',
 					)
 				),
 				new MultiTextReferencer(
@@ -133,6 +133,12 @@ class WikidataReferencerCommand extends Command {
 							'Q471839' => '/(Science Fiction|Sci-Fi)( ?film)?/i',
 							'Q157394' => '/fantasy( ?film)?/i',
 						),
+					)
+				),
+				new DateReferencer(
+					$this->wikibaseFactory,
+					array(
+						'P577' => 'datePublished',
 					)
 				)
 			),

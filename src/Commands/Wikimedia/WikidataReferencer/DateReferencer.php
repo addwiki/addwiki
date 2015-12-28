@@ -2,14 +2,19 @@
 
 namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
+use DataValues\TimeValue;
+use DateTime;
+use Exception;
 use Mediawiki\Api\UsageException;
+use ValueParsers\EraParser;
+use ValueParsers\IsoTimestampParser;
+use ValueParsers\MonthNameUnlocalizer;
+use ValueParsers\PhpDateTimeParser;
 use Wikibase\Api\WikibaseFactory;
-use Wikibase\DataModel\Entity\EntityId;
-use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
-class MultiTextReferencer implements Referencer {
+class DateReferencer implements Referencer {
 
 	/**
 	 * @var WikibaseFactory
@@ -22,41 +27,43 @@ class MultiTextReferencer implements Referencer {
 	private $propMap = array();
 
 	/**
-	 * @var array
+	 * @var PhpDateTimeParser
 	 */
-	private $regexMap = array();
+	private $timeParser;
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[] $propMap of propertyId strings to schema.org properties
-	 *          eg. 'P136' => 'genre'
-	 * @param array $regexMap of propertyId strings to array of key itemIds and value regexes
-	 *          eg. 'P136' => array( 'Q188473' => '/action( ?film)?/i' )
+	 *          eg. 'P577' => 'datePublished'
 	 */
-	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap, array $regexMap ) {
+	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
 		$this->propMap = $propMap;
-		$this->regexMap = $regexMap;
+		$this->timeParser = new PhpDateTimeParser(
+			new MonthNameUnlocalizer( array() ),
+			new EraParser(),
+			new IsoTimestampParser()
+		);
 	}
 
 	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
 		$referenceCounter = 0;
 
 		foreach ( $this->propMap as $propertyIdString => $schemaPropertyString ) {
-			$regexMap = $this->regexMap[$propertyIdString];
-
-			$values = array();
+			/** @var TimeValue[] $timeValues */
+			$timeValues = array();
 			foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_STRING ) as $propertyValue ) {
-				// Don't match URLS!
-				if( strstr( $propertyValue, '//' ) ) {
-					continue;
+				try{
+					$date =  new DateTime( trim( $propertyValue ) );
+					$timeValues[] = $this->timeParser->parse( $date->format( 'Y m d' ) );
+				} catch( Exception $e ) {
+					// Ignore failed parsing
 				}
-				$values[] = $propertyValue;
 			}
 
 			$statements = $item->getStatements()->getByPropertyId( new PropertyId( $propertyIdString ) );
 
-			foreach ( $values as $value ) {
+			foreach ( $timeValues as $timeValue ) {
 				foreach ( $statements->getIterator() as &$statement ) {
 
 					$mainSnak = $statement->getMainSnak();
@@ -68,24 +75,9 @@ class MultiTextReferencer implements Referencer {
 						continue; // Ignore statements that already have this URL domain as a ref
 					}
 
-					/** @var EntityIdValue $valueEntityIdValue */
-					$valueEntityIdValue = $mainSnak->getDataValue();
-					/** @var EntityId $valueEntityId */
-					$valueEntityId = $valueEntityIdValue->getEntityId();
-					$valueEntityIdString = $valueEntityId->getSerialization();
-
-					if( !array_key_exists( $valueEntityIdString, $regexMap ) ) {
-						//TODO log that this ItemId is missing?
+					if( !$timeValue->equals( $mainSnak->getDataValue() ) ) {
 						continue;
 					}
-
-					$regex = $regexMap[$valueEntityIdString];
-					if( !preg_match( $regex, $value ) ) {
-						// ItemId regex didn't match this schema value
-						continue;
-					}
-
-
 
 					// Add the new reference!
 					$newReference = DataModelUtils::getReferenceForUrl( $sourceUrl );
