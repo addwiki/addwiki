@@ -4,6 +4,7 @@ namespace Mediawiki\Bot\Commands\Wikimedia\WikidataReferencer;
 
 use Mediawiki\Api\UsageException;
 use Wikibase\Api\WikibaseFactory;
+use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
@@ -13,7 +14,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 /**
  * @author Addshore
  */
-class PersonReferencer implements Referencer {
+class ThingReferencer implements Referencer {
 
 	/**
 	 * @var WikibaseFactory
@@ -26,14 +27,25 @@ class PersonReferencer implements Referencer {
 	private $map = array();
 
 	/**
+	 * @var InMemoryEntityLookup
+	 */
+	private $inMemoryEntityLookup;
+
+	/**
+	 * @var EntityId
+	 */
+	private $lastEntityId;
+
+	/**
 	 * @param WikibaseFactory $wikibaseFactory
-	 * @param string[] $map of propertyId strings to schema.org properties
+	 * @param string[] $propMap of propertyId strings to schema.org properties
 	 *          eg. 'P57' => 'director'
 	 */
-	public function __construct( WikibaseFactory $wikibaseFactory, array $map ) {
+	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
+		$this->inMemoryEntityLookup = new InMemoryEntityLookup();;
 
-		foreach( $map as $propertyIdSerialization => $schemaPropertyString ) {
+		foreach( $propMap as $propertyIdSerialization => $schemaPropertyString ) {
 			$this->map[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
 				$values = array();
 				foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
@@ -46,7 +58,13 @@ class PersonReferencer implements Referencer {
 		}
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl, InMemoryEntityLookup $inMemoryEntityLookup ) {
+	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
+		// Only cache entity lookup stuff per item we are adding references for!
+		// (but can be used for multiple sourceURLs!!
+		if( !$item->getId()->equals( $this->lastEntityId ) ) {
+			$this->inMemoryEntityLookup = new InMemoryEntityLookup();
+		}
+
 		$referenceCounter = 0;
 
 		foreach( $this->map as $propertyIdString => $valueGetterFunction ) {
@@ -66,11 +84,11 @@ class PersonReferencer implements Referencer {
 					/** @var ItemId $valueItemId */
 					$valueItemId = $valueEntityIdValue->getEntityId();
 
-					if( $inMemoryEntityLookup->hasEntity( $valueItemId ) ) {
-						$valueItem = $inMemoryEntityLookup->getEntity( $valueItemId );
+					if( $this->inMemoryEntityLookup->hasEntity( $valueItemId ) ) {
+						$valueItem = $this->inMemoryEntityLookup->getEntity( $valueItemId );
 					} else {
 						$valueItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $valueItemId );
-						$inMemoryEntityLookup->addEntity( $valueItem );
+						$this->inMemoryEntityLookup->addEntity( $valueItem );
 					}
 
 					if ( !in_array( strtolower( $value ), DataModelUtils::getMainTermsAsLowerCaseStrings( $valueItem->getFingerprint() ) ) ) {

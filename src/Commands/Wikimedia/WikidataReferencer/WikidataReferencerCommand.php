@@ -108,13 +108,31 @@ class WikidataReferencerCommand extends Command {
 		);
 		$this->referencerMap = array(
 			'Movie' => array(
-				new PersonReferencer(
+				new ThingReferencer(
 					$this->wikibaseFactory,
 					array(
+						// Person
 						'P57' => 'director',
 						'P161' => 'actor',
 						'P162' => 'producer',
-						'P1040' => 'editor'
+						'P1040' => 'editor',
+						'P58' => 'author',
+						// Organization
+						'P272' => 'creator',
+					)
+				),
+				new MultiTextReferencer(
+					$this->wikibaseFactory,
+					array(
+						'P136' => 'genre',
+					),
+					array(
+						'P136' => array(
+							'Q188473' => '/action( ?film)?/i',
+							'Q319221' => '/adventure( ?film)?/i',
+							'Q471839' => '/(Science Fiction|Sci-Fi)( ?film)?/i',
+							'Q157394' => '/fantasy( ?film)?/i',
+						),
 					)
 				)
 			),
@@ -175,6 +193,7 @@ class WikidataReferencerCommand extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$output->writeln( "THIS SCRIPT IS IN DEVELOPMENT (It's your fault if something goes wrong!)" );
+		$output->writeln( "Temp file: " . $this->getProcessedListPath() );
 
 		// Get options
 		$user = $input->getOption( 'user' );
@@ -276,9 +295,6 @@ class WikidataReferencerCommand extends Command {
 				$output->write( count( $linkRequests ) . ' links: ' );
 			}
 
-			// We make one of these per item we are investigating (no point in keeping everything in mem for ever...)
-			$inMemoryEntityLookup = new InMemoryEntityLookup();
-
 			// Make a bunch of requests and act on the responses
 			foreach( array_chunk( $linkRequests, 100 ) as $linkRequestChunk ) {
 				$linkResponses = Pool::batch(
@@ -304,7 +320,7 @@ class WikidataReferencerCommand extends Command {
 							if( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) )
 								foreach( $this->referencerMap[$type] as $referencer ) {
 									/** @var Referencer $referencer */
-									$addedReferences = $referencer->addReferences( $microData, $item, $link, $inMemoryEntityLookup );
+									$addedReferences = $referencer->addReferences( $microData, $item, $link );
 									$output->write( str_repeat( 'R', $addedReferences ) );
 								}
 						}
