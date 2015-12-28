@@ -12,7 +12,6 @@
 	"require": {
 		"symfony/console": "~3.0",
 		"symfony/yaml": "~3.0",
-		"zendframework/zend-config": "~2.5",
 		"addwiki/mediawiki-commands" : "dev-master",
 		"addwiki/wikimedia-commands" : "dev-master"
 	},
