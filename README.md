@@ -20,9 +20,9 @@ You can build a phar of this repo using https://github.com/clue/phar-composer
 
 Download and install using composer:
 
-    composer require "addwiki/addwiki:dev-master"
+    composer create-project addwiki/addwiki addwiki dev-master
 
-The binary can be found at `./vendor/bin/aww`.
+The binary can be found at `./addwiki/aww`.
 
 ## Example Usage
 
