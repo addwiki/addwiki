@@ -8,6 +8,9 @@ Welcome to the addwiki documentation
 
 The addwiki project is split into multiple libraries which can be seen below.
 
+.. toctree::
+   :maxdepth: 2
+
 mediawiki-api-base_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. _mediawiki-api-base: https://addwiki.readthedocs.io/projects/mediawiki-api-base
