@@ -18,10 +18,7 @@
 	"repositories": [
 		{
 			"type": "path",
-			"url": "libs/*",
-			"options": {
-				"symlink": false
-			}
+			"url": "libs/*"
 		}
 	],
 	"minimum-stability":"dev",

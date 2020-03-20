@@ -51,15 +51,13 @@ class Purge extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$pageIdentifiers = array();
-		if( $input->hasOption( 'pageid' ) ) {
-			foreach( $input->getOption( 'pageid' ) as $pageId ) {
-				$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );
-			}
-		} elseif( $input->hasOption( 'title' ) ) {
-			foreach( $input->getOption( 'title' ) as $title ) {
-				$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
-			}
-		} else {
+		foreach( $input->getOption( 'pageid' ) as $pageId ) {
+			$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );
+		}
+		foreach( $input->getOption( 'title' ) as $title ) {
+			$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
+		}
+		if( empty( $pageIdentifiers ) ) {
 			throw new \RuntimeException( 'No titles or pageids were set!' );
 		}
 
