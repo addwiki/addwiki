@@ -1,0 +1,23 @@
+{
+	"name": "addwiki/topic-covid-19",
+	"type": "library",
+	"description": "A library containing code related to the Covid-19 Topic",
+	"version": "0.1-dev",
+	"keywords": ["Wikibase"],
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Addshore"
+		}
+	],
+	"require": {
+		"smalot/pdfparser": "0.14.0"
+	},
+	"minimum-stability":"dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"Addwiki\\Topics\\Covid19\\": "src/"
+		}
+	}
+}
