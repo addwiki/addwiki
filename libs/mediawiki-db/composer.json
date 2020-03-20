@@ -1,0 +1,27 @@
+{
+	"name": "addwiki/mediawiki-db",
+	"type": "library",
+	"description": "A Mediawiki db lib",
+	"keywords": ["Mediawiki"],
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Addshore"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Mediawiki\\Db\\": "src/"
+		}
+	},
+	"require": {
+		"addwiki/mediawiki-datamodel": "~0.6",
+		"addwiki/mediawiki-services": "~0.1@dev",
+		"lichtner/fluentpdo": "1.0.0"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1.x-dev"
+		}
+	}
+}
