@@ -63,7 +63,7 @@ class RestoreRevisions extends Command {
 				null,
 				InputOption::VALUE_OPTIONAL,
 				'Mark edits as bot',
-				true
+				false
 			)->addOption(
 				'summary',
 				null,
