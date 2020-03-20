@@ -18,10 +18,5 @@
 		"addwiki/mediawiki-datamodel": "~0.7.0|~0.8.0",
 		"addwiki/mediawiki-services": "~0.1@dev",
 		"lichtner/fluentpdo": "1.0.0"
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "0.1.x-dev"
-		}
 	}
 }
