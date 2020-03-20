@@ -222,7 +222,7 @@ class ImportWHOReportValueCommand extends Command {
 				'Either found no, or too many location items: ' . json_encode( $locationItemIds )
 			);
 		}
-		$locationItemId = new ItemId( $searchResultIds[0] );
+		$locationItemId = new ItemId( $locationItemIds[0] );
 		// Sandbox...
 		//$locationItemId = new ItemId( 'Q4115189' );
 

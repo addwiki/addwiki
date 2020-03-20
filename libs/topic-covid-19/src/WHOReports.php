@@ -14,7 +14,7 @@ class WHOReports {
 	public function getReportForId( $id ) {
 		$this->ensureIndexIsGenerated();
 		if ( !array_key_exists( $id, $this->idIndex ) ) {
-			return null;
+			throw new \RuntimeException( 'No such report' );
 		}
 
 		$pdfName = $this->idIndex[$id];
@@ -27,7 +27,7 @@ class WHOReports {
 	public function getReportForDate( $date ) {
 		$this->ensureIndexIsGenerated();
 		if ( !array_key_exists( $date, $this->dateIndex ) ) {
-			return null;
+			throw new \RuntimeException( 'No such report' );
 		}
 
 		$pdfName = $this->dateIndex[$date];
