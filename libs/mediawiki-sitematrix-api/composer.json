@@ -10,7 +10,7 @@
 		}
 	],
 	"require": {
-		"addwiki/mediawiki-api-base": "~2.0-dev"
+		"addwiki/mediawiki-api-base": "~2.0"
 	},
 	"autoload": {
 		"psr-4": {

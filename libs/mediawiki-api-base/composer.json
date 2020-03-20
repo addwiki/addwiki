@@ -2,6 +2,7 @@
 	"name": "addwiki/mediawiki-api-base",
 	"type": "library",
 	"description": "A basic Mediawiki api base library",
+	"version": "2.5.0",
 	"keywords": ["Mediawiki"],
 	"license": "GPL-2.0+",
 	"authors": [

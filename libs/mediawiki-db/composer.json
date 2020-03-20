@@ -15,7 +15,7 @@
 		}
 	},
 	"require": {
-		"addwiki/mediawiki-datamodel": "~0.6",
+		"addwiki/mediawiki-datamodel": "~0.7.0|~0.8.0",
 		"addwiki/mediawiki-services": "~0.1@dev",
 		"lichtner/fluentpdo": "1.0.0"
 	},

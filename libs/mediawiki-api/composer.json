@@ -2,6 +2,7 @@
 	"name": "addwiki/mediawiki-api",
 	"type": "library",
 	"description": "A MediaWiki API library",
+	"version": "0.7.3",
 	"keywords": ["Mediawiki"],
 	"license": "GPL-2.0+",
 	"authors": [

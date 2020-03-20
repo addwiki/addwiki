@@ -2,6 +2,7 @@
 	"name": "addwiki/mediawiki-datamodel",
 	"type": "library",
 	"description": "A Mediawiki datamodel",
+	"version": "0.8.0",
 	"keywords": ["Mediawiki"],
 	"license": "GPL-2.0+",
 	"authors": [

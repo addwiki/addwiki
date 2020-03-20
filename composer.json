@@ -12,9 +12,18 @@
 	"require": {
 		"symfony/console": "~3.0",
 		"symfony/yaml": "~3.0",
-		"addwiki/mediawiki-commands" : "dev-master",
-		"addwiki/wikimedia-commands" : "dev-master"
+		"addwiki/mediawiki-commands" : "~0.1",
+		"addwiki/wikimedia-commands" : "~0.1"
 	},
+	"repositories": [
+		{
+			"type": "path",
+			"url": "libs/*",
+			"options": {
+				"symlink": false
+			}
+		}
+	],
 	"minimum-stability":"dev",
 	"prefer-stable": true,
 	"autoload": {
