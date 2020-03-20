@@ -3,6 +3,10 @@ Release Notes
 
 These are the release notes for [mediawiki-api](http://addwiki.readthedocs.io/projects/mediawiki-api/).
 
+# Version 0.7.4
+
+* Make `PagePurger::purge` purge `Page` objects that only have a title and no pageid
+
 # Version 0.7.3 (14th January 2020)
 
 * Installable with addwiki/mediawiki-datamodel:0.8
