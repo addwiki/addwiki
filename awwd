@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+docker run --rm -it -v "/$(pwd)"://usr/src/myapp -w //usr/src/myapp php:7.4-cli ./aww $@
