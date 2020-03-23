@@ -1,0 +1,30 @@
+{
+	"name": "addwiki/addwiki",
+	"type": "library",
+	"description": "A Mediawiki CLI package",
+	"version": "0.1-dev",
+	"keywords": ["Mediawiki"],
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Addshore"
+		}
+	],
+	"require": {
+		"symfony/console": "~4.0",
+		"symfony/yaml": "~4.0",
+		"addwiki/mediawiki-commands" : "~0.1",
+		"addwiki/wikimedia-commands" : "~0.1"
+	},
+	"minimum-stability":"dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"Addwiki\\": "src/"
+		}
+	},
+	"bin": [
+		"aww",
+		"awwd"
+	]
+}

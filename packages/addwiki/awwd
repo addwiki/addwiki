@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#
+# Expect to be run from within ./vendor/bin/awwd
+
+docker run --rm -it -v "/$(dirname $0)/../.."://usr/src/myapp -w //usr/src/myapp php:7.4-cli ./vendor/bin/aww "$@"

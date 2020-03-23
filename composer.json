@@ -1,7 +1,7 @@
 {
-	"name": "addwiki/addwiki",
-	"type": "library",
-	"description": "A Mediawiki bot lib",
+	"name": "addwiki/monorepo",
+	"type": "metapackage",
+	"description": "Addwiki Monorepo",
 	"keywords": ["Mediawiki"],
 	"license": "GPL-2.0+",
 	"authors": [
@@ -10,25 +10,14 @@
 		}
 	],
 	"require": {
-		"symfony/console": "~4.0",
-		"symfony/yaml": "~4.0",
-		"addwiki/mediawiki-commands" : "~0.1",
-		"addwiki/wikimedia-commands" : "~0.1"
+		"addwiki/addwiki": "~0.1"
 	},
 	"repositories": [
 		{
 			"type": "path",
-			"url": "libs/*"
+			"url": "packages/*"
 		}
 	],
 	"minimum-stability":"dev",
-	"prefer-stable": true,
-	"autoload": {
-		"psr-4": {
-			"Addwiki\\": "src/"
-		}
-	},
-	"bin": [
-		"aww"
-	]
+	"prefer-stable": true
 }
