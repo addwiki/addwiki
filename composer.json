@@ -2,7 +2,9 @@
 	"name": "addwiki/monorepo",
 	"type": "metapackage",
 	"description": "Addwiki Monorepo",
-	"keywords": ["Mediawiki"],
+	"keywords": [
+		"Mediawiki"
+	],
 	"license": "GPL-2.0+",
 	"authors": [
 		{
@@ -12,12 +14,18 @@
 	"require": {
 		"addwiki/addwiki": "~0.1"
 	},
+	"require-dev": {
+		"ergebnis/composer-normalize": "^2.3"
+	},
 	"repositories": [
 		{
 			"type": "path",
 			"url": "packages/*"
 		}
 	],
-	"minimum-stability":"dev",
-	"prefer-stable": true
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+		"normalize:all": "bash build/normalizeAll.sh"
+	}
 }

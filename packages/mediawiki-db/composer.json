@@ -2,21 +2,23 @@
 	"name": "addwiki/mediawiki-db",
 	"type": "library",
 	"description": "A Mediawiki db lib",
-	"keywords": ["Mediawiki"],
+	"keywords": [
+		"Mediawiki"
+	],
 	"license": "GPL-2.0+",
 	"authors": [
 		{
 			"name": "Addshore"
 		}
 	],
+	"require": {
+		"addwiki/mediawiki-datamodel": "~0.7.0 || ~0.8.0",
+		"addwiki/mediawiki-services": "~0.1@dev",
+		"lichtner/fluentpdo": "1.0.0"
+	},
 	"autoload": {
 		"psr-4": {
 			"Mediawiki\\Db\\": "src/"
 		}
-	},
-	"require": {
-		"addwiki/mediawiki-datamodel": "~0.7.0|~0.8.0",
-		"addwiki/mediawiki-services": "~0.1@dev",
-		"lichtner/fluentpdo": "1.0.0"
 	}
 }
