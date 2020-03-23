@@ -205,6 +205,12 @@ class ImportWHOReportValueCommand extends Command {
 		$locationSearchStringPrefixes = [
 			"2020 coronavirus pandemic in ",
 			"2020 coronavirus outbreak in ",
+			"2020 coronavirus outbreak in the ",
+			"2020 coronavirus pandemic in the ",
+			"COVID-19 outbreak in ",
+			"COVID-19 pandemic in ",
+			"COVID-19 outbreak in the ",
+			"COVID-19 pandemic in the ",
 		];
 		$locationItemIds = [];
 		foreach( $locationSearchStringPrefixes as $prefix ) {
