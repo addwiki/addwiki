@@ -12,7 +12,19 @@
 		}
 	],
 	"require": {
-		"addwiki/addwiki": "~0.1"
+		"addwiki/addwiki": "~0.1",
+		"addwiki/mediawiki-datamodel": "*",
+		"addwiki/mediawiki-api-base": "*",
+		"addwiki/mediawiki-api": "*",
+		"addwiki/topic-covid-19": "*",
+		"addwiki/mediawiki-db": "*",
+		"addwiki/mediawiki-commands": "*",
+		"addwiki/mediawiki-flow-api": "*",
+		"addwiki/mediawiki-sitematrix-api": "*",
+		"addwiki/wikibase-api": "*",
+		"addwiki/wikimedia": "*",
+		"addwiki/wikimedia-commands": "*",
+		"addwiki/wikibase-commands": "*"
 	},
 	"require-dev": {
 		"ergebnis/composer-normalize": "^2.3"
