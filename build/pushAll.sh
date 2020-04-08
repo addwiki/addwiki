@@ -13,13 +13,14 @@ push_repo() {
   # Make sure we have the git repo for the package
   if [ -d "${GIT_REPO_PATH}/.git" ]; then
     # Make sure the repo is up to date and clean
+    echo -e "${YELL}${PACKAGE} 1) Reseting & Fetching repo${NC}"
     cd ${GIT_REPO_PATH}
     git fetch --depth 1 --no-tags origin master
     git checkout master
     git reset --hard origin/master
   else
     # Clone the repo that we will be pushing to in as slim a form as possible (removing anything previously there)
-    echo -e "${YELL}${PACKAGE} 1) Cleaning & Cloning repo into${NC}"
+    echo -e "${YELL}${PACKAGE} 1) Cleaning & Cloning repo${NC}"
     cd ${DIR_ROOT}
     rm -rf ${GIT_REPO_PATH}
     git clone --depth 1 git@github.com:addwiki/${PACKAGE}.git --branch master --no-tags --single-branch ${GIT_REPO_PATH}

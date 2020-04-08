@@ -1,5 +1,5 @@
 {
-	"name": "addwiki/addwiki",
+	"name": "addwiki/addwiki-cli",
 	"type": "library",
 	"description": "A Mediawiki CLI package",
 	"keywords": [

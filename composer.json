@@ -1,6 +1,6 @@
 {
-	"name": "addwiki/monorepo",
-	"type": "metapackage",
+	"name": "addwiki/addwiki",
+	"type": "project",
 	"description": "Addwiki Monorepo",
 	"keywords": [
 		"Mediawiki"
@@ -12,7 +12,7 @@
 		}
 	],
 	"require": {
-		"addwiki/addwiki": "~0.1",
+		"addwiki/addwiki-cli": "~0.1",
 		"addwiki/mediawiki-datamodel": "*",
 		"addwiki/mediawiki-api-base": "*",
 		"addwiki/mediawiki-api": "*",
@@ -42,6 +42,8 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"scripts": {
+		"aww": "aww",
+		"awwd": "echo Please run ./vendor/bin/awwd directly",
 		"normalize:all": "bash build/normalizeAll.sh",
 		"release:needed": "composer show addwiki/* | grep \"\\-dev\""
 	}
