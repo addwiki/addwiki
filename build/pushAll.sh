@@ -14,14 +14,14 @@ push_repo() {
   if [ -d "${GIT_REPO_PATH}/.git" ]; then
     # Make sure the repo is up to date and clean
     echo -e "${YELL}${PACKAGE} 1) Reseting & Fetching repo${NC}"
-    cd ${GIT_REPO_PATH}
+    cd "${GIT_REPO_PATH}" || return # quiet fail of the cd
     git fetch --depth 1 --no-tags origin master
     git checkout master
     git reset --hard origin/master
   else
     # Clone the repo that we will be pushing to in as slim a form as possible (removing anything previously there)
     echo -e "${YELL}${PACKAGE} 1) Cleaning & Cloning repo${NC}"
-    cd ${DIR_ROOT}
+    cd "${DIR_ROOT}" || return # quiet fail of the cd
     rm -rf ${GIT_REPO_PATH}
     git clone --depth 1 git@github.com:addwiki/${PACKAGE}.git --branch master --no-tags --single-branch ${GIT_REPO_PATH}
     if [ $? -ne 0 ]; then
@@ -32,14 +32,14 @@ push_repo() {
 
   # Remove all files currently in the repo except the .git directory and copy from the mono repo
   echo -e "${YELL}${PACKAGE} 2) Copying mono repo code to build git repo${NC}"
-  cd ${GIT_REPO_PATH}
+  cd "${GIT_REPO_PATH}" || return # quiet fail of the cd
   ls -AQ | grep -v "\"\.git\"$" | xargs rm -rf
-  cd ${DIR_START_PWD}
+  cd "${DIR_START_PWD}" || return # quiet fail of the cd
   cp -r ${PACKAGE_PATH} ${DIR_GIT}
 
   # Make a git commit
   echo -e "${YELL}${PACKAGE} 3) Trying to make a commit${NC}"
-  cd ${GIT_REPO_PATH}
+  cd "${GIT_REPO_PATH}" || return # quiet fail of the cd
   git add .
   git commit -a -m "MonoRepo split at ${SCRIPT_START_TIME}"
   # If we actually made a commit
