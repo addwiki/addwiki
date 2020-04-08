@@ -1,4 +1,5 @@
 .idea
 vendor
+build/git
 composer.lock
 test.php

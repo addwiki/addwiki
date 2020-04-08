@@ -33,6 +33,10 @@
 		{
 			"type": "path",
 			"url": "packages/*"
+		},
+		{
+			"type": "path",
+			"url": "packages-dev/*"
 		}
 	],
 	"minimum-stability": "dev",
