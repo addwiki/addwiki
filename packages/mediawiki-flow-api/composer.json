@@ -5,6 +5,7 @@
 	"keywords": [
 		"Mediawiki"
 	],
+	"version": "0.1-dev",
 	"license": "GPL-2.0+",
 	"authors": [
 		{

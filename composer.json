@@ -13,21 +13,23 @@
 	],
 	"require": {
 		"addwiki/addwiki-cli": "~0.1",
-		"addwiki/mediawiki-datamodel": "*",
-		"addwiki/mediawiki-api-base": "*",
-		"addwiki/mediawiki-api": "*",
-		"addwiki/topic-covid-19": "*",
-		"addwiki/mediawiki-db": "*",
-		"addwiki/mediawiki-commands": "*",
-		"addwiki/mediawiki-flow-api": "*",
-		"addwiki/mediawiki-sitematrix-api": "*",
-		"addwiki/wikibase-api": "*",
-		"addwiki/wikimedia": "*",
-		"addwiki/wikimedia-commands": "*",
-		"addwiki/wikibase-commands": "*"
+		"addwiki/mediawiki-datamodel": "0.8.*",
+		"addwiki/mediawiki-api-base": "2.5.*",
+		"addwiki/mediawiki-api": "0.7.4-dev",
+		"addwiki/topic-covid-19": "0.1-dev",
+		"addwiki/mediawiki-db": "0.1-dev",
+		"addwiki/mediawiki-commands": "0.1-dev",
+		"addwiki/mediawiki-flow-api": "0.1-dev",
+		"addwiki/mediawiki-sitematrix-api": "0.1-dev",
+		"addwiki/wikibase-api": "0.8.0-dev",
+		"addwiki/wikimedia": "0.1-dev",
+		"addwiki/wikimedia-commands": "0.1-dev",
+		"addwiki/wikibase-commands": "0.1-dev",
+		"ext-json": "*"
 	},
 	"require-dev": {
-		"ergebnis/composer-normalize": "^2.3"
+		"ergebnis/composer-normalize": "^2.3",
+		"kevinlebrun/colors.php": "1.0.*"
 	},
 	"repositories": [
 		{
@@ -45,6 +47,7 @@
 		"aww": "aww",
 		"awwd": "echo Please run ./vendor/bin/awwd directly",
 		"normalize:all": "bash build/normalizeAll.sh",
-		"release:needed": "composer show addwiki/* | grep \"\\-dev\""
+		"release:needed": "composer show addwiki/* | grep \"\\-dev\"",
+		"post-update-cmd": "php ./build/versionCheck.php"
 	}
 }
