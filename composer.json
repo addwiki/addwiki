@@ -39,6 +39,6 @@
 	"prefer-stable": true,
 	"scripts": {
 		"normalize:all": "bash build/normalizeAll.sh",
-		"release:needed": "composer show addwiki/* | grep \"\\-dev\"",
+		"release:needed": "composer show addwiki/* | grep \"\\-dev\""
 	}
 }
