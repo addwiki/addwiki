@@ -21,7 +21,7 @@
 		"addwiki/mediawiki-commands": "0.1-dev",
 		"addwiki/mediawiki-flow-api": "0.1-dev",
 		"addwiki/mediawiki-sitematrix-api": "0.1-dev",
-		"addwiki/wikibase-api": "0.8.0-dev",
+		"addwiki/wikibase-api": "0.8.1",
 		"addwiki/wikimedia": "0.1-dev",
 		"addwiki/wikimedia-commands": "0.1-dev",
 		"addwiki/wikibase-commands": "0.1-dev",
