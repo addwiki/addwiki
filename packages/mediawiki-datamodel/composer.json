@@ -9,6 +9,9 @@
             "name": "Addshore"
         }
     ],
+    "scripts": {
+        "test": "echo \"No tests yet!\""
+    },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^0.9.2",
         "mediawiki/mediawiki-codesniffer": "^13.0",
@@ -28,5 +31,7 @@
         "branch-alias": {
             "dev-master": "2.6-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
