@@ -9,6 +9,9 @@
             "name": "Addshore"
         }
     ],
+    "scripts": {
+        "test": "echo \"No tests yet!\""
+    },
     "require": {
         "addwiki/mediawiki-api-base": "^2.6",
         "addwiki/mediawiki-datamodel": "^2.6"
@@ -22,5 +25,7 @@
         "branch-alias": {
             "dev-master": "2.6-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
