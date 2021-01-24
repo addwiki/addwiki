@@ -1,32 +1,28 @@
 {
-	"name": "addwiki/addwiki-cli",
-	"type": "library",
-	"description": "A Mediawiki CLI package",
-	"keywords": [
-		"Mediawiki"
-	],
-	"version": "0.1-dev",
-	"license": "GPL-2.0+",
-	"authors": [
-		{
-			"name": "Addshore"
-		}
-	],
-	"require": {
-		"addwiki/mediawiki-commands": "~0.1",
-		"addwiki/wikimedia-commands": "~0.1",
-		"symfony/console": "~4.0",
-		"symfony/yaml": "~4.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"Addwiki\\": "src/"
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"bin": [
-		"aww",
-		"awwd"
-	]
+    "name": "addwiki/addwiki-cli",
+    "type": "library",
+    "description": "A Mediawiki CLI package",
+    "keywords": ["Mediawiki"],
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Addshore"
+        }
+    ],
+    "require": {
+        "addwiki/mediawiki-commands": "^2.0",
+        "addwiki/wikimedia-commands": "^2.0",
+        "symfony/console": "~4.0",
+        "symfony/yaml": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Addwiki\\": "src/"
+        }
+    },
+    "prefer-stable": true,
+    "bin": [
+        "aww",
+        "awwd"
+    ]
 }
