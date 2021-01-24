@@ -56,6 +56,11 @@ jobs:
 
             -   run: composer update --no-progress --ansi --working-dir packages/${{ matrix.package }}
 
+            -   name: Run CI docker-compose if present
+                run: '(test -f packages/${{ matrix.package }}/docker-compose-ci.yml && docker-compose --project-directory packages/${{ matrix.package }} --file packages/${{ matrix.package }}/docker-compose-ci.yml up -d) || echo No docker-compose-ci.yml, skipping step'
+            -   name: Wait for docker-compose to be ready (if needed)
+                run: '(test -f packages/${{ matrix.package }}/build/docker-compose-ci-wait.sh && packages/${{ matrix.package }}/build/docker-compose-ci-wait.sh) || echo No docker-compose-ci-wait.sh, not waiting'
+
             -
                 working-directory: packages/${{ matrix.package }}
                 run: composer test
