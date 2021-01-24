@@ -1,0 +1,12 @@
+{
+  "name": "addwiki",
+  "version": "0.0.0",
+  "scripts": {
+    "docs:dev": "vuepress dev --no-clear-screen docs",
+    "docs:build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addwiki/addwiki.git"
+  }
+}
