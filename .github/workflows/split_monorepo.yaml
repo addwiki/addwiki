@@ -6,8 +6,6 @@ on:
     push:
         branches:
             - master
-            # Remove me once no longer working on branch...
-            - monoRepo-builder
 
         # see https://github.community/t/how-to-run-github-actions-workflow-only-for-new-tags/16075/10?u=tomasvotruba
         tags:
