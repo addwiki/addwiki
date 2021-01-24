@@ -4,7 +4,7 @@ On Packagist:
 [![Latest Stable Version](https://poser.pugx.org/addwiki/addwiki/version.png)](https://packagist.org/packages/addwiki/addwiki)
 [![Download count](https://poser.pugx.org/addwiki/addwiki/d/total.png)](https://packagist.org/packages/addwiki/addwiki)
 
-Issue tracker: https://phabricator.wikimedia.org/project/profile/1490/
+Issue tracker: https://github.com/addwiki/addwiki/issues
 
 ## Installation
 

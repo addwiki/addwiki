@@ -1,1 +1,3 @@
-Things to make working with addwiki on Wikimedia sites easier.
+# WIP wikimedia
+
+Issue tracker: https://github.com/addwiki/addwiki/issues
