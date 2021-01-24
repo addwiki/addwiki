@@ -11,3 +11,4 @@ node_modules
 
 # Other stuff
 docs/.vuepress/dist
+**/.phpunit.result.cache
