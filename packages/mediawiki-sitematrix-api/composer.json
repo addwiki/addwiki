@@ -10,11 +10,16 @@
         }
     ],
     "require": {
-        "addwiki/mediawiki-api-base": "^2.0"
+        "addwiki/mediawiki-api-base": "^2.6"
     },
     "autoload": {
         "psr-4": {
             "Mediawiki\\Sitematrix\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
         }
     }
 }

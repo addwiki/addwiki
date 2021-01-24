@@ -23,5 +23,10 @@
         "psr-4": {
             "Mediawiki\\DataModel\\Test\\": "tests/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
     }
 }

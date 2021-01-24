@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": "^7.2",
-        "addwiki/mediawiki-api-base": "^2.0",
-        "addwiki/mediawiki-datamodel": "^2.0",
+        "addwiki/mediawiki-api-base": "^2.6",
+        "addwiki/mediawiki-datamodel": "^2.6",
         "serialization/serialization": "~3.2 || ~4.0",
         "wikibase/data-model": "~8.0",
         "wikibase/data-model-serialization": "~2.0",
@@ -31,6 +31,11 @@
     "autoload": {
         "psr-4": {
             "Wikibase\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
         }
     }
 }

@@ -3,7 +3,6 @@
     "type": "library",
     "description": "A library containing code related to the Covid-19 Topic",
     "keywords": ["Wikibase"],
-    "version": "0.1-dev",
     "license": "GPL-2.0+",
     "authors": [
         {
@@ -18,6 +17,9 @@
             "Addwiki\\Topics\\Covid19\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
+    }
 }

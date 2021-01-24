@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "addwiki/mediawiki-commands": "^2.0",
-        "addwiki/wikimedia-commands": "^2.0",
+        "addwiki/mediawiki-commands": "^2.6",
+        "addwiki/wikimedia-commands": "^2.6",
         "symfony/console": "~4.0",
         "symfony/yaml": "~4.0"
     },
@@ -20,9 +20,13 @@
             "Addwiki\\": "src/"
         }
     },
-    "prefer-stable": true,
     "bin": [
         "aww",
         "awwd"
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
+    }
 }

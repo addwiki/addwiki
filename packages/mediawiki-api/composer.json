@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "addwiki/mediawiki-api-base": "^2.0",
-        "addwiki/mediawiki-datamodel": "^2.0"
+        "addwiki/mediawiki-api-base": "^2.6",
+        "addwiki/mediawiki-datamodel": "^2.6"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^0.9.2",
@@ -38,5 +38,10 @@
             "parallel-lint . --exclude vendor",
             "phpcs -ps"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
     }
 }

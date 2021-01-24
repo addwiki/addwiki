@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "addwiki/mediawiki-api": "^2.0",
-        "addwiki/mediawiki-api-base": "^2.0",
-        "addwiki/mediawiki-datamodel": "^2.0",
+        "addwiki/mediawiki-api": "^2.6",
+        "addwiki/mediawiki-api-base": "^2.6",
+        "addwiki/mediawiki-datamodel": "^2.6",
         "symfony/console": "~4.0"
     },
     "autoload": {
@@ -23,5 +23,9 @@
             "addCommands.php"
         ]
     },
-    "prefer-stable": true
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
+    }
 }
