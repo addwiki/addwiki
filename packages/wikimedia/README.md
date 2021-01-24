@@ -1,0 +1,1 @@
+Things to make working with addwiki on Wikimedia sites easier.

@@ -1,0 +1,26 @@
+{
+    "name": "addwiki/mediawiki-flow-api",
+    "type": "library",
+    "description": "A Mediawiki Flow api lib",
+    "keywords": ["Mediawiki"],
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Addshore"
+        }
+    ],
+    "require": {
+        "addwiki/mediawiki-api-base": "^2.6",
+        "addwiki/mediawiki-datamodel": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mediawiki\\Flow\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6-dev"
+        }
+    }
+}

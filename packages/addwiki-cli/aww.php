@@ -10,11 +10,14 @@ ini_set( 'xdebug.max_nesting_level', 1000 );
 // global variable to allow registering additional commands
 // each callback should take a single parameter implementing ArrayAccess (the app config)
 $GLOBALS['awwCommands'] = array();
-
 if( file_exists( __DIR__ . '/../../autoload.php' ) ) {
     // addwiki is part of a composer installation
     require_once __DIR__ . '/../../autoload.php';
+} elseif ( file_exists( __DIR__ . '/../../vendor/autoload.php' ) ) {
+	// addwiki is part of the mono repo and symlinked..?
+	require_once __DIR__ . '/../../vendor/autoload.php';
 } else {
+	// addwiki is just compser installed as itself?
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
