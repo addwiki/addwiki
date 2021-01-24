@@ -18,7 +18,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // for "merge" command
     $parameters->set(Option::DATA_TO_APPEND, [
         ComposerJsonSection::REQUIRE_DEV => [
-            'phpunit/phpunit' => '~4.8.0 || ~5.3.0',
+            'phpunit/phpunit' => '~8',
         ],
     ]);
 };
