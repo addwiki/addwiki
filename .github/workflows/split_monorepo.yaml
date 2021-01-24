@@ -1,4 +1,6 @@
 name: Split Monorepo Dev-Master
+# Mainly copied from https://github.com/symplify/symplify/blob/master/.github/workflows/split_monorepo.yaml
+# per the advice at https://github.com/symplify/monorepo-builder
 
 on:
     push:
@@ -32,7 +34,7 @@ jobs:
             # get package json list
             -
                 id: output_data
-                run: echo "::set-output name=matrix::$(packages/monorepo-builder/bin/monorepo-builder packages-json)"
+                run: echo "::set-output name=matrix::$(vendor/bin/monorepo-builder packages-json)"
 
         # this step is needed, so the output gets to the next defined job
         outputs:
