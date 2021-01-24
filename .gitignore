@@ -8,3 +8,6 @@ composer.lock
 
 # Node
 node_modules
+
+# Other stuff
+docs/.vuepress/dist
