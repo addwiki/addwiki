@@ -1,4 +1,13 @@
+# IDEs
 .idea
+.vscode
+
+# Composer
 vendor
 composer.lock
-test.php
+
+# Node
+node_modules
+
+# Other stuff
+docs/.vuepress/dist

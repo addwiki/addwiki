@@ -1,0 +1,20 @@
+name: Vuepress Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: vuepress-deploy
+      uses: jenkey2011/vuepress-deploy@master
+      env:
+        ACCESS_TOKEN: ${{ secrets.CR_PAT }}
+        BUILD_SCRIPT: npm i && npm run docs:build
+        BUILD_DIR: docs/.vuepress/dist/
+        TARGET_REPO: addwiki/addwiki.github.io
+        TARGET_BRANCH: master
