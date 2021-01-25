@@ -45,7 +45,7 @@ class NamespaceInfo {
 	 * @param string $canonicalName
 	 * @param string $localName
 	 * @param string $caseHandling
-	 * @param string $defaultContentModel
+	 * @param string|null $defaultContentModel
 	 * @param array $aliases
 	 *
 	 * @throws InvalidArgumentException

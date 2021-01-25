@@ -17,7 +17,7 @@ class Page {
 	private $pageIdentifier;
 
 	/**
-	 * @param PageIdentifier $pageIdentifier
+	 * @param PageIdentifier|null $pageIdentifier
 	 * @param Revisions|null $revisions
 	 *
 	 * @throws InvalidArgumentException

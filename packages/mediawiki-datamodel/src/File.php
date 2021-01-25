@@ -16,8 +16,8 @@ class File extends Page {
 
 	/**
 	 * @param string $url
-	 * @param PageIdentifier $pageIdentifier
-	 * @param Revisions $revisions
+	 * @param PageIdentifier|null $pageIdentifier
+	 * @param Revisions|null $revisions
 	 */
 	public function __construct( $url, PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		parent::__construct( $pageIdentifier, $revisions );

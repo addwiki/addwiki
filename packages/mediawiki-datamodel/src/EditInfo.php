@@ -82,8 +82,8 @@ class EditInfo {
 	}
 
 		/**
-	 * @return int|null
-	 */
+		 * @return int|null
+		 */
 	public function getMaxlag() {
 		return $this->maxlag;
 	}
