@@ -22,7 +22,7 @@ class Page {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( PageIdentifier $pageIdentifier = null , Revisions $revisions = null ) {
+	public function __construct( PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		if ( is_null( $revisions ) ) {
 			$revisions = new Revisions();
 		}
