@@ -3,13 +3,12 @@
 namespace Mediawiki\DataModel\Test;
 
 use Mediawiki\DataModel\EditInfo;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\EditInfo
  * @author Addshore
  */
-class EditInfoTest extends PHPUnit_Framework_TestCase {
+class EditInfoTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -22,30 +21,30 @@ class EditInfoTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function provideValidConstruction() {
-		return array(
-			array( '', EditInfo::MINOR, EditInfo::BOT ),
-			array( '', EditInfo::MINOR, EditInfo::NOTBOT ),
-			array( '', EditInfo::NOTMINOR, EditInfo::BOT ),
-			array( '', EditInfo::NOTMINOR, EditInfo::NOTBOT ),
-			array( 'FOO', EditInfo::NOTMINOR, EditInfo::NOTBOT ),
-		);
+		return [
+		[ '', EditInfo::MINOR, EditInfo::BOT ],
+		[ '', EditInfo::MINOR, EditInfo::NOTBOT ],
+		[ '', EditInfo::NOTMINOR, EditInfo::BOT ],
+		[ '', EditInfo::NOTMINOR, EditInfo::NOTBOT ],
+		[ 'FOO', EditInfo::NOTMINOR, EditInfo::NOTBOT ],
+		];
 	}
 
 	/**
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $sum, $minor, $bot ) {
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 		new EditInfo( $sum, $minor, $bot );
 	}
 
 	public function provideInvalidConstruction() {
-		return array(
-			array( 1, 2, 3 ),
-			array( "foo", false, 3 ),
-			array( "foo", 3, false ),
-			array( array(), true, false ),
-		);
+		return [
+		[ 1, 2, 3 ],
+		[ "foo", false, 3 ],
+		[ "foo", 3, false ],
+		[ [], true, false ],
+		];
 	}
 
-} 
+}

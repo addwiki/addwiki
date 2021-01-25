@@ -4,6 +4,7 @@ namespace Mediawiki\DataModel;
 
 /**
  * Representation of a version of content
+ *
  * @author Addshore
  */
 class Revision {
@@ -46,11 +47,18 @@ class Revision {
 	 * @param string|null $user
 	 * @param string|null $timestamp
 	 */
-	public function __construct( Content $content, PageIdentifier $pageIdentifier = null, $revId = null, EditInfo $editInfo = null, $user = null, $timestamp = null ) {
-		if( is_null( $editInfo ) ) {
+	public function __construct(
+		Content $content,
+		PageIdentifier $pageIdentifier = null,
+		$revId = null,
+		EditInfo $editInfo = null,
+		$user = null,
+		$timestamp = null
+		) {
+		if ( is_null( $editInfo ) ) {
 			$editInfo = new EditInfo();
 		}
-		if( is_null( $pageIdentifier ) ) {
+		if ( is_null( $pageIdentifier ) ) {
 			$pageIdentifier = new PageIdentifier();
 		}
 		$this->content = $content;

@@ -7,6 +7,7 @@ use RuntimeException;
 
 /**
  * Represents a collection or Page classes
+ *
  * @author Addshore
  */
 class Pages {
@@ -19,8 +20,8 @@ class Pages {
 	/**
 	 * @param Page[] $pages
 	 */
-	public function __construct( $pages = array() ) {
-		$this->pages = array();
+	public function __construct( $pages = [] ) {
+		$this->pages = [];
 		$this->addPages( $pages );
 	}
 
@@ -30,13 +31,13 @@ class Pages {
 	 * @throws InvalidArgumentException
 	 */
 	public function addPages( $pages ) {
-		if( !is_array( $pages ) && !$pages instanceof Pages ) {
+		if ( !is_array( $pages ) && !$pages instanceof Pages ) {
 			throw new InvalidArgumentException( '$pages needs to either be an array or a Pages object' );
 		}
-		if( $pages instanceof Pages ) {
+		if ( $pages instanceof Pages ) {
 			$pages = $pages->toArray();
 		}
-		foreach( $pages as $page ) {
+		foreach ( $pages as $page ) {
 			$this->addPage( $page );
 		}
 	}
@@ -53,7 +54,7 @@ class Pages {
 	 *
 	 * @return bool
 	 */
-	public function hasPageWithId( $id ){
+	public function hasPageWithId( $id ) {
 		return array_key_exists( $id, $this->pages );
 	}
 
@@ -62,7 +63,7 @@ class Pages {
 	 *
 	 * @return bool
 	 */
-	public function hasPage( Page $page ){
+	public function hasPage( Page $page ) {
 		return array_key_exists( $page->getId(), $this->pages );
 	}
 
@@ -70,12 +71,11 @@ class Pages {
 	 * @return Page|null Page or null if there is no page
 	 */
 	public function getLatest() {
-		if( empty( $this->pages ) ) {
+		if ( empty( $this->pages ) ) {
 			return null;
 		}
 		return $this->pages[ max( array_keys( $this->pages ) ) ];
 	}
-
 
 	/**
 	 * @param int $pageid
@@ -83,8 +83,8 @@ class Pages {
 	 * @throws RuntimeException
 	 * @return Page
 	 */
-	public function get( $pageid ){
-		if( $this->hasPageWithId( $pageid ) ){
+	public function get( $pageid ) {
+		if ( $this->hasPageWithId( $pageid ) ) {
 			return $this->pages[$pageid];
 		}
 		throw new RuntimeException( 'No such page loaded in Pages object' );

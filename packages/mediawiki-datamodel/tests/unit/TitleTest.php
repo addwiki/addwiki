@@ -8,7 +8,7 @@ use Mediawiki\DataModel\Title;
  * @covers \Mediawiki\DataModel\Title
  * @author Addshore
  */
-class TitleTest extends \PHPUnit_Framework_TestCase {
+class TitleTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -21,30 +21,30 @@ class TitleTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function provideValidConstruction() {
-		return array(
-			array( 'fooo', 0 ),
-			array( 'Foo:Bar', 15 ),
-			array( 'FooBar:Bar', 9999 ),
-		);
+		return [
+		[ 'fooo', 0 ],
+		[ 'Foo:Bar', 15 ],
+		[ 'FooBar:Bar', 9999 ],
+		];
 	}
 
 	/**
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $title, $ns ) {
-		$this->setExpectedException( 'InvalidArgumentException' );
+		$this->expectException( 'InvalidArgumentException' );
 		new Title( $title, $ns );
 	}
 
 	public function provideInvalidConstruction() {
-		return array(
-			array( array(), array() ),
-			array( 'foo', array() ),
-			array( array(), 1 ),
-			array( null, 1 ),
-			array( null, null ),
-			array( 'foo', null ),
-		);
+		return [
+		[ [], [] ],
+		[ 'foo', [] ],
+		[ [], 1 ],
+		[ null, 1 ],
+		[ null, null ],
+		[ 'foo', null ],
+		];
 	}
 
 	public function testJsonRoundTrip() {
@@ -53,4 +53,4 @@ class TitleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( $title, Title::jsonDeserialize( $json ) );
 	}
 
-} 
+}

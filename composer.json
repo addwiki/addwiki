@@ -57,7 +57,10 @@
                 "packages/mediawiki-api/tests/integration",
                 "packages/mediawiki-api/tests/unit"
             ],
-            "Mediawiki\\DataModel\\Test\\": "packages/mediawiki-datamodel/tests/"
+            "Mediawiki\\DataModel\\Test\\": [
+                "packages/mediawiki-datamodel/tests/",
+                "packages/mediawiki-datamodel/tests/unit/"
+            ]
         }
     },
     "replace": {

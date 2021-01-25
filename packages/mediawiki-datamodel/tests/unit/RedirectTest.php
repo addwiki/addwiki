@@ -9,7 +9,7 @@ use Mediawiki\DataModel\Title;
  * @covers \Mediawiki\DataModel\Redirect
  * @author Addshore
  */
-class RedirectTest extends \PHPUnit_Framework_TestCase {
+class RedirectTest extends \PHPUnit\Framework\TestCase {
 
 	public function testJsonRoundTrip() {
 		$title = new Redirect( new Title( 'Foo', 12 ), new Title( 'bar', 13 ) );

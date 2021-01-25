@@ -10,7 +10,17 @@
         }
     ],
     "scripts": {
-        "test": "echo \"No tests yet!\""
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "phpunit": "phpunit",
+        "phpunit-coverage": "phpunit --coverage-clover=coverage.clover",
+        "phpunit-integration": "phpunit --testsuite integration",
+        "phpunit-unit": "phpunit --testsuite unit",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ]
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^0.9.2",
@@ -24,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Mediawiki\\DataModel\\Test\\": "tests/"
+            "Mediawiki\\DataModel\\Test\\": "tests/unit/"
         }
     },
     "extra": {

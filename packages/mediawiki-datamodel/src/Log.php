@@ -138,16 +138,16 @@ class Log implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 */
 	public function jsonSerialize() {
-		return array(
-			'id' => $this->id,
-			'type' => $this->type,
-			'action' => $this->action,
-			'timestamp' => $this->timestamp,
-			'user' => $this->user,
-			'pageidentifier' => $this->pageIdentifier,
-			'comment' => $this->comment,
-			'details' => $this->details,
-		);
+		return [
+		'id' => $this->id,
+		'type' => $this->type,
+		'action' => $this->action,
+		'timestamp' => $this->timestamp,
+		'user' => $this->user,
+		'pageidentifier' => $this->pageIdentifier,
+		'comment' => $this->comment,
+		'details' => $this->details,
+		];
 	}
 
 	/**
@@ -157,14 +157,14 @@ class Log implements JsonSerializable {
 	 */
 	public static function jsonDeserialize( $json ) {
 		return new self(
-			$json['id'],
-			$json['type'],
-			$json['action'],
-			$json['timestamp'],
-			$json['user'],
-			PageIdentifier::jsonDeserialize( $json['pageidentifier'] ),
-			$json['comment'],
-			$json['details']
+		$json['id'],
+		$json['type'],
+		$json['action'],
+		$json['timestamp'],
+		$json['user'],
+		PageIdentifier::jsonDeserialize( $json['pageidentifier'] ),
+		$json['comment'],
+		$json['details']
 		);
 	}
 

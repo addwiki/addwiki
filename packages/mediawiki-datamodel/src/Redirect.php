@@ -32,10 +32,10 @@ class Redirect implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 */
 	public function jsonSerialize() {
-		return array(
-			'from' => $this->from->jsonSerialize(),
-			'to' => $this->to->jsonSerialize(),
-		);
+		return [
+		'from' => $this->from->jsonSerialize(),
+		'to' => $this->to->jsonSerialize(),
+		];
 	}
 
 	/**
@@ -45,8 +45,8 @@ class Redirect implements JsonSerializable {
 	 */
 	public static function jsonDeserialize( $json ) {
 		return new self(
-			Title::jsonDeserialize( $json['from'] ),
-			Title::jsonDeserialize( $json['to'] )
+		Title::jsonDeserialize( $json['from'] ),
+		Title::jsonDeserialize( $json['to'] )
 		);
 	}
 

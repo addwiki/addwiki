@@ -9,7 +9,7 @@ use Mediawiki\DataModel\PageIdentifier;
  * @covers \Mediawiki\DataModel\File
  * @author Addshore
  */
-class FileTest extends \PHPUnit_Framework_TestCase {
+class FileTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -24,9 +24,9 @@ class FileTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function provideValidConstruction() {
-		return array(
-			array( 'http://upload.wikimedia.org/wikipedia/en/3/39/Journal_of_Geek_Studies_-_logo.jpg' ),
-		);
+		return [
+		[ 'http://upload.wikimedia.org/wikipedia/en/3/39/Journal_of_Geek_Studies_-_logo.jpg' ],
+		];
 	}
 
 	private function newMockTitle() {
@@ -41,4 +41,4 @@ class FileTest extends \PHPUnit_Framework_TestCase {
 			->getMock();
 	}
 
-} 
+}

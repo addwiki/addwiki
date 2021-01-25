@@ -8,6 +8,7 @@ use RuntimeException;
 
 /**
  * Represents a collection of Log classes
+ *
  * @author Addshore
  */
 class LogList implements JsonSerializable {
@@ -20,8 +21,8 @@ class LogList implements JsonSerializable {
 	/**
 	 * @param Log[] $logs
 	 */
-	public function __construct( $logs = array() ) {
-		$this->logs = array();
+	public function __construct( $logs = [] ) {
+		$this->logs = [];
 		$this->addLogs( $logs );
 	}
 
@@ -31,13 +32,13 @@ class LogList implements JsonSerializable {
 	 * @throws InvalidArgumentException
 	 */
 	public function addLogs( $logs ) {
-		if( !is_array( $logs ) && !$logs instanceof LogList ) {
+		if ( !is_array( $logs ) && !$logs instanceof LogList ) {
 			throw new InvalidArgumentException( '$logs needs to either be an array or a LogList object' );
 		}
-		if( $logs instanceof LogList ) {
+		if ( $logs instanceof LogList ) {
 			$logs = $logs->toArray();
 		}
-		foreach( $logs as $log ) {
+		foreach ( $logs as $log ) {
 			$this->addLog( $log );
 		}
 	}
@@ -54,7 +55,7 @@ class LogList implements JsonSerializable {
 	 *
 	 * @return bool
 	 */
-	public function hasLogWithId( $id ){
+	public function hasLogWithId( $id ) {
 		return array_key_exists( $id, $this->logs );
 	}
 
@@ -63,7 +64,7 @@ class LogList implements JsonSerializable {
 	 *
 	 * @return bool
 	 */
-	public function hasLog( Log $log ){
+	public function hasLog( Log $log ) {
 		return array_key_exists( $log->getId(), $this->logs );
 	}
 
@@ -71,7 +72,7 @@ class LogList implements JsonSerializable {
 	 * @return Log|null Log or null if there is no log
 	 */
 	public function getLatest() {
-		if( empty( $this->logs ) ) {
+		if ( empty( $this->logs ) ) {
 			return null;
 		}
 		return $this->logs[ max( array_keys( $this->logs ) ) ];
@@ -82,7 +83,7 @@ class LogList implements JsonSerializable {
 	 * @return Log|null Log or null if there is no log
 	 */
 	public function getOldest() {
-		if( empty( $this->logs ) ) {
+		if ( empty( $this->logs ) ) {
 			return null;
 		}
 		return $this->logs[ min( array_keys( $this->logs ) ) ];
@@ -102,8 +103,8 @@ class LogList implements JsonSerializable {
 	 * @throws RuntimeException
 	 * @return Log
 	 */
-	public function get( $id ){
-		if( $this->hasLogWithId( $id ) ){
+	public function get( $id ) {
+		if ( $this->hasLogWithId( $id ) ) {
 			return $this->logs[$id];
 		}
 		throw new RuntimeException( 'No such Log loaded in LogList object' );

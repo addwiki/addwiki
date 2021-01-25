@@ -6,6 +6,7 @@ use LogicException;
 
 /**
  * Class Representing the content of a revision
+ *
  * @author Addshore
  */
 class Content {
@@ -52,14 +53,14 @@ class Content {
 	 */
 	public function getHash() {
 		$data = $this->getData();
-		if( is_object( $data ) ) {
-			if( method_exists( $data, 'getHash' ) ) {
+		if ( is_object( $data ) ) {
+			if ( method_exists( $data, 'getHash' ) ) {
 				return $data->getHash();
 			} else {
 				return sha1( serialize( $data ) );
 			}
 		}
-		if( is_string( $data ) ) {
+		if ( is_string( $data ) ) {
 			return sha1( $data );
 		}
 		throw new LogicException( "Cant get hash for data of type: " . gettype( $data ) );
@@ -67,6 +68,7 @@ class Content {
 
 	/**
 	 * Has the content been changed since object construction (this shouldn't happen!)
+	 *
 	 * @return bool
 	 */
 	public function hasChanged() {
@@ -80,4 +82,4 @@ class Content {
 		return $this->data;
 	}
 
-} 
+}
