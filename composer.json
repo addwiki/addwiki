@@ -109,20 +109,19 @@
         }
     ],
     "scripts": {
-        "lint": "bin/run-all vendor/bin/parallel-lint DIR --exclude DIR/vendor",
-        "phpcs": "bin/run-all vendor/bin/phpcs -ps DIR",
-        "fix": "bin/run-all vendor/bin/phpcbf DIR",
-        "phpunit": "bin/run-all vendor/bin/phpunit DIR",
-        "phpunit-unit": "bin/run-all vendor/bin/phpunit --testsuite unit DIR",
-        "phpunit-integration": "bin/run-all vendor/bin/phpunit --testsuite integration DIR",
+        "lint": "bin/run-template vendor/bin/parallel-lint DIR --",
+        "phpcs": "bin/run-template vendor/bin/phpcs -ps DIR --",
+        "fix": "bin/run-template vendor/bin/phpcbf DIR --",
+        "phpunit": "bin/run-template vendor/bin/phpunit DIR --",
+        "phpunit-unit": "bin/run-template vendor/bin/phpunit --testsuite unit DIR --",
+        "phpunit-integration": "bin/run-template vendor/bin/phpunit --testsuite integration DIR --",
         "test": [
             "@lint",
             "@phpcs",
             "@phpunit"
         ],
         "aww": "aww",
-        "awwd": "echo Please run ./vendor/bin/awwd directly",
-        "post-autoload-dump": "bin/vendor-autoload-all"
+        "awwd": "echo Please run ./vendor/bin/awwd directly"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
