@@ -1,9 +1,9 @@
 {
     "name": "addwiki/mediawiki-flow-api",
     "type": "library",
-    "description": "A Mediawiki Flow api lib",
-    "keywords": ["Mediawiki"],
-    "license": "GPL-2.0+",
+    "description": "MediaWiki API library for the Flow extension",
+    "keywords": ["Mediawiki","API"],
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"

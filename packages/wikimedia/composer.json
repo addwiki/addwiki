@@ -1,9 +1,9 @@
 {
     "name": "addwiki/wikimedia",
     "type": "library",
-    "description": "A basic library containing Wikimedia specific things",
-    "keywords": ["Mediawiki"],
-    "license": "GPL-2.0+",
+    "description": "WIP library with Wikimedia specific code for addwiki",
+    "keywords": ["Wikimedia"],
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"

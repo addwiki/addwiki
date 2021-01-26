@@ -1,9 +1,9 @@
 {
     "name": "addwiki/addwiki-cli",
     "type": "library",
-    "description": "A Mediawiki CLI package",
-    "keywords": ["Mediawiki"],
-    "license": "GPL-2.0+",
+    "description": "A MediaWiki, Wikibase and Wikimedia CLI application",
+    "keywords": ["Mediawiki","Wikimedia","CLI"],
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"
