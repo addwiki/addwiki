@@ -3,7 +3,6 @@
 namespace Mediawiki\Db;
 
 use Mediawiki\Db\Service\PageFileExtensionListGetter;
-use Mediawiki\Db\Service\DeletedLogListGetter;
 use Mediawiki\Db\Service\RedirectListGetter;
 use MediaWiki\Services\LogListGetter;
 use MediaWiki\Services\UserGetter;
@@ -39,7 +38,7 @@ class MediawikiDbFactory {
 
 	/**
 	 * @since 0.1
-	 * 
+	 *
 	 * @return RedirectListGetter
 	 */
 	public function newRedirectListGetter() {

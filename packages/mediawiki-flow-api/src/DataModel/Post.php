@@ -35,5 +35,4 @@ class Post {
 		return $this->inResponseTo;
 	}
 
-
-} 
+}

@@ -15,12 +15,12 @@ class MicroData {
 	/**
 	 * @var array[]
 	 */
-	private $properties = array();
+	private $properties = [];
 
 	/**
 	 * @var string[]
 	 */
-	private $types = array();
+	private $types = [];
 
 	/**
 	 * @var string|null
@@ -28,20 +28,20 @@ class MicroData {
 	private $id = null;
 
 	/**
-	 * @param stdClass $object that can have the following defined:
+	 * @param stdClass|null $object that can have the following defined:
 	 *     - properties
 	 *     - type
 	 *     - id
 	 * As returned by MicrodataPhp::getObject
 	 */
 	public function __construct( stdClass $object = null ) {
-		if( $object === null ) {
+		if ( $object === null ) {
 			return;
 		}
-		if( isset( $object->properties ) ) {
-			foreach( $object->properties as $name => $values ) {
-				foreach( $values as $value ) {
-					if( is_string( $value ) ) {
+		if ( isset( $object->properties ) ) {
+			foreach ( $object->properties as $name => $values ) {
+				foreach ( $values as $value ) {
+					if ( is_string( $value ) ) {
 						$this->properties[$name][] = $value;
 					} else {
 						$this->properties[$name][] = new self( $value );
@@ -49,10 +49,10 @@ class MicroData {
 				}
 			}
 		}
-		if( isset( $object->type ) ) {
+		if ( isset( $object->type ) ) {
 			$this->types = $object->type;
 		}
-		if( isset( $object->id ) ) {
+		if ( isset( $object->id ) ) {
 			$this->id = $object->id;
 		}
 	}
@@ -94,10 +94,10 @@ class MicroData {
 	 * @return self[]|string[]
 	 */
 	public function getProperty( $name, $propType = null ) {
-		$properties = array();
-		if( array_key_exists( $name, $this->properties ) ) {
-			foreach( $this->properties[$name] as $property ) {
-				if( $this->propertyIsOfPropType( $property, $propType ) ) {
+		$properties = [];
+		if ( array_key_exists( $name, $this->properties ) ) {
+			foreach ( $this->properties[$name] as $property ) {
+				if ( $this->propertyIsOfPropType( $property, $propType ) ) {
 					$properties[] = $property;
 				}
 			}
@@ -112,9 +112,9 @@ class MicroData {
 	 * @return self|string|null
 	 */
 	public function getFirstProperty( $name, $propType = null ) {
-		if( array_key_exists( $name, $this->properties ) ) {
-			foreach( $this->properties[$name] as $property ) {
-				if( $this->propertyIsOfPropType( $property, $propType ) ) {
+		if ( array_key_exists( $name, $this->properties ) ) {
+			foreach ( $this->properties[$name] as $property ) {
+				if ( $this->propertyIsOfPropType( $property, $propType ) ) {
 					return $property;
 				}
 			}
@@ -129,25 +129,24 @@ class MicroData {
 	 * @return bool
 	 */
 	public function hasProperty( $name, $propType = null ) {
-		return
-			array_key_exists( $name, $this->properties ) &&
+		return array_key_exists( $name, $this->properties ) &&
 			$this->getFirstProperty( $name, $propType ) !== null;
 	}
 
 	/**
 	 * @param string|MicroData $property
-	 * @param int| null $type self::PROP_* constant
+	 * @param int| null|null $type self::PROP_* constant
 	 *
 	 * @return bool
 	 */
 	private function propertyIsOfPropType( $property, $type = null ) {
-		if( $type === null ) {
+		if ( $type === null ) {
 			return true;
 		}
-		if( $type === self::PROP_STRING && is_string( $property ) ) {
+		if ( $type === self::PROP_STRING && is_string( $property ) ) {
 			return true;
 		}
-		if( $type === self::PROP_DATA && $property instanceof self ) {
+		if ( $type === self::PROP_DATA && $property instanceof self ) {
 			return true;
 		}
 		return false;

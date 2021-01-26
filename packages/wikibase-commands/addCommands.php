@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['awwCommands'][] = function ( $awwConfig ) {
-	return array(
+	return [
 		new \Addwiki\Commands\Wikibase\WikibaseEntityStatementRemover( $awwConfig ),
-	);
+	];
 };

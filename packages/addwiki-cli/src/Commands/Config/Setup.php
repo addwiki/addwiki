@@ -28,7 +28,7 @@ class Setup extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$questionHelper = $this->getQuestionHelper();
 
-		//Add wikis?
+		// Add wikis?
 		$addWikiQuestion =
 			new ConfirmationQuestion( 'Would you like to add a wiki api endpoint? ', false );
 		while ( $questionHelper->ask( $input, $output, $addWikiQuestion ) ) {
@@ -53,19 +53,19 @@ class Setup extends Command {
 			if ( $questionHelper->ask( $input, $output, $question ) ) {
 				$this->appConfig->set(
 					'wikis.' . $code,
-					array( 'url' => $url )
+					[ 'url' => $url ]
 				);
 				$output->writeln( "Written to the config!" );
 			}
 		}
 
-		//Add users?
+		// Add users?
 		$addUserQuestion = new ConfirmationQuestion( 'Would you like to add a user? ', false );
 		while ( $questionHelper->ask( $input, $output, $addUserQuestion ) ) {
 			$question = new Question( 'Please enter a username: ' );
 			$username = $questionHelper->ask( $input, $output, $question );
 
-			//TODO oauth? :D
+			// TODO oauth? :D
 			$question = new Question( 'Please enter a password: ' );
 			$question->setHidden( true );
 			$password = $questionHelper->ask( $input, $output, $question );
@@ -74,12 +74,11 @@ class Setup extends Command {
 			if ( $questionHelper->ask( $input, $output, $question ) ) {
 				$this->appConfig->set(
 					'users.' . $username,
-					array( 'username' => $username, 'password' => $password )
+					[ 'username' => $username, 'password' => $password ]
 				);
 				$output->writeln( "Written to the config!" );
 			}
 		}
-
 
 		$output->writeln( "Setup complete" );
 	}

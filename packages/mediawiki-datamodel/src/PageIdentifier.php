@@ -23,7 +23,7 @@ class PageIdentifier implements JsonSerializable {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( Title $title = null, $id = null ) {
-		if ( !is_int( $id ) && !is_null( $id ) ) {
+		if ( !is_int( $id ) && $id !== null ) {
 			throw new InvalidArgumentException( '$id must be an int' );
 		}
 		$this->title = $title;
@@ -50,7 +50,7 @@ class PageIdentifier implements JsonSerializable {
 	 * @return bool
 	 */
 	public function identifiesPage() {
-		if ( is_null( $this->title ) && is_null( $this->id ) ) {
+		if ( $this->title === null && $this->id === null ) {
 			return false;
 		}
 		return true;

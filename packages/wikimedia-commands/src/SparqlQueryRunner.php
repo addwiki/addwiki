@@ -32,20 +32,20 @@ class SparqlQueryRunner {
 	 * @return ItemId[]
 	 */
 	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ) {
-		if( empty( $simpleQueryParts ) ) {
+		if ( empty( $simpleQueryParts ) ) {
 			throw new InvalidArgumentException( "Can't run a SPARQL query with no simple parts" );
 		}
 
-		$queryBuilder = new QueryBuilder( array(
+		$queryBuilder = new QueryBuilder( [
 			'prov' => 'http://www.w3.org/ns/prov#',
 			'wd' => 'http://www.wikidata.org/entity/',
 			'wdt' => 'http://www.wikidata.org/prop/direct/',
 			'p' => 'http://www.wikidata.org/prop/',
-		) );
+		] );
 		$queryBuilder->select( '?item' );
-		foreach( $simpleQueryParts as $key => $simpleQueryPart ) {
+		foreach ( $simpleQueryParts as $key => $simpleQueryPart ) {
 			list( $propertyIdString, $entityIdString ) = explode( ':', $simpleQueryPart );
-			if( $entityIdString == '?' ) {
+			if ( $entityIdString == '?' ) {
 				$queryBuilder->where( '?item', "wdt:$propertyIdString", '?' . str_repeat( 'z', $key ) );
 			} else {
 				$queryBuilder->where( '?item', "wdt:$propertyIdString", "wd:$entityIdString" );
@@ -61,7 +61,7 @@ class SparqlQueryRunner {
 	 * @return ItemId[]
 	 */
 	public function getItemIdsFromQuery( $query ) {
-		if( !is_string( $query ) ) {
+		if ( !is_string( $query ) ) {
 			throw new InvalidArgumentException( "SPARQL query must be a string!" );
 		}
 
@@ -70,16 +70,16 @@ class SparqlQueryRunner {
 		);
 		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
 
-		$itemIds = array();
-		foreach( $sparqlArray['results']['bindings'] as $binding ) {
+		$itemIds = [];
+		foreach ( $sparqlArray['results']['bindings'] as $binding ) {
 			$itemIds[] = new ItemId( str_replace( 'http://www.wikidata.org/entity/', '', $binding['item']['value'] ) );
 		}
 
 		return $itemIds;
 	}
 
-	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ){
-		//TODO fix this ugliness
+	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ) {
+		// TODO fix this ugliness
 		$query = "PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
@@ -95,8 +95,8 @@ SELECT ?item ?itemLabel WHERE {
 		);
 		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
 
-		$data = array();
-		foreach( $sparqlArray['results']['bindings'] as $binding ) {
+		$data = [];
+		foreach ( $sparqlArray['results']['bindings'] as $binding ) {
 			$data[str_replace( 'http://www.wikidata.org/entity/', '', $binding['item']['value'] )] =
 				$binding['itemLabel']['value'];
 		}

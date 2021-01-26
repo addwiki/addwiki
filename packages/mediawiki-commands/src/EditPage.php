@@ -36,21 +36,21 @@ class EditPage extends Command {
 			->addOption(
 				'wiki',
 				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured wiki to use',
 				$defaultWiki
 			)
 			->addOption(
 				'user',
 				null,
-				( $defaultUser === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultUser === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured user to use',
 				$defaultUser
 			)
 			->addOption(
 				'wiki',
 				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured wiki to use',
 				$defaultWiki
 			)
@@ -80,17 +80,17 @@ class EditPage extends Command {
 		$userDetails = $this->appConfig->offsetGet( 'users.' . $user );
 		$wikiDetails = $this->appConfig->offsetGet( 'wikis.' . $wiki );
 
-		if( $userDetails === null ) {
+		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
-		if( $wikiDetails === null ) {
+		if ( $wikiDetails === null ) {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}
 
 		$pageIdentifier = null;
-		if( $input->getOption( 'pageid' ) != null ) {
+		if ( $input->getOption( 'pageid' ) != null ) {
 			$pageIdentifier = new PageIdentifier( null, (int)$input->getOption( 'pageid' ) );
-		} elseif( $input->getOption( 'title' ) != null ) {
+		} elseif ( $input->getOption( 'title' ) != null ) {
 			$pageIdentifier = new PageIdentifier( new Title( $input->getOption( 'title' ) ) );
 		} else {
 			throw new \RuntimeException( 'No titles or pageids were set!' );
@@ -100,7 +100,7 @@ class EditPage extends Command {
 		$wikiDetails = $this->appConfig->offsetGet( 'wikis.' . $wiki );
 		$api = new MediawikiApi( $wikiDetails['url'] );
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if( !$loggedIn ) {
+		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
 			return -1;
 		}

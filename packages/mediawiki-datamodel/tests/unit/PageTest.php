@@ -17,7 +17,7 @@ class PageTest extends \PHPUnit\Framework\TestCase {
 	public function testValidConstruction( $pageIdentifier, $revisions ) {
 		$page = new Page( $pageIdentifier, $revisions );
 		$this->assertEquals( $pageIdentifier, $page->getPageIdentifier() );
-		if ( is_null( $revisions ) ) {
+		if ( $revisions === null ) {
 			$this->assertInstanceOf( 'Mediawiki\DataModel\Revisions', $page->getRevisions() );
 		} else {
 			$this->assertEquals( $revisions, $page->getRevisions() );

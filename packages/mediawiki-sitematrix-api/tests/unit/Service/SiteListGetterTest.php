@@ -5,7 +5,6 @@ namespace Mediawiki\Sitematrix\Api\Test;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @author Addshore
@@ -13,7 +12,7 @@ use PHPUnit_Framework_TestCase;
  *
  * @covers Mediawiki\Sitematrix\Api\Service\SiteListGetter
  */
-class SiteListGetterTest extends PHPUnit_Framework_TestCase {
+class SiteListGetterTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi
@@ -29,74 +28,74 @@ class SiteListGetterTest extends PHPUnit_Framework_TestCase {
 	public function testGetSiteList() {
 		$mockApi = $this->getMockApi();
 
-		$siteMatrixArray = array(
-			'sitematrix' => array(
+		$siteMatrixArray = [
+			'sitematrix' => [
 				'count' => 4,
-				array(
+				[
 					'code' => 'en',
 					'name' => 'English',
-					'site' => array(
-						array(
+					'site' => [
+						[
 							'url' => 'https://en.wikipedia.org',
 							'dbname' => 'enwiki',
 							'code' => 'wiki',
 							'sitename' => 'Wikipedia',
-						),
-						array(
+						],
+						[
 							'url' => 'https://en.wiktionary.org',
 							'dbname' => 'enwiktionary',
 							'code' => 'wiktionary',
 							'sitename' => 'Wiktionary',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'code' => 'de',
 					'name' => 'Deutsch',
-					'site' => array(
-						array(
+					'site' => [
+						[
 							'url' => 'https://de.wikipedia.org',
 							'dbname' => 'dewiki',
 							'code' => 'wiki',
 							'sitename' => 'Wikipedia',
-						),
-						array(
+						],
+						[
 							'url' => 'https://de.wikibooks.org',
 							'dbname' => 'dewikibooks',
 							'code' => 'wikibooks',
 							'sitename' => 'Wikibooks',
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 
-		$expectedSites = array(
-			'enwiki' => array(
+		$expectedSites = [
+			'enwiki' => [
 				'url' => 'https://en.wikipedia.org',
 				'dbname' => 'enwiki',
 				'code' => 'wiki',
 				'sitename' => 'Wikipedia',
-			),
-			'enwiktionary' => array(
+			],
+			'enwiktionary' => [
 				'url' => 'https://en.wiktionary.org',
 				'dbname' => 'enwiktionary',
 				'code' => 'wiktionary',
 				'sitename' => 'Wiktionary',
-			),
-			'dewiki' => array(
+			],
+			'dewiki' => [
 				'url' => 'https://de.wikipedia.org',
 				'dbname' => 'dewiki',
 				'code' => 'wiki',
 				'sitename' => 'Wikipedia',
-			),
-			'dewikibooks' => array(
+			],
+			'dewikibooks' => [
 				'url' => 'https://de.wikibooks.org',
 				'dbname' => 'dewikibooks',
 				'code' => 'wikibooks',
 				'sitename' => 'Wikibooks',
-			),
-		);
+			],
+		];
 
 		$mockApi->expects( $this->once() )
 			->method( 'getRequest' )

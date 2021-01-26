@@ -63,7 +63,7 @@ class WHOReport {
 		];
 
 		$regexParts = [];
-		foreach( $headings as $headingChars ) {
+		foreach ( $headings as $headingChars ) {
 			$regexParts[] = implode( $betweenExpression . '*', str_split( $headingChars ) );
 		}
 		$regex = implode( $betweenExpression . '*', $regexParts );
@@ -74,18 +74,18 @@ class WHOReport {
 	private function getValueUsingRegex( $text, $reporter, $valueType ) {
 		// Remove all new lines so that things that are split over multiple lines are easier to
 		// match
-		$text = trim(preg_replace('/\s\s+/', ' ', $text));
+		$text = trim( preg_replace( '/\s\s+/', ' ', $text ) );
 
 		$pattern = '#(' . preg_quote( $reporter ) . '(?:\s+?\([\sa-zA-Z]+\))?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+#m';
 		preg_match_all( $pattern, $text, $matches );
 
 		// Sanity check that we only find 1 line in the text version of the PDF that looks like
 		// the table row
-		if(count($matches[0]) > 1) {
+		if ( count( $matches[0] ) > 1 ) {
 			throw new \RuntimeException( 'More than 1 pdf table row extracted, bailing...' );
 		}
 
-		switch ($valueType) {
+		switch ( $valueType ) {
 			case self::VALUE_TYPE_CASE:
 				$value = (int)$matches[2][0];
 				break;
@@ -106,22 +106,22 @@ class WHOReport {
 
 	private function assertTableHeadersAreAsExpected( $text ) {
 		$regex = $this->getTableHeadingRegex();
-		if( !preg_match( $this->getTableHeadingRegex(), $text ) ) {
+		if ( !preg_match( $this->getTableHeadingRegex(), $text ) ) {
 			// Maybe the format of the table has changed?
 			// In which case we will need to update code..
-			var_dump($text);
-			var_dump($regex);
+			var_dump( $text );
+			var_dump( $regex );
 			throw new \RuntimeException( 'Expected table header not found in WHO report' );
 		}
 	}
 
 	private function getPdfText() {
-		if( $this->text ) {
+		if ( $this->text ) {
 			return $this->text;
 		}
 
 		$parser = new \Smalot\PdfParser\Parser();
-		$pdf    = $parser->parseFile($this->url);
+		$pdf    = $parser->parseFile( $this->url );
 
 		$this->text = $pdf->getText();
 		return $this->text;

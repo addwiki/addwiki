@@ -27,7 +27,7 @@ class DateReferencer implements Referencer {
 	/**
 	 * @var string[]
 	 */
-	private $propMap = array();
+	private $propMap = [];
 
 	/**
 	 * @var PhpDateTimeParser
@@ -43,7 +43,7 @@ class DateReferencer implements Referencer {
 		$this->wikibaseFactory = $wikibaseFactory;
 		$this->propMap = $propMap;
 		$this->timeParser = new PhpDateTimeParser(
-			new MonthNameUnlocalizer( array() ),
+			new MonthNameUnlocalizer( [] ),
 			new EraParser(),
 			new IsoTimestampParser()
 		);
@@ -54,12 +54,12 @@ class DateReferencer implements Referencer {
 
 		foreach ( $this->propMap as $propertyIdString => $schemaPropertyString ) {
 			/** @var TimeValue[] $timeValues */
-			$timeValues = array();
-			foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_STRING ) as $propertyValue ) {
+			$timeValues = [];
+			foreach ( $microData->getProperty( $schemaPropertyString, MicroData::PROP_STRING ) as $propertyValue ) {
 				try{
-					$date =  new DateTime( trim( $propertyValue ) );
+					$date = new DateTime( trim( $propertyValue ) );
 					$timeValues[] = $this->timeParser->parse( $date->format( 'Y m d' ) );
-				} catch( Exception $e ) {
+				} catch ( Exception $e ) {
 					// Ignore failed parsing
 				}
 			}
@@ -78,7 +78,7 @@ class DateReferencer implements Referencer {
 						continue; // Ignore statements that already have this URL domain as a ref
 					}
 
-					if( !$timeValue->equals( $mainSnak->getDataValue() ) ) {
+					if ( !$timeValue->equals( $mainSnak->getDataValue() ) ) {
 						continue;
 					}
 
@@ -92,12 +92,12 @@ class DateReferencer implements Referencer {
 							null,
 							new EditInfo( urldecode( $sourceUrl ), EditInfo::NOTMINOR, EditInfo::BOT )
 						);
-						//NOTE: keep our in memory item copy up to date (yay such reference passing)
+						// NOTE: keep our in memory item copy up to date (yay such reference passing)
 						$statement->addNewReference( $newReference->getSnaks() );
 						$referenceCounter++;
 					}
 					catch ( UsageException $e ) {
-						//Ignore
+						// Ignore
 					}
 				}
 			}

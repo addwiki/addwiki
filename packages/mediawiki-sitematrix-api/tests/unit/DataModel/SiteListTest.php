@@ -4,7 +4,6 @@ namespace Mediawiki\Sitematrix\Api\Test;
 
 use Mediawiki\Sitematrix\DataModel\Site;
 use Mediawiki\Sitematrix\DataModel\SiteList;
-use PHPUnit_Framework_TestCase;
 
 /**
  * @author Tarrow
@@ -12,22 +11,21 @@ use PHPUnit_Framework_TestCase;
  *
  * @covers Mediawiki\Sitematrix\DataModel\SiteList
  */
-class SiteListTest extends PHPUnit_Framework_TestCase
-{
+class SiteListTest extends \PHPUnit\Framework\TestCase {
 	public function testGetSiteArray() {
-		$siteArray = array(
+		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
-		);
+		];
 		$actualSiteList = new SiteList( $siteArray );
 		$this->assertEquals( $siteArray, $actualSiteList->getSiteArray() );
 	}
 
 	public function testGetSiteFromDBName() {
-		$siteArray = array(
+		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
 			new Site( "http://notasite", "adbname-B", "acode", "aSiteName" ),
-		);
+		];
 
 		$actualSiteList = new SiteList( $siteArray );
 
@@ -38,20 +36,20 @@ class SiteListTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testGetSiteListForCode() {
-		$siteArray = array(
+		$siteArray = [
 			new Site( "http://notasite", "dbname1", "Code1", "aSiteName1" ),
 			new Site( "http://notasite", "dbname2", "Code1", "aSiteName2" ),
 			new Site( "http://notasite", "dbname3", "Code2", "aSiteName3" ),
-		);
+		];
 
 		$actualSiteList = new SiteList( $siteArray );
 
 		$this->assertEquals(
-			new SiteList( array( $siteArray[0], $siteArray[1] ) ),
+			new SiteList( [ $siteArray[0], $siteArray[1] ] ),
 			$actualSiteList->getSiteListForCode( "Code1" )
 		);
 		$this->assertEquals(
-			new SiteList( array( $siteArray[2] ) ),
+			new SiteList( [ $siteArray[2] ] ),
 			$actualSiteList->getSiteListForCode( "Code2" )
 		);
 	}

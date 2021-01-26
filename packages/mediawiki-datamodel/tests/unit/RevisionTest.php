@@ -17,14 +17,14 @@ class RevisionTest extends \PHPUnit\Framework\TestCase {
 	public function testValidConstruction( $content, $pageIdentifier, $id, $editInfo, $user, $timestamp ) {
 		$rev = new Revision( $content, $pageIdentifier, $id, $editInfo, $user, $timestamp );
 		$this->assertEquals( $content, $rev->getContent() );
-		if ( !is_null( $pageIdentifier ) ) {
+		if ( $pageIdentifier !== null ) {
 			$this->assertEquals( $pageIdentifier, $rev->getPageIdentifier() );
 		} else {
 			$this->assertInstanceOf( '\Mediawiki\DataModel\PageIdentifier', $rev->getPageIdentifier() );
 		}
 
 		$this->assertEquals( $id, $rev->getId() );
-		if ( !is_null( $editInfo ) ) {
+		if ( $editInfo !== null ) {
 			$this->assertEquals( $editInfo, $rev->getEditInfo() );
 		} else {
 			$this->assertInstanceOf( '\Mediawiki\DataModel\EditInfo', $rev->getEditInfo() );

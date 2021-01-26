@@ -24,20 +24,20 @@ class DataModelUtils {
 	 */
 	public static function getReferenceForUrl( $url ) {
 		return new Reference(
-			array(
+			[
 				// Reference URL
 				new PropertyValueSnak( new PropertyId( 'P854' ), new StringValue( $url ) ),
 				// Date retrieved
-				new PropertyValueSnak( new PropertyId( 'P813' ), DataModelUtils::getCurrentTimeValue() )
+				new PropertyValueSnak( new PropertyId( 'P813' ), self::getCurrentTimeValue() )
 				// TODO date published?
-			)
+			]
 		);
 	}
 
 	public static function getCurrentTimeValue() {
 		return new TimeValue(
 			"+" . date( 'Y-m-d' ) . "T00:00:00Z",
-			0,//TODO don't assume UTC
+			0, // TODO don't assume UTC
 			0,
 			0,
 			TimeValue::PRECISION_DAY,
@@ -51,9 +51,9 @@ class DataModelUtils {
 	 * @return string[]
 	 */
 	public static function getMainTermsAsLowerCaseStrings( Fingerprint $fingerprint ) {
-		$strings = array();
-		$langsToUse = array( 'en', 'en-gb' );
-		foreach( $langsToUse as $lang ) {
+		$strings = [];
+		$langsToUse = [ 'en', 'en-gb' ];
+		foreach ( $langsToUse as $lang ) {
 			try{
 				$strings[] = $fingerprint->getLabel( $lang )->getText();
 			} catch ( Exception $e ) {

@@ -63,7 +63,7 @@ class NamespaceInfo {
 		if ( !is_string( $caseHandling ) ) {
 			throw new \InvalidArgumentException( '$caseHandling must be a string' );
 		}
-		if ( !is_null( $defaultContentModel ) && !is_string( $defaultContentModel ) ) {
+		if ( $defaultContentModel !== null && !is_string( $defaultContentModel ) ) {
 			throw new \InvalidArgumentException( '$canonicalName must be a string' );
 		}
 

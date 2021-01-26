@@ -26,11 +26,11 @@ class WikidataToSchemaMapper {
 	 * @return string[] like array( 'ItemID' => 'Schema.org_type' )
 	 */
 	public function getInstanceMap() {
-		return array(
+		return [
 			'Q5' => 'Person',
 			'Q571' => 'Book',
 			'Q11424' => 'Movie',
-		);
+		];
 	}
 
 	/**
@@ -45,54 +45,54 @@ class WikidataToSchemaMapper {
 		WikibaseFactory $wikibaseFactory,
 		SparqlQueryRunner $sparqlQueryRunner
 	) {
-		return array(
-			'Book' => array(
+		return [
+			'Book' => [
 				new ThingReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						'P50' => 'author',
 						'P110' => 'illustrator',
 						'P123' => 'publisher',
 						'P136' => 'genre',
-					)
+					]
 				),
 				new DateReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						'P577' => 'datePublished',
-					)
+					]
 				),
-			),
-			'Person' => array(
+			],
+			'Person' => [
 				new ThingReferencer(
 					$wikibaseFactory,
-					array(
-						'P7' => 'sibling',//brother
-						'P9' => 'sibling',//sister
+					[
+						'P7' => 'sibling',// brother
+						'P9' => 'sibling',// sister
 						'P19' => 'birthPlace',
 						'P20' => 'deathPlace',
 						'P21' => 'gender',
-						'P22' => 'parent',//father
-						'P25' => 'parent',//mother
+						'P22' => 'parent',// father
+						'P25' => 'parent',// mother
 						'P26' => 'spouse',
 						'P40' => 'children',
 						'P27' => 'nationality',
 						'P734' => 'familyName',
 						'P735' => 'givenName',
-					)
+					]
 				),
 				new DateReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						'P569' => 'birthDate',
 						'P570' => 'deathDate',
-					)
+					]
 				)
-			),
-			'Movie' => array(
+			],
+			'Movie' => [
 				new ThingReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						// Person
 						'P57' => 'director',
 						'P161' => 'actor',
@@ -100,30 +100,30 @@ class WikidataToSchemaMapper {
 						'P1040' => 'editor',
 						'P58' => 'author',
 						// Organization
-						'P272' => array( 'creator', 'productionCompany' ),
+						'P272' => [ 'creator', 'productionCompany' ],
 						// Content
 						'P364' => 'inLanguage',
 						'P674' => 'character',
 						'P840' => 'contentLocation',
-						//Metadata
+						// Metadata
 						'P166' => 'award',
 						'P1657' => 'contentRating',
-						//'P2047' => 'duration',//duration is a Quantity not an Item type
+						// 'P2047' => 'duration',//duration is a Quantity not an Item type
 						'P2360' => 'audience',
-					)
+					]
 				),
 				new MultiTextReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						'P136' => 'genre',
-					),
-					array(
+					],
+					[
 						'P136' => function () use ( $sparqlQueryRunner ) {
 							$filmGenreData = $sparqlQueryRunner->getItemIdStringsAndLabelsFromInstanceOf( 'Q201658' );
-							$filmGenreRegexMap = array();
-							foreach( $filmGenreData as $itemIdString => $label ) {
-								if( preg_match( '/ films?/i', $label ) ) {
-									$regex = '/^' .  preg_replace( '/ films?/i', '( film)?', $label ) . '$/i';
+							$filmGenreRegexMap = [];
+							foreach ( $filmGenreData as $itemIdString => $label ) {
+								if ( preg_match( '/ films?/i', $label ) ) {
+									$regex = '/^' . preg_replace( '/ films?/i', '( film)?', $label ) . '$/i';
 								} else {
 									$regex = '/^' . $label . '( film)?' . '$/i';
 								}
@@ -133,16 +133,16 @@ class WikidataToSchemaMapper {
 
 							return $filmGenreRegexMap;
 						},
-					)
+					]
 				),
 				new DateReferencer(
 					$wikibaseFactory,
-					array(
+					[
 						'P577' => 'datePublished',
-					)
+					]
 				)
-			),
-		);
+			],
+		];
 	}
 
 }

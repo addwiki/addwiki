@@ -30,7 +30,7 @@ class DatabaseUserGetter implements UserGetter {
 	 * @return User
 	 */
 	public function getUser( $userName ) {
-		$users = $this->getUsers( array( $userName ) );
+		$users = $this->getUsers( [ $userName ] );
 		return count( $users ) ? $user[0] : null;
 	}
 
@@ -45,9 +45,9 @@ class DatabaseUserGetter implements UserGetter {
 			->leftJoin( 'user_groups ON user_id = ug_user' )
 			->where( 'user_name', $userNames );
 
-		$users = array();
+		$users = [];
 		$rows = $query->fetchAll();
-		
+
 		$userGroups = $this->getGroupsPerUser( $rows );
 
 		foreach ( $rows as $row ) {
@@ -58,7 +58,7 @@ class DatabaseUserGetter implements UserGetter {
 	}
 
 	private function getGroupsPerUser( array $rows ) {
-		$userGroups = array();
+		$userGroups = [];
 
 		foreach ( $rows as $row ) {
 			$userGroups[$row['user_id']][] = $row['ug_group'];
@@ -73,8 +73,8 @@ class DatabaseUserGetter implements UserGetter {
 			$row['user_id'],
 			$row['user_editcount'],
 			$row['user_registration'],
-			array( 'groups' => $groups ),
-			array(),
+			[ 'groups' => $groups ],
+			[],
 			''
 		);
 	}

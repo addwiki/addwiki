@@ -4,8 +4,8 @@ namespace Mediawiki\Sitematrix\Api\Service;
 
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
-use Mediawiki\Sitematrix\DataModel\SiteList;
 use Mediawiki\Sitematrix\DataModel\Site;
+use Mediawiki\Sitematrix\DataModel\SiteList;
 
 /**
  * @access private
@@ -36,7 +36,7 @@ class SiteListGetter {
 		$sitematrixResult = $this->api->getRequest( new SimpleRequest( 'sitematrix' ) );
 		unset( $sitematrixResult['sitematrix']['count'] );
 
-		$siteListArray = array();
+		$siteListArray = [];
 		foreach ( $sitematrixResult['sitematrix'] as $key => $siteGroup ) {
 			foreach ( $siteGroup['site'] as $details ) {
 				$siteListArray[] =

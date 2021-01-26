@@ -41,7 +41,7 @@ class Site {
 	 * @param string $sitename
 	 * @param string[] $flags
 	 */
-	public function __construct( $url, $dbname, $code, $sitename, array $flags = array() ) {
+	public function __construct( $url, $dbname, $code, $sitename, array $flags = [] ) {
 		$this->url = $url;
 		$this->dbname = $dbname;
 		$this->code = $code;
@@ -91,6 +91,5 @@ class Site {
 	public function getFlags() {
 		return $this->flags;
 	}
-
 
 }

@@ -35,14 +35,14 @@ class RestoreRevisions extends Command {
 			->addOption(
 				'wiki',
 				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured wiki to use',
 				$defaultWiki
 			)
 			->addOption(
 				'user',
 				null,
-				( $defaultUser === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultUser === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured user to use',
 				$defaultUser
 			)
@@ -87,16 +87,16 @@ class RestoreRevisions extends Command {
 		$userDetails = $this->appConfig->offsetGet( 'users.' . $user );
 		$wikiDetails = $this->appConfig->offsetGet( 'wikis.' . $wiki );
 
-		if( $userDetails === null ) {
+		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
-		if( $wikiDetails === null ) {
+		if ( $wikiDetails === null ) {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}
 
 		$api = new MediawikiApi( $wikiDetails['url'] );
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if( !$loggedIn ) {
+		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
 			return -1;
 		}
@@ -105,7 +105,7 @@ class RestoreRevisions extends Command {
 		$getter = $mwFactory->newPageGetter();
 		$saver = $mwFactory->newRevisionSaver();
 
-		foreach( $revids as $revid ) {
+		foreach ( $revids as $revid ) {
 			$revid = intval( $revid );
 
 			$page = $getter->getFromRevisionId( $revid );
@@ -115,13 +115,13 @@ class RestoreRevisions extends Command {
 			$currentRevision = $page->getRevisions()->getLatest();
 			$currentText = $currentRevision->getContent()->getData();
 
-			if( $goodText === $currentText ) {
+			if ( $goodText === $currentText ) {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
 				return null;
 			}
 
-			if( $input->getOption( 'asheader' ) ) {
-				if( strstr( $currentText, $goodText ) ) {
+			if ( $input->getOption( 'asheader' ) ) {
+				if ( strstr( $currentText, $goodText ) ) {
 					$goodText = $goodText . "\n\n" . trim( str_replace( $goodText, '', $currentText ) );
 				} else {
 					$goodText = $goodText . "\n\n" . $currentText;
@@ -139,7 +139,7 @@ class RestoreRevisions extends Command {
 					)
 				);
 
-			if( $success ) {
+			if ( $success ) {
 				$output->writeln( 'Restored revision: ' . $revid );
 			} else {
 				$output->writeln( 'Failed to restore revision: ' . $revid );

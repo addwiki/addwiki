@@ -68,12 +68,12 @@ class WikidataReferencerCommand extends Command {
 	/**
 	 * @var array 'type' => Referencer[]
 	 */
-	private $referencerMap = array();
+	private $referencerMap = [];
 
 	/**
 	 * @var string[]
 	 */
-	private $instanceMap = array();
+	private $instanceMap = [];
 
 	/**
 	 * @var Client
@@ -92,10 +92,10 @@ class WikidataReferencerCommand extends Command {
 
 	public function initServices() {
 		$clientFactory = new ClientFactory(
-			array(
-				'middleware' => array( EffectiveUrlMiddleware::middleware() ),
+			[
+				'middleware' => [ EffectiveUrlMiddleware::middleware() ],
 				'user-agent' => 'Addwiki - Wikidata Referencer',
-			)
+			]
 		);
 		$guzzleClient = $clientFactory->getClient();
 
@@ -108,7 +108,7 @@ class WikidataReferencerCommand extends Command {
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
-				array(
+				[
 					'boolean' => 'DataValues\BooleanValue',
 					'number' => 'DataValues\NumberValue',
 					'string' => 'DataValues\StringValue',
@@ -119,7 +119,7 @@ class WikidataReferencerCommand extends Command {
 					'quantity' => 'DataValues\QuantityValue',
 					'time' => 'DataValues\TimeValue',
 					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-				)
+				]
 			),
 			new DataValueSerializer()
 		);
@@ -175,13 +175,13 @@ class WikidataReferencerCommand extends Command {
 		if ( strpos( $link, '//' ) === 0 ) {
 			$link = 'http' . $link;
 		}
-		if( strpos( $link, '#' ) !== false ) {
+		if ( strpos( $link, '#' ) !== false ) {
 			$link = strstr( $link, '#', true );
 		}
 		$link = trim( $link, '/' );
 
 		// Normalize some domain specific stuff
-		if( strstr( $link, '.imdb.' ) ) {
+		if ( strstr( $link, '.imdb.' ) ) {
 			$link = preg_replace( '#\/\/[^.]+\.imdb\.[^/]+\/#i', '//www.imdb.com/', $link );
 		}
 
@@ -201,13 +201,13 @@ class WikidataReferencerCommand extends Command {
 		}
 
 		/** @var FormatterHelper $formatter */
-		$formatter = $this->getHelper('formatter');
+		$formatter = $this->getHelper( 'formatter' );
 		$output->writeln( $formatter->formatBlock(
-			array(
+			[
 				'Wikidata Referencer',
 				'This script is in development, If something goes wrong while you use it it is your fault!',
 				'Temp file: ' . $this->getProcessedListPath(),
-			),
+			],
 			'info'
 		) );
 
@@ -222,12 +222,12 @@ class WikidataReferencerCommand extends Command {
 		$force = false;
 
 		// Get a list of ItemIds
-		if( $item !== null ) {
+		if ( $item !== null ) {
 			$output->writeln( $formatter->formatSection( 'Init', 'Using item passed in item parameter' ) );
-			$itemIds = array( new ItemId( $item ) );
+			$itemIds = [ new ItemId( $item ) ];
 			// Force if explicitly passed an ItemId
 			$force = true;
-		} elseif( !empty( $sparqlQueryParts ) ) {
+		} elseif ( !empty( $sparqlQueryParts ) ) {
 			$output->writeln( $formatter->formatSection( 'Init', 'Using items from SPARQL QUERY (running)' ) );
 			$itemIds = $this->sparqlQueryRunner->getItemIdsForSimpleQueryParts( $sparqlQueryParts );
 		} else {
@@ -262,17 +262,17 @@ class WikidataReferencerCommand extends Command {
 		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		$loopCounter = 0;
 		/** @var FormatterHelper $formatter */
-		$formatter = $this->getHelper('formatter');
+		$formatter = $this->getHelper( 'formatter' );
 		foreach ( $itemIds as $itemId ) {
 			$loopCounter++;
 			$itemIdString = $itemId->getSerialization();
 
 			$output->writeln( '----------------------------------------------------' );
 
-			if( $loopCounter %10 != 0 ) {
+			if ( $loopCounter % 10 != 0 ) {
 				$processedItemIdStrings = $this->getProcessedItemIdStrings();
 			}
-			if( !$force && in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
+			if ( !$force && in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Already processed' ) );
 				continue;
 			}
@@ -292,19 +292,19 @@ class WikidataReferencerCommand extends Command {
 			}
 
 			// Get the item types..
-			$types = array();
-			foreach( $item->getStatements()->getByPropertyId( new PropertyId( 'P31' ) )->toArray() as $instanceStatement ) {
+			$types = [];
+			foreach ( $item->getStatements()->getByPropertyId( new PropertyId( 'P31' ) )->toArray() as $instanceStatement ) {
 				$mainSnak = $instanceStatement->getMainSnak();
-				if( $mainSnak instanceof PropertyValueSnak ) {
+				if ( $mainSnak instanceof PropertyValueSnak ) {
 					/** @var EntityIdValue $instanceItemIdValue */
 					$instanceItemIdValue = $mainSnak->getDataValue();
 					$idSerialization = $instanceItemIdValue->getEntityId()->getSerialization();
-					if( array_key_exists( $idSerialization, $this->instanceMap ) ) {
+					if ( array_key_exists( $idSerialization, $this->instanceMap ) ) {
 						$types[] = $this->instanceMap[$idSerialization];
 					}
 				}
 			}
-			if( empty( $types ) ) {
+			if ( empty( $types ) ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Didn\t find any useful instance of statements', 'comment' ) );
 				continue;
 			}
@@ -319,7 +319,7 @@ class WikidataReferencerCommand extends Command {
 			$parseProgressBar = new ProgressBar( $output, $siteLinkList->count() );
 			$parseProgressBar->display();
 			/** @var PromiseInterface[] $parsePromises */
-			$parsePromises = array();
+			$parsePromises = [];
 			foreach ( $siteLinkList->getIterator() as $siteLink ) {
 				$siteId = $siteLink->getSiteId();
 				$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();
@@ -329,7 +329,7 @@ class WikidataReferencerCommand extends Command {
 				$parsePromises[$siteId] = $sourceParser->parsePageAsync( $pageIdentifier );
 				$parseProgressBar->advance();
 			}
-			$links = array();
+			$links = [];
 			foreach ( $parsePromises as $siteId => $promise ) {
 				try {
 					$parseResult = $promise->wait();
@@ -356,16 +356,16 @@ class WikidataReferencerCommand extends Command {
 			shuffle( $links );
 
 			/** @var Request[] $linkRequests */
-			$linkRequests = array();
-			foreach( $links as $link ) {
+			$linkRequests = [];
+			foreach ( $links as $link ) {
 				$linkRequests[] = new Request(
 					'GET',
 					$link,
-					array(
-						'allow_redirects' => array( 'track_redirects' => true ),
+					[
+						'allow_redirects' => [ 'track_redirects' => true ],
 						'connect_timeout' => 3.14,
 						'timeout' => 10,
-					)
+					]
 				);
 			}
 
@@ -382,7 +382,7 @@ class WikidataReferencerCommand extends Command {
 			$pool = new Pool(
 				$this->externalLinkClient,
 				$linkRequests,
-				array(
+				[
 					'fulfilled' => function ( $response )
 					use ( $externalLinkProgressBar, $item, $types, $referencesAddedToItem, $output ) {
 						$externalLinkProgressBar->advance(); // 1st advance point
@@ -392,15 +392,16 @@ class WikidataReferencerCommand extends Command {
 							$html = $response->getBody();
 							$referencesAddedFromLink = 0;
 
-							foreach( $this->microDataExtractor->extract( $html ) as $microData ) {
-								foreach( $types as $type ) {
-									if( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) )
-										foreach( $this->referencerMap[$type] as $referencer ) {
+							foreach ( $this->microDataExtractor->extract( $html ) as $microData ) {
+								foreach ( $types as $type ) {
+									if ( $microData->hasType( $type ) && array_key_exists( $type, $this->referencerMap ) ) {
+										foreach ( $this->referencerMap[$type] as $referencer ) {
 											/** @var Referencer $referencer */
 											$addedReferences = $referencer->addReferences( $microData, $item, $link );
 											$referencesAddedToItem += $addedReferences;
 											$referencesAddedFromLink += $addedReferences;
 										}
+									}
 								}
 							}
 							if ( $referencesAddedFromLink > 0 ) {
@@ -418,7 +419,7 @@ class WikidataReferencerCommand extends Command {
 						// TODO add this to some kind of verbose log?
 						$externalLinkProgressBar->advance(); // 1st advance point
 					},
-				)
+				]
 			);
 
 			$pool->promise()->wait();
@@ -435,10 +436,10 @@ class WikidataReferencerCommand extends Command {
 	 */
 	private function getProcessedItemIdStrings() {
 		$path = $this->getProcessedListPath();
-		if( file_exists( $path ) ) {
+		if ( file_exists( $path ) ) {
 			return explode( PHP_EOL, file_get_contents( $path ) );
 		}
-		return array();
+		return [];
 	}
 
 	private function markIdAsProcessed( ItemId $itemId ) {

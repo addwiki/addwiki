@@ -49,9 +49,9 @@ class WikibaseEntityStatementRemover extends Command {
 	}
 
 	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ) {
-		$defaultGuzzleConf = array(
-			'headers' => array( 'User-Agent' => 'addwiki - Wikibase Statement Remover' )
-		);
+		$defaultGuzzleConf = [
+			'headers' => [ 'User-Agent' => 'addwiki - Wikibase Statement Remover' ]
+		];
 		$guzzleClient = new Client( $defaultGuzzleConf );
 		$this->sparqlQueryRunner = new SparqlQueryRunner(
 			$guzzleClient,
@@ -62,8 +62,8 @@ class WikibaseEntityStatementRemover extends Command {
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
-				//TODO note: this list will not be the same for all wikibases... fixme!!!
-				array(
+				// TODO note: this list will not be the same for all wikibases... fixme!!!
+				[
 					'boolean' => 'DataValues\BooleanValue',
 					'number' => 'DataValues\NumberValue',
 					'string' => 'DataValues\StringValue',
@@ -74,7 +74,7 @@ class WikibaseEntityStatementRemover extends Command {
 					'quantity' => 'DataValues\QuantityValue',
 					'time' => 'DataValues\TimeValue',
 					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-				)
+				]
 			),
 			new DataValueSerializer()
 		);
@@ -90,7 +90,7 @@ class WikibaseEntityStatementRemover extends Command {
 			->addOption(
 				'wiki',
 				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured wiki to use',
 				$defaultWiki
 			)
@@ -143,9 +143,9 @@ class WikibaseEntityStatementRemover extends Command {
 		}
 
 		$output->writeln( 'Running SPARQL query to find items to check' );
-		$queryBuilder = new QueryBuilder( array(
+		$queryBuilder = new QueryBuilder( [
 			'wdt' => 'http://www.wikidata.org/prop/direct/',
-		) );
+		] );
 
 		$itemIds = $this->sparqlQueryRunner->getItemIdsFromQuery(
 			$queryBuilder
@@ -170,12 +170,12 @@ class WikibaseEntityStatementRemover extends Command {
 			$item = $itemLookup->getItemForId( $itemId );
 
 			foreach ( $item->getStatements()->getIterator() as $statement ) {
-				if( $statement->getPropertyId()->equals( $property ) ) {
+				if ( $statement->getPropertyId()->equals( $property ) ) {
 
 					$statementRemover->remove(
 						$statement,
 						new EditInfo(
-							//TODO allow a user defined statement
+							// TODO allow a user defined statement
 							//TODO allow bot flag?
 							'Removing Statement'
 						)

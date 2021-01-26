@@ -32,30 +32,30 @@ class ConfigList extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$items = $input->getArgument( 'items' );
 
-		if( $items === 'wikis' || $items === null ) {
+		if ( $items === 'wikis' || $items === null ) {
 			$wikis = $this->appConfig->get( 'wikis' );
 
-			if( empty( $wikis ) ) {
+			if ( empty( $wikis ) ) {
 				$output->writeln( "You have no wikis configured" );
 				return null;
 			}
 
 			$output->writeln( "You have the following wikis configured:" );
-			foreach( $wikis as $wikiCode => $wikiData ) {
+			foreach ( $wikis as $wikiCode => $wikiData ) {
 				$output->writeln( ' - ' . $wikiCode . ' => ' . $wikiData['url'] );
 			}
 		}
 
-		if( $items === 'users' || $items === null ) {
+		if ( $items === 'users' || $items === null ) {
 			$users = $this->appConfig->get( 'users' );
 
-			if( empty( $users ) ) {
+			if ( empty( $users ) ) {
 				$output->writeln( "You have no users configured" );
 				return null;
 			}
 
 			$output->writeln( "You have the following users configured:" );
-			foreach( $users as $userCode => $userData ) {
+			foreach ( $users as $userCode => $userData ) {
 				$output->writeln( ' - ' . $userCode . ' => ' . $userData['username'] . ' (password hidden)' );
 			}
 		}
