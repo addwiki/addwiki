@@ -1,4 +1,8 @@
-These are the release notes for the [mediawiki-datamodel](README.md).
+# Release Notes
+
+## Version 2.6 (WIP)
+
+- Require PHP 7.2+
 
 ## Version 0.8 (30th July 2018)
 
@@ -11,21 +15,21 @@ These are the release notes for the [mediawiki-datamodel](README.md).
 
 ## Version 0.7 (8th March 2017)
 
-#### New features
+### New features
 
 * Add NamespaceInfo class 
 
 ## Version 0.6 (2015-09-04)
 
-#### Compatibility  changes
+### Compatibility  changes
 
 * Log object now takes a PageIdentifier object instead of a Page object
 
-#### Deprecations
+### Deprecations
 
 * Title::getTitle is deprecated
 
-#### New features
+### New features
 
 * Implemented File class
 * Implemented Redirect class
@@ -37,7 +41,7 @@ These are the release notes for the [mediawiki-datamodel](README.md).
 
 ## Version 0.5 (2015-01-13)
 
-#### Compatibility  changes
+### Compatibility  changes
 
 * Revision objects now require a PageIdentifier object instead of a $pageId int
 * Page objects now require a PageIdentifier objects instead of a $title and $pageId
@@ -46,7 +50,7 @@ These are the release notes for the [mediawiki-datamodel](README.md).
 * Content has new method getModel in places of random constants
 * Removed WikitextContent class. Content is no longer abstract.
 
-#### New features
+### New features
 
 * Implemented Log class
 * Implemented LogList class
@@ -59,14 +63,13 @@ These are the release notes for the [mediawiki-datamodel](README.md).
 * InvalidArgumentExceptions are now thrown when objects are constructed with the wrong types.
 * User objects now split up implicitgroups and regular groups, thus $groups is now array[]
 
-
 ## Version 0.3 (2014-06-24)
 
-#### Compatibility  changes
+### Compatibility  changes
 
 * Revision objects now take a Content object as $content
 
-#### Additions
+### Additions
 
 * Content class
 * WikitextContent class
@@ -75,11 +78,10 @@ These are the release notes for the [mediawiki-datamodel](README.md).
 
 ## Version 0.2 (2014-02-23)
 
-#### Compatibility  changes
+### Compatibility  changes
 
 * Revision enhanced to allow more flexibility, Constructor and public functions have changed
 * contentmodel has been removed from the Page class
-
 
 ## Version 0.1 (2014-02-23)
 

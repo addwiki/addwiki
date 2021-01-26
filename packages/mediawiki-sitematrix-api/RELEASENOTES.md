@@ -1,8 +1,3 @@
-These are the release notes for the [mediawiki-sitematrix-api](README.md).
+# Release Notes
 
-## Version 0.1 
-
-Initial release with the following features:
-
-* Site and SiteList objects
-* SiteListGetter service accessible using the MediawikiSitematrixFactory
+## Version 2.6 (WIP)

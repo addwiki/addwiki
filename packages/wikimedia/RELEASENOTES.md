@@ -1,5 +1,3 @@
-These are the release notes for the [wikimedia](README.md).
+# Release Notes
 
-## Version 0.1
-
-* Initial release
+## Version 2.6 (WIP)

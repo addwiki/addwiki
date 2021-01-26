@@ -1,7 +1,3 @@
-These are the release notes for the [mediawiki-db](README.md).
+# Release Notes
 
-## Version 0.1 (in development)
-
-Initial release with the following features:
-
-* ...
+## Version 2.6 (WIP)
