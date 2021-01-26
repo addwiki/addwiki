@@ -9,8 +9,8 @@ use stdClass;
  */
 class MicroData {
 
-	const PROP_STRING = 1;
-	const PROP_DATA = 2;
+	public const PROP_STRING = 1;
+	public const PROP_DATA = 2;
 
 	/**
 	 * @var array[]

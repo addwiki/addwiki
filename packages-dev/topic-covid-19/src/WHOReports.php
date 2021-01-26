@@ -38,7 +38,7 @@ class WHOReports {
 	}
 
 	/**
-	 * @param $date 20201201 for example
+	 * @param string $date 20201201 for example
 	 * @return string|null
 	 */
 	public function getUrlForDate( $date ) {

@@ -14,8 +14,8 @@ class WHOReport {
 	private $id;
 	private $date;
 
-	const VALUE_TYPE_CASE = 'cases';
-	const VALUE_TYPE_DEATH = 'deaths';
+	private const VALUE_TYPE_CASE = 'cases';
+	private const VALUE_TYPE_DEATH = 'deaths';
 
 	/**
 	 * WHOReport constructor.

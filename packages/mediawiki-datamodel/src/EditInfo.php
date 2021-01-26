@@ -12,13 +12,13 @@ use InvalidArgumentException;
 class EditInfo {
 
 	// minor flags
-	const MINOR = true;
-	const NOTMINOR = false;
+	public const MINOR = true;
+	public const NOTMINOR = false;
 	// bot flags
-	const BOT = true;
-	const NOTBOT = false;
+	public const BOT = true;
+	public const NOTBOT = false;
 	// maxlag flags
-	const OFFLAG = null;
+	public const OFFLAG = null;
 
 	/**
 	 * @var EditInfo::MINOR|self::NOTMINOR
