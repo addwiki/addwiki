@@ -6,11 +6,11 @@
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers" />
 		<exclude name="MediaWiki.PHP71Features.VoidReturnType.NotAllowed" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
-		<exclude name="MediaWiki.Usage.InArrayUsage.Found" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php,php5,inc"/>
 	<arg name="encoding" value="utf8"/>
-	<exclude-pattern>build/</exclude-pattern>
 	<exclude-pattern>vendor/</exclude-pattern>
+	<exclude-pattern>packages/</exclude-pattern>
+	<exclude-pattern>packages-dev/</exclude-pattern>
 </ruleset>

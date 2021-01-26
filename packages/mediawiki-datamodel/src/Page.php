@@ -17,13 +17,13 @@ class Page {
 	private $pageIdentifier;
 
 	/**
-	 * @param PageIdentifier $pageIdentifier
+	 * @param PageIdentifier|null $pageIdentifier
 	 * @param Revisions|null $revisions
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( PageIdentifier $pageIdentifier = null , Revisions $revisions = null ) {
-		if( is_null( $revisions ) ) {
+	public function __construct( PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
+		if ( is_null( $revisions ) ) {
 			$revisions = new Revisions();
 		}
 		$this->revisions = $revisions;
@@ -60,4 +60,4 @@ class Page {
 		return $this->pageIdentifier;
 	}
 
-} 
+}

@@ -57,7 +57,10 @@
                 "packages/mediawiki-api/tests/integration",
                 "packages/mediawiki-api/tests/unit"
             ],
-            "Mediawiki\\DataModel\\Test\\": "packages/mediawiki-datamodel/tests/"
+            "Mediawiki\\DataModel\\Test\\": [
+                "packages/mediawiki-datamodel/tests/",
+                "packages/mediawiki-datamodel/tests/unit/"
+            ]
         }
     },
     "replace": {
@@ -90,7 +93,7 @@
     "require-dev": {
         "data-values/validators": "~0.1.0",
         "jakub-onderka/php-parallel-lint": "^0.9.2",
-        "mediawiki/mediawiki-codesniffer": "^13.0",
+        "mediawiki/mediawiki-codesniffer": "~22.0",
         "monolog/monolog": "^1.23",
         "phpunit/phpunit": "~8",
         "symplify/monorepo-builder": "^9.0"
@@ -106,6 +109,17 @@
         }
     ],
     "scripts": {
+        "lint": "bin/run-template vendor/bin/parallel-lint DIR --",
+        "phpcs": "bin/run-template vendor/bin/phpcs -ps DIR --",
+        "fix": "bin/run-template vendor/bin/phpcbf DIR --",
+        "phpunit": "bin/run-template vendor/bin/phpunit DIR --",
+        "phpunit-unit": "bin/run-template vendor/bin/phpunit --testsuite unit DIR --",
+        "phpunit-integration": "bin/run-template vendor/bin/phpunit --testsuite integration DIR --",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ],
         "aww": "aww",
         "awwd": "echo Please run ./vendor/bin/awwd directly"
     },

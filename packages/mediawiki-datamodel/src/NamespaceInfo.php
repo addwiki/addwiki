@@ -7,8 +7,7 @@ namespace Mediawiki\DataModel;
  *
  * @author gbirke
  */
-class NamespaceInfo
-{
+class NamespaceInfo {
 	/**
 	 * @var int
 	 */
@@ -41,18 +40,18 @@ class NamespaceInfo
 
 	/**
 	 * NamespaceInfo constructor.
+	 *
 	 * @param int $id
 	 * @param string $canonicalName
 	 * @param string $localName
 	 * @param string $caseHandling
-	 * @param string $defaultContentModel
+	 * @param string|null $defaultContentModel
 	 * @param array $aliases
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null, $aliases = [] )
-	{
-		if( !is_int( $id ) ) {
+	public function __construct( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null, $aliases = [] ) {
+		if ( !is_int( $id ) ) {
 			throw new \InvalidArgumentException( '$id must be an integer' );
 		}
 		if ( !is_string( $canonicalName ) ) {
@@ -64,7 +63,7 @@ class NamespaceInfo
 		if ( !is_string( $caseHandling ) ) {
 			throw new \InvalidArgumentException( '$caseHandling must be a string' );
 		}
-		if ( !is_null( $defaultContentModel) && !is_string( $defaultContentModel ) ) {
+		if ( !is_null( $defaultContentModel ) && !is_string( $defaultContentModel ) ) {
 			throw new \InvalidArgumentException( '$canonicalName must be a string' );
 		}
 
@@ -83,48 +82,42 @@ class NamespaceInfo
 	/**
 	 * @return int
 	 */
-	public function getId()
-	{
+	public function getId() {
 		return $this->id;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getCanonicalName()
-	{
+	public function getCanonicalName() {
 		return $this->canonicalName;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLocalName()
-	{
+	public function getLocalName() {
 		return $this->localName;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getCaseHandling()
-	{
+	public function getCaseHandling() {
 		return $this->caseHandling;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getDefaultContentModel()
-	{
+	public function getDefaultContentModel() {
 		return $this->defaultContentModel;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getAliases()
-	{
+	public function getAliases() {
 		return $this->aliases;
 	}
 

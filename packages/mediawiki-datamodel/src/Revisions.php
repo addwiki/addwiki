@@ -7,6 +7,7 @@ use RuntimeException;
 
 /**
  * Represents a collection or revisions
+ *
  * @author Addshore
  */
 class Revisions {
@@ -19,8 +20,8 @@ class Revisions {
 	/**
 	 * @param Revisions[] $revisions
 	 */
-	public function __construct( $revisions = array() ) {
-		$this->revisions = array();
+	public function __construct( $revisions = [] ) {
+		$this->revisions = [];
 		$this->addRevisions( $revisions );
 	}
 
@@ -30,13 +31,13 @@ class Revisions {
 	 * @throws InvalidArgumentException
 	 */
 	public function addRevisions( $revisions ) {
-		if( !is_array( $revisions ) && !$revisions instanceof Revisions ) {
+		if ( !is_array( $revisions ) && !$revisions instanceof Revisions ) {
 			throw new InvalidArgumentException( '$revisions needs to either be an array or a Revisions object' );
 		}
-		if( $revisions instanceof Revisions ) {
+		if ( $revisions instanceof Revisions ) {
 			$revisions = $revisions->toArray();
 		}
-		foreach( $revisions as $revision ) {
+		foreach ( $revisions as $revision ) {
 			$this->addRevision( $revision );
 		}
 	}
@@ -53,7 +54,7 @@ class Revisions {
 	 *
 	 * @return bool
 	 */
-	public function hasRevisionWithId( $id ){
+	public function hasRevisionWithId( $id ) {
 		return array_key_exists( $id, $this->revisions );
 	}
 
@@ -62,7 +63,7 @@ class Revisions {
 	 *
 	 * @return bool
 	 */
-	public function hasRevision( Revision $revision ){
+	public function hasRevision( Revision $revision ) {
 		return array_key_exists( $revision->getId(), $this->revisions );
 	}
 
@@ -70,7 +71,7 @@ class Revisions {
 	 * @return Revision|null Revision or null if there is no revision
 	 */
 	public function getLatest() {
-		if( empty( $this->revisions ) ) {
+		if ( empty( $this->revisions ) ) {
 			return null;
 		}
 		return $this->revisions[ max( array_keys( $this->revisions ) ) ];
@@ -83,11 +84,11 @@ class Revisions {
 	 * @throws InvalidArgumentException
 	 * @return Revision
 	 */
-	public function get( $revid ){
-		if( !is_int( $revid ) ) {
+	public function get( $revid ) {
+		if ( !is_int( $revid ) ) {
 			throw new InvalidArgumentException( '$revid needs to be an int' );
 		}
-		if( $this->hasRevisionWithId( $revid ) ){
+		if ( $this->hasRevisionWithId( $revid ) ) {
 			return $this->revisions[$revid];
 		}
 		throw new RuntimeException( 'No such revision loaded in Revisions object' );

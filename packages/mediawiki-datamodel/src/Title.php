@@ -27,10 +27,10 @@ class Title implements JsonSerializable {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( $title, $ns = 0 ) {
-		if( !is_string( $title ) ) {
+		if ( !is_string( $title ) ) {
 			throw new InvalidArgumentException( '$title must be a string' );
 		}
-		if( !is_int( $ns ) ) {
+		if ( !is_int( $ns ) ) {
 			throw new InvalidArgumentException( '$ns must be an int' );
 		}
 		$this->title = $title;
@@ -65,10 +65,10 @@ class Title implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 */
 	public function jsonSerialize() {
-		return array(
-			'title' => $this->title,
-			'ns' => $this->ns,
-		);
+		return [
+		'title' => $this->title,
+		'ns' => $this->ns,
+		];
 	}
 
 	/**
