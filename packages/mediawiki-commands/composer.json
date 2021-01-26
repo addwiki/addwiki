@@ -1,9 +1,9 @@
 {
     "name": "addwiki/mediawiki-commands",
     "type": "library",
-    "description": "A library containing mediawiki commands",
+    "description": "WIP library with MediaWiki specific code for addwiki",
     "keywords": ["Mediawiki"],
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"

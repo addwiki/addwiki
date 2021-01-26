@@ -1,9 +1,9 @@
 {
     "name": "addwiki/wikibase-commands",
     "type": "library",
-    "description": "A library containing Wikibase commands",
+    "description": "WIP library with Wikibase specific code for addwiki",
     "keywords": ["Wikibase"],
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"

@@ -1,9 +1,9 @@
 {
     "name": "addwiki/wikimedia-commands",
     "type": "library",
-    "description": "A library containing wikimedia commands",
-    "keywords": ["Mediawiki", "Wikimedia"],
-    "license": "GPL-2.0+",
+    "description": "WIP library with addwiki commands realted to Wikimedia",
+    "keywords": ["Wikimedia"],
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"

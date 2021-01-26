@@ -1,9 +1,9 @@
 {
     "name": "addwiki/mediawiki-db",
     "type": "library",
-    "description": "A Mediawiki db lib",
+    "description": "WIP library for direct MediaWiki Database access",
     "keywords": ["Mediawiki"],
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Addshore"
