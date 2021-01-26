@@ -28,8 +28,8 @@ class AppConfig implements ArrayAccess {
 		$this->createIfNotExists();
 		$data = Yaml::parse( file_get_contents( $this->path ) );
 		// If the file is empty this will eval to null, so change it back to an array
-		if( is_null( $data ) ) {
-			$data = array();
+		if ( $data === null ) {
+			$data = [];
 		}
 		$this->data = $data;
 	}
@@ -40,7 +40,7 @@ class AppConfig implements ArrayAccess {
 
 	private function createIfNotExists() {
 		if ( !file_exists( $this->path ) ) {
-			file_put_contents( $this->path, Yaml::dump( array() ) );
+			file_put_contents( $this->path, Yaml::dump( [] ) );
 		}
 	}
 
@@ -49,9 +49,9 @@ class AppConfig implements ArrayAccess {
 
 		$temp = &$this->data;
 		$paths = explode( '.', $name );
-		foreach( $paths as $i => $key ) {
-			if( ($i + 1) == count( $paths ) ) {
-				if( $temp === null || !array_key_exists( $key, $temp ) ) {
+		foreach ( $paths as $i => $key ) {
+			if ( ( $i + 1 ) == count( $paths ) ) {
+				if ( $temp === null || !array_key_exists( $key, $temp ) ) {
 					return $default;
 				} else {
 					return $temp[$key];
@@ -66,11 +66,11 @@ class AppConfig implements ArrayAccess {
 
 	public function set( $name, $value ) {
 		$temp = &$this->data;
-		foreach( explode( '.', $name ) as $key ) {
+		foreach ( explode( '.', $name ) as $key ) {
 			$temp = &$temp[$key];
 		}
 		$temp = $value;
-		unset($temp);
+		unset( $temp );
 
 		$this->save();
 	}
@@ -80,7 +80,7 @@ class AppConfig implements ArrayAccess {
 	}
 
 	private function loadIfNotLoaded() {
-		if( !$this->isLoaded ) {
+		if ( !$this->isLoaded ) {
 			$this->load();
 		}
 	}

@@ -56,10 +56,10 @@ class ImportWHOReportValueCommand extends Command {
 
 	public function initServices() {
 		$clientFactory = new ClientFactory(
-			array(
-				'middleware' => array( EffectiveUrlMiddleware::middleware() ),
+			[
+				'middleware' => [ EffectiveUrlMiddleware::middleware() ],
 				'user-agent' => 'Addwiki - Wikidata Covid19 WHO Report Value Importer',
-			)
+			]
 		);
 		$guzzleClient = $clientFactory->getClient();
 
@@ -69,7 +69,7 @@ class ImportWHOReportValueCommand extends Command {
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
-				array(
+				[
 					'boolean' => 'DataValues\BooleanValue',
 					'number' => 'DataValues\NumberValue',
 					'string' => 'DataValues\StringValue',
@@ -80,7 +80,7 @@ class ImportWHOReportValueCommand extends Command {
 					'quantity' => 'DataValues\QuantityValue',
 					'time' => 'DataValues\TimeValue',
 					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-				)
+				]
 			),
 			new DataValueSerializer()
 		);
@@ -132,14 +132,14 @@ class ImportWHOReportValueCommand extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		if( $input->getOption( 'dry' ) ) {
+		if ( $input->getOption( 'dry' ) ) {
 			echo "Dry run mode!" . PHP_EOL;
 		}
 
-		if(
-			(!$input->getOption( 'report' ) && !$input->getOption( 'date' )) ||
+		if (
+			( !$input->getOption( 'report' ) && !$input->getOption( 'date' ) ) ||
 			!$input->getOption( 'reporter' ) ||
-			!$input->getOption( 'value' ) ){
+			!$input->getOption( 'value' ) ) {
 			throw new RuntimeException( 'Missing parameter' );
 		}
 
@@ -158,31 +158,31 @@ class ImportWHOReportValueCommand extends Command {
 
 		// Login...
 		$loggedIn = $this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if( !$loggedIn ) {
+		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
 			return -1;
 		}
 
 		// Get the value from the report
 		$whoReports = new WHOReports();
-		if( $reportId ) {
+		if ( $reportId ) {
 			$report = $whoReports->getReportForId( $reportId );
-		}elseif( $reportDate ) {
+		} elseif ( $reportDate ) {
 			$report = $whoReports->getReportForDate( $reportDate );
 		} else {
 			die( 'No way to get a report given...' );
 		}
-		if( $report->getId() < 46 ) {
+		if ( $report->getId() < 46 ) {
 			throw new RuntimeException( 'Doesn\'t work for reports before 46... (yet)' );
 		}
 		$value = $report->getValue( $reporter, $valueType );
 		$date = $report->getDate();
-		$date = DateTime::createFromFormat("Ymd", $date);
+		$date = DateTime::createFromFormat( "Ymd", $date );
 
 		echo "Report: " . $report->getId() .
 			' Date: ' . $report->getDate() .
-			' Reporter: ' . $reporter.
-			' Value: ' . $value.
+			' Reporter: ' . $reporter .
+			' Value: ' . $value .
 			PHP_EOL;
 
 		// Find the report item..
@@ -193,8 +193,8 @@ class ImportWHOReportValueCommand extends Command {
 			$reportSearchString,
 			'en'
 		);
-		if( !$searchResultIds || count($searchResultIds) > 1 ) {
-			throw new RuntimeException( 'Either found no, or too many report items: ' . json_encode($searchResultIds) );
+		if ( !$searchResultIds || count( $searchResultIds ) > 1 ) {
+			throw new RuntimeException( 'Either found no, or too many report items: ' . json_encode( $searchResultIds ) );
 		}
 		$reportItemId = new ItemId( $searchResultIds[0] );
 
@@ -213,7 +213,7 @@ class ImportWHOReportValueCommand extends Command {
 			"COVID-19 pandemic in the ",
 		];
 		$locationItemIds = [];
-		foreach( $locationSearchStringPrefixes as $prefix ) {
+		foreach ( $locationSearchStringPrefixes as $prefix ) {
 			$locationSearchString = $prefix . $reporter;
 			$searchResultIds = $this->wikibaseFactory->newEntitySearcher()->search(
 				'item',
@@ -223,7 +223,7 @@ class ImportWHOReportValueCommand extends Command {
 			$locationItemIds = array_merge( $locationItemIds, $searchResultIds );
 		}
 		$locationItemIds = array_values( array_unique( $locationItemIds ) );
-		if( !$locationItemIds || count($locationItemIds) > 1 ) {
+		if ( !$locationItemIds || count( $locationItemIds ) > 1 ) {
 			throw new RuntimeException(
 				'Either found no, or too many location items: ' . json_encode( $locationItemIds )
 			);
@@ -237,9 +237,9 @@ class ImportWHOReportValueCommand extends Command {
 			PHP_EOL;
 
 		// Properties that we will use
-		if( $valueType === 'deaths' ) {
+		if ( $valueType === 'deaths' ) {
 			$valueProperty = 'P1120';
-		}elseif( $valueType === 'cases' ) {
+		} elseif ( $valueType === 'cases' ) {
 			$valueProperty = 'P1603';
 		} else {
 			throw new RuntimeException();
@@ -270,21 +270,21 @@ class ImportWHOReportValueCommand extends Command {
 		/** @var Item $locationItem */
 		$locationItem = $this->wikibaseFactory->newEntityLookup()->getEntity( $locationItemId );
 		$currentStatements = $locationItem->getStatements()->getByPropertyId( new PropertyId( $valueProperty ) );
-		foreach( $currentStatements->toArray() as $statement ) {
+		foreach ( $currentStatements->toArray() as $statement ) {
 			$checkMainSnak = $statement->getMainSnak();
-			if( !$checkMainSnak instanceof PropertyValueSnak ) {
+			if ( !$checkMainSnak instanceof PropertyValueSnak ) {
 				continue;
 			}
 			/** @var QuantityValue $checkValue */
 			$checkValue = $checkMainSnak->getDataValue();
-			if( $checkValue->getAmount()->equals($quantityValue->getAmount()) ) {
+			if ( $checkValue->getAmount()->equals( $quantityValue->getAmount() ) ) {
 				echo "Value to be imported already exists in a statement on the Item" . PHP_EOL;
 				return 0;
 			}
 		}
 
 		// Create a new statement...
-		if( $input->getOption( 'dry' ) ) {
+		if ( $input->getOption( 'dry' ) ) {
 			return 0;
 		}
 		// TODO maybe do this as 1 edit?

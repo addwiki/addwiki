@@ -50,7 +50,7 @@ class SiteList {
 	 * @return SiteList
 	 */
 	public function getSiteListForCode( $code ) {
-		$siteList = array();
+		$siteList = [];
 		foreach ( $this->sites as $site ) {
 			if ( $site->getCode() == $code ) {
 				$siteList[] = $site;
@@ -66,7 +66,7 @@ class SiteList {
 	 * @return SiteList
 	 */
 	public function getSiteListForFlag( $flag ) {
-		//TODO implement me
+		// TODO implement me
 	}
 
 }

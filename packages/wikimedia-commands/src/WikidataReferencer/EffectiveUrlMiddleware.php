@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 class EffectiveUrlMiddleware {
 
 	/**
-	 * @var Callable
+	 * @var callable
 	 */
 	protected $nextHandler;
 	/**

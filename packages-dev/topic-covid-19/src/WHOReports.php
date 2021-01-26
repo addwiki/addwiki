@@ -61,7 +61,7 @@ class WHOReports {
 			$html,
 			$matches
 		);
-		foreach( $matches[1] as $key => $pdfName ) {
+		foreach ( $matches[1] as $key => $pdfName ) {
 			$this->idIndex[$matches[3][$key]] = $pdfName;
 			$this->dateIndex[$matches[2][$key]] = $pdfName;
 			$this->pdfIndex[$pdfName] = [ 'id' => $matches[3][$key], 'date' => $matches[2][$key] ];

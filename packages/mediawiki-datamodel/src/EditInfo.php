@@ -31,8 +31,8 @@ class EditInfo {
 	protected $bot = false;
 
 		/**
-	 * @var integer
-	 */
+		 * @var int
+		 */
 	protected $maxlag = null;
 
 	/**
@@ -58,7 +58,7 @@ class EditInfo {
 		if ( !is_bool( $bot ) ) {
 			throw new InvalidArgumentException( '$bot must be a bool' );
 		}
-		if ( !is_int( $maxlag ) && !is_null( $maxlag ) ) {
+		if ( !is_int( $maxlag ) && $maxlag !== null ) {
 			throw new InvalidArgumentException( '$maxlag must be an integer or null' );
 		}
 		$this->summary = $summary;

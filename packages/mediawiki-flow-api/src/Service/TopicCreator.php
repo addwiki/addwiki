@@ -12,6 +12,7 @@ class TopicCreator {
 	 * @var MediawikiApi
 	 */
 	private $api;
+
 	/**
 	 * @param MediawikiApi $api
 	 */
@@ -22,13 +23,13 @@ class TopicCreator {
 	public function create( Topic $topic ) {
 		$this->api->postRequest( new SimpleRequest(
 			'flow',
-			array(
+			[
 				'submodule' => 'new-topic',
 				'page' => $topic->getPageName(),
 				'nttopic' => $topic->getHeader(),
 				'ntcontent' => $topic->getContent(),
 				'token' => $this->api->getToken()
-			)
+			]
 		) );
 	}
 

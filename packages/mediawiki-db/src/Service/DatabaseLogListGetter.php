@@ -37,10 +37,10 @@ class DatabaseLogListGetter implements LogListGetter {
 	 */
 	public function getLogList( $type = null, $action = null, $namespace = 0 ) {
 		$query = $this->db->from( 'logging' )
-			->select( array(
+			->select( [
 				'log_id', 'log_type', 'log_action', 'log_timestamp', 'log_user',
 				'log_namespace', 'log_title', 'log_comment', 'log_page', 'log_params'
-			) )
+			] )
 			->where( 'log_type', $type )
 			->where( 'log_action', $action )
 			->where( 'log_namespace', $namespace );
@@ -48,7 +48,7 @@ class DatabaseLogListGetter implements LogListGetter {
 		$rows = $query->fetchAll();
 		$logList = new LogList();
 
-		foreach( $rows as $row ) {
+		foreach ( $rows as $row ) {
 			$logList->addLog( $this->getLogFromRow( $row ) );
 		}
 

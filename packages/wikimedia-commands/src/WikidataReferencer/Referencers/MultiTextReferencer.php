@@ -22,12 +22,12 @@ class MultiTextReferencer implements Referencer {
 	/**
 	 * @var string[]
 	 */
-	private $propMap = array();
+	private $propMap = [];
 
 	/**
 	 * @var array
 	 */
-	private $regexMap = array();
+	private $regexMap = [];
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
@@ -48,10 +48,10 @@ class MultiTextReferencer implements Referencer {
 		foreach ( $this->propMap as $propertyIdString => $schemaPropertyString ) {
 			$regexMap = $this->regexMap[$propertyIdString];
 
-			$values = array();
-			foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_STRING ) as $propertyValue ) {
+			$values = [];
+			foreach ( $microData->getProperty( $schemaPropertyString, MicroData::PROP_STRING ) as $propertyValue ) {
 				// Don't match URLS!
-				if( strstr( $propertyValue, '//' ) ) {
+				if ( strstr( $propertyValue, '//' ) ) {
 					continue;
 				}
 				$values[] = $propertyValue;
@@ -77,13 +77,13 @@ class MultiTextReferencer implements Referencer {
 					$valueEntityId = $valueEntityIdValue->getEntityId();
 					$valueEntityIdString = $valueEntityId->getSerialization();
 
-					if( !array_key_exists( $valueEntityIdString, $regexMap ) ) {
-						//TODO log that this ItemId is missing?
+					if ( !array_key_exists( $valueEntityIdString, $regexMap ) ) {
+						// TODO log that this ItemId is missing?
 						continue;
 					}
 
 					$regex = $regexMap[$valueEntityIdString];
-					if( !preg_match( $regex, $value ) ) {
+					if ( !preg_match( $regex, $value ) ) {
 						// ItemId regex didn't match this schema value
 						continue;
 					}
@@ -98,12 +98,12 @@ class MultiTextReferencer implements Referencer {
 							null,
 							new EditInfo( urldecode( $sourceUrl ), EditInfo::NOTMINOR, EditInfo::BOT )
 						);
-						//NOTE: keep our in memory item copy up to date (yay such reference passing)
+						// NOTE: keep our in memory item copy up to date (yay such reference passing)
 						$statement->addNewReference( $newReference->getSnaks() );
 						$referenceCounter++;
 					}
 					catch ( UsageException $e ) {
-						//Ignore
+						// Ignore
 					}
 				}
 			}

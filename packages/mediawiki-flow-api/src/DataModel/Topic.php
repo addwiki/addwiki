@@ -14,7 +14,7 @@ class Topic {
 		$this->content = $content;
 	}
 
-	public function getPageName(){
+	public function getPageName() {
 		return $this->pageName;
 	}
 
@@ -31,6 +31,5 @@ class Topic {
 	public function getContent() {
 		return $this->content;
 	}
-
 
 }

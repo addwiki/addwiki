@@ -32,7 +32,7 @@ class SetDefaultWiki extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
 
-		if( !$this->appConfig->has( 'wikis.' . $code ) ) {
+		if ( !$this->appConfig->has( 'wikis.' . $code ) ) {
 			$output->writeln( "No wiki with the code $code found" );
 			return -1;
 		}

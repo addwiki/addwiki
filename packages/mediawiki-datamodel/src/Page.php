@@ -23,7 +23,7 @@ class Page {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
-		if ( is_null( $revisions ) ) {
+		if ( $revisions === null ) {
 			$revisions = new Revisions();
 		}
 		$this->revisions = $revisions;

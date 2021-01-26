@@ -26,10 +26,10 @@ class WikimediaMediawikiFactoryFactory {
 	 * @return MediawikiFactory
 	 */
 	public function getFactory( $siteID ) {
-		$lastFour = substr($siteID, -4);
-		if( $lastFour == 'wiki' ) {
-			$firstPart = substr($siteID, 0, -4);
-			if( strlen( $firstPart ) >= 2 ) {
+		$lastFour = substr( $siteID, -4 );
+		if ( $lastFour == 'wiki' ) {
+			$firstPart = substr( $siteID, 0, -4 );
+			if ( strlen( $firstPart ) >= 2 ) {
 				$firstPart = str_replace( '_', '-', $firstPart );
 				return new MediawikiFactory(
 					new MediawikiApi(

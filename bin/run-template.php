@@ -22,11 +22,11 @@ if($directory === '') {
 
 $dirs = [];
 if($directory === 'all') {
-    $dirs = array_merge(
+    $glob = array_merge(
         array_filter(glob(__DIR__ . '/../packages/*'), 'is_dir'),
         array_filter(glob(__DIR__ . '/../packages-dev/*'), 'is_dir')
     );
-    foreach( $dirs as $dir ) {
+    foreach( $glob as $dir ) {
         $relativeDir = str_replace(realpath(__DIR__."/../"),'.',realpath($dir));
         $dirs[] = $relativeDir;
     }

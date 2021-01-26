@@ -31,7 +31,7 @@ class Purge extends Command {
 			->addOption(
 				'wiki',
 				null,
-				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL),
+				( $defaultWiki === null ? InputOption::VALUE_REQUIRED : InputOption::VALUE_OPTIONAL ),
 				'The configured wiki to use',
 				$defaultWiki
 			)
@@ -50,14 +50,14 @@ class Purge extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$pageIdentifiers = array();
-		foreach( $input->getOption( 'pageid' ) as $pageId ) {
+		$pageIdentifiers = [];
+		foreach ( $input->getOption( 'pageid' ) as $pageId ) {
 			$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );
 		}
-		foreach( $input->getOption( 'title' ) as $title ) {
+		foreach ( $input->getOption( 'title' ) as $title ) {
 			$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
 		}
-		if( empty( $pageIdentifiers ) ) {
+		if ( empty( $pageIdentifiers ) ) {
 			throw new \RuntimeException( 'No titles or pageids were set!' );
 		}
 
@@ -67,17 +67,16 @@ class Purge extends Command {
 		$mwFactory = new MediawikiFactory( $api );
 		$purger = $mwFactory->newPagePurger();
 		/** @var PageIdentifier $identifier */
-		foreach( $pageIdentifiers as $identifier ) {
-			if( $identifier->getId() != null ) {
+		foreach ( $pageIdentifiers as $identifier ) {
+			if ( $identifier->getId() != null ) {
 				$output->writeln( 'Purging page with id ' . $identifier->getId() );
-			} elseif( $identifier->getTitle() != null ) {
+			} elseif ( $identifier->getTitle() != null ) {
 				$output->writeln( 'Purging page with title ' . $identifier->getTitle()->getText() );
 			}
 			$purger->purge( new Page( $identifier ) );
 		}
 
 		$output->writeln( 'Done' );
-
 	}
 
 }

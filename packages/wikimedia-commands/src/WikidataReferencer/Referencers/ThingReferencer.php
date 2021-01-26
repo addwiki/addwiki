@@ -27,7 +27,7 @@ class ThingReferencer implements Referencer {
 	/**
 	 * @var callable[]
 	 */
-	private $callbackMap = array();
+	private $callbackMap = [];
 
 	/**
 	 * @var InMemoryEntityLookup
@@ -46,17 +46,17 @@ class ThingReferencer implements Referencer {
 	 */
 	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
-		$this->inMemoryEntityLookup = new InMemoryEntityLookup();;
+		$this->inMemoryEntityLookup = new InMemoryEntityLookup();
 
-		foreach( $propMap as $propertyIdSerialization => $schemaPropertyStrings ) {
-			if( is_string( $schemaPropertyStrings ) ) {
-				$schemaPropertyStrings = array( $schemaPropertyStrings );
+		foreach ( $propMap as $propertyIdSerialization => $schemaPropertyStrings ) {
+			if ( is_string( $schemaPropertyStrings ) ) {
+				$schemaPropertyStrings = [ $schemaPropertyStrings ];
 			}
-			foreach( $schemaPropertyStrings as $schemaPropertyString ) {
-				$this->callbackMap[$propertyIdSerialization] = function( MicroData $microData ) use ( $schemaPropertyString ) {
-					$values = array();
-					foreach( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
-						foreach( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
+			foreach ( $schemaPropertyStrings as $schemaPropertyString ) {
+				$this->callbackMap[$propertyIdSerialization] = function ( MicroData $microData ) use ( $schemaPropertyString ) {
+					$values = [];
+					foreach ( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
+						foreach ( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
 							$values[] = $value;
 						}
 					}
@@ -69,17 +69,17 @@ class ThingReferencer implements Referencer {
 	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
 		// Only cache entity lookup stuff per item we are adding references for!
 		// (but can be used for multiple sourceURLs!!
-		if( !$item->getId()->equals( $this->lastEntityId ) ) {
+		if ( !$item->getId()->equals( $this->lastEntityId ) ) {
 			$this->inMemoryEntityLookup = new InMemoryEntityLookup();
 		}
 
 		$referenceCounter = 0;
 
-		foreach( $this->callbackMap as $propertyIdString => $valueGetterFunction ) {
+		foreach ( $this->callbackMap as $propertyIdString => $valueGetterFunction ) {
 			$values = $valueGetterFunction( $microData );
 			$statements = $item->getStatements()->getByPropertyId( new PropertyId( $propertyIdString ) );
 
-			foreach( $values as $value ) {
+			foreach ( $values as $value ) {
 				foreach ( $statements->getIterator() as &$statement ) {
 
 					$mainSnak = $statement->getMainSnak();
@@ -92,7 +92,7 @@ class ThingReferencer implements Referencer {
 					/** @var ItemId $valueItemId */
 					$valueItemId = $valueEntityIdValue->getEntityId();
 
-					if( $this->inMemoryEntityLookup->hasEntity( $valueItemId ) ) {
+					if ( $this->inMemoryEntityLookup->hasEntity( $valueItemId ) ) {
 						$valueItem = $this->inMemoryEntityLookup->getEntity( $valueItemId );
 					} else {
 						$valueItem = $this->wikibaseFactory->newItemLookup()->getItemForId( $valueItemId );
@@ -103,7 +103,7 @@ class ThingReferencer implements Referencer {
 						continue; // Ignore things that don't appear to have the correct value
 					}
 
-					if( DataModelUtils::statementHasReferenceForUrlWithSameDomain( $statement, $sourceUrl ) ) {
+					if ( DataModelUtils::statementHasReferenceForUrlWithSameDomain( $statement, $sourceUrl ) ) {
 						continue; // Ignore statements that already have this URL domain as a ref
 					}
 
@@ -117,11 +117,11 @@ class ThingReferencer implements Referencer {
 							null,
 							new EditInfo( urldecode( $sourceUrl ), EditInfo::NOTMINOR, EditInfo::BOT )
 						);
-						//NOTE: keep our in memory item copy up to date (yay such reference passing)
+						// NOTE: keep our in memory item copy up to date (yay such reference passing)
 						$statement->addNewReference( $newReference->getSnaks() );
 						$referenceCounter++;
-					} catch( UsageException $e ) {
-						//Ignore
+					} catch ( UsageException $e ) {
+						// Ignore
 					}
 				}
 			}

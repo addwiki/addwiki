@@ -49,9 +49,9 @@ class WikidataReferenceDateFixer extends Command {
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
 
-		$defaultGuzzleConf = array(
-			'headers' => array( 'User-Agent' => 'addwiki - Wikidata Reference Date Fixer' )
-		);
+		$defaultGuzzleConf = [
+			'headers' => [ 'User-Agent' => 'addwiki - Wikidata Reference Date Fixer' ]
+		];
 		$guzzleClient = new Client( $defaultGuzzleConf );
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 
@@ -59,7 +59,7 @@ class WikidataReferenceDateFixer extends Command {
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
-				array(
+				[
 					'boolean' => 'DataValues\BooleanValue',
 					'number' => 'DataValues\NumberValue',
 					'string' => 'DataValues\StringValue',
@@ -70,7 +70,7 @@ class WikidataReferenceDateFixer extends Command {
 					'quantity' => 'DataValues\QuantityValue',
 					'time' => 'DataValues\TimeValue',
 					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-				)
+				]
 			),
 			new DataValueSerializer()
 		);
@@ -108,14 +108,14 @@ class WikidataReferenceDateFixer extends Command {
 		}
 		$items = $input->getOption( 'item' );
 
-		if( empty( $items ) ) {
+		if ( empty( $items ) ) {
 			$output->writeln( 'Running SPARQL query to find items to check' );
-			$queryBuilder = new QueryBuilder( array(
+			$queryBuilder = new QueryBuilder( [
 				'prov' => 'http://www.w3.org/ns/prov#',
 				'wd' => 'http://www.wikidata.org/entity/',
 				'wikibase' => 'http://wikiba.se/ontology#',
 				'prv' => 'http://www.wikidata.org/prop/reference/value/',
-			) );
+			] );
 			$itemIds = $this->sparqlQueryRunner->getItemIdsFromQuery(
 				$queryBuilder
 				->select( '?item' )
@@ -128,8 +128,8 @@ class WikidataReferenceDateFixer extends Command {
 			);
 		} else {
 			/** @var ItemId[] $itemIds */
-			$itemIds = array();
-			foreach( array_unique( $items ) as $itemIdString ) {
+			$itemIds = [];
+			foreach ( array_unique( $items ) as $itemIdString ) {
 				$itemIds[] = new ItemId( $itemIdString );
 			}
 		}
@@ -170,7 +170,7 @@ class WikidataReferenceDateFixer extends Command {
 
 									$fixedTimestamp = $this->getFixedTimestamp( $dataValue->getTime() );
 
-									if( $fixedTimestamp ) {
+									if ( $fixedTimestamp ) {
 										$snakList->addSnak(
 											new PropertyValueSnak(
 												new PropertyId( 'P813' ),
@@ -187,7 +187,7 @@ class WikidataReferenceDateFixer extends Command {
 										$editSummary = 'Fix reference retrieval date';
 										$output->write( '.' );
 									} else {
-										//TODO optionally remove rather than always doing so?
+										// TODO optionally remove rather than always doing so?
 										$editSummary = 'Removing bad reference retrieval date';
 										$output->write( 'x' );
 									}
@@ -210,7 +210,7 @@ class WikidataReferenceDateFixer extends Command {
 					}
 				}
 			}
-			$output->writeln('');
+			$output->writeln( '' );
 		}
 
 		return 0;
@@ -226,7 +226,7 @@ class WikidataReferenceDateFixer extends Command {
 		$lastYear = ( (int)date( 'Y' ) ) - 1;
 
 		// Try a bunch of common misstypes
-		$swaps = array(
+		$swaps = [
 			'000' . substr( $currentYear, 3, 1 ) => $currentYear,
 			'00' . substr( $currentYear, 2, 2 ) => $currentYear,
 			'0' . substr( $currentYear, 1, 3 ) => $currentYear,
@@ -235,17 +235,17 @@ class WikidataReferenceDateFixer extends Command {
 			'00' . substr( $lastYear, 2, 2 ) => $lastYear,
 			'0' . substr( $lastYear, 1, 3 ) => $lastYear,
 			'0' . substr( $lastYear, 0, 1 ) . substr( $lastYear, 2, 2 ) => $lastYear,
-		);
-		foreach( $swaps as $match => $replace ) {
-			if( strstr( $timestamp, $match ) ) {
+		];
+		foreach ( $swaps as $match => $replace ) {
+			if ( strstr( $timestamp, $match ) ) {
 				return str_replace( $match, $replace, $timestamp );
 			}
 		}
 
 		// Also allow the last 10 years!
 		$year = $currentYear;
-		while( $year >= $currentYear - 10 ) {
-			if( strstr( $timestamp, $year ) ) {
+		while ( $year >= $currentYear - 10 ) {
+			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
 			$year = $year - 1;

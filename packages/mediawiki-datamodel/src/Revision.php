@@ -55,10 +55,10 @@ class Revision {
 		$user = null,
 		$timestamp = null
 		) {
-		if ( is_null( $editInfo ) ) {
+		if ( $editInfo === null ) {
 			$editInfo = new EditInfo();
 		}
-		if ( is_null( $pageIdentifier ) ) {
+		if ( $pageIdentifier === null ) {
 			$pageIdentifier = new PageIdentifier();
 		}
 		$this->content = $content;

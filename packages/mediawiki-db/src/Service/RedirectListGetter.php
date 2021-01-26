@@ -29,11 +29,11 @@ class RedirectListGetter {
 	 */
 	public function getRedirects( $namespace = 0 ) {
 		$statement = $this->db->prepare( $this->getQuery() );
-		$statement->execute( array( ':namespace' => $namespace ) );
+		$statement->execute( [ ':namespace' => $namespace ] );
 		$rows = $statement->fetchAll();
 
-		$redirects = array();
-		foreach( $rows as $row ) {
+		$redirects = [];
+		foreach ( $rows as $row ) {
 			$redirects[] = new Redirect(
 				new Title( $row['title'], intval( $row['namespace'] ) ),
 				new Title( $row['rd_title'], intval( $row['rd_namespace'] ) )

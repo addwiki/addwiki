@@ -16,7 +16,7 @@ class WikimediaFactory {
 
 	/**
 	 * @since 0.1
-	 * 
+	 *
 	 * @param string $domain eg. 'en.wikipedia.org'
 	 *
 	 * @return MediawikiApi
@@ -47,7 +47,7 @@ class WikimediaFactory {
 		switch ( true ) {
 			case strstr( $domain, 'wikidata.org' ):
 				$dvDeserializer = new DataValueDeserializer(
-					array(
+					[
 						// data-values/data-values
 						'boolean' => 'DataValues\BooleanValue',
 						'number' => 'DataValues\NumberValue',
@@ -64,7 +64,7 @@ class WikimediaFactory {
 						'time' => 'DataValues\TimeValue',
 						// wikibase/data-model
 						'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
-					)
+					]
 				);
 				$dvSerializer = new DataValueSerializer();
 				break;
