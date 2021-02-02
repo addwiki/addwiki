@@ -13,24 +13,24 @@ Every package also exists in it's own read only git repository, can be used sepa
 
 **Most popular:**
 
-- mediawiki-api-base
-- mediawiki-datamodel
-- mediawiki-api
-- wikibase-api
+- [mediawiki-api-base](https://github.com/addwiki/mediawiki-api-base)
+- [mediawiki-datamodel](https://github.com/addwiki/mediawiki-datamodel)
+- [mediawiki-api](https://github.com/addwiki/mediawiki-api)
+- [wikibase-api](https://github.com/addwiki/wikibase-api)
 
 **WIP CLI:**
 
-- addwiki-cli
-- mediawiki-commands
-- wikibase-commands
-- wikimedia-commands
+- [addwiki-cli](https://github.com/addwiki/addwiki-cli)
+- [mediawiki-commands](https://github.com/addwiki/mediawiki-commands)
+- [wikibase-commands](https://github.com/addwiki/wikibase-commands)
+- [wikimedia-commands](https://github.com/addwiki/wikimedia-commands)
 
 **Other WIP:**
 
-- wikimedia
-- mediawiki-sitematrix-api
-- mediawiki-flow-api
-- mediawiki-db
+- [wikimedia](https://github.com/addwiki/wikimedia)
+- [mediawiki-sitematrix-api](https://github.com/addwiki/mediawiki-sitematrix-api)
+- [mediawiki-flow-api](https://github.com/addwiki/mediawiki-flow-api)
+- [mediawiki-db](https://github.com/addwiki/mediawiki-db)
 
 ## Using the monorepo
 
