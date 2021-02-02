@@ -15,7 +15,6 @@
         "fix": "phpcbf",
         "phpunit": "phpunit",
         "phpunit-coverage": "phpunit --coverage-clover=coverage.clover",
-        "phpunit-integration": "phpunit --testsuite integration",
         "phpunit-unit": "phpunit --testsuite unit",
         "test": [
             "@lint",
