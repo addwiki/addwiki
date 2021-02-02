@@ -6,6 +6,9 @@
 	convertWarningsToExceptions="false"
 >
 	<testsuites>
+		<testsuite name="integration">
+			<directory suffix="Test.php">./tests/integration</directory>
+		</testsuite>
 		<testsuite name="unit">
 			<directory suffix="Test.php">./tests/unit</directory>
 		</testsuite>

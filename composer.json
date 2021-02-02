@@ -50,7 +50,8 @@
     "name": "addwiki/addwiki",
     "autoload-dev": {
         "files": [
-            "packages/mediawiki-api-base/tests/Integration/TestEnvironment.php"
+            "packages/mediawiki-api-base/tests/Integration/TestEnvironment.php",
+            "packages/wikibase-api/tests/integration/TestEnvironment.php"
         ],
         "psr-4": {
             "Mediawiki\\Api\\Test\\": [
@@ -91,11 +92,17 @@
         }
     ],
     "require-dev": {
+        "data-values/common": "~0.4.0",
+        "data-values/data-values": "~2.0",
+        "data-values/geo": "~4.0",
+        "data-values/number": "~0.10.0",
+        "data-values/serialization": "~1.0",
+        "data-values/time": "~1.0",
         "data-values/validators": "~0.1.0",
         "jakub-onderka/php-parallel-lint": "^0.9.2",
         "mediawiki/mediawiki-codesniffer": "~34.0",
         "monolog/monolog": "^1.23",
-        "phpunit/phpunit": "~8",
+        "phpunit/phpunit": "~9",
         "symplify/monorepo-builder": "^9.0"
     },
     "repositories": [

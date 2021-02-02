@@ -15,7 +15,6 @@
         "fix": "phpcbf",
         "phpunit": "phpunit",
         "phpunit-coverage": "phpunit --coverage-clover=coverage.clover",
-        "phpunit-integration": "phpunit --testsuite integration",
         "phpunit-unit": "phpunit --testsuite unit",
         "test": [
             "@lint",
@@ -26,7 +25,7 @@
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^0.9.2",
         "mediawiki/mediawiki-codesniffer": "~34.0",
-        "phpunit/phpunit": "~8"
+        "phpunit/phpunit": "~9"
     },
     "autoload": {
         "psr-4": {
