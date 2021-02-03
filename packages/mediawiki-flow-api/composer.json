@@ -2,7 +2,7 @@
     "name": "addwiki/mediawiki-flow-api",
     "type": "library",
     "description": "MediaWiki API library for the Flow extension",
-    "keywords": ["Mediawiki","API"],
+    "keywords": ["Mediawiki", "API"],
     "license": "GPL-2.0-or-later",
     "authors": [
         {
@@ -23,7 +23,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.6-dev"
+            "dev-master": "2.7-dev"
         }
     },
     "minimum-stability": "dev",

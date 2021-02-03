@@ -2,7 +2,7 @@
     "name": "addwiki/addwiki-cli",
     "type": "library",
     "description": "A MediaWiki, Wikibase and Wikimedia CLI application",
-    "keywords": ["Mediawiki","Wikimedia","CLI"],
+    "keywords": ["Mediawiki", "Wikimedia", "CLI"],
     "license": "GPL-2.0-or-later",
     "authors": [
         {
@@ -29,7 +29,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "2.6-dev"
+            "dev-master": "2.7-dev"
         }
     },
     "minimum-stability": "dev",
