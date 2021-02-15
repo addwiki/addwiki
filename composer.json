@@ -97,9 +97,20 @@
         "mediawiki/mediawiki-codesniffer": "~34.0",
         "monolog/monolog": "^1.23",
         "phpunit/phpunit": "~9",
-        "symplify/monorepo-builder": "^9.0"
+        "symplify/monorepo-builder": "dev-master"
     },
     "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "symplify/monorepo-builder",
+                "version": "dev-master",
+                "dist": {
+                    "url": "https://github.com/addshore/symplify/archive/master.zip",
+                    "type": "zip"
+                }
+            }
+        },
         {
             "type": "path",
             "url": "packages/*"
