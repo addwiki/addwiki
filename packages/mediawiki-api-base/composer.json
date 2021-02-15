@@ -43,7 +43,7 @@
     },
     "autoload-dev": {
         "files": [
-            "tests/Integration/TestEnvironment.php"
+            "tests/integration/TestEnvironment.php"
         ]
     },
     "extra": {
