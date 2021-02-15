@@ -1,11 +1,11 @@
-name: Split Monorepo Dev-Master
+name: Split Monorepo Dev-Main
 # Mainly copied from https://github.com/symplify/symplify/blob/master/.github/workflows/split_monorepo.yaml
 # per the advice at https://github.com/symplify/monorepo-builder
 
 on:
     push:
         branches:
-            - master
+            - main
 
         # see https://github.community/t/how-to-run-github-actions-workflow-only-for-new-tags/16075/10?u=tomasvotruba
         tags:

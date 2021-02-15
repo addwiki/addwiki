@@ -2,7 +2,7 @@ name: Vuepress Deploy
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -17,4 +17,4 @@ jobs:
         BUILD_SCRIPT: npm i && npm run docs:build
         BUILD_DIR: docs/.vuepress/dist/
         TARGET_REPO: addwiki/addwiki.github.io
-        TARGET_BRANCH: master
+        TARGET_BRANCH: main
