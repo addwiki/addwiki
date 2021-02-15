@@ -61,5 +61,6 @@ jobs:
                     package-directory: 'packages/${{ matrix.package }}'
                     split-repository-organization: 'addwiki'
                     split-repository-name: '${{ matrix.package }}'
+                    branch: "main"
                     user-name: "addwiki-ci"
                     user-email: "ci@addwiki.github.io"
