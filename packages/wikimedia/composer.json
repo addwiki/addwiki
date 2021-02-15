@@ -14,9 +14,9 @@
     },
     "require": {
         "php": "^7.2",
-        "addwiki/mediawiki-api": "^2.6",
-        "addwiki/mediawiki-api-base": "^2.6",
-        "addwiki/wikibase-api": "^2.6",
+        "addwiki/mediawiki-api": "^2.7",
+        "addwiki/mediawiki-api-base": "^2.7",
+        "addwiki/wikibase-api": "^2.7",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
         "data-values/geo": "~4.0",
@@ -32,7 +32,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.7-dev"
+            "dev-main": "2.7-dev",
+            "dev-master": "2.7-dev"
         }
     },
     "minimum-stability": "dev",

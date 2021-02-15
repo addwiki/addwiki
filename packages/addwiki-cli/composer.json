@@ -13,8 +13,8 @@
         "test": "echo \"No tests yet!\""
     },
     "require": {
-        "addwiki/mediawiki-commands": "^2.6",
-        "addwiki/wikimedia-commands": "^2.6",
+        "addwiki/mediawiki-commands": "^2.7",
+        "addwiki/wikimedia-commands": "^2.7",
         "symfony/console": "~4.0",
         "symfony/yaml": "~4.0"
     },
@@ -29,7 +29,8 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "2.7-dev"
+            "dev-main": "2.7-dev",
+            "dev-master": "2.7-dev"
         }
     },
     "minimum-stability": "dev",

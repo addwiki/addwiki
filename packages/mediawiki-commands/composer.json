@@ -13,9 +13,9 @@
         "test": "echo \"No tests yet!\""
     },
     "require": {
-        "addwiki/mediawiki-api": "^2.6",
-        "addwiki/mediawiki-api-base": "^2.6",
-        "addwiki/mediawiki-datamodel": "^2.6",
+        "addwiki/mediawiki-api": "^2.7",
+        "addwiki/mediawiki-api-base": "^2.7",
+        "addwiki/mediawiki-datamodel": "^2.7",
         "symfony/console": "~4.0"
     },
     "autoload": {
@@ -28,7 +28,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.7-dev"
+            "dev-main": "2.7-dev",
+            "dev-master": "2.7-dev"
         }
     },
     "minimum-stability": "dev",
