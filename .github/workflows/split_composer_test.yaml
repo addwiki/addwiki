@@ -21,6 +21,8 @@ jobs:
                     coverage: none
 
             -   uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-cache"
 
             # get package json list
             -
@@ -51,10 +53,12 @@ jobs:
                     coverage: none
 
             -   uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-cache"
 
             -   run: vendor/bin/monorepo-builder localize-composer-paths packages/${{ matrix.package }}/composer.json --ansi
 
-            -   run: composer update --no-progress --ansi --working-dir packages/${{ matrix.package }}
+            -   run: composer update --no-progress --ansi --no-cache --working-dir packages/${{ matrix.package }}
 
             -   name: Run CI docker-compose if present
                 run: '(test -f packages/${{ matrix.package }}/docker-compose-ci.yml && docker-compose --project-directory packages/${{ matrix.package }} --file packages/${{ matrix.package }}/docker-compose-ci.yml up -d) || echo No docker-compose-ci.yml, skipping step'
