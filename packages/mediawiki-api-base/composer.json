@@ -9,6 +9,19 @@
             "name": "Addshore"
         }
     ],
+    "scripts": {
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "phpunit": "phpunit",
+        "phpunit-unit": "phpunit tests/unit",
+        "phpunit-integration": "phpunit tests/integration",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ]
+    },
     "require": {
         "php": "^7.2",
         "guzzlehttp/guzzle": "~6.0",

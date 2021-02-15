@@ -9,6 +9,19 @@
             "name": "Addshore"
         }
     ],
+    "scripts": {
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "phpunit": "phpunit",
+        "phpunit-unit": "phpunit tests/unit",
+        "phpunit-integration": "phpunit tests/integration",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ]
+    },
     "require": {
         "addwiki/mediawiki-api-base": "^2.7",
         "addwiki/mediawiki-datamodel": "^2.7"
