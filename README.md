@@ -34,6 +34,8 @@ Every package also exists in it's own read only git repository, can be used sepa
 
 ## Using the monorepo
 
+### monorepo-builder
+
 This mono repo uses https://github.com/symplify/monorepo-builder
 
 This provides convenience scripts for a few things...
@@ -60,4 +62,38 @@ Keep your package aliases up to date (not yet working)
 
 ```sh
 vendor/bin/monorepo-builder package-alias
+```
+
+### Testing & CI
+
+Github Actions exist to split out packages as well as run tests on them.
+
+Commands exist in each of the packages to run individual tests.
+
+You can also run all tests from the main monorepo.
+
+Run lint on all packages:
+
+```sh
+composer lint
+```
+
+Run phpunit unit tests on a single package:
+
+```sh
+vendor/bin/phpunit packages/mediawiki-api-base/tests/unit
+```
+
+Integration tests are facilitated by `docker-composer-ci.yml` files which are currently kept in sync manually.
+The setup in the monorepo should work for all packages.
+Run it before running integration tests.
+
+```sh
+docker-compose -f docker-compose-ci.yml up -d
+```
+
+Wait for the wiki to be accessible, then run the tests:
+
+```sh
+composer phpunit-integration
 ```

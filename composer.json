@@ -114,7 +114,7 @@
         "lint": "bin/run-template vendor/bin/parallel-lint DIR --",
         "phpcs": "bin/run-template vendor/bin/phpcs -ps --standard=DIR/phpcs.xml DIR --",
         "fix": "bin/run-template vendor/bin/phpcbf --standard=DIR/phpcs.xml DIR --",
-        "phpunit": "bin/run-template vendor/bin/phpunit DIR --",
+        "phpunit": "bin/run-template vendor/bin/phpunit DIR/tests --",
         "phpunit-unit": "bin/run-template vendor/bin/phpunit DIR/tests/unit --",
         "phpunit-integration": "bin/run-template vendor/bin/phpunit DIR/tests/integration --",
         "test": [
