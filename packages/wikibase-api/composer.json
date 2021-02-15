@@ -13,7 +13,7 @@
         "lint": "parallel-lint . --exclude vendor",
         "phpcs": "phpcs -ps",
         "fix": "phpcbf",
-        "phpunit": "phpunit",
+        "phpunit": "phpunit tests",
         "phpunit-unit": "phpunit tests/unit",
         "phpunit-integration": "phpunit tests/integration",
         "test": [
