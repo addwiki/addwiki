@@ -11,12 +11,12 @@ use Mediawiki\DataModel\NamespaceInfo;
 class NamespaceInfoTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param int    $id
+	 * @param int $id
 	 * @param string $canonicalName
 	 * @param string $localName
 	 * @param string $caseHandling
-	 * @param null   $defaultContentModel
-	 * @param array  $aliases
+	 * @param null $defaultContentModel
+	 * @param array $aliases
 	 */
 	public function testValidConstruction( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null,
 		$aliases = []
@@ -41,12 +41,12 @@ class NamespaceInfoTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @param $id
-	 * @param $canonicalName
-	 * @param $localName
-	 * @param $caseHandling
-	 * @param null          $defaultContentModel
-	 * @param array         $aliases
+	 * @param mixed $id
+	 * @param mixed $canonicalName
+	 * @param mixed $localName
+	 * @param mixed $caseHandling
+	 * @param null $defaultContentModel
+	 * @param array $aliases
 	 *
 	 * @dataProvider provideInvalidConstruction
 	 */
