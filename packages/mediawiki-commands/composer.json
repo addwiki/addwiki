@@ -19,9 +19,9 @@
         ]
     },
     "require": {
-        "addwiki/mediawiki-api": "^2.7",
-        "addwiki/mediawiki-api-base": "^2.7",
-        "addwiki/mediawiki-datamodel": "^2.7",
+        "addwiki/mediawiki-api": "^2.8",
+        "addwiki/mediawiki-api-base": "^2.8",
+        "addwiki/mediawiki-datamodel": "^2.8",
         "symfony/console": "~4.0"
     },
     "require-dev": {

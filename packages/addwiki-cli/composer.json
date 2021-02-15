@@ -19,8 +19,8 @@
         ]
     },
     "require": {
-        "addwiki/mediawiki-commands": "^2.7",
-        "addwiki/wikimedia-commands": "^2.7",
+        "addwiki/mediawiki-commands": "^2.8",
+        "addwiki/wikimedia-commands": "^2.8",
         "symfony/console": "~4.0",
         "symfony/yaml": "~4.0"
     },
