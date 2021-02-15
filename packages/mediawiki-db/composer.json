@@ -9,9 +9,6 @@
             "name": "Addshore"
         }
     ],
-    "scripts": {
-        "test": "echo \"No tests yet!\""
-    },
     "require": {
         "addwiki/mediawiki-datamodel": "^2.7",
         "lichtner/fluentpdo": "1.0.0"

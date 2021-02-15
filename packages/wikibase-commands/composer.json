@@ -12,9 +12,6 @@
             "name": "Lucie-Aimée Kaffee"
         }
     ],
-    "scripts": {
-        "test": "echo \"No tests yet!\""
-    },
     "require": {
         "addwiki/mediawiki-api": "^2.7",
         "addwiki/mediawiki-api-base": "^2.7",

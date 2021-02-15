@@ -9,9 +9,6 @@
             "name": "Addshore"
         }
     ],
-    "scripts": {
-        "test": "echo \"No tests yet!\""
-    },
     "require": {
         "php": "^7.2",
         "addwiki/mediawiki-api-base": "^2.7",
@@ -22,14 +19,14 @@
         "wikibase/data-model-services": "~3.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "~9",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
         "data-values/geo": "~4.0",
         "data-values/number": "~0.10.0",
         "data-values/serialization": "~1.0",
         "data-values/time": "~1.0",
-        "data-values/validators": "~0.1.0",
-        "phpunit/phpunit": "~9"
+        "data-values/validators": "~0.1.0"
     },
     "autoload": {
         "psr-4": {

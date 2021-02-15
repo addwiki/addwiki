@@ -9,9 +9,6 @@
             "name": "Addshore"
         }
     ],
-    "scripts": {
-        "test": "echo \"No tests yet!\""
-    },
     "require": {
         "php": "^7.2",
         "addwiki/mediawiki-api": "^2.7",
