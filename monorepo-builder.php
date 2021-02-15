@@ -19,11 +19,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $packageDirs[] = __DIR__ . '/packages-dev';
     }
     $parameters->set(Option::PACKAGE_DIRECTORIES, $packageDirs);
-
-    // for "merge" command
-    $parameters->set(Option::DATA_TO_APPEND, [
-        ComposerJsonSection::REQUIRE_DEV => [
-            'phpunit/phpunit' => '~9',
-        ],
-    ]);
 };
