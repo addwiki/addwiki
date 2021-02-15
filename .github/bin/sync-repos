@@ -87,18 +87,6 @@ gh api --method PATCH repos/addwiki/mediawiki-db \
     --field has_issues='false'\
     --field has_projects='false'\
     --field has_wiki='false'
-gh api --method PATCH repos/addwiki/mediawiki-dump \
-    --field description='[READ-ONLY] WIP library for interacting with a MediaWiki dumps'\
-    --field homepage='https://addwiki.github.io/'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
-gh api --method PATCH repos/addwiki/mediawiki-services \
-    --field homepage='https://addwiki.github.io/'\
-    --field description='[READ-ONLY] WIP'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
 
 ## Utility Repositories
 gh api --method PATCH repos/addwiki/addwiki.github.io \
@@ -109,9 +97,8 @@ gh api --method PATCH repos/addwiki/addwiki.github.io \
     --field has_wiki='false'
 
 ## Archived Repositories
-#gh api --method PATCH repos/addwiki/readthedocs \
-#    --field description='[ARCHIVED] Repo controlling the main readthedocs site'
-#gh api --method PATCH repos/addwiki/guzzle-mediawiki-client \
-#    --field description='[ARCHIVED] See mediawiki-api-base'
-#gh api --method PATCH repos/addwiki/guzzle-mediawiki-client-generator \
-#    --field description='[ARCHIVED] See mediawiki-api-base. Was used to generate a Guzzle Service Description for mediawiki'
+#addwiki/mediawiki-dump
+#addwiki/mediawiki-services
+#addwiki/readthedocs
+#addwiki/guzzle-mediawiki-client
+#addwiki/guzzle-mediawiki-client-generator
