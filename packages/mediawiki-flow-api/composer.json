@@ -13,8 +13,8 @@
         "test": "echo \"No tests yet!\""
     },
     "require": {
-        "addwiki/mediawiki-api-base": "^2.6",
-        "addwiki/mediawiki-datamodel": "^2.6"
+        "addwiki/mediawiki-api-base": "^2.7",
+        "addwiki/mediawiki-datamodel": "^2.7"
     },
     "autoload": {
         "psr-4": {
