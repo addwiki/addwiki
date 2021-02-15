@@ -10,11 +10,22 @@
         }
     ],
     "scripts": {
-        "test": "echo \"No tests yet!\""
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "test": [
+            "@lint",
+            "@phpcs"
+        ]
     },
     "require": {
         "addwiki/mediawiki-api-base": "^2.7",
         "addwiki/mediawiki-datamodel": "^2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9",
+        "jakub-onderka/php-parallel-lint": "^0.9.2",
+        "mediawiki/mediawiki-codesniffer": "~35.0"
     },
     "autoload": {
         "psr-4": {

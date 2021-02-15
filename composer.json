@@ -50,7 +50,7 @@
     "name": "addwiki/addwiki",
     "autoload-dev": {
         "files": [
-            "packages/mediawiki-api-base/tests/Integration/TestEnvironment.php",
+            "packages/mediawiki-api-base/tests/integration/TestEnvironment.php",
             "packages/wikibase-api/tests/integration/TestEnvironment.php"
         ],
         "psr-4": {
@@ -115,8 +115,8 @@
         "phpcs": "bin/run-template vendor/bin/phpcs -ps --standard=DIR/phpcs.xml DIR --",
         "fix": "bin/run-template vendor/bin/phpcbf --standard=DIR/phpcs.xml DIR --",
         "phpunit": "bin/run-template vendor/bin/phpunit DIR --",
-        "phpunit-unit": "bin/run-template vendor/bin/phpunit --testsuite unit DIR --",
-        "phpunit-integration": "bin/run-template vendor/bin/phpunit --testsuite integration DIR --",
+        "phpunit-unit": "bin/run-template vendor/bin/phpunit DIR/tests/unit --",
+        "phpunit-integration": "bin/run-template vendor/bin/phpunit DIR/tests/integration --",
         "test": [
             "@lint",
             "@phpcs",
