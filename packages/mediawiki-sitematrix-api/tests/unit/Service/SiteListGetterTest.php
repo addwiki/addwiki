@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
@@ -12,7 +13,7 @@ use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
  *
  * @covers Mediawiki\Sitematrix\Api\Service\SiteListGetter
  */
-class SiteListGetterTest extends \PHPUnit\Framework\TestCase {
+class SiteListGetterTest extends TestCase {
 
 	/**
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi

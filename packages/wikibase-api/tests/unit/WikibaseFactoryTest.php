@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Deserializers\Deserializer;
 use Serializers\Serializer;
 use Wikibase\Api\WikibaseFactory;
@@ -11,7 +12,7 @@ use Wikibase\Api\WikibaseFactory;
  *
  * @covers Wikibase\Api\WikibaseFactory
  */
-class WikibaseFactoryTest extends \PHPUnit\Framework\TestCase {
+class WikibaseFactoryTest extends TestCase {
 
 	public function provideMethodsAndClasses() {
 		return [

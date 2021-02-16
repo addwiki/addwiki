@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Generator;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\Generator\FluentGenerator;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\Generator\FluentGenerator;
  *
  * @covers \Mediawiki\Api\Generator\FluentGenerator
  */
-class FluentGeneratorTest extends \PHPUnit\Framework\TestCase {
+class FluentGeneratorTest extends TestCase {
 
 	public function testConstructionWithNoGPrefix() {
 		$generator = new FluentGenerator( 'name' );

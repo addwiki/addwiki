@@ -2,9 +2,11 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
+use stdClass;
 use Mediawiki\DataModel\Content;
 
-class ContentTest extends \PHPUnit\Framework\TestCase {
+class ContentTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -21,7 +23,7 @@ class ContentTest extends \PHPUnit\Framework\TestCase {
 		return [
 		[ '', null ],
 		[ 'foo', null ],
-		[ new \stdClass(), null ],
+		[ new stdClass(), null ],
 		];
 	}
 

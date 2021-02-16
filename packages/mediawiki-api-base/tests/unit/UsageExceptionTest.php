@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\UsageException;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\UsageException;
  *
  * @covers Mediawiki\Api\UsageException
  */
-class UsageExceptionTest extends \PHPUnit\Framework\TestCase {
+class UsageExceptionTest extends TestCase {
 
 	public function testUsageExceptionWithNoParams() {
 		$e = new UsageException();

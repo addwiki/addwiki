@@ -2,6 +2,7 @@
 
 namespace Addwiki\Commands\Mediawiki;
 
+use RuntimeException;
 use ArrayAccess;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
@@ -58,7 +59,7 @@ class Purge extends Command {
 			$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
 		}
 		if ( empty( $pageIdentifiers ) ) {
-			throw new \RuntimeException( 'No titles or pageids were set!' );
+			throw new RuntimeException( 'No titles or pageids were set!' );
 		}
 
 		$wiki = $input->getOption( 'wiki' );

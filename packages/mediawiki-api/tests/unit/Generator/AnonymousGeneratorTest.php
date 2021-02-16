@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Generator;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\Generator\AnonymousGenerator;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\Generator\AnonymousGenerator;
  *
  * @covers \Mediawiki\Api\Generator\AnonymousGenerator
  */
-class AnonymousGeneratorTest extends \PHPUnit\Framework\TestCase {
+class AnonymousGeneratorTest extends TestCase {
 
 	public function testConstruction() {
 		$generator = new AnonymousGenerator( 'name', [ 'gfoo' => 'bar' ] );

@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiFactory;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\MediawikiFactory;
  *
  * @author Addshore
  */
-class MediawikiFactoryTest extends \PHPUnit\Framework\TestCase {
+class MediawikiFactoryTest extends TestCase {
 
 	public function getMockMediawikiApi() {
 		return $this->getMockBuilder( 'Mediawiki\Api\MediawikiApi' )

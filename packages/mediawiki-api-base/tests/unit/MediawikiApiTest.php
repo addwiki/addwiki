@@ -2,6 +2,8 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
@@ -14,7 +16,7 @@ use stdClass;
  *
  * @covers Mediawiki\Api\MediawikiApi
  */
-class MediawikiApiTest extends \PHPUnit\Framework\TestCase {
+class MediawikiApiTest extends TestCase {
 
 	public function provideValidConstruction() {
 		return [
@@ -355,7 +357,7 @@ class MediawikiApiTest extends \PHPUnit\Framework\TestCase {
 		$api->setLogger( $logger );
 
 		// Make logWarnings() accessible so we can test it the easy way.
-		$reflection = new \ReflectionClass( get_class( $api ) );
+		$reflection = new ReflectionClass( get_class( $api ) );
 		$method = $reflection->getMethod( 'logWarnings' );
 		$method->setAccessible( true );
 

@@ -2,6 +2,8 @@
 
 namespace Mediawiki\Api\Test;
 
+use PHPUnit\Framework\TestCase;
+use Mediawiki\Api\Service\PageListGetter;
 use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
@@ -10,7 +12,7 @@ use Mediawiki\DataModel\Title;
 /**
  * Test the \Mediawiki\Api\Service\PageListGetter class.
  */
-class PageListGetterTest extends \PHPUnit\Framework\TestCase {
+class PageListGetterTest extends TestCase {
 
 	/** @var string */
 	private $emptyCatName = 'Category:Empty category';
@@ -18,7 +20,7 @@ class PageListGetterTest extends \PHPUnit\Framework\TestCase {
 	/** @var string */
 	private $nonemptyCatName = 'Category:Test category';
 
-	/** @var \Mediawiki\Api\Service\PageListGetter */
+	/** @var PageListGetter */
 	private $pageListGetter;
 
 	/**

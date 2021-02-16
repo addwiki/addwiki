@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Lookup\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\Api\Lookup\EntityRedirectApiLookup;
@@ -12,7 +13,7 @@ use Wikibase\DataModel\Entity\ItemId;
  *
  * @author Addshore
  */
-class EntityRedirectApiLookupTest extends \PHPUnit\Framework\TestCase {
+class EntityRedirectApiLookupTest extends TestCase {
 
 	public function testGetRedirectForEntityId() {
 		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $apiMock */

@@ -2,13 +2,15 @@
 
 namespace Mediawiki\Api\Test\Integration;
 
+use PHPUnit\Framework\TestCase;
+use Mediawiki\Api\RsdException;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 
 /**
  * @author Addshore
  */
-class MediawikiApiTest extends \PHPUnit\Framework\TestCase {
+class MediawikiApiTest extends TestCase {
 
 	/**
 	 * @covers Mediawiki\Api\MediawikiApi::newFromPage
@@ -22,7 +24,7 @@ class MediawikiApiTest extends \PHPUnit\Framework\TestCase {
 	 * @covers Mediawiki\Api\MediawikiApi::newFromPage
 	 */
 	public function testNewFromPageInvalidHtml() {
-		$this->expectException( \Mediawiki\Api\RsdException::class );
+		$this->expectException( RsdException::class );
 		$this->expectExceptionMessageMatches( "/Unable to find RSD URL in page.*/" );
 		// This could be any URL that doesn't contain the RSD link, load.php works just fine!
 		$nonWikiPage = str_replace( 'api.php', 'load.php', TestEnvironment::newInstance()->getApiUrl() );

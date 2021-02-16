@@ -2,13 +2,14 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
 
 /**
  * @covers Mediawiki\DataModel\PageIdentifier
  */
-class PageIdentifierTest extends \PHPUnit\Framework\TestCase {
+class PageIdentifierTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

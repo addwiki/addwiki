@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test;
 
+use Exception;
 use Mediawiki\Api\Guzzle\ClientFactory;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
@@ -20,7 +21,7 @@ class TestEnvironment {
 	 * @var string
 	 */
 	public $pageUrl;
-	/** @var \Mediawiki\Api\MediawikiFactory */
+	/** @var MediawikiFactory */
 	private $factory;
 
 	/** @var MediawikiApi */
@@ -74,7 +75,7 @@ class TestEnvironment {
 	/**
 	 * Get the MediaWiki factory.
 	 *
-	 * @return \Mediawiki\Api\MediawikiFactory The factory instance.
+	 * @return MediawikiFactory The factory instance.
 	 */
 	public function getFactory() {
 		return $this->factory;

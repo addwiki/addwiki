@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\SimpleRequest;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\SimpleRequest;
  *
  * @covers Mediawiki\Api\SimpleRequest
  */
-class SimpleRequestTest extends \PHPUnit\Framework\TestCase {
+class SimpleRequestTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

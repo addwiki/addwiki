@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Revision;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
@@ -16,7 +17,7 @@ use Wikibase\DataModel\Term\Term;
  *
  * @author Addshore
  */
-class IntegrationTest extends \PHPUnit\Framework\TestCase {
+class IntegrationTest extends TestCase {
 
 	/**
 	 * @var ItemId

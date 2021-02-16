@@ -2,13 +2,14 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\NamespaceInfo;
 
 /**
  * @covers \Mediawiki\DataModel\NamespaceInfo
  * @author gbirke
  */
-class NamespaceInfoTest extends \PHPUnit\Framework\TestCase {
+class NamespaceInfoTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 * @param int $id

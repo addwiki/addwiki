@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\FluentRequest;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\FluentRequest;
  *
  * @covers Mediawiki\Api\FluentRequest
  */
-class FluentRequestTest extends \PHPUnit\Framework\TestCase {
+class FluentRequestTest extends TestCase {
 
 	public function testFactory() {
 		$this->assertInstanceOf( 'Mediawiki\Api\FluentRequest', FluentRequest::factory() );

@@ -2,10 +2,11 @@
 
 namespace Mediawiki\Api\Test\Integration;
 
+use PHPUnit\Framework\TestCase;
 /**
  * @author Addshore
  */
-class TokenHandlingTest extends \PHPUnit\Framework\TestCase {
+class TokenHandlingTest extends TestCase {
 
 	/**
 	 * @dataProvider provideTokenTypes

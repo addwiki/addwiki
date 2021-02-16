@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Lookup;
 
+use BadMethodCallException;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Wikibase\DataModel\Entity\BasicEntityIdParser;
@@ -34,7 +35,7 @@ class EntityRedirectApiLookup implements EntityRedirectLookup {
 	public function getRedirectIds( EntityId $targetId ) {
 		// TODO: Implement getRedirectIds() method.
 		// Note: this is hard currently as we have to discover the namespace of the entity type?
-		throw new \BadMethodCallException( 'Not implemented yet' );
+		throw new BadMethodCallException( 'Not implemented yet' );
 	}
 
 	/**

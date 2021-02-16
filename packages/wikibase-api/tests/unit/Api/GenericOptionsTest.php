@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Wikibase\Api\GenericOptions;
 
 /**
@@ -11,7 +12,7 @@ use Wikibase\Api\GenericOptions;
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Addshore
  */
-class GenericOptionsTest extends \PHPUnit\Framework\TestCase {
+class GenericOptionsTest extends TestCase {
 
 	public function testConstructor() {
 		$options = [

@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Lookup\Test;
 
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\Api\Lookup\PropertyApiLookup;
 use Wikibase\DataModel\Entity\Property;
@@ -13,7 +14,7 @@ use Wikibase\DataModel\Services\Lookup\EntityLookup;
  *
  * @covers Wikibase\Api\Lookup\PropertyApiLookup
  */
-class PropertyApiLookupTest extends \PHPUnit\Framework\TestCase {
+class PropertyApiLookupTest extends TestCase {
 
 	public function testGetPropertyForId() {
 		$property = new Property( new PropertyId( 'P42' ), null, 'string' );

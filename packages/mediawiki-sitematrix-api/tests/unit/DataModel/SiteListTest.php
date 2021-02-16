@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Sitematrix\DataModel\Site;
 use Mediawiki\Sitematrix\DataModel\SiteList;
 
@@ -11,7 +12,7 @@ use Mediawiki\Sitematrix\DataModel\SiteList;
  *
  * @covers Mediawiki\Sitematrix\DataModel\SiteList
  */
-class SiteListTest extends \PHPUnit\Framework\TestCase {
+class SiteListTest extends TestCase {
 	public function testGetSiteArray() {
 		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),

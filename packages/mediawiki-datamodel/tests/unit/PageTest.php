@@ -2,6 +2,7 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 
@@ -9,7 +10,7 @@ use Mediawiki\DataModel\PageIdentifier;
  * @covers \Mediawiki\DataModel\Page
  * @author Addshore
  */
-class PageTest extends \PHPUnit\Framework\TestCase {
+class PageTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

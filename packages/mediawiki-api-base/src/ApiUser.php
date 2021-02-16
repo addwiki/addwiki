@@ -35,7 +35,7 @@ class ApiUser {
 	 * @param string $password The user's password.
 	 * @param string|null $domain The domain (for authentication systems that support domains).
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct( $username, $password, $domain = null ) {
 		$domainIsStringOrNull = ( is_string( $domain ) || $domain === null );

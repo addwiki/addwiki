@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Lookup\Test;
 
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\Api\Lookup\ItemApiLookup;
 use Wikibase\DataModel\Entity\Item;
@@ -13,7 +14,7 @@ use Wikibase\DataModel\Services\Lookup\EntityLookup;
  *
  * @covers Wikibase\Api\Lookup\ItemApiLookup
  */
-class ItemApiLookupTest extends \PHPUnit\Framework\TestCase {
+class ItemApiLookupTest extends TestCase {
 
 	public function testGetItemForId() {
 		/** @var EntityLookup|PHPUnit_Framework_MockObject_MockObject $lookupMock */

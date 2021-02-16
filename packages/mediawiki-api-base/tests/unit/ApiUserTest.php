@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\ApiUser;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Api\ApiUser;
  *
  * @covers Mediawiki\Api\ApiUser
  */
-class ApiUserTest extends \PHPUnit\Framework\TestCase {
+class ApiUserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

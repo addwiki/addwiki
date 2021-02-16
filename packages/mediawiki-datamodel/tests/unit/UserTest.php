@@ -2,13 +2,14 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\User;
 
 /**
  * @covers \Mediawiki\DataModel\User
  * @author Addshore
  */
-class UserTest extends \PHPUnit\Framework\TestCase {
+class UserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit\Guzzle;
 
+use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\MockHandler;
@@ -17,7 +18,7 @@ use Mediawiki\Api\Guzzle\MiddlewareFactory;
  *
  * @covers Mediawiki\Api\Guzzle\MiddlewareFactory
  */
-class MiddlewareFactoryTest extends \PHPUnit\Framework\TestCase {
+class MiddlewareFactoryTest extends TestCase {
 
 	public function testRetriesConnectException() {
 		$queue = [

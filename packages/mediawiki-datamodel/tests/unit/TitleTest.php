@@ -2,13 +2,14 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Title;
 
 /**
  * @covers \Mediawiki\DataModel\Title
  * @author Addshore
  */
-class TitleTest extends \PHPUnit\Framework\TestCase {
+class TitleTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
@@ -10,7 +11,7 @@ use Mediawiki\DataModel\Title;
 /**
  * @author Addshore
  */
-class PageIntegrationTest extends \PHPUnit\Framework\TestCase {
+class PageIntegrationTest extends TestCase {
 
 	/**
 	 * @var PageIdentifier

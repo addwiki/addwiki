@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiSession;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -11,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject;
  *
  * @covers Mediawiki\Api\MediawikiSession
  */
-class MediawikiSessionTest extends \PHPUnit\Framework\TestCase {
+class MediawikiSessionTest extends TestCase {
 
 	/**
 	 * @return PHPUnit_Framework_MockObject_MockObject|MediawikiApi

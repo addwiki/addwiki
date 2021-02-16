@@ -2,12 +2,13 @@
 
 namespace Mediawiki\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\Service\NamespaceGetter;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\DataModel\NamespaceInfo;
 
-class NamespaceGetterTest extends \PHPUnit\Framework\TestCase {
+class NamespaceGetterTest extends TestCase {
 	public function testGetNamespaceByCanonicalNameReturnsNullIfNamespaceWasNotFound() {
 		$nsGetter = new NamespaceGetter( $this->getApi() );
 		$this->assertNull( $nsGetter->getNamespaceByCanonicalName( 'Dummy' ) );

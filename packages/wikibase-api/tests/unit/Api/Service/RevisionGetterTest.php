@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Deserializers\Deserializer;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
@@ -14,7 +15,7 @@ use Wikibase\DataModel\Entity\ItemId;
  *
  * @covers Wikibase\Api\Service\RevisionGetter
  */
-class RevisionGetterTest extends \PHPUnit\Framework\TestCase {
+class RevisionGetterTest extends TestCase {
 
 	/**
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi

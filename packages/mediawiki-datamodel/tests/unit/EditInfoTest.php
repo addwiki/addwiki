@@ -2,13 +2,14 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\EditInfo;
 
 /**
  * @covers \Mediawiki\DataModel\EditInfo
  * @author Addshore
  */
-class EditInfoTest extends \PHPUnit\Framework\TestCase {
+class EditInfoTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction

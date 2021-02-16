@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Sitematrix\DataModel\Site;
 
 /**
@@ -9,7 +10,7 @@ use Mediawiki\Sitematrix\DataModel\Site;
  *
  * @covers Mediawiki\Sitematrix\DataModel\Site
  */
-class SiteTest extends \PHPUnit\Framework\TestCase {
+class SiteTest extends TestCase {
 
 	public function testEverything() {
 		$site = new Site( 'a', 'b', 'c', 'd', [ 'z', 'x' ] );

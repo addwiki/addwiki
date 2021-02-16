@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Service;
 
+use RuntimeException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\DataModel\PageIdentifier;
@@ -34,7 +35,7 @@ class Parser extends Service {
 		} elseif ( $pageIdentifier->getTitle() !== null ) {
 			$params['page'] = $pageIdentifier->getTitle()->getText();
 		} else {
-			throw new \RuntimeException( 'No way to identify page' );
+			throw new RuntimeException( 'No way to identify page' );
 		}
 
 		$promise = $this->api->getRequestAsync( new SimpleRequest( 'parse', $params ) );

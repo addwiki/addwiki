@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Api\Test\Service;
 
+use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\Service\PagePurger;
 use Mediawiki\DataModel\Page;
@@ -14,7 +15,7 @@ use PHPUnit_Framework_MockObject_MockObject;
  * @author Addshore
  * @covers Mediawiki\Api\Service\PagePurger
  */
-class PagePurgerTest extends \PHPUnit\Framework\TestCase {
+class PagePurgerTest extends TestCase {
 
 	private function getMockApi() {
 		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $mock */
