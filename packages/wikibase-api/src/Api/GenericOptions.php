@@ -20,7 +20,7 @@ final class GenericOptions {
 	/**
 	 * @var array
 	 */
-	private $options = [];
+	private $options;
 
 	/**
 	 * @since 0.2

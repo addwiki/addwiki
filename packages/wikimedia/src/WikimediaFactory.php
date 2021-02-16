@@ -2,21 +2,11 @@
 
 namespace Wikimedia\Api;
 
-use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Wikibase\Api\WikibaseFactory;
-use Wikibase\DataModel\Entity\EntityIdValue;
 
 /**
  * @author Addshore
@@ -54,31 +44,33 @@ class WikimediaFactory {
 	 * @return WikibaseFactory
 	 */
 	public function newWikibaseFactoryForDomain( $domain ) {
-		if ( strstr( $domain, 'wikidata.org' ) == true ) {
-			$dvDeserializer = new DataValueDeserializer(
+		switch ( true ) {
+			case strstr( $domain, 'wikidata.org' ):
+				$dvDeserializer = new DataValueDeserializer(
 					[
 						// data-values/data-values
-						'boolean' => BooleanValue::class,
-						'number' => NumberValue::class,
-						'string' => StringValue::class,
-						'unknown' => UnknownValue::class,
+						'boolean' => 'DataValues\BooleanValue',
+						'number' => 'DataValues\NumberValue',
+						'string' => 'DataValues\StringValue',
+						'unknown' => 'DataValues\UnknownValue',
 						// data-values/geo
-						'globecoordinate' => GlobeCoordinateValue::class,
+						'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
 						// data-values/common
-						'monolingualtext' => MonolingualTextValue::class,
-						'multilingualtext' => MultilingualTextValue::class,
+						'monolingualtext' => 'DataValues\MonolingualTextValue',
+						'multilingualtext' => 'DataValues\MultilingualTextValue',
 						// data-values/number
-						'quantity' => QuantityValue::class,
+						'quantity' => 'DataValues\QuantityValue',
 						// data-values/time
-						'time' => TimeValue::class,
+						'time' => 'DataValues\TimeValue',
 						// wikibase/data-model
-						'wikibase-entityid' => EntityIdValue::class,
+						'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
 					]
 				);
-			$dvSerializer = new DataValueSerializer();
-		} else {
-			$dvDeserializer = new DataValueDeserializer();
-			$dvSerializer = new DataValueSerializer();
+				$dvSerializer = new DataValueSerializer();
+				break;
+			default:
+				$dvDeserializer = new DataValueDeserializer();
+				$dvSerializer = new DataValueSerializer();
 		}
 
 		return new WikibaseFactory(

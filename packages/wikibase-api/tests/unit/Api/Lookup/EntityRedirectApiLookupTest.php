@@ -17,7 +17,7 @@ class EntityRedirectApiLookupTest extends TestCase {
 
 	public function testGetRedirectForEntityId() {
 		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
-		$apiMock = $this->createMock( MediawikiApi::class );
+		$apiMock = $this->createMock( 'Mediawiki\Api\MediawikiApi' );
 		$apiMock->expects( $this->once() )
 			->method( 'getRequest' )
 			->will( $this->returnValue( [

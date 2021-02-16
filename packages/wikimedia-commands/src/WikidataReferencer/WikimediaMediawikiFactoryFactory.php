@@ -33,7 +33,7 @@ class WikimediaMediawikiFactoryFactory {
 				$firstPart = str_replace( '_', '-', $firstPart );
 				return new MediawikiFactory(
 					new MediawikiApi(
-						sprintf( 'https://%s.wikipedia.org/w/api.php', $firstPart ),
+						"https://$firstPart.wikipedia.org/w/api.php",
 						$this->client
 					)
 				);

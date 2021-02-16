@@ -5,8 +5,6 @@ namespace Mediawiki\Sitematrix\Api\Test;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
-use Mediawiki\Sitematrix\DataModel\Site;
-use Mediawiki\Sitematrix\DataModel\SiteList;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +19,7 @@ class SiteListGetterTest extends TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi
 	 */
 	private function getMockApi() {
-		return $this->getMockBuilder( MediawikiApi::class )
+		return $this->getMockBuilder( '\Mediawiki\Api\MediawikiApi' )
 			->disableOriginalConstructor()
 			->getMock();
 	}
@@ -106,14 +104,14 @@ class SiteListGetterTest extends TestCase {
 		$service = new SiteListGetter( $mockApi );
 		$siteList = $service->getSiteList();
 
-		$this->assertInstanceOf( SiteList::class, $siteList );
+		$this->assertInstanceOf( 'Mediawiki\Sitematrix\DataModel\SiteList', $siteList );
 		$this->assertCount(
 			count( $expectedSites ),
 			$siteList->getSiteArray(),
 			'Incorrect number of sites returned'
 		);
 		foreach ( $siteList->getSiteArray() as $site ) {
-			$this->assertInstanceOf( Site::class, $site );
+			$this->assertInstanceOf( 'Mediawiki\Sitematrix\DataModel\Site', $site );
 			$this->assertArrayHasKey( $site->getDbName(), $expectedSites );
 			$this->assertEquals( $expectedSites[$site->getDbName()]['url'], $site->getUrl() );
 			$this->assertEquals( $expectedSites[$site->getDbName()]['dbname'], $site->getDbName() );

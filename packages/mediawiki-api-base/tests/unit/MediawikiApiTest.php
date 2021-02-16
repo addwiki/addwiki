@@ -2,14 +2,11 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use GuzzleHttp\ClientInterface;
-use InvalidArgumentException;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Api\UsageException;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use stdClass;
@@ -50,16 +47,16 @@ class MediawikiApiTest extends TestCase {
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $apiLocation ) {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( 'InvalidArgumentException' );
 		new MediawikiApi( $apiLocation );
 	}
 
 	private function getMockClient() {
-		return $this->createMock( ClientInterface::class );
+		return $this->createMock( 'GuzzleHttp\ClientInterface' );
 	}
 
 	private function getMockResponse( $responseValue ) {
-		$mock = $this->createMock( ResponseInterface::class );
+		$mock = $this->createMock( 'Psr\Http\Message\ResponseInterface' );
 		$mock
 			->method( 'getBody' )
 			->willReturn( json_encode( $responseValue ) );
@@ -89,9 +86,9 @@ class MediawikiApiTest extends TestCase {
 			$api->getRequest( new SimpleRequest( 'foo' ) );
 			$this->fail( 'No Usage Exception Thrown' );
 		}
-		catch ( UsageException $usageException ) {
-			$this->assertEquals( 'imacode', $usageException->getApiCode() );
-			$this->assertEquals( 'imamsg', $usageException->getRawMessage() );
+		catch ( UsageException $e ) {
+			$this->assertEquals( 'imacode', $e->getApiCode() );
+			$this->assertEquals( 'imamsg', $e->getRawMessage() );
 		}
 	}
 
@@ -244,7 +241,7 @@ class MediawikiApiTest extends TestCase {
 			->will( $this->returnValue( $response ) );
 		$api = new MediawikiApi( '', $client );
 
-		$this->expectException( UsageException::class );
+		$this->expectException( 'Mediawiki\Api\UsageException' );
 		$api->login( $user );
 	}
 

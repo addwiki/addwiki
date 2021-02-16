@@ -4,7 +4,6 @@ namespace Mediawiki\Api\Test\Unit;
 
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiSession;
-use Mediawiki\Api\SimpleRequest;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -19,12 +18,12 @@ class MediawikiSessionTest extends TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject|MediawikiApi
 	 */
 	private function getMockApi() {
-		return $this->createMock( MediawikiApi::class );
+		return $this->createMock( '\Mediawiki\Api\MediawikiApi' );
 	}
 
 	public function testConstruction() {
 		$session = new MediawikiSession( $this->getMockApi() );
-		$this->assertInstanceOf( MediawikiSession::class, $session );
+		$this->assertInstanceOf( '\Mediawiki\Api\MediawikiSession', $session );
 	}
 
 	/**
@@ -34,7 +33,7 @@ class MediawikiSessionTest extends TestCase {
 		$mockApi = $this->getMockApi();
 		$mockApi->expects( $this->exactly( 2 ) )
 			->method( 'postRequest' )
-			->with( $this->isInstanceOf( SimpleRequest::class ) )
+			->with( $this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' ) )
 			->will( $this->returnValue( [
 				'query' => [
 					'tokens' => [
@@ -60,7 +59,7 @@ class MediawikiSessionTest extends TestCase {
 		$mockApi = $this->getMockApi();
 		$mockApi->expects( $this->at( 0 ) )
 			->method( 'postRequest' )
-			->with( $this->isInstanceOf( SimpleRequest::class ) )
+			->with( $this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' ) )
 			->will( $this->returnValue( [
 				'warnings' => [
 					'query' => [
@@ -70,7 +69,7 @@ class MediawikiSessionTest extends TestCase {
 			] ) );
 		$mockApi->expects( $this->at( 1 ) )
 			->method( 'postRequest' )
-			->with( $this->isInstanceOf( SimpleRequest::class ) )
+			->with( $this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' ) )
 			->will( $this->returnValue( [
 				'tokens' => [
 					$tokenType => 'TKN-' . $tokenType,

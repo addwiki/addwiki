@@ -13,7 +13,7 @@ class SiteList {
 	/**
 	 * @var Site[]
 	 */
-	private $sites = [];
+	private $sites;
 
 	/**
 	 * @param Site[] $sites

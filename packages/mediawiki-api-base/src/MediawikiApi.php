@@ -100,9 +100,9 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 				return $prevErr . ', ' . $err->message . ' (line ' . $err->line . ')';
 			} );
 			if ( $libXmlErrorStr ) {
-				$libXmlErrorStr = sprintf( 'In addition, libxml had the following errors: %s', $libXmlErrorStr );
+				$libXmlErrorStr = "In addition, libxml had the following errors: $libXmlErrorStr";
 			}
-			throw new RsdException( sprintf( 'Unable to find RSD URL in page: %s %s', $url, $libXmlErrorStr ) );
+			throw new RsdException( "Unable to find RSD URL in page: $url $libXmlErrorStr" );
 		}
 		$rsdUrl = $link->item( 0 )->attributes->getnamedItem( 'href' )->nodeValue;
 
@@ -534,7 +534,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 				'continue' => '',
 			] ) );
 			preg_match(
-				'#\d+(?:\.\d+)+#',
+				'/\d+(?:\.\d+)+/',
 				$result['query']['general']['generator'],
 				$versionParts
 			);

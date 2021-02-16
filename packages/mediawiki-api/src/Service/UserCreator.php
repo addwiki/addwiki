@@ -46,12 +46,12 @@ class UserCreator extends Service {
 		try {
 			$result = $this->api->postRequest( new SimpleRequest( 'createaccount', $params ) );
 			return $result['createaccount']['status'] === 'PASS';
-		} catch ( UsageException $usageException ) {
+		} catch ( UsageException $exception ) {
 			// If the above request failed, try again in the old way.
-			if ( $usageException->getApiCode() === 'noname' ) {
+			if ( $exception->getApiCode() === 'noname' ) {
 				return $this->createPreOneTwentySeven( $params );
 			}
-			throw $usageException;
+			throw $exception;
 		}
 	}
 

@@ -18,13 +18,7 @@ class WHOReport {
 	private $id;
 	private $date;
 
-	/**
-	 * @var string
-	 */
 	private const VALUE_TYPE_CASE = 'cases';
-	/**
-	 * @var string
-	 */
 	private const VALUE_TYPE_DEATH = 'deaths';
 
 	/**
@@ -83,7 +77,7 @@ class WHOReport {
 	private function getValueUsingRegex( $text, $reporter, $valueType ) {
 		// Remove all new lines so that things that are split over multiple lines are easier to
 		// match
-		$text = trim( preg_replace( '#\s\s+#', ' ', $text ) );
+		$text = trim( preg_replace( '/\s\s+/', ' ', $text ) );
 
 		$pattern = '#(' . preg_quote( $reporter, '#' ) . '(?:\s+?\([\sa-zA-Z]+\))?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+#m';
 		preg_match_all( $pattern, $text, $matches );

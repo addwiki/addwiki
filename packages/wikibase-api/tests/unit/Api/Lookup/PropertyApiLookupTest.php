@@ -20,7 +20,7 @@ class PropertyApiLookupTest extends TestCase {
 		$property = new Property( new PropertyId( 'P42' ), null, 'string' );
 
 		/** @var EntityLookup|PHPUnit_Framework_MockObject_MockObject $lookupMock */
-		$lookupMock = $this->createMock( EntityLookup::class );
+		$lookupMock = $this->createMock( '\Wikibase\DataModel\Services\Lookup\EntityLookup' );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
 			->with( $this->equalTo( new PropertyId( 'P42' ) ) )
@@ -35,7 +35,7 @@ class PropertyApiLookupTest extends TestCase {
 
 	public function testGetPropertyForIdWithException() {
 		/** @var EntityLookup|PHPUnit_Framework_MockObject_MockObject $lookupMock */
-		$lookupMock = $this->createMock( EntityLookup::class );
+		$lookupMock = $this->createMock( '\Wikibase\DataModel\Services\Lookup\EntityLookup' );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
 			->with( $this->equalTo( new PropertyId( 'P42' ) ) )

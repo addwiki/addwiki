@@ -5,8 +5,6 @@ namespace Mediawiki\DataModel\Test;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Pages;
-use Mediawiki\DataModel\Revisions;
-use Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,10 +22,10 @@ class PagesTest extends TestCase {
 	}
 
 	public function provideValidConstruction() {
-		$mockTitle = $this->getMockBuilder( Title::class )
+		$mockTitle = $this->getMockBuilder( 'Mediawiki\DataModel\Title' )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockRevisions = $this->getMockBuilder( Revisions::class )
+		$mockRevisions = $this->getMockBuilder( 'Mediawiki\DataModel\Revisions' )
 			->disableOriginalConstructor()
 			->getMock();
 

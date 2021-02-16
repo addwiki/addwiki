@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class FluentRequestTest extends TestCase {
 
 	public function testFactory() {
-		$this->assertInstanceOf( FluentRequest::class, FluentRequest::factory() );
+		$this->assertInstanceOf( 'Mediawiki\Api\FluentRequest', FluentRequest::factory() );
 	}
 
 	public function testConstructionDefaults() {

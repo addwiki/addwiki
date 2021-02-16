@@ -12,27 +12,12 @@ use InvalidArgumentException;
 class EditInfo {
 
 	// minor flags
-	/**
-	 * @var bool
-	 */
 	public const MINOR = true;
-	/**
-	 * @var bool
-	 */
 	public const NOTMINOR = false;
 	// bot flags
-	/**
-	 * @var bool
-	 */
 	public const BOT = true;
-	/**
-	 * @var bool
-	 */
 	public const NOTBOT = false;
 	// maxlag flags
-	/**
-	 * @var null
-	 */
 	public const OFFLAG = null;
 
 	/**

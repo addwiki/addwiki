@@ -4,8 +4,6 @@ namespace Mediawiki\DataModel\Test;
 
 use Mediawiki\DataModel\File;
 use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Revisions;
-use Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,13 +31,13 @@ class FileTest extends TestCase {
 	}
 
 	private function newMockTitle() {
-		return $this->getMockBuilder( Title::class )
+		return $this->getMockBuilder( '\Mediawiki\DataModel\Title' )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
 	private function newMockRevisions() {
-		return $this->getMockBuilder( Revisions::class )
+		return $this->getMockBuilder( '\Mediawiki\DataModel\Revisions' )
 			->disableOriginalConstructor()
 			->getMock();
 	}

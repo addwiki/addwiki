@@ -4,7 +4,6 @@ namespace Mediawiki\Api\Test\Service;
 
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\Service\PagePurger;
-use Mediawiki\Api\SimpleRequest;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Pages;
@@ -20,7 +19,7 @@ class PagePurgerTest extends TestCase {
 
 	private function getMockApi() {
 		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $mock */
-		$mock = $this->getMockBuilder( MediawikiApi::class )
+		$mock = $this->getMockBuilder( '\Mediawiki\Api\MediawikiApi' )
 			->disableOriginalConstructor()
 			->getMock();
 		return $mock;
@@ -36,7 +35,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' )
 			)
 			->will( $this->returnValue(
 			[
@@ -61,7 +60,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' )
 			)
 			->will( $this->returnValue( [
 				"batchcomplete" => "",
@@ -90,7 +89,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' )
 			)
 			->will( $this->returnValue(
 				[
@@ -133,7 +132,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( '\Mediawiki\Api\SimpleRequest' )
 			)
 			->will( $this->returnValue(
 				[

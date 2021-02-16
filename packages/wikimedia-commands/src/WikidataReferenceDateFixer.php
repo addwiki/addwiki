@@ -4,17 +4,9 @@ namespace Addwiki\Commands\Wikimedia;
 
 use ArrayAccess;
 use Asparagus\QueryBuilder;
-use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
 use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use GuzzleHttp\Client;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
@@ -26,7 +18,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
-use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
@@ -69,16 +60,16 @@ class WikidataReferenceDateFixer extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => QuantityValue::class,
-					'time' => \DataValues\TimeValue::class,
-					'wikibase-entityid' => EntityIdValue::class,
+					'boolean' => 'DataValues\BooleanValue',
+					'number' => 'DataValues\NumberValue',
+					'string' => 'DataValues\StringValue',
+					'unknown' => 'DataValues\UnknownValue',
+					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
+					'monolingualtext' => 'DataValues\MonolingualTextValue',
+					'multilingualtext' => 'DataValues\MultilingualTextValue',
+					'quantity' => 'DataValues\QuantityValue',
+					'time' => 'DataValues\TimeValue',
+					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
 				]
 			),
 			new DataValueSerializer()
@@ -207,9 +198,9 @@ class WikidataReferenceDateFixer extends Command {
 											$oldRefHash,
 											new EditInfo( $editSummary )
 										);
-									} catch ( UsageException $usageException ) {
+									} catch ( UsageException $e ) {
 										$output->writeln( '' );
-										$output->write( $usageException->getMessage() );
+										$output->write( $e->getMessage() );
 									}
 
 							}
@@ -255,7 +246,7 @@ class WikidataReferenceDateFixer extends Command {
 			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
-			--$year;
+			$year -= 1;
 		}
 
 		// Otherwise give up guessing

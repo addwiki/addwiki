@@ -2,7 +2,6 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use InvalidArgumentException;
 use Mediawiki\Api\SimpleRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +36,7 @@ class SimpleRequestTest extends TestCase {
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $action, $params ) {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( 'InvalidArgumentException' );
 		new SimpleRequest( $action, $params );
 	}
 

@@ -6,17 +6,8 @@ use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\Referencer;
 use ArrayAccess;
-use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
@@ -119,16 +110,16 @@ class WikidataReferencerCommand extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => QuantityValue::class,
-					'time' => TimeValue::class,
-					'wikibase-entityid' => \Wikibase\DataModel\Entity\EntityIdValue::class,
+					'boolean' => 'DataValues\BooleanValue',
+					'number' => 'DataValues\NumberValue',
+					'string' => 'DataValues\StringValue',
+					'unknown' => 'DataValues\UnknownValue',
+					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
+					'monolingualtext' => 'DataValues\MonolingualTextValue',
+					'multilingualtext' => 'DataValues\MultilingualTextValue',
+					'quantity' => 'DataValues\QuantityValue',
+					'time' => 'DataValues\TimeValue',
+					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
 				]
 			),
 			new DataValueSerializer()
@@ -270,7 +261,7 @@ class WikidataReferencerCommand extends Command {
 		/** @var FormatterHelper $formatter */
 		$formatter = $this->getHelper( 'formatter' );
 		foreach ( $itemIds as $itemId ) {
-			++$loopCounter;
+			$loopCounter++;
 			$itemIdString = $itemId->getSerialization();
 
 			$output->writeln( '----------------------------------------------------' );
@@ -287,7 +278,7 @@ class WikidataReferencerCommand extends Command {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Loading Item' ) );
 				$item = $itemLookup->getItemForId( $itemId );
 			}
-			catch ( ItemLookupException $itemLookupException ) {
+			catch ( ItemLookupException $e ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Failed to load item (exception)', 'error' ) );
 				continue;
 			}
@@ -348,9 +339,9 @@ class WikidataReferencerCommand extends Command {
 						}
 					}
 				}
-				catch ( Exception $exception ) {
+				catch ( Exception $e ) {
 					$parseProgressBar->clear();
-					$output->writeln( $formatter->formatSection( $itemIdString, $exception->getMessage(), 'error' ) );
+					$output->writeln( $formatter->formatSection( $itemIdString, $e->getMessage(), 'error' ) );
 					$parseProgressBar->display();
 					// Ignore failed requests
 				}

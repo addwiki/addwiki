@@ -101,7 +101,7 @@ class MiddlewareFactoryTest extends TestCase {
 		$client = $this->getClient( $queue );
 
 		$this->expectException(
-			ConnectException::class,
+			'GuzzleHttp\Exception\ConnectException',
 			'Error 6'
 		);
 

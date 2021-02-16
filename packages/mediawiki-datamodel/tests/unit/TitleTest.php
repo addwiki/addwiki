@@ -2,7 +2,6 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use InvalidArgumentException;
 use Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
@@ -34,7 +33,7 @@ class TitleTest extends TestCase {
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $title, $ns ) {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( 'InvalidArgumentException' );
 		new Title( $title, $ns );
 	}
 

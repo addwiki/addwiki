@@ -2,7 +2,6 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use InvalidArgumentException;
 use Mediawiki\DataModel\NamespaceInfo;
 use PHPUnit\Framework\TestCase;
 
@@ -55,7 +54,7 @@ class NamespaceInfoTest extends TestCase {
 	public function testInvalidConstruction( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null,
 		$aliases = []
 	) {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( 'InvalidArgumentException' );
 		new NamespaceInfo( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel, $aliases );
 	}
 

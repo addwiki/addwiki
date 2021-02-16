@@ -34,11 +34,11 @@ class SetDefaultWiki extends Command {
 		$appConfigHasWiki = $this->appConfig->has( 'wikis.' . $code );
 
 		if ( !$appConfigHasWiki ) {
-			$output->writeln( sprintf( 'No wiki with the code %s found', $code ) );
+			$output->writeln( "No wiki with the code $code found" );
 			return -1;
 		}
 
 		$this->appConfig->set( 'defaults.wiki', $code );
-		$output->writeln( sprintf( 'Default wiki set to: %s', $code ) );
+		$output->writeln( "Default wiki set to: $code" );
 	}
 }

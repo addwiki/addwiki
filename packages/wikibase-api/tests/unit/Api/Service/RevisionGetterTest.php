@@ -5,12 +5,10 @@ namespace Wikibase\Api\Test;
 use Deserializers\Deserializer;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
-use Mediawiki\DataModel\Revision;
 use PHPUnit\Framework\TestCase;
 use Wikibase\Api\Service\RevisionGetter;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\ItemContent;
 
 /**
  * @author Addshore
@@ -23,14 +21,14 @@ class RevisionGetterTest extends TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi
 	 */
 	private function createMockApi() {
-		return $this->createMock( MediawikiApi::class );
+		return $this->createMock( '\Mediawiki\Api\MediawikiApi' );
 	}
 
 	/**
 	 * @return \PHPUnit_Framework_MockObject_MockObject|Deserializer
 	 */
 	public function createMockDeserializer() {
-		return $this->createMock( Deserializer::class );
+		return $this->createMock( '\Deserializers\Deserializer' );
 	}
 
 	public function testValidConstructionWorks() {
@@ -76,9 +74,9 @@ class RevisionGetterTest extends TestCase {
 		$service = new RevisionGetter( $api, $deserializer );
 		$result = $service->getFromId( $id );
 
-		$this->assertInstanceOf( Revision::class, $result );
-		$this->assertInstanceOf( ItemContent::class, $result->getContent() );
-		$this->assertInstanceOf( Item::class, $result->getContent()->getData() );
+		$this->assertInstanceOf( 'Mediawiki\DataModel\Revision', $result );
+		$this->assertInstanceOf( 'Wikibase\DataModel\ItemContent', $result->getContent() );
+		$this->assertInstanceOf( 'Wikibase\DataModel\Entity\Item', $result->getContent()->getData() );
 		$this->assertEquals( 111, $result->getPageIdentifier()->getId() );
 		$this->assertEquals( 'TIMESTAMP', $result->getTimestamp() );
 	}
