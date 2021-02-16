@@ -23,7 +23,7 @@ class CategoryTraverserTest extends TestCase {
 	/** @var CategoryTraverser */
 	protected $traverser;
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->testEnvironment = TestEnvironment::newInstance();
 		$this->factory = $this->testEnvironment->getFactory();

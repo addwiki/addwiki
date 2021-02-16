@@ -22,7 +22,7 @@ class FileUploaderTest extends TestCase {
 	/**
 	 * Create a FileUploader to use in all these tests.
 	 */
-	public function setup(): void {
+	protected function setup(): void {
 		parent::setup();
 		$testEnvironment = TestEnvironment::newInstance();
 		$this->factory = $testEnvironment->getFactory();

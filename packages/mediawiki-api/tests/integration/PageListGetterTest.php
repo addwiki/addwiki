@@ -26,7 +26,7 @@ class PageListGetterTest extends TestCase {
 	/**
 	 * Set up some test categories and pages.
 	 */
-	public function setUp(): void {
+	protected function setUp(): void {
 		$testEnvironment = TestEnvironment::newInstance();
 		$factory = $testEnvironment->getFactory();
 
