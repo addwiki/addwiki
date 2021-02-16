@@ -16,7 +16,7 @@ class LogList implements JsonSerializable {
 	/**
 	 * @var Log[]
 	 */
-	private $logs;
+	private $logs = [];
 
 	/**
 	 * @param Log[] $logs

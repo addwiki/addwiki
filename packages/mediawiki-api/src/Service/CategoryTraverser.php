@@ -28,20 +28,20 @@ class CategoryTraverser extends Service {
 	public const CALLBACK_PAGE = 20;
 
 	/**
-	 * @var string[]
+	 * @var string[]|null
 	 */
-	protected $namespaces;
+	protected $namespaces = null;
 
 	/**
 	 * @var callable[]
 	 */
-	protected $callbacks;
+	protected $callbacks = [];
 
 	/**
 	 * Used to remember the previously-visited categories when traversing.
 	 * @var string[]
 	 */
-	protected $alreadyVisited;
+	protected $alreadyVisited = [];
 
 	/**
 	 * @param MediawikiApi $api The API to connect to.

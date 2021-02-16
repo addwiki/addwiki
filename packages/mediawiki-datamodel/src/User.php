@@ -34,12 +34,12 @@ class User {
 	/**
 	 * @var array
 	 */
-	private $groups;
+	private $groups = [];
 
 	/**
 	 * @var array
 	 */
-	private $rights;
+	private $rights = [];
 
 	/**
 	 * @var string

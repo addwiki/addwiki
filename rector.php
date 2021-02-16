@@ -98,7 +98,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $services->set(WrapEncapsedVariableInCurlyBracesRector::class);
         $services->set(NewlineBeforeNewAssignSetRector::class);
         $services->set(ManualJsonStringToJsonEncodeArrayRector::class);
-        // $services->set(AddArrayDefaultToArrayPropertyRector::class);
+        $services->set(AddArrayDefaultToArrayPropertyRector::class);
         // $services->set(AddFalseDefaultToBoolPropertyRector::class);
         $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
         $services->set(CallUserFuncCallToVariadicRector::class);

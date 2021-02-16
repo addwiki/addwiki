@@ -32,7 +32,7 @@ class Site {
 	/**
 	 * @var string[]
 	 */
-	private $flags;
+	private $flags = [];
 
 	/**
 	 * @param string $url
