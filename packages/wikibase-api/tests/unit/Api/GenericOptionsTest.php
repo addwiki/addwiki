@@ -2,6 +2,7 @@
 
 namespace Wikibase\Api\Test;
 
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 use Wikibase\Api\GenericOptions;
 
@@ -116,7 +117,7 @@ class GenericOptionsTest extends TestCase {
 		$this->assertTrue( true );
 		$genericOptions = new GenericOptions( [ 'foo' => 'bar' ] );
 
-		$this->expectException( 'OutOfBoundsException' );
+		$this->expectException( OutOfBoundsException::class );
 
 		$genericOptions->getOption( $nonExistingOption );
 	}

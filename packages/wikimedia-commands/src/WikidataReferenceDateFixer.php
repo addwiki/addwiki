@@ -2,6 +2,15 @@
 
 namespace Addwiki\Commands\Wikimedia;
 
+use DataValues\BooleanValue;
+use DataValues\NumberValue;
+use DataValues\StringValue;
+use DataValues\UnknownValue;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\QuantityValue;
+use Wikibase\DataModel\Entity\EntityIdValue;
 use ArrayAccess;
 use Asparagus\QueryBuilder;
 use DataValues\Deserializers\DataValueDeserializer;
@@ -60,16 +69,16 @@ class WikidataReferenceDateFixer extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => QuantityValue::class,
+					'time' => \DataValues\TimeValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
@@ -198,9 +207,9 @@ class WikidataReferenceDateFixer extends Command {
 											$oldRefHash,
 											new EditInfo( $editSummary )
 										);
-									} catch ( UsageException $e ) {
+									} catch ( UsageException $usageException ) {
 										$output->writeln( '' );
-										$output->write( $e->getMessage() );
+										$output->write( $usageException->getMessage() );
 									}
 
 							}
@@ -246,7 +255,7 @@ class WikidataReferenceDateFixer extends Command {
 			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
-			$year -= 1;
+			--$year;
 		}
 
 		// Otherwise give up guessing

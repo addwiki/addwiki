@@ -31,6 +31,7 @@ class PageFileExtensionListGetter {
 	public function getPageIds() {
 		$statement = $this->db->prepare( "SELECT page_id from page where page_title like :regex and page_namespace = 6" );
 		$statement->execute( [ ':regex' => '%\.' . $this->fileExtension ] );
+
 		$rows = $statement->fetchAll();
 
 		$pageids = [];

@@ -30,6 +30,7 @@ class RedirectListGetter {
 	public function getRedirects( $namespace = 0 ) {
 		$statement = $this->db->prepare( $this->getQuery() );
 		$statement->execute( [ ':namespace' => $namespace ] );
+
 		$rows = $statement->fetchAll();
 
 		$redirects = [];

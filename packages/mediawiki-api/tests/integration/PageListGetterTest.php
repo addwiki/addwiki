@@ -41,11 +41,11 @@ class PageListGetterTest extends TestCase {
 		// Some pages in the latter.
 		// (Count must exceed the default categorymember result set size of 10.)
 		$revisionSaver = $factory->newRevisionSaver();
-		for ( $i = 1; $i <= 35; $i++ ) {
-			$testCat = new PageIdentifier( new Title( "Test page $i" ) );
+		for ( $i = 1; $i <= 35; ++$i ) {
+			$testCat = new PageIdentifier( new Title( sprintf('Test page %s', $i) ) );
 			// Even pages link to Main Page, odd pages transclude {{test}}.
 			$mainPageLink = ( ( $i % 2 ) == 0 ) ? 'Go to [[Main Page]].' : 'This is a {{test}}.';
-			$content = new Content( "$mainPageLink\n\n[[$this->nonemptyCatName]]" );
+			$content = new Content( "{$mainPageLink}\n\n[[$this->nonemptyCatName]]" );
 			$revisionSaver->save( new Revision( $content, $testCat ) );
 		}
 

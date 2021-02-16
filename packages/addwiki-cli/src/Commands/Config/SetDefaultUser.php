@@ -34,11 +34,11 @@ class SetDefaultUser extends Command {
 		$appConfigHasUser = $this->appConfig->has( 'users.' . $code );
 
 		if ( !$appConfigHasUser ) {
-			$output->writeln( "No user with the code $code found" );
+			$output->writeln( sprintf('No user with the code %s found', $code) );
 			return -1;
 		}
 
 		$this->appConfig->set( 'defaults.user', $code );
-		$output->writeln( "Default user set to: $code" );
+		$output->writeln( sprintf('Default user set to: %s', $code) );
 	}
 }

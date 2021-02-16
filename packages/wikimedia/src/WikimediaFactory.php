@@ -2,6 +2,16 @@
 
 namespace Wikimedia\Api;
 
+use DataValues\BooleanValue;
+use DataValues\NumberValue;
+use DataValues\StringValue;
+use DataValues\UnknownValue;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\QuantityValue;
+use DataValues\TimeValue;
+use Wikibase\DataModel\Entity\EntityIdValue;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use Mediawiki\Api\MediawikiApi;
@@ -44,33 +54,31 @@ class WikimediaFactory {
 	 * @return WikibaseFactory
 	 */
 	public function newWikibaseFactoryForDomain( $domain ) {
-		switch ( true ) {
-			case strstr( $domain, 'wikidata.org' ):
-				$dvDeserializer = new DataValueDeserializer(
+		if (true == strstr( $domain, 'wikidata.org' )) {
+			$dvDeserializer = new DataValueDeserializer(
 					[
 						// data-values/data-values
-						'boolean' => 'DataValues\BooleanValue',
-						'number' => 'DataValues\NumberValue',
-						'string' => 'DataValues\StringValue',
-						'unknown' => 'DataValues\UnknownValue',
+						'boolean' => BooleanValue::class,
+						'number' => NumberValue::class,
+						'string' => StringValue::class,
+						'unknown' => UnknownValue::class,
 						// data-values/geo
-						'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
+						'globecoordinate' => GlobeCoordinateValue::class,
 						// data-values/common
-						'monolingualtext' => 'DataValues\MonolingualTextValue',
-						'multilingualtext' => 'DataValues\MultilingualTextValue',
+						'monolingualtext' => MonolingualTextValue::class,
+						'multilingualtext' => MultilingualTextValue::class,
 						// data-values/number
-						'quantity' => 'DataValues\QuantityValue',
+						'quantity' => QuantityValue::class,
 						// data-values/time
-						'time' => 'DataValues\TimeValue',
+						'time' => TimeValue::class,
 						// wikibase/data-model
-						'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+						'wikibase-entityid' => EntityIdValue::class,
 					]
 				);
-				$dvSerializer = new DataValueSerializer();
-				break;
-			default:
-				$dvDeserializer = new DataValueDeserializer();
-				$dvSerializer = new DataValueSerializer();
+			$dvSerializer = new DataValueSerializer();
+		} else {
+			$dvDeserializer = new DataValueDeserializer();
+			$dvSerializer = new DataValueSerializer();
 		}
 
 		return new WikibaseFactory(

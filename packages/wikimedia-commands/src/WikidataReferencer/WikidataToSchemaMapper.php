@@ -122,12 +122,12 @@ class WikidataToSchemaMapper {
 							$filmGenreData = $sparqlQueryRunner->getItemIdStringsAndLabelsFromInstanceOf( 'Q201658' );
 							$filmGenreRegexMap = [];
 							foreach ( $filmGenreData as $itemIdString => $label ) {
-								if ( preg_match( '/ films?/i', $label ) ) {
-									$regex = '/^' . preg_replace( '/ films?/i', '( film)?', $label ) . '$/i';
+								if ( preg_match( '# films?#i', $label ) ) {
+									$regex = '/^' . preg_replace( '# films?#i', '( film)?', $label ) . '$/i';
 								} else {
 									$regex = '/^' . $label . '( film)?' . '$/i';
 								}
-								$regex = preg_replace( '/science ?fiction/i', '(science ?fiction|sci-fi)', $regex );
+								$regex = preg_replace( '#science ?fiction#i', '(science ?fiction|sci-fi)', $regex );
 								$filmGenreRegexMap[$itemIdString] = $regex;
 							}
 

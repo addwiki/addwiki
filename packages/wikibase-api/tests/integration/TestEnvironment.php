@@ -2,6 +2,15 @@
 
 namespace Wikibase\Api\Test;
 
+use DataValues\BooleanValue;
+use DataValues\NumberValue;
+use DataValues\StringValue;
+use DataValues\UnknownValue;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\QuantityValue;
+use DataValues\TimeValue;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
 use Mediawiki\Api\MediawikiApi;
@@ -26,7 +35,7 @@ class TestEnvironment {
 		}
 
 		if ( substr( $apiUrl, -7 ) !== 'api.php' ) {
-			$msg = "URL incorrect: $apiUrl"
+			$msg = sprintf('URL incorrect: %s', $apiUrl)
 				. " (Set the ADDWIKI_MW_API environment variable correctly)";
 			throw new Exception( $msg );
 		}
@@ -45,15 +54,15 @@ class TestEnvironment {
 	private function newDataValueDeserializer() {
 		return new DataValueDeserializer(
 			[
-				'boolean' => 'DataValues\BooleanValue',
-				'number' => 'DataValues\NumberValue',
-				'string' => 'DataValues\StringValue',
-				'unknown' => 'DataValues\UnknownValue',
-				'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-				'monolingualtext' => 'DataValues\MonolingualTextValue',
-				'multilingualtext' => 'DataValues\MultilingualTextValue',
-				'quantity' => 'DataValues\QuantityValue',
-				'time' => 'DataValues\TimeValue',
+				'boolean' => BooleanValue::class,
+				'number' => NumberValue::class,
+				'string' => StringValue::class,
+				'unknown' => UnknownValue::class,
+				'globecoordinate' => GlobeCoordinateValue::class,
+				'monolingualtext' => MonolingualTextValue::class,
+				'multilingualtext' => MultilingualTextValue::class,
+				'quantity' => QuantityValue::class,
+				'time' => TimeValue::class,
 			]
 		);
 	}

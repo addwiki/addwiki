@@ -37,7 +37,8 @@ class IntegrationTest extends TestCase {
 	}
 
 	public function testCreateItem() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$newItem = $factory->newRevisionSaver()->save( new Revision( new ItemContent( self::$localItem ) ) );
 		self::$itemId = $newItem->getId(); // Save our ID for later use
 		self::$localItem->setId( self::$itemId );
@@ -48,7 +49,8 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testGetNewlyCreatedItem() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		// Make sure the RevisionGetter will also return the same Item as expected
 		$gotItem = $factory->newRevisionGetter()->getFromId( self::$itemId )->getContent()->getData();
 		$this->assertTrue( self::$localItem->equals( $gotItem ) );
@@ -58,7 +60,8 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testSetLabel() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$labelDe = new Term( 'de', 'Foo' . microtime() );
 		$r = $factory->newLabelSetter()->set( $labelDe, self::$itemId );
 		$this->assertTrue( $r );
@@ -69,7 +72,8 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testSetDescription() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$descDe = new Term( 'de', 'FooBarDesc' . microtime() );
 		$r = $factory->newDescriptionSetter()->set( $descDe, self::$itemId );
 		$this->assertTrue( $r );
@@ -80,7 +84,8 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testSetAliases() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$aliasFr = new AliasGroup( 'fr', [ 'aa', 'bb' ] );
 		$r = $factory->newAliasGroupSetter()->set( $aliasFr, self::$itemId );
 		$this->assertTrue( $r );
@@ -91,10 +96,11 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testSetSitelink() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$enwikiLondon = new SiteLink( 'mywiki', 'Main Page' );
 		// Expect an exception as we didn't actually setup the test site fully
-		$this->expectExceptionMessage( "The external client site \"mywiki\" did not provide page information for page \"Main Page\"" );
+		$this->expectExceptionMessage( 'The external client site "mywiki" did not provide page information for page "Main Page"' );
 		$factory->newSiteLinkSetter()->set( $enwikiLondon, self::$itemId );
 	}
 
@@ -103,11 +109,12 @@ class IntegrationTest extends TestCase {
 	 * @depends testSetSitelink
 	 */
 	public function testLinkSitelinks() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		$enwikiLondon = new SiteLink( 'mywiki', 'Main Page' );
 		$dewikiBerlin = new Sitelink( 'dewiki', 'Main Page' );
 		// Expect an exception as we didn't actually setup dewiki as a test site
-		$this->expectExceptionMessage( "Unrecognized value for parameter \"fromsite\": dewiki." );
+		$this->expectExceptionMessage( 'Unrecognized value for parameter "fromsite": dewiki.' );
 		$factory->newSiteLinkLinker()->link( $enwikiLondon, $dewikiBerlin );
 	}
 
@@ -115,9 +122,11 @@ class IntegrationTest extends TestCase {
 	 * @depends testCreateItem
 	 */
 	public function testEmptyItem() {
-		$factory = $factory = TestEnvironment::newDefault()->getFactory();
+		$factory = TestEnvironment::newDefault()->getFactory();
+		$factory = $factory;
 		self::$localItem = new Item();
 		self::$localItem->setId( self::$itemId );
+
 		$newItem = $factory->newRevisionSaver()->save( new Revision( new ItemContent( self::$localItem ) ) );
 		$this->assertTrue( self::$localItem->equals( $newItem ) );
 	}

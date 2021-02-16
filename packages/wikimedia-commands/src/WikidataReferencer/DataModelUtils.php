@@ -56,8 +56,8 @@ class DataModelUtils {
 		foreach ( $langsToUse as $lang ) {
 			try{
 				$strings[] = $fingerprint->getLabel( $lang )->getText();
-			} catch ( Exception $e ) {
-				// Ignore!
+			} catch ( Exception $exception ) {
+
 			}
 			try{
 				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );

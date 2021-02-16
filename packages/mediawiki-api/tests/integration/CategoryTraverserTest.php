@@ -177,7 +177,7 @@ class CategoryTraverserTest extends TestCase {
 		$haveCaught = false;
 		try {
 			$this->traverser->descend( $catA );
-		} catch ( CategoryLoopException $ex ) {
+		} catch ( CategoryLoopException $categoryLoopException ) {
 			$haveCaught = true;
 			$expectedCatLoop = [
 				'Category:E cat',
@@ -187,7 +187,7 @@ class CategoryTraverserTest extends TestCase {
 			// Build a simplified representation of the thrown loop pages, to get around different
 			// revision IDs.
 			$actualCatLoop = [];
-			foreach ( $ex->getCategoryPath()->toArray() as $p ) {
+			foreach ( $categoryLoopException->getCategoryPath()->toArray() as $p ) {
 				$actualCatLoop[] = $p->getPageIdentifier()->getTitle()->getText();
 			}
 			$this->assertEquals( $expectedCatLoop, $actualCatLoop );

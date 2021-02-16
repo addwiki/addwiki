@@ -2,6 +2,8 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use Mediawiki\DataModel\Revisions;
+use Mediawiki\DataModel\Title;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +21,7 @@ class PageTest extends TestCase {
 		$page = new Page( $pageIdentifier, $revisions );
 		$this->assertEquals( $pageIdentifier, $page->getPageIdentifier() );
 		if ( $revisions === null ) {
-			$this->assertInstanceOf( 'Mediawiki\DataModel\Revisions', $page->getRevisions() );
+			$this->assertInstanceOf( Revisions::class, $page->getRevisions() );
 		} else {
 			$this->assertEquals( $revisions, $page->getRevisions() );
 		}
@@ -35,13 +37,13 @@ class PageTest extends TestCase {
 	}
 
 	private function newMockTitle() {
-		return $this->getMockBuilder( '\Mediawiki\DataModel\Title' )
+		return $this->getMockBuilder( Title::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
 	private function newMockRevisions() {
-		return $this->getMockBuilder( '\Mediawiki\DataModel\Revisions' )
+		return $this->getMockBuilder( Revisions::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}

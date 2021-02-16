@@ -59,8 +59,8 @@ class DateReferencer implements Referencer {
 				try{
 					$date = new DateTime( trim( $propertyValue ) );
 					$timeValues[] = $this->timeParser->parse( $date->format( 'Y m d' ) );
-				} catch ( Exception $e ) {
-					// Ignore failed parsing
+				} catch ( Exception $exception ) {
+
 				}
 			}
 
@@ -94,9 +94,9 @@ class DateReferencer implements Referencer {
 						);
 						// NOTE: keep our in memory item copy up to date (yay such reference passing)
 						$statement->addNewReference( $newReference->getSnaks() );
-						$referenceCounter++;
+						++$referenceCounter;
 					}
-					catch ( UsageException $e ) {
+					catch ( UsageException $usageException ) {
 						// Ignore
 					}
 				}

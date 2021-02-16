@@ -9,7 +9,13 @@ use stdClass;
  */
 class MicroData {
 
+	/**
+	 * @var int
+	 */
 	public const PROP_STRING = 1;
+	/**
+	 * @var int
+	 */
 	public const PROP_DATA = 2;
 
 	/**

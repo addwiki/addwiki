@@ -2,6 +2,9 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use Mediawiki\DataModel\EditInfo;
+use Mediawiki\DataModel\Content;
+use Mediawiki\DataModel\Title;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use PHPUnit\Framework\TestCase;
@@ -21,27 +24,27 @@ class RevisionTest extends TestCase {
 		if ( $pageIdentifier !== null ) {
 			$this->assertEquals( $pageIdentifier, $rev->getPageIdentifier() );
 		} else {
-			$this->assertInstanceOf( '\Mediawiki\DataModel\PageIdentifier', $rev->getPageIdentifier() );
+			$this->assertInstanceOf( PageIdentifier::class, $rev->getPageIdentifier() );
 		}
 
 		$this->assertEquals( $id, $rev->getId() );
 		if ( $editInfo !== null ) {
 			$this->assertEquals( $editInfo, $rev->getEditInfo() );
 		} else {
-			$this->assertInstanceOf( '\Mediawiki\DataModel\EditInfo', $rev->getEditInfo() );
+			$this->assertInstanceOf( EditInfo::class, $rev->getEditInfo() );
 		}
 		$this->assertEquals( $user, $rev->getUser() );
 		$this->assertEquals( $timestamp, $rev->getTimestamp() );
 	}
 
 	public function provideValidConstruction() {
-		$mockContent = $this->getMockBuilder( 'Mediawiki\DataModel\Content' )
+		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockEditInfo = $this->getMockBuilder( '\Mediawiki\DataModel\EditInfo' )
+		$mockEditInfo = $this->getMockBuilder( EditInfo::class )
 			->disableOriginalConstructor()
 			->getMock();
-		$mockTitle = $this->getMockBuilder( 'Mediawiki\DataModel\Title' )
+		$mockTitle = $this->getMockBuilder( Title::class )
 			->disableOriginalConstructor()
 			->getMock();
 
