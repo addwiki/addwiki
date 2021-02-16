@@ -30,7 +30,7 @@ class CategoryTraverser extends Service {
 	/**
 	 * @var string[]|null
 	 */
-	protected $namespaces = null;
+	protected $namespaces;
 
 	/**
 	 * @var callable[]
