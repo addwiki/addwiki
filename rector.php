@@ -51,7 +51,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/packages',
     ]);
 
-    $parameters->set(Option::SETS, [SetList::CODE_QUALITY]);
+    $parameters->set(Option::SETS, [
+        SetList::CODE_QUALITY,
+        SetList::PHPUNIT_90,
+        SetList::PHPUNIT_91,
+        SetList::PHPUNIT_CODE_QUALITY,
+        SetList::PHPUNIT_EXCEPTION,
+        SetList::PHPUNIT_MOCK,
+        SetList::PHP_70,
+        SetList::PHP_71,
+        SetList::PHP_72,
+        ]);
 
     // // is your PHP version different from the one your refactor to? [default: your PHP version], uses PHP_VERSION_ID format
     // $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_72);

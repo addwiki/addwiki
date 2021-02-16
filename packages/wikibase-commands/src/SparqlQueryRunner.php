@@ -51,7 +51,7 @@ class SparqlQueryRunner {
 		] );
 		$queryBuilder->select( '?item' );
 		foreach ( $simpleQueryParts as $key => $simpleQueryPart ) {
-			list( $propertyIdString, $entityIdString ) = explode( ':', $simpleQueryPart );
+			[ $propertyIdString, $entityIdString ] = explode( ':', $simpleQueryPart );
 			if ( $entityIdString == '?' ) {
 				$queryBuilder->where( '?item', "wdt:$propertyIdString", '?' . str_repeat( 'z', $key ) );
 			} else {

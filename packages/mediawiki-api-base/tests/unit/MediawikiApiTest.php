@@ -55,9 +55,9 @@ class MediawikiApiTest extends \PHPUnit\Framework\TestCase {
 
 	private function getMockResponse( $responseValue ) {
 		$mock = $this->createMock( 'Psr\Http\Message\ResponseInterface' );
-		$mock->expects( $this->any() )
+		$mock
 			->method( 'getBody' )
-			->will( $this->returnValue( json_encode( $responseValue ) ) );
+			->willReturn( json_encode( $responseValue ) );
 		return $mock;
 	}
 

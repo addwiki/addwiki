@@ -65,7 +65,7 @@ class NamespaceGetterTest extends \PHPUnit\Framework\TestCase {
 	 */
 	private function getApi() {
 		$api = $this->getMockBuilder( MediawikiApi::class )->disableOriginalConstructor()->getMock();
-		$api->expects( $this->any() )
+		$api
 			->method( 'getRequest' )
 			->with( $this->getRequest() )
 			->willReturn( $this->getNamespaceFixture() );

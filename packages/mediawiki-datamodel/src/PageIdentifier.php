@@ -75,7 +75,7 @@ class PageIdentifier implements JsonSerializable {
 	public static function jsonDeserialize( $array ) {
 		return new self(
 		isset( $array['title'] ) ? Title::jsonDeserialize( $array['title'] ) : null,
-		isset( $array['id'] ) ? $array['id'] : null
+		$array['id'] ?? null
 
 		);
 	}
