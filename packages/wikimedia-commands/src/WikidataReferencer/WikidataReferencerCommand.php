@@ -336,7 +336,7 @@ class WikidataReferencerCommand extends Command {
 				$parseProgressBar->advance();
 			}
 			$links = [];
-			foreach ( $parsePromises as $siteId => $promise ) {
+			foreach ( $parsePromises as $promise ) {
 				try {
 					$parseResult = $promise->wait();
 					if ( array_key_exists( 'externallinks', $parseResult ) ) {

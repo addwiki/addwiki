@@ -37,7 +37,7 @@ class SiteListGetter {
 		unset( $sitematrixResult['sitematrix']['count'] );
 
 		$siteListArray = [];
-		foreach ( $sitematrixResult['sitematrix'] as $key => $siteGroup ) {
+		foreach ( $sitematrixResult['sitematrix'] as $siteGroup ) {
 			foreach ( $siteGroup['site'] as $details ) {
 				$siteListArray[] =
 					new Site(

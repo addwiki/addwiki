@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-
-
 /**
  * Run a template command.
  * Examples:
@@ -47,8 +45,6 @@ foreach( $dirs as $dir ) {
     }
 }
 
-exit( $finalExitCode );
-
 function runAndStreamCommand( $cmd, $cwd ) {
     $descriptorspec = array(
         0 => array("pipe", "r"),   // stdin is a pipe that the child will read from
@@ -65,3 +61,6 @@ function runAndStreamCommand( $cmd, $cwd ) {
      }
      return proc_get_status($process)['exitcode'];
 }
+
+// Exit had to be moved below function definition due to https://github.com/rectorphp/rector/issues/5571
+exit( $finalExitCode );

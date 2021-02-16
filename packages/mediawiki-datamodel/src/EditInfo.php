@@ -48,12 +48,12 @@ class EditInfo {
 		/**
 		 * @var int
 		 */
-	protected $maxlag = null;
+	protected $maxlag;
 
 	/**
 	 * @var string
 	 */
-	protected $summary = null;
+	protected $summary;
 
 	/**
 	 * @param string $summary

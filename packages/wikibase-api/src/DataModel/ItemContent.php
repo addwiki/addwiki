@@ -23,6 +23,7 @@ class ItemContent extends Content {
 	}
 
 	/**
+	 * @required
 	 * @see Content::getData
 	 * @return Item
 	 */

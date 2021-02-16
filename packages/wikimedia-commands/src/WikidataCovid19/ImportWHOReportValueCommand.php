@@ -2,7 +2,6 @@
 
 namespace Addwiki\Commands\Wikimedia\WikidataCovid19;
 
-use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\EffectiveUrlMiddleware;
 use Addwiki\Topics\Covid19\WHOReports;
 use ArrayAccess;
@@ -42,11 +41,6 @@ class ImportWHOReportValueCommand extends Command {
 	private $appConfig;
 
 	/**
-	 * @var SparqlQueryRunner
-	 */
-	private $sparqlQueryRunner;
-
-	/**
 	 * @var WikibaseFactory
 	 */
 	private $wikibaseFactory;
@@ -69,8 +63,6 @@ class ImportWHOReportValueCommand extends Command {
 			]
 		);
 		$guzzleClient = $clientFactory->getClient();
-
-		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 
 		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $guzzleClient );
 		$this->wikibaseFactory = new WikibaseFactory(

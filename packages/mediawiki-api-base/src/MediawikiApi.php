@@ -29,7 +29,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	/**
 	 * @var ClientInterface|null Should be accessed through getClient
 	 */
-	private $client = null;
+	private $client;
 
 	/**
 	 * @var bool|string

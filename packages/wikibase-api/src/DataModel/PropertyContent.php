@@ -23,6 +23,7 @@ class PropertyContent extends Content {
 	}
 
 	/**
+	 * @required
 	 * @see Content::getData
 	 * @return Property
 	 */

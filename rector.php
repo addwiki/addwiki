@@ -64,6 +64,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SETS, [
         SetList::CODE_QUALITY,
         SetList::CODE_QUALITY_STRICT,
+        SetList::DEAD_CODE,
         SetList::PHPUNIT_90,
         SetList::PHPUNIT_91,
         SetList::PHPUNIT_CODE_QUALITY,

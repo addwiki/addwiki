@@ -53,16 +53,4 @@ class FluentGenerator implements ApiGenerator {
 		return $this;
 	}
 
-	/**
-	 * @param string $key
-	 *
-	 * @return string
-	 */
-	private function addKeyPrefixIfNeeded( $key ) {
-		if ( strtolower( substr( $key, 0, 1 ) ) === 'g' ) {
-			return $key;
-		}
-		return 'g' . $key;
-	}
-
 }

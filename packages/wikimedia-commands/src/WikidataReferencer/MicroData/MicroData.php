@@ -31,7 +31,7 @@ class MicroData {
 	/**
 	 * @var string|null
 	 */
-	private $id = null;
+	private $id;
 
 	/**
 	 * @param stdClass|null $object that can have the following defined:
