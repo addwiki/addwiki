@@ -76,7 +76,7 @@ class AppConfig implements ArrayAccess {
 	}
 
 	public function has( $name ) {
-		return $this->get( $name, null ) !== null;
+		return $this->get( $name ) !== null;
 	}
 
 	private function loadIfNotLoaded() {

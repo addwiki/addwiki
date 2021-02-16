@@ -106,7 +106,7 @@ class RestoreRevisions extends Command {
 		$saver = $mwFactory->newRevisionSaver();
 
 		foreach ( $revids as $revid ) {
-			$revid = intval( $revid );
+			$revid = (int)$revid;
 
 			$page = $getter->getFromRevisionId( $revid );
 			$page = $getter->getFromPage( $page );
@@ -119,8 +119,9 @@ class RestoreRevisions extends Command {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
 				return null;
 			}
+			$asheaderInputOption = $input->getOption( 'asheader' );
 
-			if ( $input->getOption( 'asheader' ) ) {
+			if ( $asheaderInputOption ) {
 				if ( strstr( $currentText, $goodText ) ) {
 					$goodText = $goodText . "\n\n" . trim( str_replace( $goodText, '', $currentText ) );
 				} else {

@@ -56,8 +56,8 @@ class DataModelUtils {
 		foreach ( $langsToUse as $lang ) {
 			try{
 				$strings[] = $fingerprint->getLabel( $lang )->getText();
-			} catch ( Exception $e ) {
-				// Ignore!
+			} catch ( Exception $exception ) {
+
 			}
 			try{
 				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );
@@ -104,7 +104,7 @@ class DataModelUtils {
 	 * @return bool
 	 */
 	private static function urlsDomainsAreSame( $a, $b ) {
-		return parse_url( $a, PHP_URL_HOST ) == parse_url( $b, PHP_URL_HOST );
+		return parse_url( $a, PHP_URL_HOST ) === parse_url( $b, PHP_URL_HOST );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class DataModelUtils {
 
 		foreach ( $siteLinkList->getIterator() as $siteLink ) {
 			$siteId = $siteLink->getSiteId();
-			if ( substr( $siteId, -strlen( $suffix ) ) == $suffix ) {
+			if ( substr( $siteId, -strlen( $suffix ) ) === $suffix ) {
 				$filteredSiteLinkList->addSiteLink( $siteLink );
 			}
 		}

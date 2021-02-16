@@ -2,6 +2,8 @@
 
 namespace Mediawiki\DataModel;
 
+use InvalidArgumentException;
+
 /**
  * Class representing metadata about a MediaWiki namespace
  *
@@ -36,7 +38,7 @@ class NamespaceInfo {
 	/**
 	 * @var array
 	 */
-	private $aliases;
+	private $aliases = [];
 
 	/**
 	 * NamespaceInfo constructor.
@@ -52,23 +54,23 @@ class NamespaceInfo {
 	 */
 	public function __construct( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null, $aliases = [] ) {
 		if ( !is_int( $id ) ) {
-			throw new \InvalidArgumentException( '$id must be an integer' );
+			throw new InvalidArgumentException( '$id must be an integer' );
 		}
 		if ( !is_string( $canonicalName ) ) {
-			throw new \InvalidArgumentException( '$canonicalName must be a string' );
+			throw new InvalidArgumentException( '$canonicalName must be a string' );
 		}
 		if ( !is_string( $localName ) ) {
-			throw new \InvalidArgumentException( '$localName must be a string' );
+			throw new InvalidArgumentException( '$localName must be a string' );
 		}
 		if ( !is_string( $caseHandling ) ) {
-			throw new \InvalidArgumentException( '$caseHandling must be a string' );
+			throw new InvalidArgumentException( '$caseHandling must be a string' );
 		}
 		if ( $defaultContentModel !== null && !is_string( $defaultContentModel ) ) {
-			throw new \InvalidArgumentException( '$canonicalName must be a string' );
+			throw new InvalidArgumentException( '$canonicalName must be a string' );
 		}
 
 		if ( !is_array( $aliases ) ) {
-			throw new \InvalidArgumentException( '$aliases must be an array' );
+			throw new InvalidArgumentException( '$aliases must be an array' );
 		}
 
 		$this->id = $id;

@@ -2,15 +2,17 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Revisions;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\Revisions
  * @author Addshore
  */
-class RevisionsTest extends \PHPUnit\Framework\TestCase {
+class RevisionsTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -21,7 +23,7 @@ class RevisionsTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function provideValidConstruction() {
-		$mockContent = $this->getMockBuilder( 'Mediawiki\DataModel\Content' )
+		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()
 			->getMock();
 

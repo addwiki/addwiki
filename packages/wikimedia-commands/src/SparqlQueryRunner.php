@@ -44,11 +44,11 @@ class SparqlQueryRunner {
 		] );
 		$queryBuilder->select( '?item' );
 		foreach ( $simpleQueryParts as $key => $simpleQueryPart ) {
-			list( $propertyIdString, $entityIdString ) = explode( ':', $simpleQueryPart );
+			[ $propertyIdString, $entityIdString ] = explode( ':', $simpleQueryPart );
 			if ( $entityIdString == '?' ) {
-				$queryBuilder->where( '?item', "wdt:$propertyIdString", '?' . str_repeat( 'z', $key ) );
+				$queryBuilder->where( '?item', sprintf( 'wdt:%s', $propertyIdString ), '?' . str_repeat( 'z', $key ) );
 			} else {
-				$queryBuilder->where( '?item', "wdt:$propertyIdString", "wd:$entityIdString" );
+				$queryBuilder->where( '?item', sprintf( 'wdt:%s', $propertyIdString ), sprintf( 'wd:%s', $entityIdString ) );
 			}
 		}
 

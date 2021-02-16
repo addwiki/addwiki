@@ -2,15 +2,21 @@
 
 namespace Addwiki\Commands\Wikimedia\WikidataCovid19;
 
-use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\EffectiveUrlMiddleware;
 use Addwiki\Topics\Covid19\WHOReports;
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnboundedQuantityValue;
+use DataValues\UnknownValue;
 use DateTime;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\Guzzle\ClientFactory;
@@ -33,11 +39,6 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 class ImportWHOReportValueCommand extends Command {
 
 	private $appConfig;
-
-	/**
-	 * @var SparqlQueryRunner
-	 */
-	private $sparqlQueryRunner;
 
 	/**
 	 * @var WikibaseFactory
@@ -63,23 +64,21 @@ class ImportWHOReportValueCommand extends Command {
 		);
 		$guzzleClient = $clientFactory->getClient();
 
-		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
-
 		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $guzzleClient );
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => \DataValues\QuantityValue::class,
+					'time' => TimeValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
@@ -132,7 +131,8 @@ class ImportWHOReportValueCommand extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		if ( $input->getOption( 'dry' ) ) {
+		$dryInputOption = $input->getOption( 'dry' );
+		if ( $dryInputOption ) {
 			echo "Dry run mode!" . PHP_EOL;
 		}
 
@@ -173,7 +173,7 @@ class ImportWHOReportValueCommand extends Command {
 			die( 'No way to get a report given...' );
 		}
 		if ( $report->getId() < 46 ) {
-			throw new RuntimeException( 'Doesn\'t work for reports before 46... (yet)' );
+			throw new RuntimeException( "Doesn't work for reports before 46... (yet)" );
 		}
 		$value = $report->getValue( $reporter, $valueType );
 		$date = $report->getDate();
@@ -282,9 +282,10 @@ class ImportWHOReportValueCommand extends Command {
 				return 0;
 			}
 		}
+		$dryInputOption = $input->getOption( 'dry' );
 
 		// Create a new statement...
-		if ( $input->getOption( 'dry' ) ) {
+		if ( $dryInputOption ) {
 			return 0;
 		}
 		// TODO maybe do this as 1 edit?
@@ -294,7 +295,7 @@ class ImportWHOReportValueCommand extends Command {
 		$statement->getReferences()->addNewReference( [ $referenceSnak ] );
 		$this->wikibaseFactory->newStatementSetter()->set( $statement );
 
-		echo "Created statement $guid" . PHP_EOL;
+		echo sprintf( 'Created statement %s', $guid ) . PHP_EOL;
 
 		return 0;
 	}

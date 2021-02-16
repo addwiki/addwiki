@@ -2,13 +2,15 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use InvalidArgumentException;
 use Mediawiki\DataModel\EditInfo;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\EditInfo
  * @author Addshore
  */
-class EditInfoTest extends \PHPUnit\Framework\TestCase {
+class EditInfoTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -34,7 +36,7 @@ class EditInfoTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $sum, $minor, $bot ) {
-		$this->expectException( 'InvalidArgumentException' );
+		$this->expectException( InvalidArgumentException::class );
 		new EditInfo( $sum, $minor, $bot );
 	}
 

@@ -50,10 +50,7 @@ class PageIdentifier implements JsonSerializable {
 	 * @return bool
 	 */
 	public function identifiesPage() {
-		if ( $this->title === null && $this->id === null ) {
-			return false;
-		}
-		return true;
+		return !( !$this->title instanceof Title && $this->id === null );
 	}
 
 	/**
@@ -78,7 +75,7 @@ class PageIdentifier implements JsonSerializable {
 	public static function jsonDeserialize( $array ) {
 		return new self(
 		isset( $array['title'] ) ? Title::jsonDeserialize( $array['title'] ) : null,
-		isset( $array['id'] ) ? $array['id'] : null
+		$array['id'] ?? null
 
 		);
 	}

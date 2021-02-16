@@ -2,13 +2,15 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use InvalidArgumentException;
 use Mediawiki\DataModel\User;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\User
  * @author Addshore
  */
-class UserTest extends \PHPUnit\Framework\TestCase {
+class UserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
@@ -38,7 +40,7 @@ class UserTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider provideInvalidConstruction
 	 */
 	public function testInvalidConstruction( $name, $id, $editcount, $registration, $groups, $rights, $gender ) {
-		$this->expectException( 'InvalidArgumentException' );
+		$this->expectException( InvalidArgumentException::class );
 		new User( $name, $id, $editcount, $registration, $groups, $rights, $gender );
 	}
 

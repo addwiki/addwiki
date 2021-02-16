@@ -15,7 +15,7 @@ class Pages {
 	/**
 	 * @var Page[]
 	 */
-	private $pages;
+	private $pages = [];
 
 	/**
 	 * @param Page[] $pages

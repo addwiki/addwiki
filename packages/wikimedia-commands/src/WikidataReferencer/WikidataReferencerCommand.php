@@ -6,8 +6,17 @@ use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\Referencer;
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
+use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
+use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
@@ -28,6 +37,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
+use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
@@ -109,16 +119,16 @@ class WikidataReferencerCommand extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => QuantityValue::class,
+					'time' => TimeValue::class,
+					'wikibase-entityid' => \Wikibase\DataModel\Entity\EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
@@ -191,11 +201,7 @@ class WikidataReferencerCommand extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$this->initServices();
 
-		if ( is_string( $input->getOption( 'tmpDir' ) ) ) {
-			$this->tmpDir = $input->getOption( 'tmpDir' );
-		} else {
-			$this->tmpDir = sys_get_temp_dir();
-		}
+		$this->tmpDir = is_string( $input->getOption( 'tmpDir' ) ) ? $input->getOption( 'tmpDir' ) : sys_get_temp_dir();
 		if ( !is_writable( $this->tmpDir ) ) {
 			throw new RuntimeException( 'Temp dir: ' . $this->tmpDir . ' is not writable' );
 		}
@@ -264,7 +270,7 @@ class WikidataReferencerCommand extends Command {
 		/** @var FormatterHelper $formatter */
 		$formatter = $this->getHelper( 'formatter' );
 		foreach ( $itemIds as $itemId ) {
-			$loopCounter++;
+			++$loopCounter;
 			$itemIdString = $itemId->getSerialization();
 
 			$output->writeln( '----------------------------------------------------' );
@@ -281,12 +287,12 @@ class WikidataReferencerCommand extends Command {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Loading Item' ) );
 				$item = $itemLookup->getItemForId( $itemId );
 			}
-			catch ( ItemLookupException $e ) {
+			catch ( ItemLookupException $itemLookupException ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Failed to load item (exception)', 'error' ) );
 				continue;
 			}
 
-			if ( $item === null ) {
+			if ( !$item instanceof Item ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Failed to load item (null)', 'error' ) );
 				continue;
 			}
@@ -330,7 +336,7 @@ class WikidataReferencerCommand extends Command {
 				$parseProgressBar->advance();
 			}
 			$links = [];
-			foreach ( $parsePromises as $siteId => $promise ) {
+			foreach ( $parsePromises as $promise ) {
 				try {
 					$parseResult = $promise->wait();
 					if ( array_key_exists( 'externallinks', $parseResult ) ) {
@@ -342,9 +348,9 @@ class WikidataReferencerCommand extends Command {
 						}
 					}
 				}
-				catch ( Exception $e ) {
+				catch ( Exception $exception ) {
 					$parseProgressBar->clear();
-					$output->writeln( $formatter->formatSection( $itemIdString, $e->getMessage(), 'error' ) );
+					$output->writeln( $formatter->formatSection( $itemIdString, $exception->getMessage(), 'error' ) );
 					$parseProgressBar->display();
 					// Ignore failed requests
 				}

@@ -4,9 +4,17 @@ namespace Addwiki\Commands\Wikimedia;
 
 use ArrayAccess;
 use Asparagus\QueryBuilder;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
+use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
 use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use GuzzleHttp\Client;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
@@ -18,6 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
+use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
@@ -60,16 +69,16 @@ class WikidataReferenceDateFixer extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => QuantityValue::class,
+					'time' => \DataValues\TimeValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
@@ -155,12 +164,11 @@ class WikidataReferenceDateFixer extends Command {
 				foreach ( $statement->getReferences() as $reference ) {
 					/** @var Reference $reference */
 					foreach ( $reference->getSnaks()->getIterator() as $snak ) {
-						if ( $snak instanceof PropertyValueSnak ) {
-							if ( $snak->getPropertyId()->getSerialization() == 'P813' ) {
-								/** @var TimeValue $dataValue */
-								$dataValue = $snak->getDataValue();
-								// We can assume ALL retrieval dates should be Gregorian!
-								if ( $dataValue->getCalendarModel() === TimeValue::CALENDAR_JULIAN ) {
+						if ( $snak instanceof PropertyValueSnak && $snak->getPropertyId()->getSerialization() == 'P813' ) {
+							/** @var TimeValue $dataValue */
+							$dataValue = $snak->getDataValue();
+							// We can assume ALL retrieval dates should be Gregorian!
+							if ( $dataValue->getCalendarModel() === TimeValue::CALENDAR_JULIAN ) {
 									$oldRefHash = $reference->getHash();
 									$statementGuid = $statement->getGuid();
 
@@ -199,12 +207,11 @@ class WikidataReferenceDateFixer extends Command {
 											$oldRefHash,
 											new EditInfo( $editSummary )
 										);
-									} catch ( UsageException $e ) {
+									} catch ( UsageException $usageException ) {
 										$output->writeln( '' );
-										$output->write( $e->getMessage() );
+										$output->write( $usageException->getMessage() );
 									}
 
-								}
 							}
 						}
 					}
@@ -248,7 +255,7 @@ class WikidataReferenceDateFixer extends Command {
 			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
-			$year = $year - 1;
+			--$year;
 		}
 
 		// Otherwise give up guessing

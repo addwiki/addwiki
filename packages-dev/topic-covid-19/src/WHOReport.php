@@ -2,6 +2,10 @@
 
 namespace Addwiki\Topics\Covid19;
 
+use Countable;
+use RuntimeException;
+use Smalot\PdfParser\Parser;
+
 class WHOReport {
 
 	/**
@@ -14,7 +18,13 @@ class WHOReport {
 	private $id;
 	private $date;
 
+	/**
+	 * @var string
+	 */
 	private const VALUE_TYPE_CASE = 'cases';
+	/**
+	 * @var string
+	 */
 	private const VALUE_TYPE_DEATH = 'deaths';
 
 	/**
@@ -67,22 +77,21 @@ class WHOReport {
 			$regexParts[] = implode( $betweenExpression . '*', str_split( $headingChars ) );
 		}
 		$regex = implode( $betweenExpression . '*', $regexParts );
-		$regex = '#' . $regex . '#';
-		return $regex;
+		return '#' . $regex . '#';
 	}
 
 	private function getValueUsingRegex( $text, $reporter, $valueType ) {
 		// Remove all new lines so that things that are split over multiple lines are easier to
 		// match
-		$text = trim( preg_replace( '/\s\s+/', ' ', $text ) );
+		$text = trim( preg_replace( '#\s\s+#', ' ', $text ) );
 
-		$pattern = '#(' . preg_quote( $reporter ) . '(?:\s+?\([\sa-zA-Z]+\))?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+#m';
+		$pattern = '#(' . preg_quote( $reporter, '#' ) . '(?:\s+?\([\sa-zA-Z]+\))?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+#m';
 		preg_match_all( $pattern, $text, $matches );
 
 		// Sanity check that we only find 1 line in the text version of the PDF that looks like
 		// the table row
-		if ( count( $matches[0] ) > 1 ) {
-			throw new \RuntimeException( 'More than 1 pdf table row extracted, bailing...' );
+		if ( ( is_array( $matches[0] ) || $matches[0] instanceof Countable ? count( $matches[0] ) : 0 ) > 1 ) {
+			throw new RuntimeException( 'More than 1 pdf table row extracted, bailing...' );
 		}
 
 		switch ( $valueType ) {
@@ -93,7 +102,7 @@ class WHOReport {
 				$value = (int)$matches[4][0];
 				break;
 			default:
-				throw new \RuntimeException( 'Unknown value type: ' . $valueType );
+				throw new RuntimeException( 'Unknown value type: ' . $valueType );
 		}
 
 		if ( $value === 0 ) {
@@ -111,7 +120,7 @@ class WHOReport {
 			// In which case we will need to update code..
 			var_dump( $text );
 			var_dump( $regex );
-			throw new \RuntimeException( 'Expected table header not found in WHO report' );
+			throw new RuntimeException( 'Expected table header not found in WHO report' );
 		}
 	}
 
@@ -120,7 +129,7 @@ class WHOReport {
 			return $this->text;
 		}
 
-		$parser = new \Smalot\PdfParser\Parser();
+		$parser = new Parser();
 		$pdf    = $parser->parseFile( $this->url );
 
 		$this->text = $pdf->getText();

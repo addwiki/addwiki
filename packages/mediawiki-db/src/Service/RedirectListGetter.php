@@ -30,13 +30,14 @@ class RedirectListGetter {
 	public function getRedirects( $namespace = 0 ) {
 		$statement = $this->db->prepare( $this->getQuery() );
 		$statement->execute( [ ':namespace' => $namespace ] );
+
 		$rows = $statement->fetchAll();
 
 		$redirects = [];
 		foreach ( $rows as $row ) {
 			$redirects[] = new Redirect(
-				new Title( $row['title'], intval( $row['namespace'] ) ),
-				new Title( $row['rd_title'], intval( $row['rd_namespace'] ) )
+				new Title( $row['title'], (int)$row['namespace'] ),
+				new Title( $row['rd_title'], (int)$row['rd_namespace'] )
 			);
 		}
 

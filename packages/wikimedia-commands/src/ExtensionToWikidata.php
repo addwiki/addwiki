@@ -3,8 +3,17 @@
 namespace Addwiki\Commands\Wikimedia;
 
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
+use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
+use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
@@ -65,7 +74,8 @@ class ExtensionToWikidata extends Command {
 		}
 
 		$pageIdentifier = null;
-		if ( $input->getOption( 'title' ) != null ) {
+		$titleInputOption = $input->getOption( 'title' );
+		if ( $titleInputOption != null ) {
 			$sourceTitle = $input->getOption( 'title' );
 			$pageIdentifier = new PageIdentifier( new Title( $sourceTitle ) );
 		} else {
@@ -98,16 +108,16 @@ class ExtensionToWikidata extends Command {
 			$targetApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => QuantityValue::class,
+					'time' => TimeValue::class,
+					'wikibase-entityid' => \Wikibase\DataModel\Entity\EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()

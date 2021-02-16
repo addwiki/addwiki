@@ -4,6 +4,7 @@ namespace Mediawiki\Sitematrix\Api\Test;
 
 use Mediawiki\Sitematrix\DataModel\Site;
 use Mediawiki\Sitematrix\DataModel\SiteList;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Tarrow
@@ -11,7 +12,7 @@ use Mediawiki\Sitematrix\DataModel\SiteList;
  *
  * @covers Mediawiki\Sitematrix\DataModel\SiteList
  */
-class SiteListTest extends \PHPUnit\Framework\TestCase {
+class SiteListTest extends TestCase {
 	public function testGetSiteArray() {
 		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),

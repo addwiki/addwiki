@@ -5,12 +5,13 @@ namespace Mediawiki\DataModel\Test;
 use Mediawiki\DataModel\Log;
 use Mediawiki\DataModel\LogList;
 use Mediawiki\DataModel\PageIdentifier;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\LogList
  * @author Addshore
  */
-class LogListTest extends \PHPUnit\Framework\TestCase {
+class LogListTest extends TestCase {
 
 	public function testJsonRoundTrip() {
 		$logList = new LogList(

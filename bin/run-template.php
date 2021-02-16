@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+
+
+
+
+
 /**
  * Run a template command.
  * Examples:
@@ -16,7 +21,7 @@ $directory = implode( ' ', array_slice($argv,$splitKey+1,1) );
 
 if($directory === '') {
     $directory = 'all';
-} elseif(count($argv) !== $splitKey +2) {
+} elseif((is_array($argv) || $argv instanceof Countable ? count($argv) : 0) !== $splitKey +2) {
     die("You're using it wrong!");
 }
 
@@ -45,8 +50,6 @@ foreach( $dirs as $dir ) {
     }
 }
 
-exit( $finalExitCode );
-
 function runAndStreamCommand( $cmd, $cwd ) {
     $descriptorspec = array(
         0 => array("pipe", "r"),   // stdin is a pipe that the child will read from
@@ -64,3 +67,6 @@ function runAndStreamCommand( $cmd, $cwd ) {
      flush();
      return proc_get_status($process)['exitcode'];
 }
+
+// Exit had to be moved below function definition due to https://github.com/rectorphp/rector/issues/5571
+exit( $finalExitCode );

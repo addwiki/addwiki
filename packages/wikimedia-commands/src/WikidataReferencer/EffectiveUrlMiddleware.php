@@ -2,6 +2,7 @@
 
 namespace Addwiki\Commands\Wikimedia\WikidataReferencer;
 
+use Closure;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -62,7 +63,7 @@ class EffectiveUrlMiddleware {
 	 *
 	 * @param string $headerName The header name to use for storing effective url
 	 *
-	 * @return \Closure
+	 * @return Closure
 	 */
 	public static function middleware( $headerName = 'X-GUZZLE-EFFECTIVE-URL' ) {
 		return function ( callable $handler ) use ( &$headerName ) {

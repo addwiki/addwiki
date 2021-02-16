@@ -97,7 +97,8 @@
         "monolog/monolog": "^1.23",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpunit/phpunit": "~9",
-        "symplify/monorepo-builder": "^9.2"
+        "symplify/monorepo-builder": "^9.2",
+        "rector/rector": "^0.9.29"
     },
     "repositories": [
         {

@@ -31,13 +31,14 @@ class SetDefaultUser extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
+		$appConfigHasUser = $this->appConfig->has( 'users.' . $code );
 
-		if ( !$this->appConfig->has( 'users.' . $code ) ) {
-			$output->writeln( "No user with the code $code found" );
+		if ( !$appConfigHasUser ) {
+			$output->writeln( sprintf( 'No user with the code %s found', $code ) );
 			return -1;
 		}
 
 		$this->appConfig->set( 'defaults.user', $code );
-		$output->writeln( "Default user set to: $code" );
+		$output->writeln( sprintf( 'Default user set to: %s', $code ) );
 	}
 }

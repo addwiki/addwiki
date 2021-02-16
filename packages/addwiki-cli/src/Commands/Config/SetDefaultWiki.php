@@ -31,13 +31,14 @@ class SetDefaultWiki extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
+		$appConfigHasWiki = $this->appConfig->has( 'wikis.' . $code );
 
-		if ( !$this->appConfig->has( 'wikis.' . $code ) ) {
-			$output->writeln( "No wiki with the code $code found" );
+		if ( !$appConfigHasWiki ) {
+			$output->writeln( sprintf( 'No wiki with the code %s found', $code ) );
 			return -1;
 		}
 
 		$this->appConfig->set( 'defaults.wiki', $code );
-		$output->writeln( "Default wiki set to: $code" );
+		$output->writeln( sprintf( 'Default wiki set to: %s', $code ) );
 	}
 }

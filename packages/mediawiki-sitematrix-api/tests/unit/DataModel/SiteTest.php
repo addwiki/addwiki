@@ -3,13 +3,14 @@
 namespace Mediawiki\Sitematrix\Api\Test;
 
 use Mediawiki\Sitematrix\DataModel\Site;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore
  *
  * @covers Mediawiki\Sitematrix\DataModel\Site
  */
-class SiteTest extends \PHPUnit\Framework\TestCase {
+class SiteTest extends TestCase {
 
 	public function testEverything() {
 		$site = new Site( 'a', 'b', 'c', 'd', [ 'z', 'x' ] );

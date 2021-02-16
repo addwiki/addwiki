@@ -8,6 +8,7 @@ use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -58,7 +59,7 @@ class Purge extends Command {
 			$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
 		}
 		if ( empty( $pageIdentifiers ) ) {
-			throw new \RuntimeException( 'No titles or pageids were set!' );
+			throw new RuntimeException( 'No titles or pageids were set!' );
 		}
 
 		$wiki = $input->getOption( 'wiki' );

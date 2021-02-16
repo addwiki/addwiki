@@ -1,5 +1,12 @@
 <?php
 
+use Addwiki\Commands\Config\ConfigList;
+use Addwiki\Commands\Config\SetDefaultUser;
+use Addwiki\Commands\Config\SetDefaultWiki;
+use Addwiki\Commands\Config\Setup;
+use Addwiki\Config\AppConfig;
+use Symfony\Component\Console\Application;
+
 /**
  * Per https://github.com/guzzle/guzzle/blob/master/docs/faq.rst
  * "Maximum function nesting level of '100' reached, aborting" is possible
@@ -21,14 +28,14 @@ if ( file_exists( __DIR__ . '/../../autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-$awwConfig = new Addwiki\Config\AppConfig( __DIR__ );
-$awwApp = new Symfony\Component\Console\Application( 'aww - addwiki cli tool' );
+$awwConfig = new AppConfig( __DIR__ );
+$awwApp = new Application( 'aww - addwiki cli tool' );
 
 $awwApp->addCommands( [
-	new Addwiki\Commands\Config\Setup( $awwConfig ),
-	new Addwiki\Commands\Config\ConfigList( $awwConfig ),
-	new Addwiki\Commands\Config\SetDefaultWiki( $awwConfig ),
-	new Addwiki\Commands\Config\SetDefaultUser( $awwConfig ),
+	new Setup( $awwConfig ),
+	new ConfigList( $awwConfig ),
+	new SetDefaultWiki( $awwConfig ),
+	new SetDefaultUser( $awwConfig ),
 ] );
 
 foreach ( $GLOBALS['awwCommands'] as $callback ) {
