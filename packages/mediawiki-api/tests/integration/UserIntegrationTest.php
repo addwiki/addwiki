@@ -2,8 +2,8 @@
 
 namespace Mediawiki\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\ApiUser;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

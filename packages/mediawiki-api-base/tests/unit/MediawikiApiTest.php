@@ -2,13 +2,13 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Api\UsageException;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
 use stdClass;
 
 /**

@@ -2,11 +2,11 @@
 
 namespace Mediawiki\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiFactory;
 use Mediawiki\Api\Service\FileUploader;
 use Mediawiki\DataModel\Title;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test the \Mediawiki\Api\Service\FileUploader class.

@@ -3,6 +3,7 @@
 namespace Mediawiki\DataModel;
 
 use InvalidArgumentException;
+
 /**
  * Class representing metadata about a MediaWiki namespace
  *

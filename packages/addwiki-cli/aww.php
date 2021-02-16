@@ -1,11 +1,12 @@
 <?php
 
+use Addwiki\Commands\Config\ConfigList;
+use Addwiki\Commands\Config\SetDefaultUser;
+use Addwiki\Commands\Config\SetDefaultWiki;
+use Addwiki\Commands\Config\Setup;
 use Addwiki\Config\AppConfig;
 use Symfony\Component\Console\Application;
-use Addwiki\Commands\Config\Setup;
-use Addwiki\Commands\Config\ConfigList;
-use Addwiki\Commands\Config\SetDefaultWiki;
-use Addwiki\Commands\Config\SetDefaultUser;
+
 /**
  * Per https://github.com/guzzle/guzzle/blob/master/docs/faq.rst
  * "Maximum function nesting level of '100' reached, aborting" is possible

@@ -2,8 +2,8 @@
 
 namespace Wikibase\Api\Lookup\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\Api\Lookup\EntityRedirectApiLookup;
 use Wikibase\DataModel\Entity\ItemId;

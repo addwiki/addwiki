@@ -2,8 +2,8 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MultipartRequest;
+use PHPUnit\Framework\TestCase;
 
 class MultipartRequestTest extends TestCase {
 

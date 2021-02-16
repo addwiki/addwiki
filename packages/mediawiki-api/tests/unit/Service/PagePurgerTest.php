@@ -2,13 +2,13 @@
 
 namespace Mediawiki\Api\Test\Service;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\Service\PagePurger;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Pages;
 use Mediawiki\DataModel\Title;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**

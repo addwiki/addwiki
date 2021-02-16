@@ -3,6 +3,7 @@
 namespace Mediawiki\Api\Test\Integration;
 
 use PHPUnit\Framework\TestCase;
+
 /**
  * @author Addshore
  */

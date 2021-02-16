@@ -2,9 +2,9 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiSession;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**

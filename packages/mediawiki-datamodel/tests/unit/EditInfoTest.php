@@ -2,8 +2,8 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\EditInfo;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\EditInfo

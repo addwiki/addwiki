@@ -2,9 +2,9 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use Mediawiki\DataModel\Content;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Mediawiki\DataModel\Content;
 
 class ContentTest extends TestCase {
 

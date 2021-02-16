@@ -2,12 +2,12 @@
 
 namespace Mediawiki\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\Service\PageListGetter;
 use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Title;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test the \Mediawiki\Api\Service\PageListGetter class.

@@ -2,10 +2,10 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Revisions;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\Revisions

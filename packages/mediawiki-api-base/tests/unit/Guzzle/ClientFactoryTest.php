@@ -2,9 +2,9 @@
 
 namespace Mediawiki\Api\Test\Unit\Guzzle;
 
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\HandlerStack;
 use Mediawiki\Api\Guzzle\ClientFactory;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**

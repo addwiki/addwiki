@@ -2,8 +2,8 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Sitematrix\DataModel\Site;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

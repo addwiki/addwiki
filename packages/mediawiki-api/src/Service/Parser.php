@@ -2,10 +2,10 @@
 
 namespace Mediawiki\Api\Service;
 
-use RuntimeException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\DataModel\PageIdentifier;
+use RuntimeException;
 
 /**
  * @access private

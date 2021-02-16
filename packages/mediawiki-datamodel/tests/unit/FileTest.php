@@ -2,9 +2,9 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\File;
 use Mediawiki\DataModel\PageIdentifier;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\File

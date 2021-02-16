@@ -132,7 +132,8 @@ class ImportWHOReportValueCommand extends Command {
 	}
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		if ( $input->getOption( 'dry' ) ) {
+		$dryInputOption = $input->getOption( 'dry' );
+		if ( $dryInputOption ) {
 			echo "Dry run mode!" . PHP_EOL;
 		}
 
@@ -282,9 +283,10 @@ class ImportWHOReportValueCommand extends Command {
 				return 0;
 			}
 		}
+		$dryInputOption = $input->getOption( 'dry' );
 
 		// Create a new statement...
-		if ( $input->getOption( 'dry' ) ) {
+		if ( $dryInputOption ) {
 			return 0;
 		}
 		// TODO maybe do this as 1 edit?

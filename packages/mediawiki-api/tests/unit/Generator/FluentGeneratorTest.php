@@ -2,8 +2,8 @@
 
 namespace Mediawiki\Api\Test\Generator;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\Generator\FluentGenerator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

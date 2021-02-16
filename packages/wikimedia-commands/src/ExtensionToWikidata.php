@@ -65,7 +65,8 @@ class ExtensionToWikidata extends Command {
 		}
 
 		$pageIdentifier = null;
-		if ( $input->getOption( 'title' ) != null ) {
+		$titleInputOption = $input->getOption( 'title' );
+		if ( $titleInputOption != null ) {
 			$sourceTitle = $input->getOption( 'title' );
 			$pageIdentifier = new PageIdentifier( new Title( $sourceTitle ) );
 		} else {

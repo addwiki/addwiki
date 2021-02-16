@@ -88,7 +88,8 @@ class EditPage extends Command {
 		}
 
 		$pageIdentifier = null;
-		if ( $input->getOption( 'pageid' ) != null ) {
+		$pageidInputOption = $input->getOption( 'pageid' );
+		if ( $pageidInputOption != null ) {
 			$pageIdentifier = new PageIdentifier( null, (int)$input->getOption( 'pageid' ) );
 		} elseif ( $input->getOption( 'title' ) != null ) {
 			$pageIdentifier = new PageIdentifier( new Title( $input->getOption( 'title' ) ) );

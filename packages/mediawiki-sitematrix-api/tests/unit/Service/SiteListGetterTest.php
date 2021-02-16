@@ -2,10 +2,10 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

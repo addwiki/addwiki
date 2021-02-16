@@ -2,10 +2,10 @@
 
 namespace Wikibase\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Deserializers\Deserializer;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
+use PHPUnit\Framework\TestCase;
 use Wikibase\Api\Service\RevisionGetter;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;

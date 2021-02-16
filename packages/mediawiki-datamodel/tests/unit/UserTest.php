@@ -2,8 +2,8 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\User;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mediawiki\DataModel\User

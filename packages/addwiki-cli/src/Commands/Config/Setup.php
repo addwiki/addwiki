@@ -34,13 +34,15 @@ class Setup extends Command {
 		while ( $questionHelper->ask( $input, $output, $addWikiQuestion ) ) {
 			$question = new Question( 'Please enter a code for this wiki: ' );
 			$code = $questionHelper->ask( $input, $output, $question );
-			if ( $this->appConfig->has( 'wikis.' . $code ) ) {
+			$appConfigHasWiki = $this->appConfig->has( 'wikis.' . $code );
+			if ( $appConfigHasWiki ) {
 				$question =
 					new ConfirmationQuestion(
 						'A wiki with that code already exists, would you like to overwrite it? ',
 						false
 					);
-				if ( !$questionHelper->ask( $input, $output, $question ) ) {
+				$questionHelperAsk = $questionHelper->ask( $input, $output, $question );
+				if ( !$questionHelperAsk ) {
 					continue 1;
 				}
 			}
@@ -50,7 +52,8 @@ class Setup extends Command {
 
 			$output->writeln( "$code, $url" );
 			$question = new ConfirmationQuestion( 'Do these details look correct? ', false );
-			if ( $questionHelper->ask( $input, $output, $question ) ) {
+			$questionHelperAsk = $questionHelper->ask( $input, $output, $question );
+			if ( $questionHelperAsk ) {
 				$this->appConfig->set(
 					'wikis.' . $code,
 					[ 'url' => $url ]
@@ -71,7 +74,8 @@ class Setup extends Command {
 			$password = $questionHelper->ask( $input, $output, $question );
 
 			$question = new ConfirmationQuestion( 'Do you want to save this user? ', false );
-			if ( $questionHelper->ask( $input, $output, $question ) ) {
+			$questionHelperAsk = $questionHelper->ask( $input, $output, $question );
+			if ( $questionHelperAsk ) {
 				$this->appConfig->set(
 					'users.' . $username,
 					[ 'username' => $username, 'password' => $password ]

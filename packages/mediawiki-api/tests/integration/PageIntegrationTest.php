@@ -2,11 +2,11 @@
 
 namespace Mediawiki\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Title;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

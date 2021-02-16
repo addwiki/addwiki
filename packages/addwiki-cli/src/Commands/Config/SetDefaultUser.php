@@ -31,8 +31,9 @@ class SetDefaultUser extends Command {
 
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
+		$appConfigHasUser = $this->appConfig->has( 'users.' . $code );
 
-		if ( !$this->appConfig->has( 'users.' . $code ) ) {
+		if ( !$appConfigHasUser ) {
 			$output->writeln( "No user with the code $code found" );
 			return -1;
 		}

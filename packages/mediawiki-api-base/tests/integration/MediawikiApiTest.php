@@ -2,10 +2,10 @@
 
 namespace Mediawiki\Api\Test\Integration;
 
-use PHPUnit\Framework\TestCase;
-use Mediawiki\Api\RsdException;
 use Mediawiki\Api\MediawikiApi;
+use Mediawiki\Api\RsdException;
 use Mediawiki\Api\SimpleRequest;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore

@@ -2,8 +2,8 @@
 
 namespace Wikibase\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\DataModel\Revision;
+use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\ItemContent;

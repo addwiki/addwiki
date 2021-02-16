@@ -2,8 +2,8 @@
 
 namespace Mediawiki\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Mediawiki\Api\MediawikiFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Mediawiki\Api\MediawikiFactory

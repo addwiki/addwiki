@@ -2,8 +2,8 @@
 
 namespace Wikibase\Api\Test;
 
-use PHPUnit\Framework\TestCase;
 use Deserializers\Deserializer;
+use PHPUnit\Framework\TestCase;
 use Serializers\Serializer;
 use Wikibase\Api\WikibaseFactory;
 

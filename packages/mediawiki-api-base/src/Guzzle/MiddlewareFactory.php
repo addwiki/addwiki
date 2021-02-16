@@ -108,10 +108,11 @@ class MiddlewareFactory implements LoggerAwareInterface {
 				}
 
 				foreach ( $response->getHeader( 'Mediawiki-Api-Error' ) as $mediawikiApiErrorHeader ) {
+					$RetryAfterResponseHeaderLine = $response->getHeaderLine( 'Retry-After' );
 					if (
 						// Retry if the API explicitly tells us to:
 						// https://www.mediawiki.org/wiki/Manual:Maxlag_parameter
-						$response->getHeaderLine( 'Retry-After' )
+						$RetryAfterResponseHeaderLine
 						||
 						// Retry if we have a response with an API error worth retrying
 						in_array(
