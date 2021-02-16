@@ -67,6 +67,9 @@ class DateReferencer implements Referencer {
 			$statements = $item->getStatements()->getByPropertyId( new PropertyId( $propertyIdString ) );
 
 			foreach ( $timeValues as $timeValue ) {
+				/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
+				/** @psalm-suppress UndefinedDocblockClass */
+				/** @psalm-suppress UndefinedClass */
 				foreach ( $statements->getIterator() as &$statement ) {
 
 					$mainSnak = $statement->getMainSnak();
