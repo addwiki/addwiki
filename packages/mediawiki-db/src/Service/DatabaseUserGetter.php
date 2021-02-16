@@ -30,7 +30,7 @@ class DatabaseUserGetter {
 	 */
 	public function getUser( $userName ) {
 		$users = $this->getUsers( [ $userName ] );
-		return $users !== [] ? $user[0] : null;
+		return $users !== [] ? $users[0] : null;
 	}
 
 	/**

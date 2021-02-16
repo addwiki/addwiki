@@ -46,7 +46,7 @@ class EditInfo {
 	protected $bot = false;
 
 		/**
-		 * @var int
+		 * @var int|null
 		 */
 	protected $maxlag;
 
@@ -59,7 +59,7 @@ class EditInfo {
 	 * @param string $summary
 	 * @param bool $minor
 	 * @param bool $bot
-	 * @param int $maxlag
+	 * @param int|null $maxlag
 	 *
 	 * @throws InvalidArgumentException
 	 */

@@ -104,7 +104,11 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 			}
 			throw new RsdException( sprintf( 'Unable to find RSD URL in page: %s %s', $url, $libXmlErrorStr ) );
 		}
-		$rsdUrl = $link->item( 0 )->attributes->getnamedItem( 'href' )->nodeValue;
+		if(is_null($link->item( 0 )->attributes)){
+			throw new RsdException( 'Unexpected RSD fetch error' );
+		}
+		/** @psalm-suppress NullReference */
+		$rsdUrl = $link->item( 0 )->attributes->getNamedItem( 'href' )->nodeValue;
 
 		// Then get the RSD XML, and return the API link.
 		$rsdXml = new SimpleXMLElement( $tempClient->get( $rsdUrl )->getBody() );

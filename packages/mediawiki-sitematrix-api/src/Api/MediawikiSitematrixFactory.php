@@ -3,6 +3,7 @@
 namespace Mediawiki\Sitematrix\Api;
 
 use Mediawiki\Api\MediawikiApi;
+use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
 
 /**
  * @access public
