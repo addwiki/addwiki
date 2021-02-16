@@ -77,7 +77,7 @@ class RevisionSaver {
 			$params['id'] = $entityId->getSerialization();
 
 			// If we are provided an empty entity, then set the clear flag
-			if ( $entity->isEmpty() ){
+			if ( $entity->isEmpty() ) {
 				$params['clear'] = true;
 			}
 
