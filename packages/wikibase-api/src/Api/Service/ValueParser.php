@@ -2,12 +2,12 @@
 
 namespace Wikibase\Api\Service;
 
+use DataValues\DataValue;
 use Deserializers\Deserializer;
+use GuzzleHttp\Promise\PromiseInterface;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use RuntimeException;
-use DataValues\DataValue;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * @access private
