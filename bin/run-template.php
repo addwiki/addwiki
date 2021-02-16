@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-
-
-
-
-
 /**
  * Run a template command.
  * Examples:
