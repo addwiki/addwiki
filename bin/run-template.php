@@ -54,7 +54,7 @@ function runAndStreamCommand( $cmd, $cwd ) {
         2 => array("pipe", "w")    // stderr is a pipe that the child will write to
      );
      flush();
-     $process = proc_open($cmd, $descriptorspec, $pipes, $cwd, array());
+     $process = proc_open($cmd, $descriptorspec, $pipes, $cwd);
      if (is_resource($process)) {
          while ( ( $c = fgetc($pipes[1]) ) !== false ) {
              echo $c;
