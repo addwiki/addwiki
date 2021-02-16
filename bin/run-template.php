@@ -61,5 +61,6 @@ function runAndStreamCommand( $cmd, $cwd ) {
              flush();
          }
      }
+     flush();
      return proc_get_status($process)['exitcode'];
 }
