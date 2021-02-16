@@ -3,20 +3,20 @@
 namespace Wikimedia\Api;
 
 use DataValues\BooleanValue;
-use DataValues\NumberValue;
-use DataValues\StringValue;
-use DataValues\UnknownValue;
+use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Geo\Values\GlobeCoordinateValue;
 use DataValues\MonolingualTextValue;
 use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
-use DataValues\TimeValue;
-use Wikibase\DataModel\Entity\EntityIdValue;
-use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
+use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\MediawikiFactory;
 use Wikibase\Api\WikibaseFactory;
+use Wikibase\DataModel\Entity\EntityIdValue;
 
 /**
  * @author Addshore
@@ -54,7 +54,7 @@ class WikimediaFactory {
 	 * @return WikibaseFactory
 	 */
 	public function newWikibaseFactoryForDomain( $domain ) {
-		if (true == strstr( $domain, 'wikidata.org' )) {
+		if ( strstr( $domain, 'wikidata.org' ) == true ) {
 			$dvDeserializer = new DataValueDeserializer(
 					[
 						// data-values/data-values

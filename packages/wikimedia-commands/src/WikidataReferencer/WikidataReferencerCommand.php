@@ -2,21 +2,21 @@
 
 namespace Addwiki\Commands\Wikimedia\WikidataReferencer;
 
-use DataValues\BooleanValue;
-use DataValues\NumberValue;
-use DataValues\StringValue;
-use DataValues\UnknownValue;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\QuantityValue;
-use DataValues\TimeValue;
 use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\Referencer;
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
+use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
+use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;

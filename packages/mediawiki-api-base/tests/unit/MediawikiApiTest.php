@@ -2,14 +2,14 @@
 
 namespace Mediawiki\Api\Test\Unit;
 
-use InvalidArgumentException;
 use GuzzleHttp\ClientInterface;
-use Psr\Http\Message\ResponseInterface;
+use InvalidArgumentException;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Api\UsageException;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use stdClass;

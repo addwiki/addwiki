@@ -2,11 +2,11 @@
 
 namespace Wikibase\Api\Test;
 
+use Deserializers\Deserializer;
+use Mediawiki\Api\MediawikiApi;
+use PHPUnit\Framework\TestCase;
+use Serializers\Serializer;
 use Wikibase\Api\Service\AliasGroupSetter;
-use Wikibase\Api\Service\StatementCreator;
-use Wikibase\Api\Service\StatementGetter;
-use Wikibase\Api\Service\StatementRemover;
-use Wikibase\Api\Service\StatementSetter;
 use Wikibase\Api\Service\DescriptionSetter;
 use Wikibase\Api\Service\ItemMerger;
 use Wikibase\Api\Service\LabelSetter;
@@ -16,12 +16,12 @@ use Wikibase\Api\Service\RevisionGetter;
 use Wikibase\Api\Service\RevisionSaver;
 use Wikibase\Api\Service\SiteLinkLinker;
 use Wikibase\Api\Service\SiteLinkSetter;
+use Wikibase\Api\Service\StatementCreator;
+use Wikibase\Api\Service\StatementGetter;
+use Wikibase\Api\Service\StatementRemover;
+use Wikibase\Api\Service\StatementSetter;
 use Wikibase\Api\Service\ValueFormatter;
 use Wikibase\Api\Service\ValueParser;
-use Mediawiki\Api\MediawikiApi;
-use Deserializers\Deserializer;
-use PHPUnit\Framework\TestCase;
-use Serializers\Serializer;
 use Wikibase\Api\WikibaseFactory;
 
 /**

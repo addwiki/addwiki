@@ -50,7 +50,7 @@ class Setup extends Command {
 			$question = new Question( 'Please enter a wiki api endpoint: ' );
 			$url = $questionHelper->ask( $input, $output, $question );
 
-			$output->writeln( sprintf('%s, %s', $code, $url) );
+			$output->writeln( sprintf( '%s, %s', $code, $url ) );
 			$question = new ConfirmationQuestion( 'Do these details look correct? ', false );
 			$questionHelperAsk = $questionHelper->ask( $input, $output, $question );
 			if ( $questionHelperAsk ) {

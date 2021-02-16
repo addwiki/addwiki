@@ -39,7 +39,7 @@ class MediawikiApiTest extends TestCase {
 	public function testNewFromPageWithDuplicateId() {
 		$testPageName = __METHOD__;
 		$testEnv = TestEnvironment::newInstance();
-		$wikiPageUrl = str_replace( 'api.php', sprintf('index.php?title=%s', $testPageName), $testEnv->getApiUrl() );
+		$wikiPageUrl = str_replace( 'api.php', sprintf( 'index.php?title=%s', $testPageName ), $testEnv->getApiUrl() );
 
 		// Test with no duplicate IDs.
 		$testEnv->savePage( $testPageName, '<p id="unique-id"></p>' );

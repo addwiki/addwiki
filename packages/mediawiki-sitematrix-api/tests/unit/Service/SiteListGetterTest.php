@@ -2,11 +2,11 @@
 
 namespace Mediawiki\Sitematrix\Api\Test;
 
-use Mediawiki\Sitematrix\DataModel\SiteList;
-use Mediawiki\Sitematrix\DataModel\Site;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
+use Mediawiki\Sitematrix\DataModel\Site;
+use Mediawiki\Sitematrix\DataModel\SiteList;
 use PHPUnit\Framework\TestCase;
 
 /**

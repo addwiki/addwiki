@@ -2,9 +2,9 @@
 
 namespace Mediawiki\Api\Test\Service;
 
-use Mediawiki\Api\SimpleRequest;
 use Mediawiki\Api\MediawikiApi;
 use Mediawiki\Api\Service\PagePurger;
+use Mediawiki\Api\SimpleRequest;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Pages;

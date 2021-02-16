@@ -3,16 +3,16 @@
 namespace Wikibase\Api\Test;
 
 use DataValues\BooleanValue;
-use DataValues\NumberValue;
-use DataValues\StringValue;
-use DataValues\UnknownValue;
+use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Geo\Values\GlobeCoordinateValue;
 use DataValues\MonolingualTextValue;
 use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
-use DataValues\TimeValue;
-use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
+use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use Mediawiki\Api\MediawikiApi;
 use Wikibase\Api\WikibaseFactory;
 
@@ -35,7 +35,7 @@ class TestEnvironment {
 		}
 
 		if ( substr( $apiUrl, -7 ) !== 'api.php' ) {
-			$msg = sprintf('URL incorrect: %s', $apiUrl)
+			$msg = sprintf( 'URL incorrect: %s', $apiUrl )
 				. " (Set the ADDWIKI_MW_API environment variable correctly)";
 			throw new Exception( $msg );
 		}

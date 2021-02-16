@@ -2,20 +2,19 @@
 
 namespace Addwiki\Commands\Wikimedia;
 
+use ArrayAccess;
+use Asparagus\QueryBuilder;
 use DataValues\BooleanValue;
-use DataValues\NumberValue;
-use DataValues\StringValue;
-use DataValues\UnknownValue;
+use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Geo\Values\GlobeCoordinateValue;
 use DataValues\MonolingualTextValue;
 use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
-use Wikibase\DataModel\Entity\EntityIdValue;
-use ArrayAccess;
-use Asparagus\QueryBuilder;
-use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
 use DataValues\TimeValue;
+use DataValues\UnknownValue;
 use GuzzleHttp\Client;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\MediawikiApi;
@@ -27,6 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\Api\WikibaseFactory;
+use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;

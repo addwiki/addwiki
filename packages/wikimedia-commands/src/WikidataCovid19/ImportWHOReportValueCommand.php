@@ -2,21 +2,21 @@
 
 namespace Addwiki\Commands\Wikimedia\WikidataCovid19;
 
-use DataValues\BooleanValue;
-use DataValues\NumberValue;
-use DataValues\StringValue;
-use DataValues\UnknownValue;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\EffectiveUrlMiddleware;
 use Addwiki\Topics\Covid19\WHOReports;
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnboundedQuantityValue;
+use DataValues\UnknownValue;
 use DateTime;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\Guzzle\ClientFactory;
@@ -295,7 +295,7 @@ class ImportWHOReportValueCommand extends Command {
 		$statement->getReferences()->addNewReference( [ $referenceSnak ] );
 		$this->wikibaseFactory->newStatementSetter()->set( $statement );
 
-		echo sprintf('Created statement %s', $guid) . PHP_EOL;
+		echo sprintf( 'Created statement %s', $guid ) . PHP_EOL;
 
 		return 0;
 	}

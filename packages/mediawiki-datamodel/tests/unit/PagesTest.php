@@ -2,11 +2,11 @@
 
 namespace Mediawiki\DataModel\Test;
 
-use Mediawiki\DataModel\Title;
-use Mediawiki\DataModel\Revisions;
 use Mediawiki\DataModel\Page;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Pages;
+use Mediawiki\DataModel\Revisions;
+use Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
