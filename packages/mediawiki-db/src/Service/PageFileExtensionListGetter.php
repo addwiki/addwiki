@@ -35,7 +35,7 @@ class PageFileExtensionListGetter {
 
 		$pageids = [];
 		foreach ( $rows as $row ) {
-			$pageids[] = intval( $row['page_id'] );
+			$pageids[] = (int)$row['page_id'];
 		}
 
 		return $pageids;

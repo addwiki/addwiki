@@ -97,7 +97,8 @@
         "mediawiki/mediawiki-codesniffer": "~35.0",
         "monolog/monolog": "^1.23",
         "phpunit/phpunit": "~9",
-        "symplify/monorepo-builder": "^9.2"
+        "symplify/monorepo-builder": "^9.2",
+        "rector/rector": "^0.9.29"
     },
     "repositories": [
         {

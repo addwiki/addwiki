@@ -155,12 +155,11 @@ class WikidataReferenceDateFixer extends Command {
 				foreach ( $statement->getReferences() as $reference ) {
 					/** @var Reference $reference */
 					foreach ( $reference->getSnaks()->getIterator() as $snak ) {
-						if ( $snak instanceof PropertyValueSnak ) {
-							if ( $snak->getPropertyId()->getSerialization() == 'P813' ) {
-								/** @var TimeValue $dataValue */
-								$dataValue = $snak->getDataValue();
-								// We can assume ALL retrieval dates should be Gregorian!
-								if ( $dataValue->getCalendarModel() === TimeValue::CALENDAR_JULIAN ) {
+						if ( $snak instanceof PropertyValueSnak && $snak->getPropertyId()->getSerialization() == 'P813' ) {
+							/** @var TimeValue $dataValue */
+							$dataValue = $snak->getDataValue();
+							// We can assume ALL retrieval dates should be Gregorian!
+							if ( $dataValue->getCalendarModel() === TimeValue::CALENDAR_JULIAN ) {
 									$oldRefHash = $reference->getHash();
 									$statementGuid = $statement->getGuid();
 
@@ -204,7 +203,6 @@ class WikidataReferenceDateFixer extends Command {
 										$output->write( $e->getMessage() );
 									}
 
-								}
 							}
 						}
 					}
@@ -248,7 +246,7 @@ class WikidataReferenceDateFixer extends Command {
 			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
-			$year = $year - 1;
+			$year -= 1;
 		}
 
 		// Otherwise give up guessing

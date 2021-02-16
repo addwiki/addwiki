@@ -187,7 +187,9 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		);
 
 		return $promise->then( function ( ResponseInterface $response ) {
-			return call_user_func( [ $this, 'decodeResponse' ], $response );
+			return call_user_func( function ( ResponseInterface $response ) {
+				return $this->decodeResponse( $response );
+			}, $response );
 		} );
 	}
 
@@ -208,7 +210,9 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		);
 
 		return $promise->then( function ( ResponseInterface $response ) {
-			return call_user_func( [ $this, 'decodeResponse' ], $response );
+			return call_user_func( function ( ResponseInterface $response ) {
+				return $this->decodeResponse( $response );
+			}, $response );
 		} );
 	}
 
@@ -524,7 +528,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return string
 	 */
 	public function getVersion() {
-		if ( !isset( $this->version ) ) {
+		if ( !( $this->version !== null ) ) {
 			$result = $this->getRequest( new SimpleRequest( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',

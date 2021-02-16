@@ -12,6 +12,14 @@ use Mediawiki\Api\SimpleRequest;
  */
 class TestEnvironment {
 
+	/**
+	 * @var string
+	 */
+	public $apiUrl;
+	/**
+	 * @var string
+	 */
+	public $pageUrl;
 	/** @var \Mediawiki\Api\MediawikiFactory */
 	private $factory;
 

@@ -82,9 +82,9 @@ class ApiUser {
 	 */
 	public function equals( $other ) {
 		return $other instanceof self
-			&& $this->username == $other->getUsername()
-			&& $this->password == $other->getPassword()
-			&& $this->domain == $other->getDomain();
+			&& $this->username === $other->getUsername()
+			&& $this->password === $other->getPassword()
+			&& $this->domain === $other->getDomain();
 	}
 
 }

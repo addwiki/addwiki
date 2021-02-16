@@ -7,14 +7,13 @@ use Mediawiki\DataModel\Log;
 use Mediawiki\DataModel\LogList;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Title;
-use MediaWiki\Services\LogListGetter;
 use PDO;
 
 /**
  * @author Addshore
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class DatabaseLogListGetter implements LogListGetter {
+class DatabaseLogListGetter {
 
 	/**
 	 * @var FluentPDO
@@ -57,14 +56,14 @@ class DatabaseLogListGetter implements LogListGetter {
 
 	private function getLogFromRow( array $row ) {
 		return new Log(
-			intval( $row['log_id'] ),
+			(int)$row['log_id'],
 			$row['log_type'],
 			$row['log_action'],
 			$row['log_timestamp'],
 			$row['log_user'],
 			new PageIdentifier(
-				new Title( $row['log_title'], intval( $row['log_namespace'] ) ),
-				intval( $row['log_page'] )
+				new Title( $row['log_title'], (int)$row['log_namespace'] ),
+				(int)$row['log_page']
 			),
 			$row['log_comment'],
 			$row['log_params']

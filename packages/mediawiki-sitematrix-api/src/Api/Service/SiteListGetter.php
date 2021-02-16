@@ -49,9 +49,7 @@ class SiteListGetter {
 			}
 		}
 
-		$siteList = new SiteList( $siteListArray );
-
-		return $siteList;
+		return new SiteList( $siteListArray );
 	}
 
 }

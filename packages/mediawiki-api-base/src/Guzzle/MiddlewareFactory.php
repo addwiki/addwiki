@@ -67,7 +67,7 @@ class MiddlewareFactory implements LoggerAwareInterface {
 					return 1000 * $retryAfter;
 				}
 
-				if ( $retryAfter ) {
+				if ( $retryAfter !== '' ) {
 					$seconds = strtotime( $retryAfter ) - time();
 					return 1000 * max( 1, $seconds );
 				}
@@ -99,7 +99,7 @@ class MiddlewareFactory implements LoggerAwareInterface {
 				$shouldRetry = true;
 			}
 
-			if ( $response ) {
+			if ( $response !== null ) {
 				$data = json_decode( $response->getBody(), true );
 
 				// Retry on server errors
@@ -145,7 +145,7 @@ class MiddlewareFactory implements LoggerAwareInterface {
 						$request->getMethod(),
 						$request->getUri(),
 						$retries + 1,
-						$response ? 'status code: ' . $response->getStatusCode() :
+						$response !== null ? 'status code: ' . $response->getStatusCode() :
 							$exception->getMessage()
 					)
 				);

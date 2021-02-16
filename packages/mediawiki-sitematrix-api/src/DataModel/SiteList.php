@@ -36,7 +36,7 @@ class SiteList {
 	 */
 	public function getSiteFromDbName( $dbName ) {
 		foreach ( $this->sites as $site ) {
-			if ( $site->getDbName() == $dbName ) {
+			if ( $site->getDbName() === $dbName ) {
 				return $site;
 			}
 		}
@@ -52,7 +52,7 @@ class SiteList {
 	public function getSiteListForCode( $code ) {
 		$siteList = [];
 		foreach ( $this->sites as $site ) {
-			if ( $site->getCode() == $code ) {
+			if ( $site->getCode() === $code ) {
 				$siteList[] = $site;
 			}
 		}

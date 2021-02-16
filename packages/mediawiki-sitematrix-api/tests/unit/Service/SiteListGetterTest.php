@@ -18,11 +18,9 @@ class SiteListGetterTest extends \PHPUnit\Framework\TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi
 	 */
 	private function getMockApi() {
-		$mock = $this->getMockBuilder( '\Mediawiki\Api\MediawikiApi' )
+		return $this->getMockBuilder( '\Mediawiki\Api\MediawikiApi' )
 			->disableOriginalConstructor()
 			->getMock();
-
-		return $mock;
 	}
 
 	public function testGetSiteList() {

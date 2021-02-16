@@ -29,7 +29,7 @@ class MultipartRequest extends FluentRequest {
 			if ( !is_array( $val ) ) {
 				throw new Exception( "Parameter '$key' must be an array." );
 			}
-			if ( !in_array( $key, array_keys( $this->getParams() ) ) ) {
+			if ( !array_key_exists( $key, $this->getParams() ) ) {
 				throw new Exception( "Parameter '$key' is not already set on this request." );
 			}
 		}

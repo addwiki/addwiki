@@ -4,13 +4,12 @@ namespace Mediawiki\Db\Service;
 
 use FluentPDO;
 use Mediawiki\DataModel\User;
-use MediaWiki\Services\UserGetter;
 use PDO;
 
 /**
  * @author Bene* < benestar.wikimedia@gmail.com >
  */
-class DatabaseUserGetter implements UserGetter {
+class DatabaseUserGetter {
 
 	/**
 	 * @var FluentPDO
@@ -31,7 +30,7 @@ class DatabaseUserGetter implements UserGetter {
 	 */
 	public function getUser( $userName ) {
 		$users = $this->getUsers( [ $userName ] );
-		return count( $users ) ? $user[0] : null;
+		return count( $users ) > 0 ? $user[0] : null;
 	}
 
 	/**

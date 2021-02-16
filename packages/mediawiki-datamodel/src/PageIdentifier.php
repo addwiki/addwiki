@@ -50,10 +50,7 @@ class PageIdentifier implements JsonSerializable {
 	 * @return bool
 	 */
 	public function identifiesPage() {
-		if ( $this->title === null && $this->id === null ) {
-			return false;
-		}
-		return true;
+		return !( $this->title === null && $this->id === null );
 	}
 
 	/**

@@ -191,11 +191,7 @@ class WikidataReferencerCommand extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$this->initServices();
 
-		if ( is_string( $input->getOption( 'tmpDir' ) ) ) {
-			$this->tmpDir = $input->getOption( 'tmpDir' );
-		} else {
-			$this->tmpDir = sys_get_temp_dir();
-		}
+		$this->tmpDir = is_string( $input->getOption( 'tmpDir' ) ) ? $input->getOption( 'tmpDir' ) : sys_get_temp_dir();
 		if ( !is_writable( $this->tmpDir ) ) {
 			throw new RuntimeException( 'Temp dir: ' . $this->tmpDir . ' is not writable' );
 		}

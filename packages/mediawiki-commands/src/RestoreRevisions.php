@@ -106,7 +106,7 @@ class RestoreRevisions extends Command {
 		$saver = $mwFactory->newRevisionSaver();
 
 		foreach ( $revids as $revid ) {
-			$revid = intval( $revid );
+			$revid = (int)$revid;
 
 			$page = $getter->getFromRevisionId( $revid );
 			$page = $getter->getFromPage( $page );
