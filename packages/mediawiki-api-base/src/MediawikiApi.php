@@ -528,7 +528,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return string
 	 */
 	public function getVersion() {
-		if ( !( $this->version !== null ) ) {
+		if ( $this->version === null ) {
 			$result = $this->getRequest( new SimpleRequest( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',
