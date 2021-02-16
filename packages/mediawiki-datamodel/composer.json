@@ -21,7 +21,7 @@
             "@phpunit"
         ]
     },
-    "require" : {
+    "require": {
         "php": ">=7.2"
     },
     "require-dev": {
