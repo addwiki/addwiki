@@ -160,6 +160,9 @@ class WikidataReferenceDateFixer extends Command {
 			$output->write( $itemId->getSerialization() . ' ' );
 			$item = $itemLookup->getItemForId( $itemId );
 
+			/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
+			/** @psalm-suppress UndefinedDocblockClass */
+			/** @psalm-suppress UndefinedClass */
 			foreach ( $item->getStatements()->getIterator() as $statement ) {
 				foreach ( $statement->getReferences() as $reference ) {
 					/** @var Reference $reference */

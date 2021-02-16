@@ -116,6 +116,9 @@ class DataModelUtils {
 	public static function getSitelinksWiteSiteIdSuffix( SiteLinkList $siteLinkList, $suffix ) {
 		$filteredSiteLinkList = new SiteLinkList();
 
+		/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
+		/** @psalm-suppress UndefinedDocblockClass */
+		/** @psalm-suppress UndefinedClass */
 		foreach ( $siteLinkList->getIterator() as $siteLink ) {
 			$siteId = $siteLink->getSiteId();
 			if ( substr( $siteId, -strlen( $suffix ) ) === $suffix ) {

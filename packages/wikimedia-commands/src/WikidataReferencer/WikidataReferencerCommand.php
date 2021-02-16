@@ -326,6 +326,9 @@ class WikidataReferencerCommand extends Command {
 			$parseProgressBar->display();
 			/** @var PromiseInterface[] $parsePromises */
 			$parsePromises = [];
+			/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
+			/** @psalm-suppress UndefinedDocblockClass */
+			/** @psalm-suppress UndefinedClass */
 			foreach ( $siteLinkList->getIterator() as $siteLink ) {
 				$siteId = $siteLink->getSiteId();
 				$pageName = $item->getSiteLinkList()->getBySiteId( $siteId )->getPageName();

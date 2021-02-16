@@ -179,6 +179,9 @@ class WikibaseEntityStatementRemover extends Command {
 		foreach ( $itemIds as $itemId ) {
 			$item = $itemLookup->getItemForId( $itemId );
 
+			/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
+			/** @psalm-suppress UndefinedDocblockClass */
+			/** @psalm-suppress UndefinedClass */
 			foreach ( $item->getStatements()->getIterator() as $statement ) {
 				if ( $statement->getPropertyId()->equals( $property ) ) {
 

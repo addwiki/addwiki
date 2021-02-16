@@ -1,5 +1,10 @@
 # Release Notes
 
+## Unreleased
+
+- Fix issue in `DatabaseUserGetter::getUser`
+- Fix class usage issues in `MediawikiDbFactory`
+
 ## Version 2.8 (16 February 2021)
 
 - Installable with 7.3+ (including PHP8)

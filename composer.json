@@ -99,7 +99,8 @@
         "phpunit/phpunit": "~9",
         "symplify/monorepo-builder": "^9.2",
         "rector/rector": "^0.9.29",
-        "symplify/easy-ci": "^9.1"
+        "symplify/easy-ci": "^9.1",
+        "vimeo/psalm": "^4.6"
     },
     "repositories": [
         {
@@ -122,12 +123,14 @@
         "test": [
             "@lint",
             "@phpcs",
+            "@psalm",
             "@phpunit"
         ],
         "merge": "vendor/bin/monorepo-builder merge --ansi",
         "propagate": "vendor/bin/monorepo-builder propagate --ansi",
         "rector": "vendor/bin/rector process --dry-run --ansi",
         "validate-monorepo": "vendor/bin/monorepo-builder validate --ansi",
+        "psalm": "vendor/bin/psalm",
         "aww": "aww",
         "awwd": "echo Please run ./vendor/bin/awwd directly"
     },

@@ -1,5 +1,9 @@
 # Release Notes
 
+## Unreleased
+
+- Fix class usage issue in `MediawikiSitematrixFactory`
+
 ## Version 2.8 (16 February 2021)
 
 - Installable with 7.3+ (including PHP8)

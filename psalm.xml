@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="packages-dev/topic-covid-19/src" />
+        <directory name="packages/addwiki-cli/src" />
+        <directory name="packages/mediawiki-api-base/src" />
+        <directory name="packages/mediawiki-api/src" />
+        <directory name="packages/mediawiki-commands/src" />
+        <directory name="packages/mediawiki-datamodel/src" />
+        <directory name="packages/mediawiki-db/src" />
+        <directory name="packages/mediawiki-flow-api/src" />
+        <directory name="packages/mediawiki-sitematrix-api/src" />
+        <directory name="packages/wikibase-api/src" />
+        <directory name="packages/wikibase-commands/src" />
+        <directory name="packages/wikimedia-commands/src" />
+        <directory name="packages/wikimedia/src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
