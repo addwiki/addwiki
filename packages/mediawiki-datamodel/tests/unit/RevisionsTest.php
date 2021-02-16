@@ -2,6 +2,7 @@
 
 namespace Mediawiki\DataModel\Test;
 
+use Mediawiki\DataModel\Content;
 use Mediawiki\DataModel\PageIdentifier;
 use Mediawiki\DataModel\Revision;
 use Mediawiki\DataModel\Revisions;
@@ -22,7 +23,7 @@ class RevisionsTest extends TestCase {
 	}
 
 	public function provideValidConstruction() {
-		$mockContent = $this->getMockBuilder( 'Mediawiki\DataModel\Content' )
+		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()
 			->getMock();
 

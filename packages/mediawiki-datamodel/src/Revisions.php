@@ -15,7 +15,7 @@ class Revisions {
 	/**
 	 * @var Revision[]
 	 */
-	private $revisions;
+	private $revisions = [];
 
 	/**
 	 * @param Revisions[] $revisions

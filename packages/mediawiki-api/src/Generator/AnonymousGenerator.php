@@ -19,7 +19,7 @@ class AnonymousGenerator implements ApiGenerator {
 	/**
 	 * @var array
 	 */
-	private $params;
+	private $params = [];
 
 	/**
 	 * @param string $name

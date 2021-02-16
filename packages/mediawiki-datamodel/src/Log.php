@@ -47,7 +47,7 @@ class Log implements JsonSerializable {
 	/**
 	 * @var array
 	 */
-	private $details;
+	private $details = [];
 
 	/**
 	 * @param int $id

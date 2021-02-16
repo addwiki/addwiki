@@ -6,11 +6,18 @@ use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
 use Addwiki\Commands\Wikimedia\WikidataReferencer\EffectiveUrlMiddleware;
 use Addwiki\Topics\Covid19\WHOReports;
 use ArrayAccess;
+use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
+use DataValues\Geo\Values\GlobeCoordinateValue;
+use DataValues\MonolingualTextValue;
+use DataValues\MultilingualTextValue;
+use DataValues\NumberValue;
 use DataValues\QuantityValue;
 use DataValues\Serializers\DataValueSerializer;
+use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnboundedQuantityValue;
+use DataValues\UnknownValue;
 use DateTime;
 use Mediawiki\Api\ApiUser;
 use Mediawiki\Api\Guzzle\ClientFactory;
@@ -70,16 +77,16 @@ class ImportWHOReportValueCommand extends Command {
 			$this->wikibaseApi,
 			new DataValueDeserializer(
 				[
-					'boolean' => 'DataValues\BooleanValue',
-					'number' => 'DataValues\NumberValue',
-					'string' => 'DataValues\StringValue',
-					'unknown' => 'DataValues\UnknownValue',
-					'globecoordinate' => 'DataValues\Geo\Values\GlobeCoordinateValue',
-					'monolingualtext' => 'DataValues\MonolingualTextValue',
-					'multilingualtext' => 'DataValues\MultilingualTextValue',
-					'quantity' => 'DataValues\QuantityValue',
-					'time' => 'DataValues\TimeValue',
-					'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					'globecoordinate' => GlobeCoordinateValue::class,
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					'quantity' => \DataValues\QuantityValue::class,
+					'time' => TimeValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
@@ -174,7 +181,7 @@ class ImportWHOReportValueCommand extends Command {
 			die( 'No way to get a report given...' );
 		}
 		if ( $report->getId() < 46 ) {
-			throw new RuntimeException( 'Doesn\'t work for reports before 46... (yet)' );
+			throw new RuntimeException( "Doesn't work for reports before 46... (yet)" );
 		}
 		$value = $report->getValue( $reporter, $valueType );
 		$date = $report->getDate();
@@ -296,7 +303,7 @@ class ImportWHOReportValueCommand extends Command {
 		$statement->getReferences()->addNewReference( [ $referenceSnak ] );
 		$this->wikibaseFactory->newStatementSetter()->set( $statement );
 
-		echo "Created statement $guid" . PHP_EOL;
+		echo sprintf( 'Created statement %s', $guid ) . PHP_EOL;
 
 		return 0;
 	}

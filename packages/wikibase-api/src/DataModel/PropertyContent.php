@@ -10,6 +10,9 @@ use Wikibase\DataModel\Entity\Property;
  */
 class PropertyContent extends Content {
 
+	/**
+	 * @var string
+	 */
 	public const MODEL = 'wikibase-property';
 
 	/**

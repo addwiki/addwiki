@@ -100,9 +100,9 @@ class MultiTextReferencer implements Referencer {
 						);
 						// NOTE: keep our in memory item copy up to date (yay such reference passing)
 						$statement->addNewReference( $newReference->getSnaks() );
-						$referenceCounter++;
+						++$referenceCounter;
 					}
-					catch ( UsageException $e ) {
+					catch ( UsageException $usageException ) {
 						// Ignore
 					}
 				}

@@ -10,6 +10,9 @@ use Wikibase\DataModel\Entity\Item;
  */
 class ItemContent extends Content {
 
+	/**
+	 * @var string
+	 */
 	public const MODEL = 'wikibase-item';
 
 	/**

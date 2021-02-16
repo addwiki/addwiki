@@ -38,7 +38,7 @@ class NamespaceInfo {
 	/**
 	 * @var array
 	 */
-	private $aliases;
+	private $aliases = [];
 
 	/**
 	 * NamespaceInfo constructor.

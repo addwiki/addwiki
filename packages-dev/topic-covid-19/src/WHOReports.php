@@ -59,7 +59,7 @@ class WHOReports {
 		// TODO make this match reports prior to ID 24...
 		$html = file_get_contents( $this->reportHome );
 		preg_match_all(
-			'/\/docs\/default-source\/coronaviruse\/situation-reports\/((\d\d\d\d\d\d\d\d)-sitrep-(\d+)-covid-19\.pdf)/',
+			'#\/docs\/default-source\/coronaviruse\/situation-reports\/((\d\d\d\d\d\d\d\d)-sitrep-(\d+)-covid-19\.pdf)#',
 			$html,
 			$matches
 		);

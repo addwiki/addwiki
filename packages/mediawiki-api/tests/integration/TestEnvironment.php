@@ -52,7 +52,7 @@ class TestEnvironment {
 		}
 
 		if ( substr( $apiUrl, -7 ) !== 'api.php' ) {
-			$msg = "URL incorrect: $apiUrl"
+			$msg = sprintf( 'URL incorrect: %s', $apiUrl )
 				. " (Set the ADDWIKI_MW_API environment variable correctly)";
 			throw new Exception( $msg );
 		}
@@ -94,7 +94,7 @@ class TestEnvironment {
 		$mainPageUrl = $out['query']['general']['base'];
 		$i = 0;
 		while ( $this->getJobQueueLength( $this->getApi() ) > 0 ) {
-			$i++;
+			++$i;
 			$cf = new ClientFactory();
 			$cf->getClient()->get( $mainPageUrl );
 			if ( $i == 10 ) {
