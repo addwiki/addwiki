@@ -123,7 +123,7 @@
         "test": [
             "@lint",
             "@phpcs",
-            "@psalm"
+            "@psalm",
             "@phpunit"
         ],
         "merge": "vendor/bin/monorepo-builder merge --ansi",
