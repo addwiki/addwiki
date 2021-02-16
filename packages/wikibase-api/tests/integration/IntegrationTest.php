@@ -38,7 +38,7 @@ class IntegrationTest extends TestCase {
 
 	public function testCreateItem() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$newItem = $factory->newRevisionSaver()->save( new Revision( new ItemContent( self::$localItem ) ) );
 		self::$itemId = $newItem->getId(); // Save our ID for later use
 		self::$localItem->setId( self::$itemId );
@@ -50,7 +50,6 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testGetNewlyCreatedItem() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
 		// Make sure the RevisionGetter will also return the same Item as expected
 		$gotItem = $factory->newRevisionGetter()->getFromId( self::$itemId )->getContent()->getData();
 		$this->assertTrue( self::$localItem->equals( $gotItem ) );
@@ -61,7 +60,7 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testSetLabel() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$labelDe = new Term( 'de', 'Foo' . microtime() );
 		$r = $factory->newLabelSetter()->set( $labelDe, self::$itemId );
 		$this->assertTrue( $r );
@@ -73,7 +72,7 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testSetDescription() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$descDe = new Term( 'de', 'FooBarDesc' . microtime() );
 		$r = $factory->newDescriptionSetter()->set( $descDe, self::$itemId );
 		$this->assertTrue( $r );
@@ -85,7 +84,7 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testSetAliases() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$aliasFr = new AliasGroup( 'fr', [ 'aa', 'bb' ] );
 		$r = $factory->newAliasGroupSetter()->set( $aliasFr, self::$itemId );
 		$this->assertTrue( $r );
@@ -97,7 +96,7 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testSetSitelink() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$enwikiLondon = new SiteLink( 'mywiki', 'Main Page' );
 		// Expect an exception as we didn't actually setup the test site fully
 		$this->expectExceptionMessage( 'The external client site "mywiki" did not provide page information for page "Main Page"' );
@@ -110,7 +109,7 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testLinkSitelinks() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		$enwikiLondon = new SiteLink( 'mywiki', 'Main Page' );
 		$dewikiBerlin = new Sitelink( 'dewiki', 'Main Page' );
 		// Expect an exception as we didn't actually setup dewiki as a test site
@@ -123,8 +122,9 @@ class IntegrationTest extends TestCase {
 	 */
 	public function testEmptyItem() {
 		$factory = TestEnvironment::newDefault()->getFactory();
-		$factory = $factory;
+
 		self::$localItem = new Item();
+
 		self::$localItem->setId( self::$itemId );
 
 		$newItem = $factory->newRevisionSaver()->save( new Revision( new ItemContent( self::$localItem ) ) );
