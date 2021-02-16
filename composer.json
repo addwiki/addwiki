@@ -123,6 +123,10 @@
             "@phpcs",
             "@phpunit"
         ],
+        "merge": "vendor/bin/monorepo-builder merge --ansi",
+        "propagate": "vendor/bin/monorepo-builder propagate --ansi",
+        "rector": "vendor/bin/rector process --dry-run --ansi",
+        "validate-monorepo": "vendor/bin/monorepo-builder validate --ansi",
         "aww": "aww",
         "awwd": "echo Please run ./vendor/bin/awwd directly"
     },

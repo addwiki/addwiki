@@ -43,7 +43,7 @@ This provides convenience scripts for a few things...
 Merge all composer.json files together with:
 
 ```sh
-vendor/bin/monorepo-builder merge
+composer merge
 ```
 
 Bump the cross package dependency with:
@@ -55,7 +55,7 @@ vendor/bin/monorepo-builder bump-interdependency "<version here>"
 Validate your synchronization:
 
 ```sh
-vendor/bin/monorepo-builder validate
+composer validate-monorepo
 ```
 
 Keep your package aliases up to date (not yet working)
