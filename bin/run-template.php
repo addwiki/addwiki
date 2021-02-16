@@ -60,7 +60,7 @@ function runAndStreamCommand( $cmd, $cwd ) {
          }
      }
      flush();
-     return proc_get_status($process)['exitcode'];
+     return proc_close($process);
 }
 
 // Exit had to be moved below function definition due to https://github.com/rectorphp/rector/issues/5571
