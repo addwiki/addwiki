@@ -19,6 +19,7 @@
         ]
     },
     "require": {
+        "php": ">=7.3",
         "addwiki/mediawiki-datamodel": "^2.8",
         "lichtner/fluentpdo": "1.0.0"
     },

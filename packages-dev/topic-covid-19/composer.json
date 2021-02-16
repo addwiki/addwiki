@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": ">=7.3",
         "smalot/pdfparser": "0.14.0"
     },
     "autoload": {

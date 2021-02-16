@@ -10,6 +10,7 @@ env:
 
 jobs:
     provide_packages_json:
+        name: Collect packages names
         # see json juggling: https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#example-6
         runs-on: ubuntu-latest
         steps:

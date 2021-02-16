@@ -24,6 +24,7 @@
         }
     },
     "require": {
+        "php": ">=7.3",
         "benestar/asparagus": "~0.4",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
@@ -33,11 +34,10 @@
         "data-values/serialization": "~1.0",
         "data-values/time": "~1.0",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "~6.0|~7.0",
+        "guzzlehttp/guzzle": "~6.3|~7.0",
         "guzzlehttp/promises": "~1.0",
         "lichtner/fluentpdo": "1.0.0",
         "linclark/microdata-php": "~2.0",
-        "php": "^7.2",
         "psr/log": "~1.0",
         "serialization/serialization": "~3.2 || ~4.0",
         "smalot/pdfparser": "0.14.0",
@@ -98,7 +98,8 @@
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpunit/phpunit": "~9",
         "symplify/monorepo-builder": "^9.2",
-        "rector/rector": "^0.9.29"
+        "rector/rector": "^0.9.29",
+        "symplify/easy-ci": "^9.1"
     },
     "repositories": [
         {

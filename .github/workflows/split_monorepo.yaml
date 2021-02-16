@@ -13,6 +13,7 @@ on:
 
 jobs:
     provide_packages_json:
+        name: Collect packages names
         # see json juggling: https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#example-6
         # see https://stackoverflow.com/a/62953566/1348344
         runs-on: ubuntu-latest
@@ -39,6 +40,7 @@ jobs:
             matrix: ${{ steps.output_data.outputs.matrix }}
 
     split_monorepo:
+        name: Split tagged ${{ matrix.package }}
         needs: provide_packages_json
 
         runs-on: ubuntu-latest
@@ -46,6 +48,7 @@ jobs:
             fail-fast: false
             matrix:
                 package: ${{fromJson(needs.provide_packages_json.outputs.matrix)}}
+
 
         steps:
             -
