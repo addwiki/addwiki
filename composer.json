@@ -24,6 +24,7 @@
         }
     },
     "require": {
+        "php": ">=7.2",
         "benestar/asparagus": "~0.4",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
@@ -37,7 +38,6 @@
         "guzzlehttp/promises": "~1.0",
         "lichtner/fluentpdo": "1.0.0",
         "linclark/microdata-php": "~2.0",
-        "php": "^7.2",
         "psr/log": "~1.0",
         "serialization/serialization": "~3.2 || ~4.0",
         "smalot/pdfparser": "0.14.0",

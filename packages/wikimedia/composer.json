@@ -19,7 +19,7 @@
         ]
     },
     "require": {
-        "php": "^7.2",
+        "php": ">=7.2",
         "addwiki/mediawiki-api": "^2.8",
         "addwiki/mediawiki-api-base": "^2.8",
         "addwiki/wikibase-api": "^2.8",
