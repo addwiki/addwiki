@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+
 /**
  * Run a template command.
  * Examples:
@@ -16,7 +17,7 @@ $directory = implode( ' ', array_slice($argv,$splitKey+1,1) );
 
 if($directory === '') {
     $directory = 'all';
-} elseif(count($argv) !== $splitKey +2) {
+} elseif((is_array($argv) || $argv instanceof Countable ? count($argv) : 0) !== $splitKey +2) {
     die("You're using it wrong!");
 }
 

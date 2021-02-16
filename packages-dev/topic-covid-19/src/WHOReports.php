@@ -2,6 +2,8 @@
 
 namespace Addwiki\Topics\Covid19;
 
+use RuntimeException;
+
 class WHOReports {
 
 	private $reportHome = 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports';
@@ -14,7 +16,7 @@ class WHOReports {
 	public function getReportForId( $id ) {
 		$this->ensureIndexIsGenerated();
 		if ( !array_key_exists( $id, $this->idIndex ) ) {
-			throw new \RuntimeException( 'No such report' );
+			throw new RuntimeException( 'No such report' );
 		}
 
 		$pdfName = $this->idIndex[$id];
@@ -27,7 +29,7 @@ class WHOReports {
 	public function getReportForDate( $date ) {
 		$this->ensureIndexIsGenerated();
 		if ( !array_key_exists( $date, $this->dateIndex ) ) {
-			throw new \RuntimeException( 'No such report' );
+			throw new RuntimeException( 'No such report' );
 		}
 
 		$pdfName = $this->dateIndex[$date];
@@ -68,7 +70,7 @@ class WHOReports {
 		}
 
 		if ( empty( $this->idIndex ) || empty( $this->dateIndex ) || empty( $this->pdfIndex ) ) {
-			throw new \RuntimeException( 'Failed to index WHO reports' );
+			throw new RuntimeException( 'Failed to index WHO reports' );
 		}
 	}
 
