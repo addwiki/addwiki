@@ -9,15 +9,28 @@
             "name": "Addshore"
         }
     ],
+    "scripts": {
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "phpunit": "phpunit tests",
+        "phpunit-unit": "phpunit tests/unit",
+        "phpunit-integration": "phpunit tests/integration",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ]
+    },
     "require": {
-        "addwiki/mediawiki-api-base": "^2.7",
-        "addwiki/mediawiki-datamodel": "^2.7"
+        "addwiki/mediawiki-api-base": "^2.8",
+        "addwiki/mediawiki-datamodel": "^2.8"
     },
     "require-dev": {
+        "phpunit/phpunit": "~9",
         "php-parallel-lint/php-parallel-lint": "^1.2",
-        "mediawiki/mediawiki-codesniffer": "~34.0",
-        "monolog/monolog": "^1.23",
-        "phpunit/phpunit": "~9"
+        "mediawiki/mediawiki-codesniffer": "~35.0",
+        "monolog/monolog": "^1.23"
     },
     "autoload": {
         "psr-4": {
@@ -32,24 +45,9 @@
             ]
         }
     },
-    "scripts": {
-        "lint": "parallel-lint . --exclude vendor",
-        "phpcs": "phpcs -ps",
-        "fix": "phpcbf",
-        "phpunit": "phpunit",
-        "phpunit-coverage": "phpunit --coverage-clover=coverage.clover",
-        "phpunit-integration": "phpunit --testsuite integration",
-        "phpunit-unit": "phpunit --testsuite unit",
-        "test": [
-            "@lint",
-            "@phpcs",
-            "@phpunit"
-        ]
-    },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.7-dev",
-            "dev-master": "2.7-dev"
+            "dev-main": "2.8-dev"
         }
     },
     "minimum-stability": "dev",

@@ -106,9 +106,9 @@ class SiteListGetterTest extends \PHPUnit\Framework\TestCase {
 		$siteList = $service->getSiteList();
 
 		$this->assertInstanceOf( 'Mediawiki\Sitematrix\DataModel\SiteList', $siteList );
-		$this->assertEquals(
+		$this->assertCount(
 			count( $expectedSites ),
-			count( $siteList->getSiteArray() ),
+			$siteList->getSiteArray(),
 			'Incorrect number of sites returned'
 		);
 		foreach ( $siteList->getSiteArray() as $site ) {

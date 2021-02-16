@@ -33,7 +33,7 @@
         "data-values/serialization": "~1.0",
         "data-values/time": "~1.0",
         "ext-curl": "*",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/guzzle": "~6.0|~7.0",
         "guzzlehttp/promises": "~1.0",
         "lichtner/fluentpdo": "1.0.0",
         "linclark/microdata-php": "~2.0",
@@ -50,7 +50,7 @@
     "name": "addwiki/addwiki",
     "autoload-dev": {
         "files": [
-            "packages/mediawiki-api-base/tests/Integration/TestEnvironment.php",
+            "packages/mediawiki-api-base/tests/integration/TestEnvironment.php",
             "packages/wikibase-api/tests/integration/TestEnvironment.php"
         ],
         "psr-4": {
@@ -65,19 +65,19 @@
         }
     },
     "replace": {
-        "addwiki/addwiki-cli": "self.version",
-        "addwiki/mediawiki-api": "self.version",
-        "addwiki/mediawiki-api-base": "self.version",
-        "addwiki/mediawiki-commands": "self.version",
-        "addwiki/mediawiki-datamodel": "self.version",
-        "addwiki/mediawiki-db": "self.version",
-        "addwiki/mediawiki-flow-api": "self.version",
-        "addwiki/mediawiki-sitematrix-api": "self.version",
-        "addwiki/topic-covid-19": "self.version",
-        "addwiki/wikibase-api": "self.version",
-        "addwiki/wikibase-commands": "self.version",
-        "addwiki/wikimedia": "self.version",
-        "addwiki/wikimedia-commands": "self.version"
+        "addwiki/addwiki-cli": "2.7.0",
+        "addwiki/mediawiki-api": "2.7.0",
+        "addwiki/mediawiki-api-base": "2.7.0",
+        "addwiki/mediawiki-commands": "2.7.0",
+        "addwiki/mediawiki-datamodel": "2.7.0",
+        "addwiki/mediawiki-db": "2.7.0",
+        "addwiki/mediawiki-flow-api": "2.7.0",
+        "addwiki/mediawiki-sitematrix-api": "2.7.0",
+        "addwiki/topic-covid-19": "2.7.0",
+        "addwiki/wikibase-api": "2.7.0",
+        "addwiki/wikibase-commands": "2.7.0",
+        "addwiki/wikimedia": "2.7.0",
+        "addwiki/wikimedia-commands": "2.7.0"
     },
     "type": "project",
     "description": "Addwiki Monorepo",
@@ -93,7 +93,7 @@
     ],
     "require-dev": {
         "data-values/validators": "~0.1.0",
-        "mediawiki/mediawiki-codesniffer": "~34.0",
+        "mediawiki/mediawiki-codesniffer": "~35.0",
         "monolog/monolog": "^1.23",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpunit/phpunit": "~9",
@@ -114,9 +114,9 @@
         "lint": "bin/run-template vendor/bin/parallel-lint DIR --",
         "phpcs": "bin/run-template vendor/bin/phpcs -ps --standard=DIR/phpcs.xml DIR --",
         "fix": "bin/run-template vendor/bin/phpcbf --standard=DIR/phpcs.xml DIR --",
-        "phpunit": "bin/run-template vendor/bin/phpunit DIR --",
-        "phpunit-unit": "bin/run-template vendor/bin/phpunit --testsuite unit DIR --",
-        "phpunit-integration": "bin/run-template vendor/bin/phpunit --testsuite integration DIR --",
+        "phpunit": "bin/run-template vendor/bin/phpunit DIR/tests --",
+        "phpunit-unit": "bin/run-template vendor/bin/phpunit DIR/tests/unit --",
+        "phpunit-integration": "bin/run-template vendor/bin/phpunit DIR/tests/integration --",
         "test": [
             "@lint",
             "@phpcs",

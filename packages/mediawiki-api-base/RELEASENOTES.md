@@ -1,5 +1,9 @@
 # Release Notes
 
+## Version 2.7 (15 February 2021)
+
+- Installable with `guzzlehttp/guzzle` `~6.0|~7.0`
+
 ## Version 2.6 (2 February 2021)
 
 - Require PHP 7.2+
