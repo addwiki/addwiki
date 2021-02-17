@@ -48,12 +48,15 @@ class WikimediaFactory {
 	/**
 	 * @since 0.1
 	 *
-	 * @param string $domain eg. 'en.wikipedia.org'
+	 * @param string $domain eg. 'wikidata.org'
 	 *
 	 * @return WikibaseFactory
 	 */
 	public function newWikibaseFactoryForDomain( $domain ) {
-		if ( strstr( $domain, 'wikidata.org' ) == true ) {
+		if (
+			strstr( $domain, 'wikidata.org' ) === true ||
+			strstr( $domain, 'commons.wikimedia.org' ) === true
+			) {
 			$dvDeserializer = new DataValueDeserializer(
 					[
 						// data-values/data-values
