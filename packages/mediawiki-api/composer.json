@@ -40,8 +40,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Addwiki\\Mediawiki\\Api\\Tests\\Unit": "tests/unit/",
-            "Addwiki\\Mediawiki\\Api\\Tests\\Integration": "tests/integration/"
+            "Addwiki\\Mediawiki\\Api\\Tests\\Unit\\": "tests/unit/",
+            "Addwiki\\Mediawiki\\Api\\Tests\\Integration\\": "tests/integration/"
         }
     },
     "extra": {
