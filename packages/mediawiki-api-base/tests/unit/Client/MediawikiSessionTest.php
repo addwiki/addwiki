@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class MediawikiSessionTest extends TestCase {
 
 	/**
-	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @return MockObject|MediawikiApi
 	 */
 	private function getMockApi() {
 		return $this->createMock( MediawikiApi::class );
@@ -35,13 +35,13 @@ class MediawikiSessionTest extends TestCase {
 		$mockApi->expects( $this->exactly( 2 ) )
 			->method( 'postRequest' )
 			->with( $this->isInstanceOf( SimpleRequest::class ) )
-			->will( $this->returnValue( [
+			->willReturn( [
 				'query' => [
 					'tokens' => [
 					$tokenType => 'TKN-' . $tokenType,
 					]
 				]
-			] ) );
+			] );
 
 		$session = new MediawikiSession( $mockApi );
 
@@ -61,21 +61,21 @@ class MediawikiSessionTest extends TestCase {
 		$mockApi->expects( $this->at( 0 ) )
 			->method( 'postRequest' )
 			->with( $this->isInstanceOf( SimpleRequest::class ) )
-			->will( $this->returnValue( [
+			->willReturn( [
 				'warnings' => [
 					'query' => [
 						'*' => "Unrecognized value for parameter 'meta': tokens",
 					]
 				]
-			] ) );
+			] );
 		$mockApi->expects( $this->at( 1 ) )
 			->method( 'postRequest' )
 			->with( $this->isInstanceOf( SimpleRequest::class ) )
-			->will( $this->returnValue( [
+			->willReturn( [
 				'tokens' => [
 					$tokenType => 'TKN-' . $tokenType,
 				]
-			] ) );
+			] );
 
 		$session = new MediawikiSession( $mockApi );
 

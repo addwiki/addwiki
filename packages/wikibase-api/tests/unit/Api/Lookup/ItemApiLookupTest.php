@@ -21,8 +21,8 @@ class ItemApiLookupTest extends TestCase {
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
-			->with( $this->equalTo( new ItemId( 'Q42' ) ) )
-			->will( $this->returnValue( new Item( new ItemId( 'Q42' ) ) ) );
+			->with( new ItemId( 'Q42' ) )
+			->willReturn( new Item( new ItemId( 'Q42' ) ) );
 
 		$itemApiLookup = new ItemApiLookup( $lookupMock );
 		$this->assertEquals(

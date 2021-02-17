@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikimedia\Api;
 
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use DataValues\BooleanValue;
@@ -26,12 +27,11 @@ class WikimediaFactory {
 	/**
 	 * @param string $domain eg. 'en.wikipedia.org'
 	 *
-	 * @return \Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @return MediawikiApi
 	 * @since 0.1
-	 *
 	 */
 	public function newMediawikiApiForDomain( $domain ) {
-		return \Addwiki\Mediawiki\Api\Client\MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php' );
+		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php' );
 	}
 
 	/**

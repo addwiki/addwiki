@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class UserIntegrationTest extends TestCase {
 
 	/**
-	 * @var \Addwiki\Mediawiki\Api\Client\ApiUser
+	 * @var ApiUser
 	 */
 	private static $localApiUser;
 

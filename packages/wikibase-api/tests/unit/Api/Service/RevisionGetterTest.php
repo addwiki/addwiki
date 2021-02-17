@@ -54,25 +54,25 @@ class RevisionGetterTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'getRequest' )
 			->with(
-				$this->equalTo( new SimpleRequest(
+				new SimpleRequest(
 					'wbgetentities',
 					[ 'ids' => 'Q1' ]
-				) )
+				)
 			)
-			->will( $this->returnValue( [ 'entities' => [ 'Q123' => [
+			->willReturn( [ 'entities' => [ 'Q123' => [
 				'pageid' => '111',
 				'lastrevid' => '222',
 				'modified' => 'TIMESTAMP'
-			] ] ] ) );
+			] ] ] );
 		$deserializer = $this->createMockDeserializer();
 		$deserializer->expects( $this->once() )
 			->method( 'deserialize' )
-			->with( $this->equalTo( [
+			->with( [
 						'pageid' => '111',
 						'lastrevid' => '222',
 						'modified' => 'TIMESTAMP'
-			] ) )
-			->will( $this->returnValue( new Item() ) );
+			] )
+			->willReturn( new Item() );
 
 		$service = new RevisionGetter( $api, $deserializer );
 		$result = $service->getFromId( $id );

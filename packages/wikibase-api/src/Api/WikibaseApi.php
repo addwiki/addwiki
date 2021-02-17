@@ -14,7 +14,7 @@ use Addwiki\Mediawiki\DataModel\EditInfo;
 class WikibaseApi {
 
 	/**
-	 * @var \Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @var MediawikiApi
 	 */
 	private $api;
 

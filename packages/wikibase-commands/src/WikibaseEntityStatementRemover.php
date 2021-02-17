@@ -44,7 +44,7 @@ class WikibaseEntityStatementRemover extends Command {
 	private $wikibaseFactory;
 
 	/**
-	 * @var \Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @var MediawikiApi
 	 */
 	private $wikibaseApi;
 

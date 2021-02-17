@@ -14,12 +14,12 @@ use Wikibase\DataModel\Entity\ItemId;
 class BadgeIdsGetter {
 
 	/**
-	 * @var \Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @var MediawikiApi
 	 */
 	private $api;
 
 	/**
-	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api
+	 * @param MediawikiApi $api
 	 */
 	public function __construct( MediawikiApi $api ) {
 		$this->api = $api;

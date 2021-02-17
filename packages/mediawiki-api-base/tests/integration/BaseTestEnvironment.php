@@ -11,7 +11,7 @@ use Exception;
  */
 class BaseTestEnvironment {
 
-	/** @var \Addwiki\Mediawiki\Api\Client\MediawikiApi */
+	/** @var MediawikiApi */
 	private $api;
 
 	/** @var string */
@@ -73,7 +73,7 @@ class BaseTestEnvironment {
 
 	/**
 	 * Get the MediawikiApi to test against
-	 * @return \Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @return MediawikiApi
 	 */
 	public function getApi() {
 		return $this->api;

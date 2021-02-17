@@ -23,8 +23,8 @@ class PropertyApiLookupTest extends TestCase {
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
-			->with( $this->equalTo( new PropertyId( 'P42' ) ) )
-			->will( $this->returnValue( $property ) );
+			->with( new PropertyId( 'P42' ) )
+			->willReturn( $property );
 
 		$propertyApiLookup = new PropertyApiLookup( $lookupMock );
 		$this->assertEquals(

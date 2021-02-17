@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class SiteListGetterTest extends TestCase {
 
 	/**
-	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\MediawikiApi
+	 * @return MockObject|MediawikiApi
 	 */
 	private function getMockApi() {
 		return $this->getMockBuilder( MediawikiApi::class )
@@ -101,8 +101,8 @@ class SiteListGetterTest extends TestCase {
 
 		$mockApi->expects( $this->once() )
 			->method( 'getRequest' )
-			->with( $this->equalTo( new SimpleRequest( 'sitematrix' ) ) )
-			->will( $this->returnValue( $siteMatrixArray ) );
+			->with( new SimpleRequest( 'sitematrix' ) )
+			->willReturn( $siteMatrixArray );
 
 		$service = new SiteListGetter( $mockApi );
 		$siteList = $service->getSiteList();

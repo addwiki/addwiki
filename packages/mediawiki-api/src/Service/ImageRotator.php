@@ -20,7 +20,7 @@ class ImageRotator extends Service {
 	 * @param int $rotation Degrees to rotate image clockwise, One value: 90, 180, 270
 	 *
 	 * @return bool
-	 * @throws \Addwiki\Mediawiki\Api\Client\UsageException
+	 * @throws UsageException
 	 */
 	public function rotate( File $file, $rotation ) {
 		$params = [
