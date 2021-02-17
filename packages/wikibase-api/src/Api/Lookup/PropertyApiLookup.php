@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Lookup;
 
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\PropertyLookup;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Wikibase\DataModel\Services\Lookup\PropertyLookup;
 
 /**
  * @access private

@@ -48,7 +48,6 @@
             "Addwiki\\Wikibase\\": "src/"
         }
     },
-
     "autoload-dev": {
         "psr-4": {
             "Addwiki\\Wikibase\\Tests\\Unit\\": "tests/unit/",

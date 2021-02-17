@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Lookup;
 
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookup;
 use Wikibase\DataModel\Entity\ItemId;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Wikibase\DataModel\Services\Lookup\ItemLookup;
 
 /**
  * @access private

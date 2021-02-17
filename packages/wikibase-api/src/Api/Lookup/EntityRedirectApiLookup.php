@@ -4,11 +4,11 @@ namespace Addwiki\Wikibase\Api\Lookup;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityRedirectLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityRedirectLookupException;
 use BadMethodCallException;
 use Wikibase\DataModel\Entity\BasicEntityIdParser;
 use Wikibase\DataModel\Entity\EntityId;
+use Wikibase\DataModel\Services\Lookup\EntityRedirectLookup;
+use Wikibase\DataModel\Services\Lookup\EntityRedirectLookupException;
 
 /**
  * @author Addshore

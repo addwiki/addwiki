@@ -27,16 +27,16 @@ use Addwiki\Wikibase\Api\Service\StatementRemover;
 use Addwiki\Wikibase\Api\Service\StatementSetter;
 use Addwiki\Wikibase\Api\Service\ValueFormatter;
 use Addwiki\Wikibase\Api\Service\ValueParser;
-use Addwiki\Wikibase\DataModel\DeserializerFactory;
-use Addwiki\Wikibase\DataModel\SerializerFactory;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityRetrievingTermLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\PropertyLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\TermLookup;
 use Deserializers\Deserializer;
 use Serializers\Serializer;
+use Wikibase\DataModel\DeserializerFactory;
 use Wikibase\DataModel\Entity\BasicEntityIdParser;
+use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Wikibase\DataModel\Services\Lookup\EntityRetrievingTermLookup;
+use Wikibase\DataModel\Services\Lookup\ItemLookup;
+use Wikibase\DataModel\Services\Lookup\PropertyLookup;
+use Wikibase\DataModel\Services\Lookup\TermLookup;
 
 /**
  * @author Addshore

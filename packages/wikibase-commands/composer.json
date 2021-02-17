@@ -45,7 +45,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Addwiki\\Commands\\Wikibase\\": "src/"
+            "Addwiki\\Wikibase\\Commands\\": "src/"
         },
         "files": [
             "addCommands.php"

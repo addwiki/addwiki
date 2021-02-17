@@ -8,7 +8,6 @@ use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Title;
 use Addwiki\Wikibase\Api\WikibaseFactory;
-use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Addwiki\Wikimedia\Commands\SparqlQueryRunner;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\Referencer;
@@ -41,6 +40,7 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**
@@ -128,7 +128,7 @@ class WikidataReferencerCommand extends Command {
 					'multilingualtext' => MultilingualTextValue::class,
 					'quantity' => QuantityValue::class,
 					'time' => TimeValue::class,
-					'wikibase-entityid' => \Addwiki\Wikibase\DataModel\Entity\EntityIdValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()

@@ -117,7 +117,7 @@ class ExtensionToWikidata extends Command {
 					'multilingualtext' => MultilingualTextValue::class,
 					'quantity' => QuantityValue::class,
 					'time' => TimeValue::class,
-					'wikibase-entityid' => \Addwiki\Wikibase\DataModel\Entity\EntityIdValue::class,
+					'wikibase-entityid' => EntityIdValue::class,
 				]
 			),
 			new DataValueSerializer()
