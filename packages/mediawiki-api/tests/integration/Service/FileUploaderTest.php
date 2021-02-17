@@ -44,7 +44,7 @@ class FileUploaderTest extends TestCase {
 		$this->assertSame( 0, $testFile->getPageIdentifier()->getId() );
 
 		// Upload a file.
-		$testFilename = dirname( __DIR__ ) . '/fixtures/blue ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ.png';
+		$testFilename = dirname( dirname( __DIR__ ) ) . '/fixtures/blue ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ.png';
 		$uploaded = $this->fileUploader->upload( $testPagename, $testFilename, 'Testing',
 			null, null, true );
 		$this->assertTrue( $uploaded );
@@ -59,7 +59,7 @@ class FileUploaderTest extends TestCase {
 		$testTitle = new Title( 'File:' . $testPagename );
 
 		// Upload a 83725 byte file in 10k chunks.
-		$testFilename = dirname( __DIR__ ) . '/fixtures/blue ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ.png';
+		$testFilename = dirname( dirname( __DIR__ ) ) . '/fixtures/blue ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ.png';
 		$this->fileUploader->setChunkSize( 1024 * 10 );
 		$uploaded = $this->fileUploader->upload( $testPagename, $testFilename, 'Testing',
 			null, null, true );
