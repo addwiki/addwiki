@@ -3,11 +3,11 @@
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
 use Addwiki\Wikibase\Api\Lookup\ItemApiLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
 
 /**
  * @author Addshore
@@ -17,7 +17,7 @@ use Wikibase\DataModel\Entity\ItemId;
 class ItemApiLookupTest extends TestCase {
 
 	public function testGetItemForId() {
-		/** @var EntityLookup|PHPUnit_Framework_MockObject_MockObject $lookupMock */
+		/** @var EntityLookup|MockObject $lookupMock */
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )

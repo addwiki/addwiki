@@ -1,16 +1,16 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Tests\Unit\Service;
+namespace Addwiki\Mediawiki\Api\Tests\Unit\Service;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Service\PagePurger;
+use Addwiki\Mediawiki\Api\Service\PagePurger;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Pages;
 use Addwiki\Mediawiki\DataModel\Title;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author Addshore
@@ -19,7 +19,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 class PagePurgerTest extends TestCase {
 
 	private function getMockApi() {
-		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $mock */
+		/** @var MediawikiApi|MockObject $mock */
 		$mock = $this->getMockBuilder( MediawikiApi::class )
 			->disableOriginalConstructor()
 			->getMock();

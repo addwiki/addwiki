@@ -4,8 +4,8 @@ namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Wikibase\Api\Lookup\EntityRedirectApiLookup;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**
@@ -16,7 +16,7 @@ use Wikibase\DataModel\Entity\ItemId;
 class EntityRedirectApiLookupTest extends TestCase {
 
 	public function testGetRedirectForEntityId() {
-		/** @var MediawikiApi|PHPUnit_Framework_MockObject_MockObject $apiMock */
+		/** @var \Addwiki\Mediawiki\Api\Client\MediawikiApi|MockObject $apiMock */
 		$apiMock = $this->createMock( MediawikiApi::class );
 		$apiMock->expects( $this->once() )
 			->method( 'getRequest' )

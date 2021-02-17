@@ -3,11 +3,11 @@
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
 use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Wikibase\DataModel\Entity\Property;
 use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Services\Lookup\EntityLookup;
 
 /**
  * @author Addshore
@@ -19,7 +19,7 @@ class PropertyApiLookupTest extends TestCase {
 	public function testGetPropertyForId() {
 		$property = new Property( new PropertyId( 'P42' ), null, 'string' );
 
-		/** @var EntityLookup|PHPUnit_Framework_MockObject_MockObject $lookupMock */
+		/** @var EntityLookup|MockObject $lookupMock */
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )

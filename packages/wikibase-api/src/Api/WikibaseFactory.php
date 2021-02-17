@@ -61,11 +61,11 @@ class WikibaseFactory {
 	private $dataValueSerializer;
 
 	/**
-	 * @param MediawikiApi $api
+	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api
 	 * @param Deserializer $dvDeserializer
 	 * @param Serializer $dvSerializer
 	 */
-	public function __construct( MediawikiApi $api, Deserializer $dvDeserializer, Serializer $dvSerializer ) {
+	public function __construct( \Addwiki\Mediawiki\Api\Client\MediawikiApi $api, Deserializer $dvDeserializer, Serializer $dvSerializer ) {
 		$this->api = $api;
 		$this->dataValueDeserializer = $dvDeserializer;
 		$this->dataValueSerializer = $dvSerializer;

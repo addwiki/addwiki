@@ -46,7 +46,7 @@ class ImportWHOReportValueCommand extends Command {
 	private $wikibaseFactory;
 
 	/**
-	 * @var MediawikiApi
+	 * @var \Addwiki\Mediawiki\Api\Client\MediawikiApi
 	 */
 	private $wikibaseApi;
 

@@ -1,15 +1,16 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Tests\Integration;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
 use Addwiki\Mediawiki\Api\Client\ApiUser;
-use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
-use Addwiki\Mediawiki\Api\Client\Service\FileUploader;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
+use Addwiki\Mediawiki\Api\Service\FileUploader;
+use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test the \Addwiki\Addwiki\Mediawiki\Api\Client\Service\FileUploader class.
+ * Test the \Addwiki\Addwiki\Mediawiki\Api\Service\FileUploader class.
  */
 class FileUploaderTest extends TestCase {
 

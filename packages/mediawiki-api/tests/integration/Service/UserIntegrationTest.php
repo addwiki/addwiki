@@ -1,8 +1,9 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Tests\Integration;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
 use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class UserIntegrationTest extends TestCase {
 
 	/**
-	 * @var ApiUser
+	 * @var \Addwiki\Mediawiki\Api\Client\ApiUser
 	 */
 	private static $localApiUser;
 

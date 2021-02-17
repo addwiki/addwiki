@@ -8,6 +8,7 @@ use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Wikibase\Api\Service\RevisionGetter;
 use Addwiki\Wikibase\DataModel\ItemContent;
 use Deserializers\Deserializer;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
@@ -20,14 +21,14 @@ use Wikibase\DataModel\Entity\ItemId;
 class RevisionGetterTest extends TestCase {
 
 	/**
-	 * @return \PHPUnit_Framework_MockObject_MockObject|MediawikiApi
+	 * @return MockObject|MediawikiApi
 	 */
 	private function createMockApi() {
 		return $this->createMock( MediawikiApi::class );
 	}
 
 	/**
-	 * @return \PHPUnit_Framework_MockObject_MockObject|Deserializer
+	 * @return MockObject|Deserializer
 	 */
 	public function createMockDeserializer() {
 		return $this->createMock( Deserializer::class );

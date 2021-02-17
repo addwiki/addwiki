@@ -9,9 +9,9 @@ use Exception;
 /**
  * @author Addshore
  */
-class TestEnvironment {
+class BaseTestEnvironment {
 
-	/** @var MediawikiApi */
+	/** @var \Addwiki\Mediawiki\Api\Client\MediawikiApi */
 	private $api;
 
 	/** @var string */
@@ -21,10 +21,10 @@ class TestEnvironment {
 	private $pageUrl;
 
 	/**
-	 * Get a new TestEnvironment.
+	 * Get a new BaseTestEnvironment.
 	 * This is identical to calling self::__construct() but is useful for fluent construction.
 	 *
-	 * @return TestEnvironment
+	 * @return BaseTestEnvironment
 	 */
 	public static function newInstance() {
 		return new self();
@@ -73,7 +73,7 @@ class TestEnvironment {
 
 	/**
 	 * Get the MediawikiApi to test against
-	 * @return MediawikiApi
+	 * @return \Addwiki\Mediawiki\Api\Client\MediawikiApi
 	 */
 	public function getApi() {
 		return $this->api;

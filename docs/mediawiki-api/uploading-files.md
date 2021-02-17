@@ -7,7 +7,7 @@ To upload a single, small-sized file:
 ```php
 // Construct the API.
 $api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
-$services = new \Addwiki\Mediawiki\Api\Client\MediawikiFactory( $api );
+$services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 $fileUploader = $services->newFileUploader();
 
 // Upload the file.

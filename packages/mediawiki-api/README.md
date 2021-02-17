@@ -19,7 +19,7 @@ require_once( __DIR__ . '/vendor/autoload.php' );
 // Log in to a wiki
 $api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
 $api->login( new \Addwiki\Mediawiki\Api\Client\ApiUser( 'username', 'password' ) );
-$services = new \Addwiki\Mediawiki\Api\Client\MediawikiFactory( $api );
+$services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 
 // Get a page
 $page = $services->newPageGetter()->getFromTitle( 'Foo' );

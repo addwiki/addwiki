@@ -8,7 +8,7 @@ To use it, first get a new PageListGetter object from the factory:
 
 ```php
 $api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
-$services = new \Addwiki\Mediawiki\Api\Client\MediawikiFactory( $api );
+$services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 $pageListGetter = $services->newPageListGetter();
 ```
 

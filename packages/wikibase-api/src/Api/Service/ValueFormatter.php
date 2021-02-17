@@ -26,7 +26,7 @@ class ValueFormatter {
 	private $dataValueSerializer;
 
 	/**
-	 * @param MediawikiApi $api
+	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api
 	 * @param Serializer $dataValueSerializer
 	 */
 	public function __construct( MediawikiApi $api, Serializer $dataValueSerializer ) {

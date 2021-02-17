@@ -13,14 +13,14 @@ use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 class MediawikiSitematrixFactory {
 
 	/**
-	 * @var MediawikiApi
+	 * @var \Addwiki\Mediawiki\Api\Client\MediawikiApi
 	 */
 	private $api;
 
 	/**
-	 * @param MediawikiApi $api
+	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api
 	 */
-	public function __construct( MediawikiApi $api ) {
+	public function __construct( \Addwiki\Mediawiki\Api\Client\MediawikiApi $api ) {
 		$this->api = $api;
 	}
 

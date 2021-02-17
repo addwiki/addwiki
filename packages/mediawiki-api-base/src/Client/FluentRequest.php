@@ -2,6 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
+use Addwiki\Mediawiki\Api\Client\Request;
+
 /**
  * @since 1.0
  *

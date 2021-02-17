@@ -1,7 +1,8 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Tests\Integration;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
+use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;

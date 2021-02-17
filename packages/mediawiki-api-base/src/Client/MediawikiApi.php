@@ -2,7 +2,15 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
+use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use Addwiki\Mediawiki\Api\Client\MediawikiApiInterface;
+use Addwiki\Mediawiki\Api\Client\MediawikiSession;
+use Addwiki\Mediawiki\Api\Client\MultipartRequest;
+use Addwiki\Mediawiki\Api\Client\Request;
+use Addwiki\Mediawiki\Api\Client\RsdException;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\UsageException;
 use DOMDocument;
 use DOMXPath;
 use GuzzleHttp\Client;

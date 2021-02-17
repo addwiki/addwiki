@@ -1,8 +1,8 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Service;
+namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\CategoryLoopException;
+use Addwiki\Mediawiki\Api\CategoryLoopException;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\Page;
@@ -45,7 +45,7 @@ class CategoryTraverser extends Service {
 	protected $alreadyVisited = [];
 
 	/**
-	 * @param MediawikiApi $api The API to connect to.
+	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api The API to connect to.
 	 */
 	public function __construct( MediawikiApi $api ) {
 		parent::__construct( $api );

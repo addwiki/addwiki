@@ -6,25 +6,24 @@
             "packages/wikimedia-commands/addCommands.php"
         ],
         "psr-4": {
-            "Addwiki\\": "packages/addwiki-cli/src/",
-            "Addwiki\\Commands\\Mediawiki\\": "packages/mediawiki-commands/src/",
-            "Addwiki\\Commands\\Wikibase\\": "packages/wikibase-commands/src/",
-            "Addwiki\\Commands\\Wikimedia\\": "packages/wikimedia-commands/src/",
-            "Addwiki\\Topics\\Covid19\\": "packages-dev/topic-covid-19/src/",
-            "Mediawiki\\Api\\": [
+            "Addwiki\\Cli\\": "packages/addwiki-cli/src/",
+            "Addwiki\\Mediawiki\\Api\\": [
                 "packages/mediawiki-api-base/src/",
                 "packages/mediawiki-api/src/"
             ],
-            "Mediawiki\\DataModel\\": "packages/mediawiki-datamodel/src/",
-            "Mediawiki\\Db\\": "packages/mediawiki-db/src/",
-            "Mediawiki\\Flow\\": "packages/mediawiki-flow-api/src/",
-            "Mediawiki\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
-            "Wikibase\\": "packages/wikibase-api/src/",
-            "Wikimedia\\Api\\": "packages/wikimedia/src/"
+            "Addwiki\\Mediawiki\\Commands\\": "packages/mediawiki-commands/src/",
+            "Addwiki\\Mediawiki\\DataModel\\": "packages/mediawiki-datamodel/src/",
+            "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
+            "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
+            "Addwiki\\Topics\\Covid19\\": "packages-dev/topic-covid-19/src/",
+            "Addwiki\\Wikibase\\": "packages/wikibase-api/src/",
+            "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
+            "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
+            "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/",
+            "Mediawiki\\Db\\": "packages/mediawiki-db/src/"
         }
     },
     "require": {
-        "php": ">=7.3",
         "benestar/asparagus": "~0.4",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
@@ -38,6 +37,7 @@
         "guzzlehttp/promises": "~1.0",
         "lichtner/fluentpdo": "1.0.0",
         "linclark/microdata-php": "~2.0",
+        "php": ">=7.3",
         "psr/log": "~1.0",
         "serialization/serialization": "~3.2 || ~4.0",
         "smalot/pdfparser": "0.14.0",
@@ -47,23 +47,22 @@
         "wikibase/data-model-serialization": "~2.0",
         "wikibase/data-model-services": "~3.0"
     },
-    "name": "addwiki/addwiki",
     "autoload-dev": {
-        "files": [
-            "packages/mediawiki-api-base/tests/integration/TestEnvironment.php",
-            "packages/wikibase-api/tests/integration/TestEnvironment.php"
-        ],
         "psr-4": {
-            "Mediawiki\\Api\\Test\\": [
-                "packages/mediawiki-api/tests/integration",
-                "packages/mediawiki-api/tests/unit"
+            "Addwiki\\Mediawiki\\Api\\Tests\\Integration\\": [
+                "packages/mediawiki-api-base/tests/integration/",
+                "packages/mediawiki-api/tests/integration/"
             ],
-            "Mediawiki\\DataModel\\Test\\": [
-                "packages/mediawiki-datamodel/tests/",
-                "packages/mediawiki-datamodel/tests/unit/"
-            ]
+            "Addwiki\\Mediawiki\\Api\\Tests\\Unit\\": [
+                "packages/mediawiki-api-base/tests/unit/",
+                "packages/mediawiki-api/tests/unit/"
+            ],
+            "Addwiki\\Mediawiki\\DataModel\\Tests\\Unit\\": "packages/mediawiki-datamodel/tests/unit/",
+            "Addwiki\\Wikibase\\Tests\\Integration\\": "packages/wikibase-api/tests/integration/",
+            "Addwiki\\Wikibase\\Tests\\Unit\\": "packages/wikibase-api/tests/unit/"
         }
     },
+    "name": "addwiki/addwiki",
     "replace": {
         "addwiki/addwiki-cli": "2.8.0",
         "addwiki/mediawiki-api": "2.8.0",
@@ -97,9 +96,9 @@
         "monolog/monolog": "^1.23",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpunit/phpunit": "~9",
-        "symplify/monorepo-builder": "^9.2",
         "rector/rector": "^0.9.29",
         "symplify/easy-ci": "^9.1",
+        "symplify/monorepo-builder": "^9.2",
         "vimeo/psalm": "^4.6"
     },
     "repositories": [

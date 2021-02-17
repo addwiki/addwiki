@@ -5,8 +5,8 @@ namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\MediawikiSession;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author Addshore
@@ -16,7 +16,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 class MediawikiSessionTest extends TestCase {
 
 	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject|MediawikiApi
+	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\MediawikiApi
 	 */
 	private function getMockApi() {
 		return $this->createMock( MediawikiApi::class );

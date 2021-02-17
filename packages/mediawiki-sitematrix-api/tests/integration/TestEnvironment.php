@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 /**
  * @author Addshore

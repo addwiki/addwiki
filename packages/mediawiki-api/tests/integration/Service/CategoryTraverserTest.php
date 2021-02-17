@@ -1,10 +1,11 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Tests\Integration;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
-use Addwiki\Mediawiki\Api\Client\CategoryLoopException;
-use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
-use Addwiki\Mediawiki\Api\Client\Service\CategoryTraverser;
+use Addwiki\Mediawiki\Api\CategoryLoopException;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
+use Addwiki\Mediawiki\Api\Service\CategoryTraverser;
+use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;

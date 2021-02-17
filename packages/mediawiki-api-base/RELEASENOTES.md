@@ -3,7 +3,7 @@
 ## Unreleased
 
 - PSR4 namespacing. Now in `Addwiki\Mediawiki\Api`
-- Client classes, such as `MediaWikiApi`, moved to `Addwiki\Mediawiki\Api\Client`
+- Client classes, such as `MediaWikiApi`, moved to `Addwiki\Mediawiki\Api`
 
 ## Version 2.8 (16 February 2021)
 

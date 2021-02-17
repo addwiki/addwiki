@@ -1,13 +1,13 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client;
+namespace Addwiki\Mediawiki\Api;
 
 use Addwiki\Mediawiki\DataModel\Pages;
 use Exception;
 
 /**
  * Class CategoryLoopException
- * @package Addwiki\Mediawiki\Api\Client
+ * @package Addwiki\Mediawiki\Api
  */
 class CategoryLoopException extends Exception {
 

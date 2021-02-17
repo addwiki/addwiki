@@ -3,7 +3,7 @@
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use InvalidArgumentException;
 
