@@ -104,7 +104,8 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 			}
 			throw new RsdException( sprintf( 'Unable to find RSD URL in page: %s %s', $url, $libXmlErrorStr ) );
 		}
-		if ( ( $link->item( 0 )->attributes ) === null ) {
+		$linkItem = $link->item( 0 );
+		if ( ( $linkItem->attributes ) === null ) {
 			throw new RsdException( 'Unexpected RSD fetch error' );
 		}
 		/** @psalm-suppress NullReference */
