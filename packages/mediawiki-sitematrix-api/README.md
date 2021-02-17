@@ -15,7 +15,7 @@ Use composer to install the library and all its dependencies:
 require_once( __DIR__ . '/vendor/autoload.php' );
 
 // Log in to a wiki
-$api = new \Mediawiki\Api\MediawikiApi( 'http://localhost/w/api.php' );
+$api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
 $services = new \Mediawiki\SiteMatrix\Api\MediawikiSitematrixFactory( $api );
 
 // Get the sitelist

@@ -35,15 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\Api\\": "src/"
+            "Addwiki\\Mediawiki\\Api\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mediawiki\\Api\\Test\\": [
-                "tests/integration",
-                "tests/unit"
-            ]
+            "Addwiki\\Mediawiki\\Api\\Tests\\Unit": "tests/unit/",
+            "Addwiki\\Mediawiki\\Api\\Tests\\Integration": "tests/integration/"
         }
     },
     "extra": {

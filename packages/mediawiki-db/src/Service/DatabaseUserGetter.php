@@ -1,9 +1,9 @@
 <?php
 
-namespace Mediawiki\Db\Service;
+namespace Addwiki\Mediawiki\Db\Service;
 
 use FluentPDO;
-use Mediawiki\DataModel\User;
+use Addwiki\Mediawiki\DataModel\User;
 use PDO;
 
 /**

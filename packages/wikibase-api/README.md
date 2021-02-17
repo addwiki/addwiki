@@ -56,7 +56,7 @@ $dataValueClasses = array(
     'multilingualtext' => 'DataValues\MultilingualTextValue',
     'quantity' => 'DataValues\QuantityValue',
     'time' => 'DataValues\TimeValue',
-    'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+    'wikibase-entityid' => 'Addwiki\Wikibase\DataModel\Entity\EntityIdValue',
 );
 $wbFactory = new WikibaseFactory(
     $api,

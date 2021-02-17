@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
 use InvalidArgumentException;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\Title
+ * @covers \Addwiki\Mediawiki\DataModel\Title
  * @author Addshore
  */
 class TitleTest extends TestCase {

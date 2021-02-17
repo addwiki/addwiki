@@ -1,10 +1,10 @@
 <?php
 
-namespace Mediawiki\Api\Service;
+namespace Addwiki\Mediawiki\Api\Client\Service;
 
 use Exception;
-use Mediawiki\Api\MultipartRequest;
-use Mediawiki\Api\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\MultipartRequest;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 
 /**
  * @access private

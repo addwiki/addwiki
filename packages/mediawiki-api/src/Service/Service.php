@@ -1,8 +1,8 @@
 <?php
 
-namespace Mediawiki\Api\Service;
+namespace Addwiki\Mediawiki\Api\Client\Service;
 
-use Mediawiki\Api\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 
 /**
  * The base service functions that all services inherit.

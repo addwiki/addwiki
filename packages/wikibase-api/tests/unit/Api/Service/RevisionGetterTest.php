@@ -1,16 +1,16 @@
 <?php
 
-namespace Wikibase\Api\Test;
+namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Service;
 
 use Deserializers\Deserializer;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\SimpleRequest;
-use Mediawiki\DataModel\Revision;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\DataModel\Revision;
 use PHPUnit\Framework\TestCase;
-use Wikibase\Api\Service\RevisionGetter;
+use Addwiki\Wikibase\Api\Service\RevisionGetter;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\ItemContent;
+use Addwiki\Wikibase\DataModel\ItemContent;
 
 /**
  * @author Addshore

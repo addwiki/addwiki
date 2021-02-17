@@ -1,10 +1,10 @@
 <?php
 
-namespace Wikibase\Api\Service;
+namespace Addwiki\Wikibase\Api\Service;
 
 use Deserializers\Deserializer;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Wikibase\DataModel\Statement\Statement;
 
 /**

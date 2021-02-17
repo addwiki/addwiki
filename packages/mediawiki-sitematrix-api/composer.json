@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\Sitematrix\\": "src/"
+            "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "src/"
         }
     },
     "extra": {

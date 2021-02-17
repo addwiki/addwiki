@@ -1,12 +1,12 @@
 <?php
 
-namespace Wikibase\Api\Service;
+namespace Addwiki\Wikibase\Api\Service;
 
 use DataValues\DataValue;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Serializers\Serializer;
-use Wikibase\Api\GenericOptions;
+use Addwiki\Wikibase\Api\GenericOptions;
 
 /**
  * @access private

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Api\Test\Unit\Guzzle;
+namespace Addwiki\Mediawiki\Api\Tests\Unit\Guzzle;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
@@ -8,7 +8,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Mediawiki\Api\Guzzle\MiddlewareFactory;
+use Addwiki\Mediawiki\Api\Guzzle\MiddlewareFactory;
 use PHPUnit\Framework\TestCase;
 
 /**

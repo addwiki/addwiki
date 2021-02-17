@@ -1,10 +1,10 @@
 <?php
 
-namespace Wikibase\Api\Lookup;
+namespace Addwiki\Wikibase\Api\Lookup;
 
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\Lookup\EntityLookup;
-use Wikibase\DataModel\Services\Lookup\PropertyLookup;
+use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Addwiki\Wikibase\DataModel\Services\Lookup\PropertyLookup;
 
 /**
  * @access private

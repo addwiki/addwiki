@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia;
+namespace Addwiki\Wikimedia\Commands;
 
 use Asparagus\QueryBuilder;
 use GuzzleHttp\Client;

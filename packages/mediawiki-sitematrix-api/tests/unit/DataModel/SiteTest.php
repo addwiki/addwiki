@@ -1,8 +1,8 @@
 <?php
 
-namespace Mediawiki\Sitematrix\Api\Test;
+namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration\DataModel;
 
-use Mediawiki\Sitematrix\DataModel\Site;
+use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
 use PHPUnit\Framework\TestCase;
 
 /**

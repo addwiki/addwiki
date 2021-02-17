@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Db\Service;
+namespace Addwiki\Mediawiki\Db\Service;
 
 use PDO;
 

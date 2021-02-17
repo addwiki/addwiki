@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\DataModel;
+namespace Addwiki\Mediawiki\DataModel;
 
 use InvalidArgumentException;
 use JsonSerializable;

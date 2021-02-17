@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataReferencer;
+namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
 use Closure;
 use Psr\Http\Message\RequestInterface;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mediawiki\Api\Test\Integration;
+namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
 use Exception;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 
 /**
  * @author Addshore

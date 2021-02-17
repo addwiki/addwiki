@@ -1,6 +1,6 @@
 <?php
 
-use Addwiki\Commands\Wikibase\WikibaseEntityStatementRemover;
+use Addwiki\Wikibase\Commands\WikibaseEntityStatementRemover;
 
 $GLOBALS['awwCommands'][] = function ( $awwConfig ) {
 	return [

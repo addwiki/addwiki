@@ -1,9 +1,9 @@
 <?php
 
-namespace Mediawiki\Db\Service;
+namespace Addwiki\Mediawiki\Db\Service;
 
-use Mediawiki\DataModel\Redirect;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\DataModel\Redirect;
+use Addwiki\Mediawiki\DataModel\Title;
 use PDO;
 
 class RedirectListGetter {

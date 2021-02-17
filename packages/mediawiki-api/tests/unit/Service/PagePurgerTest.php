@@ -1,14 +1,14 @@
 <?php
 
-namespace Mediawiki\Api\Test\Service;
+namespace Addwiki\Mediawiki\Api\Client\Tests\Unit\Service;
 
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\Service\PagePurger;
-use Mediawiki\Api\SimpleRequest;
-use Mediawiki\DataModel\Page;
-use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Pages;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Service\PagePurger;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\DataModel\Page;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Pages;
+use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 

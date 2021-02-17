@@ -1,17 +1,17 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers;
+namespace Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers;
 
-use Addwiki\Commands\Wikimedia\WikidataReferencer\DataModelUtils;
-use Addwiki\Commands\Wikimedia\WikidataReferencer\MicroData\MicroData;
-use Mediawiki\Api\UsageException;
-use Mediawiki\DataModel\EditInfo;
-use Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
+use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\DataModel\EditInfo;
+use Addwiki\Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
+use Addwiki\Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**

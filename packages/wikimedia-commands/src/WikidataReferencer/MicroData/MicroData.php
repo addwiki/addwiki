@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataReferencer\MicroData;
+namespace Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData;
 
 use stdClass;
 

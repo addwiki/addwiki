@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia;
+namespace Addwiki\Wikimedia\Commands;
 
 use ArrayAccess;
 use Asparagus\QueryBuilder;
@@ -16,16 +16,16 @@ use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnknownValue;
 use GuzzleHttp\Client;
-use Mediawiki\Api\ApiUser;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\UsageException;
-use Mediawiki\DataModel\EditInfo;
+use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\DataModel\EditInfo;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;

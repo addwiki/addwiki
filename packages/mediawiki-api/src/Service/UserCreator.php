@@ -1,10 +1,10 @@
 <?php
 
-namespace Mediawiki\Api\Service;
+namespace Addwiki\Mediawiki\Api\Client\Service;
 
 use InvalidArgumentException;
-use Mediawiki\Api\SimpleRequest;
-use Mediawiki\Api\UsageException;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\UsageException;
 
 /**
  * @access private

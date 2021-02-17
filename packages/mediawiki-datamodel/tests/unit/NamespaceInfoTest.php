@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
 use InvalidArgumentException;
-use Mediawiki\DataModel\NamespaceInfo;
+use Addwiki\Mediawiki\DataModel\NamespaceInfo;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\NamespaceInfo
+ * @covers \Addwiki\Mediawiki\DataModel\NamespaceInfo
  * @author gbirke
  */
 class NamespaceInfoTest extends TestCase {

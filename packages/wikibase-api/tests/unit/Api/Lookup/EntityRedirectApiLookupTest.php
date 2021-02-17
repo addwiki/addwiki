@@ -1,11 +1,11 @@
 <?php
 
-namespace Wikibase\Api\Lookup\Test;
+namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
-use Mediawiki\Api\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use Wikibase\Api\Lookup\EntityRedirectApiLookup;
+use Addwiki\Wikibase\Api\Lookup\EntityRedirectApiLookup;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**

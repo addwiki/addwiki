@@ -1,8 +1,8 @@
 <?php
 
-namespace Addwiki\Commands\Config;
+namespace Addwiki\Cli\Commands\Config;
 
-use Addwiki\Config\AppConfig;
+use Addwiki\Cli\Config\AppConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;

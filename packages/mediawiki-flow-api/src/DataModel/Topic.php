@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Flow\Api\DataModel;
+namespace Addwiki\Mediawiki\Ext\Flow\DataModel;
 
 class Topic {
 

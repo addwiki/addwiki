@@ -1,15 +1,15 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use Mediawiki\DataModel\File;
-use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Revisions;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\DataModel\File;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Revisions;
+use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\File
+ * @covers \Addwiki\Mediawiki\DataModel\File
  * @author Addshore
  */
 class FileTest extends TestCase {

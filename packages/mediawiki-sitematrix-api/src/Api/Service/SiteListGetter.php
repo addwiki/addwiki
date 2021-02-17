@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediawiki\Sitematrix\Api\Service;
+namespace Addwiki\Mediawiki\Ext\Sitematrix\Api\Service;
 
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\SimpleRequest;
-use Mediawiki\Sitematrix\DataModel\Site;
-use Mediawiki\Sitematrix\DataModel\SiteList;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
+use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
 
 /**
  * @access private

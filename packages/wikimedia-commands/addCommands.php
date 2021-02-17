@@ -1,9 +1,9 @@
 <?php
 
-use Addwiki\Commands\Wikimedia\ExtensionToWikidata;
-use Addwiki\Commands\Wikimedia\WikidataCovid19\ImportWHOReportValueCommand;
-use Addwiki\Commands\Wikimedia\WikidataReferenceDateFixer;
-use Addwiki\Commands\Wikimedia\WikidataReferencer\WikidataReferencerCommand;
+use Addwiki\Wikimedia\Commands\ExtensionToWikidata;
+use Addwiki\Wikimedia\Commands\WikidataCovid19\ImportWHOReportValueCommand;
+use Addwiki\Wikimedia\Commands\WikidataReferenceDateFixer;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\WikidataReferencerCommand;
 
 $GLOBALS['awwCommands'][] = function ( $awwConfig ) {
 	return [

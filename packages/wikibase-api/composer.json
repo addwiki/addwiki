@@ -45,13 +45,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Wikibase\\": "src/"
+            "Addwiki\\Wikibase\\": "src/"
         }
     },
+
     "autoload-dev": {
-        "files": [
-            "tests/integration/TestEnvironment.php"
-        ]
+        "psr-4": {
+            "Addwiki\\Wikibase\\Tests\\Unit\\": "tests/unit/",
+            "Addwiki\\Wikibase\\Tests\\Integration\\": "tests/integration/"
+        }
     },
     "extra": {
         "branch-alias": {

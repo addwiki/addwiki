@@ -1,8 +1,8 @@
 <?php
 
-use Addwiki\Commands\Mediawiki\EditPage;
-use Addwiki\Commands\Mediawiki\Purge;
-use Addwiki\Commands\Mediawiki\RestoreRevisions;
+use Addwiki\Mediawiki\Commands\EditPage;
+use Addwiki\Mediawiki\Commands\Purge;
+use Addwiki\Mediawiki\Commands\RestoreRevisions;
 
 $GLOBALS['awwCommands'][] = function ( $awwConfig ) {
 	return [

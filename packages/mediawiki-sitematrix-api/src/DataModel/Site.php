@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Sitematrix\DataModel;
+namespace Addwiki\Mediawiki\Ext\Sitematrix\DataModel;
 
 /**
  * @since 0.1

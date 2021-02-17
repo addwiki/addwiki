@@ -1,14 +1,14 @@
 <?php
 
-namespace Mediawiki\Api\Test\Generator;
+namespace Addwiki\Mediawiki\Api\Client\Tests\Unit\Generator;
 
-use Mediawiki\Api\Generator\AnonymousGenerator;
+use Addwiki\Mediawiki\Api\Client\Generator\AnonymousGenerator;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @author Addshore
  *
- * @covers \Mediawiki\Api\Generator\AnonymousGenerator
+ * @covers \Addwiki\Mediawiki\Api\Client\Generator\AnonymousGenerator
  */
 class AnonymousGeneratorTest extends TestCase {
 
