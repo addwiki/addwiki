@@ -16,7 +16,6 @@
             "Addwiki\\Mediawiki\\Db\\": "packages/mediawiki-db/src/",
             "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
             "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
-            "Addwiki\\Topics\\Covid19\\": "packages-dev/topic-covid-19/src/",
             "Addwiki\\Wikibase\\": "packages/wikibase-api/src/",
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
@@ -73,7 +72,6 @@
         "addwiki/mediawiki-db": "2.8.0",
         "addwiki/mediawiki-flow-api": "2.8.0",
         "addwiki/mediawiki-sitematrix-api": "2.8.0",
-        "addwiki/topic-covid-19": "2.8.0",
         "addwiki/wikibase-api": "2.8.0",
         "addwiki/wikibase-commands": "2.8.0",
         "addwiki/wikimedia": "2.8.0",
@@ -106,10 +104,6 @@
         {
             "type": "path",
             "url": "packages/*"
-        },
-        {
-            "type": "path",
-            "url": "packages-dev/*"
         }
     ],
     "scripts": {
