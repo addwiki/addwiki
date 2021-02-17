@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Wikibase\Api\Tests\Unit;
+namespace Addwiki\Wikibase\Tests\Unit;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Wikibase\Api\Service\AliasGroupSetter;

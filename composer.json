@@ -13,6 +13,7 @@
             ],
             "Addwiki\\Mediawiki\\Commands\\": "packages/mediawiki-commands/src/",
             "Addwiki\\Mediawiki\\DataModel\\": "packages/mediawiki-datamodel/src/",
+            "Addwiki\\Mediawiki\\Db\\": "packages/mediawiki-db/src/",
             "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
             "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
             "Addwiki\\Topics\\Covid19\\": "packages-dev/topic-covid-19/src/",

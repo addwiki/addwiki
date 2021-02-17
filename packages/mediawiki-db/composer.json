@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\Db\\": "src/"
+            "Addwiki\\Mediawiki\\Db\\": "src/"
         }
     },
     "extra": {

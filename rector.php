@@ -68,6 +68,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         SetList::PHPUNIT_CODE_QUALITY,
         SetList::PHPUNIT_EXCEPTION,
         SetList::PHPUNIT_MOCK,
+        SetList::PSR_4,
         SetList::PHP_70,
         SetList::PHP_71,
         SetList::PHP_72,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
+namespace Addwiki\Wikibase\Tests\Unit\Api\Lookup;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Wikibase\Api\Lookup\EntityRedirectApiLookup;

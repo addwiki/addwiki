@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Service;
+namespace Addwiki\Wikibase\Tests\Unit\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
