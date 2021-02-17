@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
-use Addwiki\Mediawiki\Api\Client\Request;
-
 /**
  * @since 2.2
  * @license GPL-2.0-or-later

@@ -2,7 +2,6 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Api;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 
 /**

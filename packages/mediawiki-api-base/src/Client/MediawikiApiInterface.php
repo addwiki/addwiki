@@ -2,11 +2,6 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
-use Addwiki\Mediawiki\Api\Client\ApiRequester;
-use Addwiki\Mediawiki\Api\Client\ApiUser;
-use Addwiki\Mediawiki\Api\Client\AsyncApiRequester;
-use Addwiki\Mediawiki\Api\Client\UsageException;
-
 /**
  * @since 2.2
  * @license GPL-2.0-or-later
