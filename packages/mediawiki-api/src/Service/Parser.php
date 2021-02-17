@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Service;
 
-use GuzzleHttp\Promise\PromiseInterface;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use GuzzleHttp\Promise\PromiseInterface;
 use RuntimeException;
 
 /**

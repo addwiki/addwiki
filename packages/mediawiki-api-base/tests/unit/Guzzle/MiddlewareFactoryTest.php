@@ -2,13 +2,13 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Guzzle;
 
+use Addwiki\Mediawiki\Api\Guzzle\MiddlewareFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Addwiki\Mediawiki\Api\Guzzle\MiddlewareFactory;
 use PHPUnit\Framework\TestCase;
 
 /**

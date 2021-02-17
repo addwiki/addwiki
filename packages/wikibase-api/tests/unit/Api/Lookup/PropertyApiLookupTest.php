@@ -2,12 +2,12 @@
 
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
+use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
+use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
 use Wikibase\DataModel\Entity\Property;
 use Wikibase\DataModel\Entity\PropertyId;
-use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
 
 /**
  * @author Addshore

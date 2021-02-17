@@ -3,9 +3,9 @@
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Lookup;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Wikibase\Api\Lookup\EntityRedirectApiLookup;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use Addwiki\Wikibase\Api\Lookup\EntityRedirectApiLookup;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**

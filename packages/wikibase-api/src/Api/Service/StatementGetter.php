@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Deserializers\Deserializer;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Deserializers\Deserializer;
 use Wikibase\DataModel\Statement\Statement;
 
 /**

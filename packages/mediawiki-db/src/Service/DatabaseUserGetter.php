@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Db\Service;
 
-use FluentPDO;
 use Addwiki\Mediawiki\DataModel\User;
+use FluentPDO;
 use PDO;
 
 /**

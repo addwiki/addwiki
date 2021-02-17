@@ -2,6 +2,14 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
+use Addwiki\Mediawiki\DataModel\Content;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Revision;
+use Addwiki\Mediawiki\DataModel\Title;
+use Addwiki\Wikibase\Api\WikibaseFactory;
 use ArrayAccess;
 use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
@@ -14,19 +22,11 @@ use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnknownValue;
-use Addwiki\Mediawiki\Api\Client\ApiUser;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
-use Addwiki\Mediawiki\DataModel\Content;
-use Addwiki\Mediawiki\DataModel\PageIdentifier;
-use Addwiki\Mediawiki\DataModel\Revision;
-use Addwiki\Mediawiki\DataModel\Title;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Addwiki\Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;

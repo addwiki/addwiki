@@ -2,10 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Tests\Unit;
 
-use Deserializers\Deserializer;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use PHPUnit\Framework\TestCase;
-use Serializers\Serializer;
 use Addwiki\Wikibase\Api\Service\AliasGroupSetter;
 use Addwiki\Wikibase\Api\Service\DescriptionSetter;
 use Addwiki\Wikibase\Api\Service\ItemMerger;
@@ -23,6 +20,9 @@ use Addwiki\Wikibase\Api\Service\StatementSetter;
 use Addwiki\Wikibase\Api\Service\ValueFormatter;
 use Addwiki\Wikibase\Api\Service\ValueParser;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Deserializers\Deserializer;
+use PHPUnit\Framework\TestCase;
+use Serializers\Serializer;
 
 /**
  * @author Addshore

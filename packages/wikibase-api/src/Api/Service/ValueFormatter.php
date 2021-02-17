@@ -2,11 +2,11 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use DataValues\DataValue;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
-use Serializers\Serializer;
 use Addwiki\Wikibase\Api\GenericOptions;
+use DataValues\DataValue;
+use Serializers\Serializer;
 
 /**
  * @access private

@@ -3,8 +3,8 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\DataModel\EditInfo;
-use UnexpectedValueException;
 use Addwiki\Wikibase\Api\WikibaseApi;
+use UnexpectedValueException;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Statement\StatementGuid;
 

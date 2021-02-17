@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use DOMDocument;
 use DOMXPath;
 use GuzzleHttp\Client;
@@ -9,7 +10,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
-use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;

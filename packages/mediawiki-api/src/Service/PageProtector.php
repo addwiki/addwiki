@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Service;
 
-use InvalidArgumentException;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\Page;
+use InvalidArgumentException;
 
 /**
  * @access private

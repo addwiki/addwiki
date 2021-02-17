@@ -2,11 +2,11 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
-use Exception;
-use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use Exception;
 
 /**
  * @author Addshore

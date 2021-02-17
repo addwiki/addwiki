@@ -2,11 +2,11 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers;
 
-use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
-use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use Addwiki\Mediawiki\Api\Client\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;

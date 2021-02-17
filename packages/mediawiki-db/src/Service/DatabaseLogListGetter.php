@@ -2,11 +2,11 @@
 
 namespace Addwiki\Mediawiki\Db\Service;
 
-use FluentPDO;
 use Addwiki\Mediawiki\DataModel\Log;
 use Addwiki\Mediawiki\DataModel\LogList;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Title;
+use FluentPDO;
 use PDO;
 
 /**

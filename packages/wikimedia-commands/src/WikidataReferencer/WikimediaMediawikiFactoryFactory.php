@@ -2,10 +2,10 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
-use InvalidArgumentException;
-use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use InvalidArgumentException;
 
 /**
  * @author Addshore

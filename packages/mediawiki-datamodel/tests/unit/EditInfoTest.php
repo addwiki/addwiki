@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use InvalidArgumentException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**

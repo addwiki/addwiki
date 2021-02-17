@@ -2,18 +2,18 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers;
 
+use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\DataModel\EditInfo;
+use Addwiki\Wikibase\Api\WikibaseFactory;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use DataValues\TimeValue;
 use DateTime;
 use Exception;
-use Addwiki\Mediawiki\Api\Client\UsageException;
-use Addwiki\Mediawiki\DataModel\EditInfo;
 use ValueParsers\EraParser;
 use ValueParsers\IsoTimestampParser;
 use ValueParsers\MonthNameUnlocalizer;
 use ValueParsers\PhpDateTimeParser;
-use Addwiki\Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 

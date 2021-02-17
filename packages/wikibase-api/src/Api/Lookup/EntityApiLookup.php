@@ -3,8 +3,8 @@
 namespace Addwiki\Wikibase\Api\Lookup;
 
 use Addwiki\Wikibase\Api\Service\RevisionGetter;
-use Wikibase\DataModel\Entity\EntityId;
 use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
+use Wikibase\DataModel\Entity\EntityId;
 
 /**
  * @author Addshore

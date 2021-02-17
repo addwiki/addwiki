@@ -3,10 +3,10 @@
 namespace Addwiki\Wikibase\Tests\Integration\Api;
 
 use Addwiki\Mediawiki\DataModel\Revision;
+use Addwiki\Wikibase\DataModel\ItemContent;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Addwiki\Wikibase\DataModel\ItemContent;
 use Wikibase\DataModel\SiteLink;
 use Wikibase\DataModel\Term\AliasGroup;
 use Wikibase\DataModel\Term\Term;

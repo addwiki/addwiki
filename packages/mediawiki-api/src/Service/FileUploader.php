@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Service;
 
-use Exception;
 use Addwiki\Mediawiki\Api\Client\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Exception;
 
 /**
  * @access private

@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Tests\Unit\DataModel;
 
+use Addwiki\Wikibase\DataModel\ItemContent;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
-use Addwiki\Wikibase\DataModel\ItemContent;
 
 /**
  * @covers Wikibase\DataModel\ItemContent

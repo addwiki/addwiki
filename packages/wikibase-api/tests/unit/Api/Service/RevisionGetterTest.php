@@ -2,15 +2,15 @@
 
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api\Service;
 
-use Deserializers\Deserializer;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\Revision;
-use PHPUnit\Framework\TestCase;
 use Addwiki\Wikibase\Api\Service\RevisionGetter;
+use Addwiki\Wikibase\DataModel\ItemContent;
+use Deserializers\Deserializer;
+use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
-use Addwiki\Wikibase\DataModel\ItemContent;
 
 /**
  * @author Addshore

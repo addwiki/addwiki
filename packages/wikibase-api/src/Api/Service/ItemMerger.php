@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use InvalidArgumentException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseApi;
+use InvalidArgumentException;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 

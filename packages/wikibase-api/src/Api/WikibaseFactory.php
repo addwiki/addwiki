@@ -2,9 +2,7 @@
 
 namespace Addwiki\Wikibase\Api;
 
-use Deserializers\Deserializer;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Serializers\Serializer;
 use Addwiki\Wikibase\Api\Lookup\EntityApiLookup;
 use Addwiki\Wikibase\Api\Lookup\ItemApiLookup;
 use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
@@ -30,13 +28,15 @@ use Addwiki\Wikibase\Api\Service\StatementSetter;
 use Addwiki\Wikibase\Api\Service\ValueFormatter;
 use Addwiki\Wikibase\Api\Service\ValueParser;
 use Addwiki\Wikibase\DataModel\DeserializerFactory;
-use Wikibase\DataModel\Entity\BasicEntityIdParser;
 use Addwiki\Wikibase\DataModel\SerializerFactory;
 use Addwiki\Wikibase\DataModel\Services\Lookup\EntityLookup;
 use Addwiki\Wikibase\DataModel\Services\Lookup\EntityRetrievingTermLookup;
 use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookup;
 use Addwiki\Wikibase\DataModel\Services\Lookup\PropertyLookup;
 use Addwiki\Wikibase\DataModel\Services\Lookup\TermLookup;
+use Deserializers\Deserializer;
+use Serializers\Serializer;
+use Wikibase\DataModel\Entity\BasicEntityIdParser;
 
 /**
  * @author Addshore

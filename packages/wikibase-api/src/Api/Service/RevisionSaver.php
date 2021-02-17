@@ -2,13 +2,13 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Deserializers\Deserializer;
-use InvalidArgumentException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Mediawiki\DataModel\Revision;
+use Addwiki\Wikibase\Api\WikibaseApi;
+use Deserializers\Deserializer;
+use InvalidArgumentException;
 use RuntimeException;
 use Serializers\Serializer;
-use Addwiki\Wikibase\Api\WikibaseApi;
 use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\Property;

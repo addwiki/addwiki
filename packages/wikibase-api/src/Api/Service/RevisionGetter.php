@@ -2,17 +2,17 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Deserializers\Deserializer;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
+use Addwiki\Wikibase\DataModel\ItemContent;
+use Addwiki\Wikibase\DataModel\PropertyContent;
+use Deserializers\Deserializer;
 use RuntimeException;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\Property;
-use Addwiki\Wikibase\DataModel\ItemContent;
-use Addwiki\Wikibase\DataModel\PropertyContent;
 use Wikibase\DataModel\SiteLink;
 
 /**

@@ -2,7 +2,6 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
-use ArrayAccess;
 use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\MediawikiFactory;
@@ -10,6 +9,7 @@ use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
+use ArrayAccess;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

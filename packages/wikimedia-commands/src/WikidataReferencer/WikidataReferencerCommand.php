@@ -2,6 +2,13 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
+use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Title;
+use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Addwiki\Wikimedia\Commands\SparqlQueryRunner;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\Referencer;
@@ -22,11 +29,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
-use Addwiki\Mediawiki\Api\Client\ApiUser;
-use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\DataModel\PageIdentifier;
-use Addwiki\Mediawiki\DataModel\Title;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -35,12 +37,10 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Addwiki\Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
-use Addwiki\Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 /**

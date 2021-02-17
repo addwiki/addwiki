@@ -2,12 +2,12 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
 
-use GuzzleHttp\ClientInterface;
-use InvalidArgumentException;
 use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\UsageException;
+use GuzzleHttp\ClientInterface;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;

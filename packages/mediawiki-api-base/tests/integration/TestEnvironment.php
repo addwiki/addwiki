@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
-use Exception;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Exception;
 
 /**
  * @author Addshore

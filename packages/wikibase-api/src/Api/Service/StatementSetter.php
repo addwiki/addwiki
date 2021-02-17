@@ -2,10 +2,10 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use InvalidArgumentException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
-use Serializers\Serializer;
 use Addwiki\Wikibase\Api\WikibaseApi;
+use InvalidArgumentException;
+use Serializers\Serializer;
 use Wikibase\DataModel\Statement\Statement;
 
 /**

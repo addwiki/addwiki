@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
-use Exception;
 use Addwiki\Mediawiki\DataModel\Pages;
+use Exception;
 
 /**
  * Class CategoryLoopException

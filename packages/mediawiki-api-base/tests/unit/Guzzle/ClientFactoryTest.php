@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Guzzle;
 
-use GuzzleHttp\HandlerStack;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 

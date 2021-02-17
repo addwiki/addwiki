@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Tests\Unit\Api;
 
+use Addwiki\Wikibase\Api\GenericOptions;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use Addwiki\Wikibase\Api\GenericOptions;
 
 /**
  * @covers Wikibase\Api\GenericOptions
