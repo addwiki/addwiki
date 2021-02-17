@@ -4,6 +4,7 @@ namespace Addwiki\Wikibase\Tests\Integration\Api;
 
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Wikibase\DataModel\ItemContent;
+use Addwiki\Wikibase\Tests\Integration\TestEnvironment;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;

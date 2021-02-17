@@ -15,6 +15,7 @@ use DataValues\Serializers\DataValueSerializer;
 use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnknownValue;
+use Exception;
 
 /**
  * @author Addshore
