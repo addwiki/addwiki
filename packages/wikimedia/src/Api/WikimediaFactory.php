@@ -90,4 +90,20 @@ class WikimediaFactory {
 		);
 	}
 
+	/**
+	 * @since 3.0
+	 * @return WikibaseFactory
+	 */
+	public function newWikidataWikibaseFactory() {
+		return $this->newWikibaseFactoryForDomain( 'wikidata.org' );
+	}
+
+	/**
+	 * @since 3.0
+	 * @return WikibaseFactory
+	 */
+	public function newCommonsWikibaseFactory() {
+		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org' );
+	}
+
 }
