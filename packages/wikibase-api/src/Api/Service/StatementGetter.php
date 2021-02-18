@@ -14,7 +14,7 @@ class StatementGetter {
 
 	private MediawikiApi $api;
 
-	private \Deserializers\Deserializer $statementDeserializer;
+	private Deserializer $statementDeserializer;
 
 	public function __construct( MediawikiApi $api, Deserializer $statementDeserializer ) {
 		$this->api = $api;

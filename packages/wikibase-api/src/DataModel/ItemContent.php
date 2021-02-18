@@ -20,7 +20,7 @@ class ItemContent extends Content {
 	 * @required
 	 * @see Content::getData
 	 */
-	public function getData(): \Wikibase\DataModel\Entity\Item {
+	public function getData(): Item {
 		return parent::getData();
 	}
 }

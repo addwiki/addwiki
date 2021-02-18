@@ -9,12 +9,27 @@ use InvalidArgumentException;
  */
 class EditInfo {
 
+	/**
+	 * @var bool
+	 */
 	public const MINOR = true;
+	/**
+	 * @var bool
+	 */
 	public const NOTMINOR = false;
 
+	/**
+	 * @var bool
+	 */
 	public const BOT = true;
+	/**
+	 * @var bool
+	 */
 	public const NOTBOT = false;
 
+	/**
+	 * @var null
+	 */
 	public const OFFLAG = null;
 
 	protected bool $minor = false;
