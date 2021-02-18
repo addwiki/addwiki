@@ -4,25 +4,15 @@ namespace Addwiki\Mediawiki\DataModel;
 
 use JsonSerializable;
 
-/**
- * @since 0.5
- */
 class Log implements JsonSerializable {
 
 	private int $id;
-
 	private string $type;
-
 	private string $action;
-
 	private string $timestamp;
-
 	private string $user;
-
 	private string $comment;
-
 	private PageIdentifier $pageIdentifier;
-
 	private array $details = [];
 
 	/**

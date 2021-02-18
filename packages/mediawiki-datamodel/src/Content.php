@@ -5,9 +5,7 @@ namespace Addwiki\Mediawiki\DataModel;
 use LogicException;
 
 /**
- * Class Representing the content of a revision
- *
- * @author Addshore
+ * Represents the content of a revision
  */
 class Content {
 

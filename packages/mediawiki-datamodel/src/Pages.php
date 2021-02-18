@@ -7,8 +7,6 @@ use RuntimeException;
 
 /**
  * Represents a collection or Page classes
- *
- * @author Addshore
  */
 class Pages {
 

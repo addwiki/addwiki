@@ -5,13 +5,9 @@ namespace Addwiki\Mediawiki\DataModel;
 use InvalidArgumentException;
 use JsonSerializable;
 
-/**
- * @author Addshore
- */
 class Title implements JsonSerializable {
 
 	private string $title;
-
 	private int $ns;
 
 	/**

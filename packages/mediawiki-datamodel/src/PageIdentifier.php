@@ -8,13 +8,8 @@ use JsonSerializable;
 class PageIdentifier implements JsonSerializable {
 
 	private ?int $id;
-
 	private ?Title $title;
 
-	/**
-	 * @param Title|null $title
-	 * @throws InvalidArgumentException
-	 */
 	public function __construct( Title $title = null, ?int $id = null ) {
 		if ( !is_int( $id ) && $id !== null ) {
 			throw new InvalidArgumentException( '$id must be an int' );
@@ -23,9 +18,6 @@ class PageIdentifier implements JsonSerializable {
 		$this->id = $id;
 	}
 
-	/**
-	 * @return int|null
-	 */
 	public function getId(): ?int {
 		return $this->id;
 	}
@@ -35,7 +27,7 @@ class PageIdentifier implements JsonSerializable {
 	}
 
 	/**
-	 * Does this object identify a page
+	 * Does this object identify a page?
 	 */
 	public function identifiesPage(): bool {
 		return !( !$this->title instanceof Title && $this->id === null );

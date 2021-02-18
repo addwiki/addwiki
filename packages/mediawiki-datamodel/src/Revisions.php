@@ -7,8 +7,6 @@ use RuntimeException;
 
 /**
  * Represents a collection or revisions
- *
- * @author Addshore
  */
 class Revisions {
 
