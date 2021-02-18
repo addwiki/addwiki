@@ -6,8 +6,6 @@ use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Addshore
- *
  * @covers Mediawiki\Sitematrix\DataModel\Site
  */
 class SiteTest extends TestCase {

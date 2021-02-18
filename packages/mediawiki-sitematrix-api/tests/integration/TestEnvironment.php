@@ -5,9 +5,6 @@ namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 
-/**
- * @author Addshore
- */
 class TestEnvironment {
 
 	public static function newDefault(): TestEnvironment {

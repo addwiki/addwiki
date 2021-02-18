@@ -7,9 +7,6 @@ use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Tarrow
- * @author Addshore
- *
  * @covers Mediawiki\Sitematrix\DataModel\SiteList
  */
 class SiteListTest extends TestCase {
