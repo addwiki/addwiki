@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers Mediawiki\Sitematrix\DataModel\SiteList
  */
 class SiteListTest extends TestCase {
-	public function testGetSiteArray() {
+	public function testGetSiteArray(): void {
 		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
@@ -22,7 +22,7 @@ class SiteListTest extends TestCase {
 		$this->assertEquals( $siteArray, $actualSiteList->getSiteArray() );
 	}
 
-	public function testGetSiteFromDBName() {
+	public function testGetSiteFromDBName(): void {
 		$siteArray = [
 			new Site( "http://notasite", "adbname", "acode", "aSiteName" ),
 			new Site( "http://notasite", "adbname-B", "acode", "aSiteName" ),
@@ -36,7 +36,7 @@ class SiteListTest extends TestCase {
 		);
 	}
 
-	public function testGetSiteListForCode() {
+	public function testGetSiteListForCode(): void {
 		$siteArray = [
 			new Site( "http://notasite", "dbname1", "Code1", "aSiteName1" ),
 			new Site( "http://notasite", "dbname2", "Code1", "aSiteName2" ),

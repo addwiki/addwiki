@@ -16,13 +16,15 @@ class RevisionsTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param Revision[]|Revisions $input
+	 * @param array<int, Revision>[]|Revision[][] $expected
 	 */
-	public function testValidConstruction( $input, $expected ) {
+	public function testValidConstruction( $input, array $expected ): void {
 		$revisions = new Revisions( $input );
 		$this->assertEquals( $expected, $revisions->toArray() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()
 			->getMock();

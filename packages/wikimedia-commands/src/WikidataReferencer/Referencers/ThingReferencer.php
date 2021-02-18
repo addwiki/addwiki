@@ -9,6 +9,7 @@ use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
+use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
@@ -19,25 +20,16 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
  */
 class ThingReferencer implements Referencer {
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var callable[]
 	 */
-	private $callbackMap = [];
+	private array $callbackMap = [];
 
-	/**
-	 * @var InMemoryEntityLookup
-	 */
-	private $inMemoryEntityLookup;
+	private InMemoryEntityLookup $inMemoryEntityLookup;
 
-	/**
-	 * @var EntityId
-	 */
-	private $lastEntityId;
+	private EntityId $lastEntityId;
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
@@ -53,7 +45,7 @@ class ThingReferencer implements Referencer {
 				$schemaPropertyStrings = [ $schemaPropertyStrings ];
 			}
 			foreach ( $schemaPropertyStrings as $schemaPropertyString ) {
-				$this->callbackMap[$propertyIdSerialization] = function ( MicroData $microData ) use ( $schemaPropertyString ) {
+				$this->callbackMap[$propertyIdSerialization] = function ( MicroData $microData ) use ( $schemaPropertyString ): array {
 					$values = [];
 					foreach ( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
 						foreach ( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
@@ -66,7 +58,7 @@ class ThingReferencer implements Referencer {
 		}
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
+	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int {
 		// Only cache entity lookup stuff per item we are adding references for!
 		// (but can be used for multiple sourceURLs!!
 		if ( !$item->getId()->equals( $this->lastEntityId ) ) {

@@ -15,10 +15,10 @@ class Revisions {
 	/**
 	 * @var Revision[]
 	 */
-	private $revisions = [];
+	private array $revisions = [];
 
 	/**
-	 * @param Revisions[] $revisions
+	 * @param Revisions[]|Revisions $revisions
 	 */
 	public function __construct( $revisions = [] ) {
 		$this->revisions = [];
@@ -30,7 +30,7 @@ class Revisions {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function addRevisions( $revisions ) {
+	public function addRevisions( $revisions ): void {
 		if ( !is_array( $revisions ) && !$revisions instanceof Revisions ) {
 			throw new InvalidArgumentException( '$revisions needs to either be an array or a Revisions object' );
 		}
@@ -45,32 +45,25 @@ class Revisions {
 	/**
 	 * @param Revision $revision
 	 */
-	public function addRevision( Revision $revision ) {
+	public function addRevision( Revision $revision ): void {
 		$this->revisions[$revision->getId()] = $revision;
 	}
 
-	/**
-	 * @param int $id
-	 *
-	 * @return bool
-	 */
-	public function hasRevisionWithId( $id ) {
+	public function hasRevisionWithId( int $id ): bool {
 		return array_key_exists( $id, $this->revisions );
 	}
 
 	/**
 	 * @param Revision $revision
-	 *
-	 * @return bool
 	 */
-	public function hasRevision( Revision $revision ) {
+	public function hasRevision( Revision $revision ): bool {
 		return array_key_exists( $revision->getId(), $this->revisions );
 	}
 
 	/**
 	 * @return Revision|null Revision or null if there is no revision
 	 */
-	public function getLatest() {
+	public function getLatest(): ?Revision {
 		if ( empty( $this->revisions ) ) {
 			return null;
 		}
@@ -78,13 +71,11 @@ class Revisions {
 	}
 
 	/**
-	 * @param int $revid
 	 *
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
-	 * @return Revision
 	 */
-	public function get( $revid ) {
+	public function get( int $revid ): Revision {
 		if ( !is_int( $revid ) ) {
 			throw new InvalidArgumentException( '$revid needs to be an int' );
 		}
@@ -97,7 +88,7 @@ class Revisions {
 	/**
 	 * @return Revision[]
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return $this->revisions;
 	}
 }

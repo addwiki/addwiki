@@ -9,57 +9,26 @@ use JsonSerializable;
  */
 class Log implements JsonSerializable {
 
-	/**
-	 * @var int
-	 */
-	private $id;
+	private int $id;
+
+	private string $type;
+
+	private string $action;
+
+	private string $timestamp;
+
+	private string $user;
+
+	private string $comment;
+
+	private PageIdentifier $pageIdentifier;
+
+	private array $details = [];
 
 	/**
-	 * @var string
+	 * @param mixed[] $details
 	 */
-	private $type;
-
-	/**
-	 * @var string
-	 */
-	private $action;
-
-	/**
-	 * @var string
-	 */
-	private $timestamp;
-
-	/**
-	 * @var string
-	 */
-	private $user;
-
-	/**
-	 * @var string
-	 */
-	private $comment;
-
-	/**
-	 * @var PageIdentifier
-	 */
-	private $pageIdentifier;
-
-	/**
-	 * @var array
-	 */
-	private $details = [];
-
-	/**
-	 * @param int $id
-	 * @param string $type
-	 * @param string $action
-	 * @param string $timestamp
-	 * @param string $user
-	 * @param PageIdentifier $pageIdentifier
-	 * @param string $comment
-	 * @param array $details
-	 */
-	public function __construct( $id, $type, $action, $timestamp, $user, $pageIdentifier, $comment, $details ) {
+	public function __construct( int $id, string $type, string $action, string $timestamp, string $user, PageIdentifier $pageIdentifier, string $comment, array $details ) {
 		$this->id = $id;
 		$this->type = $type;
 		$this->action = $action;
@@ -72,65 +41,58 @@ class Log implements JsonSerializable {
 
 	/**
 	 * @since 0.5
-	 * @return string
 	 */
-	public function getUser() {
+	public function getUser(): string {
 		return $this->user;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return string
 	 */
-	public function getAction() {
+	public function getAction(): string {
 		return $this->action;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return string
 	 */
-	public function getComment() {
+	public function getComment(): string {
 		return $this->comment;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return int
 	 */
-	public function getId() {
+	public function getId(): int {
 		return $this->id;
 	}
 
 	/**
 	 * @since 0.6
-	 * @return PageIdentifier
 	 */
-	public function getPageIdentifier() {
+	public function getPageIdentifier(): PageIdentifier {
 		return $this->pageIdentifier;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return string
 	 */
-	public function getTimestamp() {
+	public function getTimestamp(): string {
 		return $this->timestamp;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return string
 	 */
-	public function getType() {
+	public function getType(): string {
 		return $this->type;
 	}
 
 	/**
 	 * @since 0.5
-	 * @return array
+	 * @return mixed[]
 	 */
-	public function getDetails() {
+	public function getDetails(): array {
 		return $this->details;
 	}
 
@@ -150,12 +112,7 @@ class Log implements JsonSerializable {
 		];
 	}
 
-	/**
-	 * @param array $json
-	 *
-	 * @return self
-	 */
-	public static function jsonDeserialize( $json ) {
+	public static function jsonDeserialize( array $json ): Log {
 		return new self(
 		$json['id'],
 		$json['type'],

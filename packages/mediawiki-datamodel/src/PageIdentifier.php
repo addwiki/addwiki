@@ -7,22 +7,15 @@ use JsonSerializable;
 
 class PageIdentifier implements JsonSerializable {
 
-	/**
-	 * @var int|null
-	 */
-	private $id;
+	private ?int $id;
 
-	/**
-	 * @var Title|null
-	 */
-	private $title;
+	private ?Title $title;
 
 	/**
 	 * @param Title|null $title
-	 * @param int|null $id
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( Title $title = null, $id = null ) {
+	public function __construct( Title $title = null, ?int $id = null ) {
 		if ( !is_int( $id ) && $id !== null ) {
 			throw new InvalidArgumentException( '$id must be an int' );
 		}
@@ -33,28 +26,24 @@ class PageIdentifier implements JsonSerializable {
 	/**
 	 * @return int|null
 	 */
-	public function getId() {
+	public function getId(): ?int {
 		return $this->id;
 	}
 
-	/**
-	 * @return Title|null
-	 */
-	public function getTitle() {
+	public function getTitle(): ?Title {
 		return $this->title;
 	}
 
 	/**
 	 * Does this object identify a page
-	 *
-	 * @return bool
 	 */
-	public function identifiesPage() {
+	public function identifiesPage(): bool {
 		return !( !$this->title instanceof Title && $this->id === null );
 	}
 
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * @return array <string mixed>
 	 */
 	public function jsonSerialize() {
 		$array = [];
@@ -67,12 +56,7 @@ class PageIdentifier implements JsonSerializable {
 		return $array;
 	}
 
-	/**
-	 * @param array $array
-	 *
-	 * @return self
-	 */
-	public static function jsonDeserialize( $array ) {
+	public static function jsonDeserialize( array $array ): PageIdentifier {
 		return new self(
 		isset( $array['title'] ) ? Title::jsonDeserialize( $array['title'] ) : null,
 		$array['id'] ?? null

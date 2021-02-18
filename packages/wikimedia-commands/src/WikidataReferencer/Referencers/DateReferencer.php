@@ -14,25 +14,20 @@ use ValueParsers\EraParser;
 use ValueParsers\IsoTimestampParser;
 use ValueParsers\MonthNameUnlocalizer;
 use ValueParsers\PhpDateTimeParser;
+use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class DateReferencer implements Referencer {
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var string[]
 	 */
-	private $propMap = [];
+	private array $propMap = [];
 
-	/**
-	 * @var PhpDateTimeParser
-	 */
-	private $timeParser;
+	private PhpDateTimeParser $timeParser;
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
@@ -49,7 +44,10 @@ class DateReferencer implements Referencer {
 		);
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
+	/**
+	 * @return int
+	 */
+	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int {
 		$referenceCounter = 0;
 
 		foreach ( $this->propMap as $propertyIdString => $schemaPropertyString ) {

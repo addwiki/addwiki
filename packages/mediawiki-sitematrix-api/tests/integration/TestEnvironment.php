@@ -10,17 +10,17 @@ use Addwiki\Mediawiki\Api\MediawikiFactory;
  */
 class TestEnvironment {
 
-	public static function newDefault() {
+	public static function newDefault(): TestEnvironment {
 		return new self();
 	}
 
-	private $factory;
+	private MediawikiFactory $factory;
 
 	public function __construct() {
 		$this->factory = new MediawikiFactory( new MediawikiApi( 'http://localhost/w/api.php' ) );
 	}
 
-	public function getFactory() {
+	public function getFactory(): MediawikiFactory {
 		return $this->factory;
 	}
 

@@ -36,29 +36,20 @@ use Wikibase\DataModel\Entity\PropertyId;
  */
 class WikibaseEntityStatementRemover extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private ?WikibaseFactory $wikibaseFactory = null;
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $wikibaseApi;
+	private ?MediawikiApi $wikibaseApi = null;
 
-	/**
-	 * @var SparqlQueryRunner
-	 */
-	private $sparqlQueryRunner;
+	private ?SparqlQueryRunner $sparqlQueryRunner = null;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
 		parent::__construct( null );
 	}
 
-	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ) {
+	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ): void {
 		$defaultGuzzleConf = [
 			'headers' => [ 'User-Agent' => 'addwiki - Wikibase Statement Remover' ]
 		];
@@ -169,7 +160,7 @@ class WikibaseEntityStatementRemover extends Command {
 			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in to wikibase wiki' );
-			return -1;
+			return 1;
 		}
 
 		$itemLookup = $this->wikibaseFactory->newItemLookup();

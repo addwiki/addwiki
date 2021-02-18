@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LogListTest extends TestCase {
 
-	public function testJsonRoundTrip() {
+	public function testJsonRoundTrip(): void {
 		$logList = new LogList(
 			[
 			new Log( 1, 'ty', 'ac', '2014', 'Addshore', new PageIdentifier( null, 22 ), 'comment', [] ),

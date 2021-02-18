@@ -14,34 +14,27 @@ class Content {
 	/**
 	 * @var string sha1 hash of the object content upon creation
 	 */
-	private $initialHash;
+	private string $initialHash;
 
 	/**
 	 * @var mixed
 	 */
 	private $data;
 
-	/**
-	 * @var string|null
-	 */
-	private $model;
+	private ?string $model;
 
 	/**
 	 * Should always be called AFTER overriding constructors so a hash can be created
 	 *
 	 * @param mixed $data
-	 * @param string|null $model
 	 */
-	public function __construct( $data, $model = null ) {
+	public function __construct( $data, ?string $model = null ) {
 		$this->data = $data;
 		$this->model = $model;
 		$this->initialHash = $this->getHash();
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getModel() {
+	public function getModel(): ?string {
 		return $this->model;
 	}
 
@@ -49,7 +42,7 @@ class Content {
 	 * Returns a sha1 hash of the content
 	 *
 	 * @throws LogicException
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getHash() {
 		$data = $this->getData();
@@ -68,10 +61,8 @@ class Content {
 
 	/**
 	 * Has the content been changed since object construction (this shouldn't happen!)
-	 *
-	 * @return bool
 	 */
-	public function hasChanged() {
+	public function hasChanged(): bool {
 		return $this->initialHash !== $this->getHash();
 	}
 

@@ -14,7 +14,7 @@ class PageIdentifierTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 */
-	public function testValidConstruction( $title, $pageid, $identifiesPage ) {
+	public function testValidConstruction( ?Title $title, ?int $pageid, bool $identifiesPage ): void {
 		$pageIdentifier = new PageIdentifier( $title, $pageid );
 		if ( is_string( $title ) ) {
 			$this->assertEquals( new Title( $title ), $pageIdentifier->getTitle() );
@@ -25,7 +25,7 @@ class PageIdentifierTest extends TestCase {
 		$this->assertEquals( $identifiesPage, $pageIdentifier->identifiesPage() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 		[ null, null, false ],
 		[ new Title( 'Foo' ), null, true ],
@@ -34,7 +34,7 @@ class PageIdentifierTest extends TestCase {
 		];
 	}
 
-	public function provideRoundTripObjects() {
+	public function provideRoundTripObjects(): array {
 		return [
 		[ new PageIdentifier( null, null ) ],
 		[ new PageIdentifier( null, 44 ) ],
@@ -46,7 +46,7 @@ class PageIdentifierTest extends TestCase {
 	/**
 	 * @dataProvider provideRoundTripObjects
 	 */
-	public function testJsonRoundTrip( PageIdentifier $identifierObject ) {
+	public function testJsonRoundTrip( PageIdentifier $identifierObject ): void {
 		$json = $identifierObject->jsonSerialize();
 		$this->assertEquals( $identifierObject, PageIdentifier::jsonDeserialize( $json ) );
 	}

@@ -19,7 +19,7 @@
         ]
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "ext-curl": "*",
         "addwiki/mediawiki-api": "^3.0",
         "addwiki/mediawiki-api-base": "^3.0",

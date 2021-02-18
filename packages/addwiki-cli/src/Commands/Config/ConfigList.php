@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigList extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -37,7 +37,7 @@ class ConfigList extends Command {
 
 			if ( empty( $wikis ) ) {
 				$output->writeln( "You have no wikis configured" );
-				return null;
+				return 1;
 			}
 
 			$output->writeln( "You have the following wikis configured:" );
@@ -51,7 +51,7 @@ class ConfigList extends Command {
 
 			if ( empty( $users ) ) {
 				$output->writeln( "You have no users configured" );
-				return null;
+				return 1;
 			}
 
 			$output->writeln( "You have the following users configured:" );
@@ -59,5 +59,7 @@ class ConfigList extends Command {
 				$output->writeln( ' - ' . $userCode . ' => ' . $userData['username'] . ' (password hidden)' );
 			}
 		}
+
+		return 0;
 	}
 }

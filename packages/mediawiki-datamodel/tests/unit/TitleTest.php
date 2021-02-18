@@ -15,14 +15,14 @@ class TitleTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 */
-	public function testValidConstruction( $title, $ns ) {
+	public function testValidConstruction( string $title, int $ns ): void {
 		$titleObj = new Title( $title, $ns );
 		$this->assertEquals( $title, $titleObj->getText() );
 		$this->assertEquals( $title, $titleObj->getTitle() );
 		$this->assertEquals( $ns, $titleObj->getNs() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 		[ 'fooo', 0 ],
 		[ 'Foo:Bar', 15 ],
@@ -33,23 +33,18 @@ class TitleTest extends TestCase {
 	/**
 	 * @dataProvider provideInvalidConstruction
 	 */
-	public function testInvalidConstruction( $title, $ns ) {
+	public function testInvalidConstruction( string $title, int $ns ): void {
 		$this->expectException( InvalidArgumentException::class );
 		new Title( $title, $ns );
 	}
 
-	public function provideInvalidConstruction() {
+	public function provideInvalidConstruction(): array {
 		return [
-		[ [], [] ],
-		[ 'foo', [] ],
-		[ [], 1 ],
-		[ null, 1 ],
-		[ null, null ],
-		[ 'foo', null ],
+		[ '', 1 ],
 		];
 	}
 
-	public function testJsonRoundTrip() {
+	public function testJsonRoundTrip(): void {
 		$title = new Title( 'Foo', 19 );
 		$json = $title->jsonSerialize();
 		$this->assertEquals( $title, Title::jsonDeserialize( $json ) );

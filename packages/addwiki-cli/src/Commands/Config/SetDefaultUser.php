@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SetDefaultUser extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -35,10 +35,12 @@ class SetDefaultUser extends Command {
 
 		if ( !$appConfigHasUser ) {
 			$output->writeln( sprintf( 'No user with the code %s found', $code ) );
-			return -1;
+			return 1;
 		}
 
 		$this->appConfig->set( 'defaults.user', $code );
 		$output->writeln( sprintf( 'Default user set to: %s', $code ) );
+
+		return 0;
 	}
 }

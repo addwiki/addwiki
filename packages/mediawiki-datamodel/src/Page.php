@@ -6,15 +6,9 @@ use InvalidArgumentException;
 
 class Page {
 
-	/**
-	 * @var Revisions
-	 */
-	private $revisions;
+	private Revisions $revisions;
 
-	/**
-	 * @var PageIdentifier
-	 */
-	private $pageIdentifier;
+	private ?PageIdentifier $pageIdentifier;
 
 	/**
 	 * @param PageIdentifier|null $pageIdentifier
@@ -32,31 +26,23 @@ class Page {
 
 	/**
 	 * @deprecated since 0.5
-	 * @return int
 	 */
-	public function getId() {
+	public function getId(): ?int {
 		return $this->pageIdentifier->getId();
 	}
 
-	/**
-	 * @return Revisions
-	 */
-	public function getRevisions() {
+	public function getRevisions(): Revisions {
 		return $this->revisions;
 	}
 
 	/**
 	 * @deprecated since 0.5
-	 * @return Title
 	 */
-	public function getTitle() {
+	public function getTitle(): ?Title {
 		return $this->pageIdentifier->getTitle();
 	}
 
-	/**
-	 * @return PageIdentifier
-	 */
-	public function getPageIdentifier() {
+	public function getPageIdentifier(): ?PageIdentifier {
 		return $this->pageIdentifier;
 	}
 

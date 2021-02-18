@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SetDefaultWiki extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -35,10 +35,12 @@ class SetDefaultWiki extends Command {
 
 		if ( !$appConfigHasWiki ) {
 			$output->writeln( sprintf( 'No wiki with the code %s found', $code ) );
-			return -1;
+			return 1;
 		}
 
 		$this->appConfig->set( 'defaults.wiki', $code );
 		$output->writeln( sprintf( 'Default wiki set to: %s', $code ) );
+
+		return 0;
 	}
 }

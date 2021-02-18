@@ -15,10 +15,10 @@ class Pages {
 	/**
 	 * @var Page[]
 	 */
-	private $pages = [];
+	private array $pages = [];
 
 	/**
-	 * @param Page[] $pages
+	 * @param Page[]|Pages $pages
 	 */
 	public function __construct( $pages = [] ) {
 		$this->pages = [];
@@ -30,7 +30,7 @@ class Pages {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function addPages( $pages ) {
+	public function addPages( $pages ): void {
 		if ( !is_array( $pages ) && !$pages instanceof Pages ) {
 			throw new InvalidArgumentException( '$pages needs to either be an array or a Pages object' );
 		}
@@ -42,48 +42,29 @@ class Pages {
 		}
 	}
 
-	/**
-	 * @param Page $page
-	 */
-	public function addPage( Page $page ) {
+	public function addPage( Page $page ): void {
 		$this->pages[$page->getId()] = $page;
 	}
 
-	/**
-	 * @param int $id
-	 *
-	 * @return bool
-	 */
-	public function hasPageWithId( $id ) {
+	public function hasPageWithId( int $id ): bool {
 		return array_key_exists( $id, $this->pages );
 	}
 
-	/**
-	 * @param Page $page
-	 *
-	 * @return bool
-	 */
-	public function hasPage( Page $page ) {
+	public function hasPage( Page $page ): bool {
 		return array_key_exists( $page->getId(), $this->pages );
 	}
 
 	/**
 	 * @return Page|null Page or null if there is no page
 	 */
-	public function getLatest() {
+	public function getLatest(): ?Page {
 		if ( empty( $this->pages ) ) {
 			return null;
 		}
 		return $this->pages[ max( array_keys( $this->pages ) ) ];
 	}
 
-	/**
-	 * @param int $pageid
-	 *
-	 * @throws RuntimeException
-	 * @return Page
-	 */
-	public function get( $pageid ) {
+	public function get( int $pageid ): Page {
 		if ( $this->hasPageWithId( $pageid ) ) {
 			return $this->pages[$pageid];
 		}
@@ -93,7 +74,7 @@ class Pages {
 	/**
 	 * @return Page[]
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return $this->pages;
 	}
 }

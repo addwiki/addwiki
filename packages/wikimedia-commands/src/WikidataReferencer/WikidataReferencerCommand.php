@@ -38,59 +38,38 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
  */
 class WikidataReferencerCommand extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
+
+	private ?SparqlQueryRunner $sparqlQueryRunner = null;
+
+	private ?WikibaseFactory $wikibaseFactory = null;
+
+	private ?MediawikiApi $wikibaseApi = null;
+
+	private ?WikimediaMediawikiFactoryFactory $wmFactoryFactory = null;
+
+	private ?MicroDataExtractor $microDataExtractor = null;
 
 	/**
-	 * @var SparqlQueryRunner
+	 * @var Referencer[] 'type' => Referencer[]
 	 */
-	private $sparqlQueryRunner;
-
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
-
-	/**
-	 * @var MediawikiApi
-	 */
-	private $wikibaseApi;
-
-	/**
-	 * @var WikimediaMediawikiFactoryFactory
-	 */
-	private $wmFactoryFactory;
-
-	/**
-	 * @var MicroDataExtractor
-	 */
-	private $microDataExtractor;
-
-	/**
-	 * @var array 'type' => Referencer[]
-	 */
-	private $referencerMap = [];
+	private array $referencerMap = [];
 
 	/**
 	 * @var string[]
 	 */
-	private $instanceMap = [];
+	private array $instanceMap = [];
 
-	/**
-	 * @var Client
-	 */
-	private $externalLinkClient;
+	private ?Client $externalLinkClient = null;
 
-	/**
-	 * @var string
-	 */
-	private $tmpDir;
+	private ?string $tmpDir = null;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
 		parent::__construct( null );
 	}
 
-	public function initServices() {
+	public function initServices(): void {
 		$clientFactory = new ClientFactory(
 			[
 				'middleware' => [ EffectiveUrlMiddleware::middleware() ],
@@ -149,12 +128,7 @@ class WikidataReferencerCommand extends Command {
 			);
 	}
 
-	/**
-	 * @param string $link
-	 *
-	 * @return string
-	 */
-	private function normalizeExternalLink( $link ) {
+	private function normalizeExternalLink( string $link ): ?string {
 		if ( strpos( $link, '//' ) === 0 ) {
 			$link = 'http' . $link;
 		}
@@ -171,6 +145,9 @@ class WikidataReferencerCommand extends Command {
 		return $link;
 	}
 
+	/**
+	 * @return int
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$this->initServices();
 
@@ -232,11 +209,9 @@ class WikidataReferencerCommand extends Command {
 	}
 
 	/**
-	 * @param OutputInterface $output
 	 * @param ItemId[] $itemIds
-	 * @param bool $force
 	 */
-	private function executeForItemIds( OutputInterface $output, array $itemIds, $force ) {
+	private function executeForItemIds( OutputInterface $output, array $itemIds, bool $force ): void {
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 		$processedItemIdStrings = $this->getProcessedItemIdStrings();
 		$loopCounter = 0;
@@ -366,7 +341,7 @@ class WikidataReferencerCommand extends Command {
 				$linkRequests,
 				[
 					'fulfilled' => function ( $response )
-					use ( $externalLinkProgressBar, $item, $types, $referencesAddedToItem, $output ) {
+					use ( $externalLinkProgressBar, $item, $types, $referencesAddedToItem, $output ): void {
 						$externalLinkProgressBar->advance(); // 1st advance point
 
 						if ( $response instanceof ResponseInterface ) {
@@ -397,7 +372,7 @@ class WikidataReferencerCommand extends Command {
 						$externalLinkProgressBar->advance(); // 2nd advance point
 					},
 
-					'rejected' => function () use ( $externalLinkProgressBar ) {
+					'rejected' => function () use ( $externalLinkProgressBar ): void {
 						// TODO add this to some kind of verbose log?
 						$externalLinkProgressBar->advance(); // 1st advance point
 					},
@@ -416,7 +391,7 @@ class WikidataReferencerCommand extends Command {
 	/**
 	 * @return string[] ItemId serializations Q12 etc
 	 */
-	private function getProcessedItemIdStrings() {
+	private function getProcessedItemIdStrings(): array {
 		$path = $this->getProcessedListPath();
 		if ( file_exists( $path ) ) {
 			return explode( PHP_EOL, file_get_contents( $path ) );
@@ -424,11 +399,11 @@ class WikidataReferencerCommand extends Command {
 		return [];
 	}
 
-	private function markIdAsProcessed( ItemId $itemId ) {
+	private function markIdAsProcessed( ItemId $itemId ): void {
 		file_put_contents( $this->getProcessedListPath(), $itemId->getSerialization() . PHP_EOL, FILE_APPEND );
 	}
 
-	private function getProcessedListPath() {
+	private function getProcessedListPath(): string {
 		return $this->tmpDir . DIRECTORY_SEPARATOR . 'addwiki-wikidatareferencer-alreadydone.txt';
 	}
 

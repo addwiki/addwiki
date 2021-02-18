@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Installable with 7.4+ (including PHP8)
+- Typing added throughout
 - PSR4 namespacing. Now in `Addwiki\Mediawiki\Ext\Sitematrix`
 - Fix class usage issue in `MediawikiSitematrixFactory`
 

@@ -15,7 +15,7 @@ class UserTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 */
-	public function testValidConstruction( $name, $id, $editcount, $registration, $groups, $rights, $gender ) {
+	public function testValidConstruction( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ): void {
 		$user = new User( $name, $id, $editcount, $registration, $groups, $rights, $gender );
 		$this->assertEquals( $name, $user->getName() );
 		$this->assertEquals( $id, $user->getId() );
@@ -27,11 +27,10 @@ class UserTest extends TestCase {
 		$this->assertEquals( $gender, $user->getGender() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
-		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
 		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'female' ],
-		[ 'Username', 99999999, 99999997, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
+		[ 'Username', 2, 2, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
 		[ 'Username', 1, 1, null, [ 'groups' => [], 'implicitgroups' => [] ], [], 'female' ],
 		];
 	}
@@ -39,19 +38,13 @@ class UserTest extends TestCase {
 	/**
 	 * @dataProvider provideInvalidConstruction
 	 */
-	public function testInvalidConstruction( $name, $id, $editcount, $registration, $groups, $rights, $gender ) {
+	public function testInvalidConstruction( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ): void {
 		$this->expectException( InvalidArgumentException::class );
 		new User( $name, $id, $editcount, $registration, $groups, $rights, $gender );
 	}
 
-	public function provideInvalidConstruction() {
+	public function provideInvalidConstruction(): array {
 		return [
-		[ 'Username', 1, 1, 'TIMESTAMP', 'bad', [], 'male' ],
-		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], 'bad', 'male' ],
-		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 1 ],
-		[ 'Username', 1, 'bad', 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
-		[ 'Username', 'bad', 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
-		[ 14287941, 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'male' ],
 		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'foo' => [] ], [], 'male' ],
 		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [] ], [], 'male' ],
 		[ 'Username', 1, 1, 'TIMESTAMP', [], [], 'male' ],

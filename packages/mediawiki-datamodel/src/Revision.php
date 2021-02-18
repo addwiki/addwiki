@@ -9,51 +9,25 @@ namespace Addwiki\Mediawiki\DataModel;
  */
 class Revision {
 
-	/**
-	 * @var int Id of the revision
-	 */
-	private $id;
+	private Content $content;
 
-	/**
-	 * @var PageIdentifier of the page for the revision
-	 */
-	private $pageIdentifier;
+	private PageIdentifier $pageIdentifier;
 
-	/**
-	 * @var Content
-	 */
-	private $content;
+	private ?int $id;
 
-	/**
-	 * @var EditInfo
-	 */
-	private $editInfo;
+	private EditInfo $editInfo;
 
-	/**
-	 * @var null|string
-	 */
-	private $user;
+	private ?string $user;
 
-	/**
-	 * @var null|string
-	 */
-	private $timestamp;
+	private ?string $timestamp;
 
-	/**
-	 * @param Content $content
-	 * @param PageIdentifier|null $pageIdentifier
-	 * @param int|null $revId
-	 * @param EditInfo|null $editInfo
-	 * @param string|null $user
-	 * @param string|null $timestamp
-	 */
 	public function __construct(
 		Content $content,
-		PageIdentifier $pageIdentifier = null,
-		$revId = null,
-		EditInfo $editInfo = null,
-		$user = null,
-		$timestamp = null
+		?PageIdentifier $pageIdentifier = null,
+		?int $id = null,
+		?EditInfo $editInfo = null,
+		?string $user = null,
+		?string $timestamp = null
 		) {
 		if ( $editInfo === null ) {
 			$editInfo = new EditInfo();
@@ -63,51 +37,33 @@ class Revision {
 		}
 		$this->content = $content;
 		$this->pageIdentifier = $pageIdentifier;
-		$this->id = $revId;
+		$this->id = $id;
 		$this->editInfo = $editInfo;
 		$this->user = $user;
 		$this->timestamp = $timestamp;
 	}
 
-	/**
-	 * @return Content
-	 */
-	public function getContent() {
+	public function getContent(): Content {
 		return $this->content;
 	}
 
-	/**
-	 * @return EditInfo
-	 */
-	public function getEditInfo() {
+	public function getEditInfo(): EditInfo {
 		return $this->editInfo;
 	}
 
-	/**
-	 * @return int|null
-	 */
-	public function getId() {
+	public function getId(): ?int {
 		return $this->id;
 	}
 
-	/**
-	 * @return PageIdentifier|null
-	 */
-	public function getPageIdentifier() {
+	public function getPageIdentifier(): PageIdentifier {
 		return $this->pageIdentifier;
 	}
 
-	/**
-	 * @return null|string
-	 */
-	public function getUser() {
+	public function getUser(): ?string {
 		return $this->user;
 	}
 
-	/**
-	 * @return null|string
-	 */
-	public function getTimestamp() {
+	public function getTimestamp(): ?string {
 		return $this->timestamp;
 	}
 

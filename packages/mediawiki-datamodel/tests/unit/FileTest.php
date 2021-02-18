@@ -17,7 +17,7 @@ class FileTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 */
-	public function testValidConstruction( $url ) {
+	public function testValidConstruction( string $url ): void {
 		$file = new File(
 			$url,
 			new PageIdentifier( $this->newMockTitle(), 1 ),
@@ -26,18 +26,24 @@ class FileTest extends TestCase {
 		$this->assertEquals( $url, $file->getUrl() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 		[ 'http://upload.wikimedia.org/wikipedia/en/3/39/Journal_of_Geek_Studies_-_logo.jpg' ],
 		];
 	}
 
+	/**
+	 * @return Title&MockObject
+	 */
 	private function newMockTitle() {
 		return $this->getMockBuilder( Title::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}
 
+	/**
+	 * @return Revisions&MockObject
+	 */
 	private function newMockRevisions() {
 		return $this->getMockBuilder( Revisions::class )
 			->disableOriginalConstructor()

@@ -13,10 +13,7 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class SparqlQueryRunner {
 
-	/**
-	 * @var Client
-	 */
-	private $client;
+	private \GuzzleHttp\Client $client;
 
 	/**
 	 * @param Client $guzzleClient
@@ -31,7 +28,7 @@ class SparqlQueryRunner {
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ) {
+	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ): array {
 		if ( empty( $simpleQueryParts ) ) {
 			throw new InvalidArgumentException( "Can't run a SPARQL query with no simple parts" );
 		}
@@ -56,11 +53,10 @@ class SparqlQueryRunner {
 	}
 
 	/**
-	 * @param string $query
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsFromQuery( $query ) {
+	public function getItemIdsFromQuery( string $query ): array {
 		if ( !is_string( $query ) ) {
 			throw new InvalidArgumentException( "SPARQL query must be a string!" );
 		}
@@ -78,7 +74,10 @@ class SparqlQueryRunner {
 		return $itemIds;
 	}
 
-	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ) {
+	/**
+	 * @return mixed[]
+	 */
+	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ): array {
 		// TODO fix this ugliness
 		$query = "PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>

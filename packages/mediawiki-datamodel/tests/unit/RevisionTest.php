@@ -18,7 +18,7 @@ class RevisionTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
 	 */
-	public function testValidConstruction( $content, $pageIdentifier, $id, $editInfo, $user, $timestamp ) {
+	public function testValidConstruction( Content $content, ?PageIdentifier $pageIdentifier, ?int $id, ?EditInfo $editInfo, ?string $user, ?string $timestamp ): void {
 		$rev = new Revision( $content, $pageIdentifier, $id, $editInfo, $user, $timestamp );
 		$this->assertEquals( $content, $rev->getContent() );
 		if ( $pageIdentifier !== null ) {
@@ -37,7 +37,7 @@ class RevisionTest extends TestCase {
 		$this->assertEquals( $timestamp, $rev->getTimestamp() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()
 			->getMock();

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RestoreRevisions extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -98,7 +98,7 @@ class RestoreRevisions extends Command {
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
-			return -1;
+			return 1;
 		}
 
 		$mwFactory = new MediawikiFactory( $api );
@@ -117,12 +117,12 @@ class RestoreRevisions extends Command {
 
 			if ( $goodText === $currentText ) {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
-				return null;
+				return 0;
 			}
 			$asheaderInputOption = $input->getOption( 'asheader' );
 
 			if ( $asheaderInputOption ) {
-				if ( strstr( $currentText, $goodText ) ) {
+				if ( strstr( $currentText, (string)$goodText ) ) {
 					$goodText = $goodText . "\n\n" . trim( str_replace( $goodText, '', $currentText ) );
 				} else {
 					$goodText = $goodText . "\n\n" . $currentText;
@@ -147,9 +147,12 @@ class RestoreRevisions extends Command {
 			}
 		}
 
-		return null;
+		return 0;
 	}
 
+	/**
+	 * @return mixed[]|string
+	 */
 	private function getEditSummary( $rawSummary, $revid ) {
 		return str_replace( '$revid', $revid, $rawSummary );
 	}

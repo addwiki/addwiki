@@ -28,22 +28,13 @@ use Wikibase\DataModel\Snak\SnakList;
  */
 class WikidataReferenceDateFixer extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $wikibaseApi;
+	private MediawikiApi $wikibaseApi;
 
-	/**
-	 * @var SparqlQueryRunner
-	 */
-	private $sparqlQueryRunner;
+	private SparqlQueryRunner $sparqlQueryRunner;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -124,7 +115,7 @@ class WikidataReferenceDateFixer extends Command {
 			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in to wikidata wiki' );
-			return -1;
+			return 1;
 		}
 
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
@@ -200,11 +191,10 @@ class WikidataReferenceDateFixer extends Command {
 	}
 
 	/**
-	 * @param string $timestamp
 	 *
 	 * @return string|bool false if we cant really tell how to fix this
 	 */
-	private function getFixedTimestamp( $timestamp ) {
+	private function getFixedTimestamp( string $timestamp ) {
 		$currentYear = date( 'Y' );
 		$lastYear = ( (int)date( 'Y' ) ) - 1;
 

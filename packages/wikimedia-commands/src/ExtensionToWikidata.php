@@ -24,7 +24,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class ExtensionToWikidata extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -76,7 +76,7 @@ class ExtensionToWikidata extends Command {
 		$loggedIn = $targetApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in to target wiki' );
-			return -1;
+			return 1;
 		}
 
 		$sourceMwFactory = new MediawikiFactory( $sourceApi );
@@ -155,6 +155,8 @@ class ExtensionToWikidata extends Command {
 				$item->getId()
 			);
 		}
+
+		return 0;
 	}
 
 }

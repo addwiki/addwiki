@@ -61,11 +61,8 @@ jobs:
                     coverage: none
 
             -
-                if: "matrix.php == 7.3"
-                run: composer update  --no-progress --ansi --prefer-lowest
-            -
                 if: "matrix.php == 7.4"
-                uses: "ramsey/composer-install@v1"
+                run: composer update  --no-progress --ansi --prefer-lowest
             -
                 if: "matrix.php >= 8"
                 uses: "ramsey/composer-install@v1"

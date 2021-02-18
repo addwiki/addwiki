@@ -9,25 +9,20 @@ use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\EntityIdValue;
+use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class MultiTextReferencer implements Referencer {
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var string[]
 	 */
-	private $propMap = [];
+	private array $propMap = [];
 
-	/**
-	 * @var array
-	 */
-	private $regexMap = [];
+	private array $regexMap = [];
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
@@ -42,7 +37,10 @@ class MultiTextReferencer implements Referencer {
 		$this->regexMap = $regexMap;
 	}
 
-	public function addReferences( MicroData $microData, $item, $sourceUrl ) {
+	/**
+	 * @return int
+	 */
+	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int {
 		$referenceCounter = 0;
 
 		foreach ( $this->propMap as $propertyIdString => $schemaPropertyString ) {

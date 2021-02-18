@@ -10,24 +10,16 @@ use JsonSerializable;
  */
 class Title implements JsonSerializable {
 
-	/**
-	 * @var string
-	 */
-	private $title;
+	private string $title;
+
+	private int $ns;
 
 	/**
-	 * @var int
-	 */
-	private $ns;
-
-	/**
-	 * @param string $title
-	 * @param int $ns
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( $title, $ns = 0 ) {
-		if ( !is_string( $title ) ) {
+	public function __construct( string $title, int $ns = 0 ) {
+		if ( !is_string( $title ) || empty( $title ) ) {
 			throw new InvalidArgumentException( '$title must be a string' );
 		}
 		if ( !is_int( $ns ) ) {
@@ -38,31 +30,29 @@ class Title implements JsonSerializable {
 	}
 
 	/**
-	 * @return int
 	 * @since 0.1
 	 */
-	public function getNs() {
+	public function getNs(): int {
 		return $this->ns;
 	}
 
 	/**
-	 * @return string
 	 * @since 0.6
 	 */
-	public function getText() {
+	public function getText(): string {
 		return $this->title;
 	}
 
 	/**
-	 * @return string
 	 * @deprecated in 0.6 use getText (makes things look cleaner)
 	 */
-	public function getTitle() {
+	public function getTitle(): string {
 		return $this->getText();
 	}
 
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * @return array [ 'title' => string, 'ns' => int ]
 	 */
 	public function jsonSerialize() {
 		return [
@@ -71,12 +61,7 @@ class Title implements JsonSerializable {
 		];
 	}
 
-	/**
-	 * @param array $json
-	 *
-	 * @return self
-	 */
-	public static function jsonDeserialize( $json ) {
+	public static function jsonDeserialize( array $json ): Title {
 		return new self( $json['title'], $json['ns'] );
 	}
 

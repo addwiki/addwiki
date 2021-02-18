@@ -19,7 +19,7 @@
         ]
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "addwiki/mediawiki-commands": "^3.0",
         "addwiki/wikimedia-commands": "^3.0",
         "symfony/console": "~4.0",

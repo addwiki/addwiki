@@ -21,17 +21,14 @@ class MicroData {
 	/**
 	 * @var array[]
 	 */
-	private $properties = [];
+	private array $properties = [];
 
 	/**
 	 * @var string[]
 	 */
-	private $types = [];
+	private array $types = [];
 
-	/**
-	 * @var string|null
-	 */
-	private $id;
+	private ?string $id;
 
 	/**
 	 * @param stdClass|null $object that can have the following defined:
@@ -62,40 +59,33 @@ class MicroData {
 	/**
 	 * @return null|string
 	 */
-	public function getId() {
+	public function getId(): ?string {
 		return $this->id;
 	}
 
 	/**
 	 * @return string[]
 	 */
-	public function getTypes() {
+	public function getTypes(): array {
 		return $this->types;
 	}
 
-	/**
-	 * @param string $type
-	 *
-	 * @return bool
-	 */
-	public function hasType( $type ) {
+	public function hasType( string $type ): bool {
 		return in_array( $type, $this->types ) || in_array( "http://schema.org/" . $type, $this->types );
 	}
 
 	/**
 	 * @return array[]
 	 */
-	public function getProperties() {
+	public function getProperties(): array {
 		return $this->properties;
 	}
 
 	/**
-	 * @param string $name
 	 * @param int|null $propType self::PROP_* constant
-	 *
-	 * @return self[]|string[]
+	 * @return mixed[]
 	 */
-	public function getProperty( $name, $propType = null ) {
+	public function getProperty( string $name, ?int $propType = null ): array {
 		$properties = [];
 		if ( array_key_exists( $name, $this->properties ) ) {
 			foreach ( $this->properties[$name] as $property ) {
@@ -108,12 +98,10 @@ class MicroData {
 	}
 
 	/**
-	 * @param string $name
 	 * @param int|null $propType self::PROP_* constant
-	 *
-	 * @return self|string|null
+	 * @return mixed|null
 	 */
-	public function getFirstProperty( $name, $propType = null ) {
+	public function getFirstProperty( string $name, ?int $propType = null ) {
 		if ( array_key_exists( $name, $this->properties ) ) {
 			foreach ( $this->properties[$name] as $property ) {
 				if ( $this->propertyIsOfPropType( $property, $propType ) ) {
@@ -125,23 +113,19 @@ class MicroData {
 	}
 
 	/**
-	 * @param string $name
 	 * @param int|null $propType self::PROP_* constant
 	 *
-	 * @return bool
 	 */
-	public function hasProperty( $name, $propType = null ) {
+	public function hasProperty( string $name, ?int $propType = null ): bool {
 		return array_key_exists( $name, $this->properties ) &&
 			$this->getFirstProperty( $name, $propType ) !== null;
 	}
 
 	/**
 	 * @param string|MicroData $property
-	 * @param int| null|null $type self::PROP_* constant
-	 *
-	 * @return bool
+	 * @param int|null|null $type self::PROP_* constant
 	 */
-	private function propertyIsOfPropType( $property, $type = null ) {
+	private function propertyIsOfPropType( $property, ?int $type = null ): bool {
 		if ( $type === null ) {
 			return true;
 		}

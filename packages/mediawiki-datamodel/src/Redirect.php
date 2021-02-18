@@ -6,30 +6,25 @@ use JsonSerializable;
 
 class Redirect implements JsonSerializable {
 
-	private $from;
-	private $to;
+	private Title $from;
+	private Title $to;
 
 	public function __construct( Title $from, Title $to ) {
 		$this->from = $from;
 		$this->to = $to;
 	}
 
-	/**
-	 * @return Title
-	 */
-	public function getFrom() {
+	public function getFrom(): Title {
 		return $this->from;
 	}
 
-	/**
-	 * @return Title
-	 */
-	public function getTo() {
+	public function getTo(): Title {
 		return $this->to;
 	}
 
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * @return array <string mixed>
 	 */
 	public function jsonSerialize() {
 		return [
@@ -38,12 +33,7 @@ class Redirect implements JsonSerializable {
 		];
 	}
 
-	/**
-	 * @param array $json
-	 *
-	 * @return self
-	 */
-	public static function jsonDeserialize( $json ) {
+	public static function jsonDeserialize( array $json ): Redirect {
 		return new self(
 		Title::jsonDeserialize( $json['from'] ),
 		Title::jsonDeserialize( $json['to'] )

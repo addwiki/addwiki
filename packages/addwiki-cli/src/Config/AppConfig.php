@@ -11,19 +11,19 @@ use Symfony\Component\Yaml\Yaml;
  */
 class AppConfig implements ArrayAccess {
 
-	private $configDirectory;
-	private $configFilename = 'aww.yml';
-	private $path;
+	private string $configDirectory;
+	private string $configFilename = 'aww.yml';
+	private string $path;
 
 	private $data;
-	private $isLoaded;
+	private ?bool $isLoaded = null;
 
 	public function __construct( $pwd ) {
 		$this->configDirectory = $pwd . '/config';
 		$this->path = $this->configDirectory . DIRECTORY_SEPARATOR . $this->configFilename;
 	}
 
-	private function load() {
+	private function load(): void {
 		$this->isLoaded = true;
 		$this->createIfNotExists();
 		$data = Yaml::parse( file_get_contents( $this->path ) );
@@ -34,11 +34,11 @@ class AppConfig implements ArrayAccess {
 		$this->data = $data;
 	}
 
-	private function save() {
+	private function save(): void {
 		file_put_contents( $this->path, Yaml::dump( $this->data ) );
 	}
 
-	private function createIfNotExists() {
+	private function createIfNotExists(): void {
 		if ( !file_exists( $this->path ) ) {
 			file_put_contents( $this->path, Yaml::dump( [] ) );
 		}
@@ -64,7 +64,7 @@ class AppConfig implements ArrayAccess {
 		throw new LogicException();
 	}
 
-	public function set( $name, $value ) {
+	public function set( $name, $value ): void {
 		$temp = &$this->data;
 		foreach ( explode( '.', $name ) as $key ) {
 			$temp = &$temp[$key];
@@ -75,20 +75,17 @@ class AppConfig implements ArrayAccess {
 		$this->save();
 	}
 
-	public function has( $name ) {
+	public function has( $name ): bool {
 		return $this->get( $name ) !== null;
 	}
 
-	private function loadIfNotLoaded() {
+	private function loadIfNotLoaded(): void {
 		if ( !$this->isLoaded ) {
 			$this->load();
 		}
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function isEmpty() {
+	public function isEmpty(): bool {
 		$this->loadIfNotLoaded();
 		return empty( $this->data );
 	}

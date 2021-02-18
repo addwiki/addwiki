@@ -13,21 +13,14 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class SparqlQueryRunner {
 
-	/**
-	 * @var Client
-	 */
-	private $client;
+	private Client $client;
+
+	private string $sparqlEndpoint;
 
 	/**
-	 * @var string
-	 */
-	private $sparqlEndpoint;
-
-	/**
-	 * @param Client $guzzleClient
 	 * @param string $sparqlEndpoint eg. 'https://query.wikidata.org/bigdata/namespace/wdq/sparql'
 	 */
-	public function __construct( Client $guzzleClient, $sparqlEndpoint ) {
+	public function __construct( Client $guzzleClient, string $sparqlEndpoint ) {
 		$this->client = $guzzleClient;
 		$this->sparqlEndpoint = $sparqlEndpoint;
 	}
@@ -38,7 +31,7 @@ class SparqlQueryRunner {
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ) {
+	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ): array {
 		if ( empty( $simpleQueryParts ) ) {
 			throw new InvalidArgumentException( "Can't run a SPARQL query with no simple parts" );
 		}
@@ -63,11 +56,10 @@ class SparqlQueryRunner {
 	}
 
 	/**
-	 * @param string $query
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsFromQuery( $query ) {
+	public function getItemIdsFromQuery( string $query ): array {
 		if ( !is_string( $query ) ) {
 			throw new InvalidArgumentException( "SPARQL query must be a string!" );
 		}

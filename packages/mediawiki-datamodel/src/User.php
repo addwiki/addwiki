@@ -11,57 +11,34 @@ use InvalidArgumentException;
  */
 class User {
 
-	/**
-	 * @var string
-	 */
-	private $name;
+	private string $name;
 
-	/**
-	 * @var int
-	 */
-	private $id;
+	private int $id;
 
-	/**
-	 * @var int
-	 */
-	private $editcount;
+	private int $editcount;
 
-	/**
-	 * @var string
-	 */
-	private $registration;
+	private ?string $registration;
 
 	/**
 	 * @var array
 	 */
 	private $groups = [];
 
-	/**
-	 * @var array
-	 */
-	private $rights = [];
+	private array $rights = [];
+
+	private string $gender;
 
 	/**
-	 * @var string
-	 */
-	private $gender;
-
-	/**
-	 * @param string $name
-	 * @param int $id
-	 * @param int $editcount
-	 * @param string $registration
 	 * @param array[] $groups groups grouped by type.
 	 *                              Keys to use are
 	 *                              'groups' and
 	 *                              'implicitgroups' as
 	 *                              returned by the api.
-	 * @param array $rights
-	 * @param string $gender
 	 *
 	 * @throws InvalidArgumentException
+	 * @param mixed[] $rights
 	 */
-	public function __construct( $name, $id, $editcount, $registration, $groups, $rights, $gender ) {
+	public function __construct( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ) {
 		if ( !is_string( $name ) || empty( $name ) ) {
 			throw new InvalidArgumentException( '$name must be a string and can not be empty' );
 		}
@@ -90,54 +67,39 @@ class User {
 		$this->rights = $rights;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getEditcount() {
+	public function getEditcount(): int {
 		return $this->editcount;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getGender() {
+	public function getGender(): string {
 		return $this->gender;
 	}
 
 	/**
 	 * @param string $type 'groups' or 'implicitgroups'
 	 *
-	 * @return array
+	 * @return mixed[]
 	 */
-	public function getGroups( $type = 'groups' ) {
+	public function getGroups( string $type = 'groups' ): array {
 		return $this->groups[$type];
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getId() {
+	public function getId(): int {
 		return $this->id;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->name;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getRegistration() {
+	public function getRegistration(): ?string {
 		return $this->registration;
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
-	public function getRights() {
+	public function getRights(): array {
 		return $this->rights;
 	}
 

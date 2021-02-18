@@ -16,12 +16,12 @@ class LogList implements JsonSerializable {
 	/**
 	 * @var Log[]
 	 */
-	private $logs = [];
+	private array $logs = [];
 
 	/**
 	 * @param Log[] $logs
 	 */
-	public function __construct( $logs = [] ) {
+	public function __construct( array $logs = [] ) {
 		$this->logs = [];
 		$this->addLogs( $logs );
 	}
@@ -31,7 +31,7 @@ class LogList implements JsonSerializable {
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function addLogs( $logs ) {
+	public function addLogs( $logs ): void {
 		if ( !is_array( $logs ) && !$logs instanceof LogList ) {
 			throw new InvalidArgumentException( '$logs needs to either be an array or a LogList object' );
 		}
@@ -46,32 +46,25 @@ class LogList implements JsonSerializable {
 	/**
 	 * @param Log $log
 	 */
-	public function addLog( Log $log ) {
+	public function addLog( Log $log ): void {
 		$this->logs[$log->getId()] = $log;
 	}
 
-	/**
-	 * @param int $id
-	 *
-	 * @return bool
-	 */
-	public function hasLogWithId( $id ) {
+	public function hasLogWithId( int $id ): bool {
 		return array_key_exists( $id, $this->logs );
 	}
 
 	/**
 	 * @param Log $log
-	 *
-	 * @return bool
 	 */
-	public function hasLog( Log $log ) {
+	public function hasLog( Log $log ): bool {
 		return array_key_exists( $log->getId(), $this->logs );
 	}
 
 	/**
 	 * @return Log|null Log or null if there is no log
 	 */
-	public function getLatest() {
+	public function getLatest(): ?Log {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
@@ -82,7 +75,7 @@ class LogList implements JsonSerializable {
 	 * @since 0.6
 	 * @return Log|null Log or null if there is no log
 	 */
-	public function getOldest() {
+	public function getOldest(): ?Log {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
@@ -91,19 +84,16 @@ class LogList implements JsonSerializable {
 
 	/**
 	 * @since 0.6
-	 * @return bool
 	 */
-	public function isEmpty() {
+	public function isEmpty(): bool {
 		return empty( $this->logs );
 	}
 
 	/**
-	 * @param int $id
 	 *
 	 * @throws RuntimeException
-	 * @return Log
 	 */
-	public function get( $id ) {
+	public function get( int $id ): Log {
 		if ( $this->hasLogWithId( $id ) ) {
 			return $this->logs[$id];
 		}
@@ -113,23 +103,19 @@ class LogList implements JsonSerializable {
 	/**
 	 * @return Log[]
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return $this->logs;
 	}
 
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+	 * @return Log[]
 	 */
 	public function jsonSerialize() {
 		return $this->toArray();
 	}
 
-	/**
-	 * @param array $json
-	 *
-	 * @return self
-	 */
-	public static function jsonDeserialize( $json ) {
+	public static function jsonDeserialize( array $json ): LogList {
 		$self = new LogList();
 		foreach ( $json as $logJson ) {
 			$self->addLog( Log::jsonDeserialize( $logJson ) );

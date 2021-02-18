@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class EditPage extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -103,7 +103,7 @@ class EditPage extends Command {
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
-			return -1;
+			return 1;
 		}
 
 		$mwFactory = new MediawikiFactory( $api );

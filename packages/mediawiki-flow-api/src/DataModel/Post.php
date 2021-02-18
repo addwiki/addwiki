@@ -6,6 +6,9 @@ class Post {
 
 	private $id;
 	private $content;
+	/**
+	 * @var null
+	 */
 	private $inResponseTo;
 
 	public function __construct( $id, $content, $inResponseTo = null ) {

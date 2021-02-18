@@ -10,49 +10,19 @@ use InvalidArgumentException;
  * @author gbirke
  */
 class NamespaceInfo {
-	/**
-	 * @var int
-	 */
-	private $id;
+	private int $id;
 
-	/**
-	 * @var string
-	 */
-	private $canonicalName;
+	private string $canonicalName;
 
-	/**
-	 * @var string
-	 */
-	private $localName;
+	private string $localName;
 
-	/**
-	 * @var string
-	 */
-	private $caseHandling;
+	private string $caseHandling;
 
-	/**
-	 * @var string
-	 */
-	private $defaultContentModel;
+	private ?string $defaultContentModel;
 
-	/**
-	 * @var array
-	 */
-	private $aliases = [];
+	private array $aliases = [];
 
-	/**
-	 * NamespaceInfo constructor.
-	 *
-	 * @param int $id
-	 * @param string $canonicalName
-	 * @param string $localName
-	 * @param string $caseHandling
-	 * @param string|null $defaultContentModel
-	 * @param array $aliases
-	 *
-	 * @throws InvalidArgumentException
-	 */
-	public function __construct( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null, $aliases = [] ) {
+	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {
 		if ( !is_int( $id ) ) {
 			throw new InvalidArgumentException( '$id must be an integer' );
 		}
@@ -81,45 +51,30 @@ class NamespaceInfo {
 		$this->aliases = $aliases;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getId() {
+	public function getId(): int {
 		return $this->id;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getCanonicalName() {
+	public function getCanonicalName(): string {
 		return $this->canonicalName;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getLocalName() {
+	public function getLocalName(): string {
 		return $this->localName;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getCaseHandling() {
+	public function getCaseHandling(): string {
 		return $this->caseHandling;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getDefaultContentModel() {
+	public function getDefaultContentModel(): ?string {
 		return $this->defaultContentModel;
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
-	public function getAliases() {
+	public function getAliases(): array {
 		return $this->aliases;
 	}
 
