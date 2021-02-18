@@ -15,8 +15,8 @@ class FluentRequest implements Request {
 		return $this->headers;
 	}
 
-	public static function factory(): FluentRequest {
-		return new FluentRequest();
+	public static function factory(): self {
+		return new self();
 	}
 
 	public function setAction( string $action ): self {
