@@ -18,24 +18,16 @@ use DataValues\TimeValue;
 use DataValues\UnknownValue;
 use Wikibase\DataModel\Entity\EntityIdValue;
 
-/**
- * @author Addshore
- * @since 0.1
- */
 class WikimediaFactory {
 
 	/**
 	 * @param string $domain eg. 'en.wikipedia.org'
-	 *
-	 * @since 0.1
 	 */
 	public function newMediawikiApiForDomain( string $domain ): MediawikiApi {
 		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php' );
 	}
 
 	/**
-	 * @since 0.1
-	 *
 	 * @param string $domain eg. 'en.wikipedia.org'
 	 */
 	public function newMediawikiFactoryForDomain( string $domain ): MediawikiFactory {
@@ -43,8 +35,6 @@ class WikimediaFactory {
 	}
 
 	/**
-	 * @since 0.1
-	 *
 	 * @param string $domain eg. 'wikidata.org'
 	 */
 	public function newWikibaseFactoryForDomain( string $domain ): WikibaseFactory {
@@ -85,16 +75,10 @@ class WikimediaFactory {
 		);
 	}
 
-	/**
-	 * @since 3.0
-	 */
 	public function newWikidataWikibaseFactory(): WikibaseFactory {
 		return $this->newWikibaseFactoryForDomain( 'wikidata.org' );
 	}
 
-	/**
-	 * @since 3.0
-	 */
 	public function newCommonsWikibaseFactory(): WikibaseFactory {
 		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org' );
 	}

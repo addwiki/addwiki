@@ -6,9 +6,6 @@ use ArrayAccess;
 use LogicException;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * @author Addshore
- */
 class AppConfig implements ArrayAccess {
 
 	private string $configDirectory;
