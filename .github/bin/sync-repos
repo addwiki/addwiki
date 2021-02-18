@@ -80,14 +80,6 @@ gh api --method PATCH repos/addwiki/wikimedia \
     --field has_projects='false'\
     --field has_wiki='false'
 
-## WIP Repositories
-gh api --method PATCH repos/addwiki/mediawiki-db \
-    --field description='[READ-ONLY] WIP library for interacting with a MediaWiki database'\
-    --field homepage='https://addwiki.github.io/'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
-
 ## Utility Repositories
 gh api --method PATCH repos/addwiki/addwiki.github.io \
     --field description='Github Pages Deployment for addwiki'\
@@ -97,6 +89,7 @@ gh api --method PATCH repos/addwiki/addwiki.github.io \
     --field has_wiki='false'
 
 ## Archived Repositories
+#addwiki/mediawiki-db
 #addwiki/mediawiki-dump
 #addwiki/mediawiki-services
 #addwiki/readthedocs

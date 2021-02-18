@@ -13,14 +13,12 @@
             ],
             "Addwiki\\Mediawiki\\Commands\\": "packages/mediawiki-commands/src/",
             "Addwiki\\Mediawiki\\DataModel\\": "packages/mediawiki-datamodel/src/",
-            "Addwiki\\Mediawiki\\Db\\": "packages/mediawiki-db/src/",
             "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
             "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
             "Addwiki\\Wikibase\\": "packages/wikibase-api/src/",
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
-            "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/",
-            "Mediawiki\\Db\\": "packages/mediawiki-db/src/"
+            "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/"
         }
     },
     "require": {
@@ -69,7 +67,6 @@
         "addwiki/mediawiki-api-base": "2.8.0",
         "addwiki/mediawiki-commands": "2.8.0",
         "addwiki/mediawiki-datamodel": "2.8.0",
-        "addwiki/mediawiki-db": "2.8.0",
         "addwiki/mediawiki-flow-api": "2.8.0",
         "addwiki/mediawiki-sitematrix-api": "2.8.0",
         "addwiki/wikibase-api": "2.8.0",

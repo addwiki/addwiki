@@ -30,7 +30,6 @@ Every package also exists in it's own read only git repository, can be used sepa
 - [wikimedia](https://github.com/addwiki/wikimedia)
 - [mediawiki-sitematrix-api](https://github.com/addwiki/mediawiki-sitematrix-api)
 - [mediawiki-flow-api](https://github.com/addwiki/mediawiki-flow-api)
-- [mediawiki-db](https://github.com/addwiki/mediawiki-db)
 
 ## Using the monorepo
 
