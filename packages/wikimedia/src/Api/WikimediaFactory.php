@@ -27,10 +27,9 @@ class WikimediaFactory {
 	/**
 	 * @param string $domain eg. 'en.wikipedia.org'
 	 *
-	 * @return MediawikiApi
 	 * @since 0.1
 	 */
-	public function newMediawikiApiForDomain( $domain ) {
+	public function newMediawikiApiForDomain( string $domain ): MediawikiApi {
 		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php' );
 	}
 
@@ -38,10 +37,8 @@ class WikimediaFactory {
 	 * @since 0.1
 	 *
 	 * @param string $domain eg. 'en.wikipedia.org'
-	 *
-	 * @return MediawikiFactory
 	 */
-	public function newMediawikiFactoryForDomain( $domain ) {
+	public function newMediawikiFactoryForDomain( string $domain ): MediawikiFactory {
 		return new MediawikiFactory( $this->newMediawikiApiForDomain( $domain ) );
 	}
 
@@ -49,10 +46,8 @@ class WikimediaFactory {
 	 * @since 0.1
 	 *
 	 * @param string $domain eg. 'wikidata.org'
-	 *
-	 * @return WikibaseFactory
 	 */
-	public function newWikibaseFactoryForDomain( $domain ) {
+	public function newWikibaseFactoryForDomain( string $domain ): WikibaseFactory {
 		if (
 			strstr( $domain, 'wikidata.org' ) === true ||
 			strstr( $domain, 'commons.wikimedia.org' ) === true
@@ -92,17 +87,15 @@ class WikimediaFactory {
 
 	/**
 	 * @since 3.0
-	 * @return WikibaseFactory
 	 */
-	public function newWikidataWikibaseFactory() {
+	public function newWikidataWikibaseFactory(): WikibaseFactory {
 		return $this->newWikibaseFactoryForDomain( 'wikidata.org' );
 	}
 
 	/**
 	 * @since 3.0
-	 * @return WikibaseFactory
 	 */
-	public function newCommonsWikibaseFactory() {
+	public function newCommonsWikibaseFactory(): WikibaseFactory {
 		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org' );
 	}
 

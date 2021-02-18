@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigList extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -29,6 +29,9 @@ class ConfigList extends Command {
 			);
 	}
 
+	/**
+	 * @return null|void
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$items = $input->getArgument( 'items' );
 

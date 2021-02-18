@@ -14,7 +14,7 @@ class MicroDataExtractor {
 	 *
 	 * @return MicroData[] array of microdata things
 	 */
-	public function extract( $html ) {
+	public function extract( string $html ): array {
 		$microDatas = [];
 		$md = new MicrodataPhp( [ 'html' => $html ] );
 

@@ -27,7 +27,7 @@ class SiteListGetterTest extends TestCase {
 			->getMock();
 	}
 
-	public function testGetSiteList() {
+	public function testGetSiteList(): void {
 		$mockApi = $this->getMockApi();
 
 		$siteMatrixArray = [

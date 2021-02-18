@@ -8,19 +8,16 @@ use Addwiki\Mediawiki\Ext\Flow\DataModel\Topic;
 
 class TopicCreator {
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $api;
+	private MediawikiApi $api;
 
 	/**
-	 * @param \Addwiki\Mediawiki\Api\Client\MediawikiApi $api
+	 * @param MediawikiApi $api
 	 */
 	public function __construct( MediawikiApi $api ) {
 		$this->api = $api;
 	}
 
-	public function create( Topic $topic ) {
+	public function create( Topic $topic ): void {
 		$this->api->postRequest( new SimpleRequest(
 			'flow',
 			[

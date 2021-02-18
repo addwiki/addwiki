@@ -31,7 +31,7 @@ use Serializers\Serializer;
  */
 class WikibaseFactoryTest extends TestCase {
 
-	public function provideMethodsAndClasses() {
+	public function provideMethodsAndClasses(): array {
 		return [
 			[ 'newAliasGroupSetter',AliasGroupSetter::class ],
 			[ 'newStatementCreator',StatementCreator::class ],
@@ -54,8 +54,10 @@ class WikibaseFactoryTest extends TestCase {
 
 	/**
 	 * @dataProvider provideMethodsAndClasses
+	 * @param string[] $method
+	 * @param string[] $class
 	 */
-	public function testNewFactoryObject( $method, $class ) {
+	public function testNewFactoryObject( array $method, array $class ): void {
 		/** @var Serializer $dvSerializer */
 		$dvSerializer = $this->createMock( \Serializers\Serializer::class );
 		/** @var Deserializer $dvDeserializer */

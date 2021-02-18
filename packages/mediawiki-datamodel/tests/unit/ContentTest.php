@@ -10,8 +10,10 @@ class ContentTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param string[]|null[] $data
+	 * @param string[]|null[] $model
 	 */
-	public function testValidConstruction( $data, $model ) {
+	public function testValidConstruction( array $data, array $model ): void {
 		$content = new Content( $data, $model );
 		$this->assertEquals( $data, $content->getData() );
 		$this->assertEquals( $model, $content->getModel() );
@@ -19,7 +21,10 @@ class ContentTest extends TestCase {
 		$this->assertFalse( $content->hasChanged() );
 	}
 
-	public function provideValidConstruction() {
+	/**
+	 * @return string[][]|stdClass[][]|null[][]
+	 */
+	public function provideValidConstruction(): array {
 		return [
 		[ '', null ],
 		[ 'foo', null ],

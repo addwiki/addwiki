@@ -17,13 +17,15 @@ class PagesTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param Page[][] $input
+	 * @param array<int, Page>[]|Page[][] $expected
 	 */
-	public function testValidConstruction( $input, $expected ) {
+	public function testValidConstruction( array $input, array $expected ): void {
 		$pages = new Pages( $input );
 		$this->assertEquals( $expected, $pages->toArray() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		$mockTitle = $this->getMockBuilder( Title::class )
 			->disableOriginalConstructor()
 			->getMock();

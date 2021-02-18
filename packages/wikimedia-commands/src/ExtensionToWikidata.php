@@ -24,7 +24,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class ExtensionToWikidata extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -53,6 +53,9 @@ class ExtensionToWikidata extends Command {
 			);
 	}
 
+	/**
+	 * @return int|void
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$user = $input->getOption( 'user' );
 

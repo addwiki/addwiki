@@ -12,10 +12,7 @@ use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
  */
 class MediawikiSitematrixFactory {
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $api;
+	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api
@@ -26,10 +23,8 @@ class MediawikiSitematrixFactory {
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return SiteListGetter
 	 */
-	public function newSiteListGetter() {
+	public function newSiteListGetter(): SiteListGetter {
 		return new SiteListGetter( $this->api );
 	}
 

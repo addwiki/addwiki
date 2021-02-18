@@ -18,10 +18,7 @@ use Psr\Log\NullLogger;
  */
 class MiddlewareFactory implements LoggerAwareInterface {
 
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
+	private NullLogger $logger;
 
 	public function __construct() {
 		$this->logger = new NullLogger();
@@ -39,9 +36,9 @@ class MiddlewareFactory implements LoggerAwareInterface {
 	 *
 	 * @param bool $delay default to true, can be false to speed up tests
 	 *
-	 * @return callable
+	 * @return callable|void
 	 */
-	public function retry( $delay = true ) {
+	public function retry( bool $delay = true ) {
 		if ( $delay ) {
 			return Middleware::retry( $this->newRetryDecider(), $this->getRetryDelay() );
 		} else {
@@ -52,10 +49,8 @@ class MiddlewareFactory implements LoggerAwareInterface {
 	/**
 	 * Returns a method that takes the number of retries and returns the number of miliseconds
 	 * to wait
-	 *
-	 * @return callable
 	 */
-	private function getRetryDelay() {
+	private function getRetryDelay(): callable {
 		return function ( $numberOfRetries, Response $response = null ) {
 			// The $response argument is only passed as of Guzzle 6.2.2.
 			if ( $response !== null ) {
@@ -77,16 +72,13 @@ class MiddlewareFactory implements LoggerAwareInterface {
 		};
 	}
 
-	/**
-	 * @return callable
-	 */
-	private function newRetryDecider() {
+	private function newRetryDecider(): callable {
 		return function (
 			$retries,
 			Request $request,
 			Response $response = null,
 			TransferException $exception = null
-		) {
+		): bool {
 			// Don't retry if we have run out of retries
 			if ( $retries >= 5 ) {
 				return false;
@@ -100,7 +92,7 @@ class MiddlewareFactory implements LoggerAwareInterface {
 			}
 
 			if ( $response !== null ) {
-				$data = json_decode( $response->getBody(), true );
+				$data = json_decode( $response->getBody(), true, 512, JSON_THROW_ON_ERROR );
 
 				// Retry on server errors
 				if ( $response->getStatusCode() >= 500 ) {

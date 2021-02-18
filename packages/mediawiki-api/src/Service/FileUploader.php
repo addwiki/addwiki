@@ -13,8 +13,7 @@ use Exception;
  */
 class FileUploader extends Service {
 
-	/** @var int */
-	protected $chunkSize;
+	protected ?int $chunkSize;
 
 	/**
 	 * Set the chunk size used for chunked uploading.
@@ -26,7 +25,7 @@ class FileUploader extends Service {
 	 *
 	 * @param int $chunkSize In bytes.
 	 */
-	public function setChunkSize( $chunkSize ) {
+	public function setChunkSize( int $chunkSize ): void {
 		$this->chunkSize = $chunkSize;
 	}
 
@@ -42,17 +41,15 @@ class FileUploader extends Service {
 	 * preferences or do not change watch. Possible values: 'watch', 'preferences', 'nochange'.
 	 * @param bool $ignoreWarnings Ignore any warnings. This must be set to upload a new version of
 	 * an existing image.
-	 *
-	 * @return bool
 	 */
 	public function upload(
-		$targetName,
-		$location,
-		$text = '',
-		$comment = '',
-		$watchlist = 'preferences',
-		$ignoreWarnings = false
-	) {
+		string $targetName,
+		string $location,
+		string $text = '',
+		string $comment = '',
+		string $watchlist = 'preferences',
+		bool $ignoreWarnings = false
+	): bool {
 		$params = [
 			'filename' => $targetName,
 			'token' => $this->api->getToken(),
@@ -97,7 +94,7 @@ class FileUploader extends Service {
 	 * @return mixed[]
 	 * @throws Exception
 	 */
-	protected function uploadByChunks( $params ) {
+	protected function uploadByChunks( array $params ) {
 		// Get the file handle for looping, but don't keep it in the request parameters.
 		$fileHandle = $params['file'];
 		unset( $params['file'] );

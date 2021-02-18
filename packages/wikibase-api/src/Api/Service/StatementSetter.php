@@ -15,15 +15,9 @@ use Wikibase\DataModel\Statement\Statement;
  */
 class StatementSetter {
 
-	/**
-	 * @var WikibaseApi
-	 */
-	private $api;
+	private \Addwiki\Wikibase\Api\WikibaseApi $api;
 
-	/**
-	 * @var Serializer
-	 */
-	private $statementSerializer;
+	private \Serializers\Serializer $statementSerializer;
 
 	/**
 	 * @param WikibaseApi $api
@@ -41,17 +35,16 @@ class StatementSetter {
 	 * @param EditInfo|null $editInfo
 	 *
 	 * @throws InvalidArgumentException
-	 * @return bool
 	 *
 	 * @todo allow setting of indexes
 	 */
-	public function set( Statement $statement, EditInfo $editInfo = null ) {
+	public function set( Statement $statement, EditInfo $editInfo = null ): bool {
 		if ( $statement->getGuid() === null ) {
 			throw new InvalidArgumentException( 'Can not set a statement that does not have a GUID' );
 		}
 
 		$params = [
-			'claim' => json_encode( $this->statementSerializer->serialize( $statement ) ),
+			'claim' => json_encode( $this->statementSerializer->serialize( $statement ), JSON_THROW_ON_ERROR ),
 		];
 
 		$this->api->postRequest( 'wbsetclaim', $params, $editInfo );

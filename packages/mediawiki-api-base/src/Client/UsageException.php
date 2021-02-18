@@ -13,20 +13,11 @@ use Exception;
  */
 class UsageException extends Exception {
 
-	/**
-	 * @var string
-	 */
-	private $apiCode;
+	private string $apiCode;
 
-	/**
-	 * @var array
-	 */
-	private $result = [];
+	private array $result = [];
 
-	/**
-	 * @var string
-	 */
-	private $rawMessage;
+	private string $rawMessage;
 
 	/**
 	 * @since 0.1
@@ -41,34 +32,30 @@ class UsageException extends Exception {
 		$this->rawMessage = $message;
 		$message = 'Code: ' . $apiCode . PHP_EOL .
 			'Message: ' . $message . PHP_EOL .
-			'Result: ' . json_encode( $result );
+			'Result: ' . json_encode( $result, JSON_THROW_ON_ERROR );
 		parent::__construct( $message, 0, null );
 	}
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return string
 	 */
-	public function getApiCode() {
+	public function getApiCode(): string {
 		return $this->apiCode;
 	}
 
 	/**
 	 * @since 0.3
 	 *
-	 * @return array
+	 * @return mixed[]
 	 */
-	public function getApiResult() {
+	public function getApiResult(): array {
 		return $this->result;
 	}
 
 	/**
 	 * @since 2.3.0
-	 *
-	 * @return string
 	 */
-	public function getRawMessage() {
+	public function getRawMessage(): string {
 		return $this->rawMessage;
 	}
 

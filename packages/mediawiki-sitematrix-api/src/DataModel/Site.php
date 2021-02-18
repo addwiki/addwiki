@@ -9,39 +9,23 @@ namespace Addwiki\Mediawiki\Ext\Sitematrix\DataModel;
  */
 class Site {
 
-	/**
-	 * @var string
-	 */
-	private $url;
+	private string $url;
 
-	/**
-	 * @var string
-	 */
-	private $dbname;
+	private string $dbname;
 
-	/**
-	 * @var string
-	 */
-	private $code;
+	private string $code;
 
-	/**
-	 * @var string
-	 */
-	private $sitename;
+	private string $sitename;
 
 	/**
 	 * @var string[]
 	 */
-	private $flags = [];
+	private array $flags = [];
 
 	/**
-	 * @param string $url
-	 * @param string $dbname
-	 * @param string $code
-	 * @param string $sitename
 	 * @param string[] $flags
 	 */
-	public function __construct( $url, $dbname, $code, $sitename, array $flags = [] ) {
+	public function __construct( string $url, string $dbname, string $code, string $sitename, array $flags = [] ) {
 		$this->url = $url;
 		$this->dbname = $dbname;
 		$this->code = $code;
@@ -51,44 +35,36 @@ class Site {
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return string
 	 */
-	public function getUrl() {
+	public function getUrl(): string {
 		return $this->url;
 	}
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return string
 	 */
-	public function getDbName() {
+	public function getDbName(): string {
 		return $this->dbname;
 	}
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return string
 	 */
-	public function getCode() {
+	public function getCode(): string {
 		return $this->code;
 	}
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return string
 	 */
-	public function getSiteName() {
+	public function getSiteName(): string {
 		return $this->sitename;
 	}
 
 	/**
 	 * @return string[]
 	 */
-	public function getFlags() {
+	public function getFlags(): array {
 		return $this->flags;
 	}
 

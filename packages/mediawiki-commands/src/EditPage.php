@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class EditPage extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -73,6 +73,9 @@ class EditPage extends Command {
 			);
 	}
 
+	/**
+	 * @return int
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$wiki = $input->getOption( 'wiki' );
 		$user = $input->getOption( 'user' );

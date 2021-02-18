@@ -15,10 +15,7 @@ use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
  */
 class SiteListGetter {
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $api;
+	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api
@@ -29,10 +26,8 @@ class SiteListGetter {
 
 	/**
 	 * @since 0.1
-	 *
-	 * @return SiteList
 	 */
-	public function getSiteList() {
+	public function getSiteList(): SiteList {
 		$sitematrixResult = $this->api->getRequest( new SimpleRequest( 'sitematrix' ) );
 		unset( $sitematrixResult['sitematrix']['count'] );
 

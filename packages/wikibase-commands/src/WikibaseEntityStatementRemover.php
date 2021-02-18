@@ -36,29 +36,20 @@ use Wikibase\DataModel\Entity\PropertyId;
  */
 class WikibaseEntityStatementRemover extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
-	/**
-	 * @var WikibaseFactory
-	 */
-	private $wikibaseFactory;
+	private ?WikibaseFactory $wikibaseFactory;
 
-	/**
-	 * @var MediawikiApi
-	 */
-	private $wikibaseApi;
+	private ?MediawikiApi $wikibaseApi;
 
-	/**
-	 * @var SparqlQueryRunner
-	 */
-	private $sparqlQueryRunner;
+	private ?SparqlQueryRunner $sparqlQueryRunner;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
 		parent::__construct( null );
 	}
 
-	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ) {
+	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ): void {
 		$defaultGuzzleConf = [
 			'headers' => [ 'User-Agent' => 'addwiki - Wikibase Statement Remover' ]
 		];
@@ -126,6 +117,9 @@ class WikibaseEntityStatementRemover extends Command {
 			);
 	}
 
+	/**
+	 * @return int
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$user = $input->getOption( 'user' );
 		$userDetails = $this->appConfig->offsetGet( 'users.' . $user );

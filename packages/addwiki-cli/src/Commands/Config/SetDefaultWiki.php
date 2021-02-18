@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SetDefaultWiki extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -29,6 +29,9 @@ class SetDefaultWiki extends Command {
 			);
 	}
 
+	/**
+	 * @return int|void
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
 		$appConfigHasWiki = $this->appConfig->has( 'wikis.' . $code );

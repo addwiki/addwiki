@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SiteTest extends TestCase {
 
-	public function testEverything() {
+	public function testEverything(): void {
 		$site = new Site( 'a', 'b', 'c', 'd', [ 'z', 'x' ] );
 		$this->assertEquals( 'a', $site->getUrl() );
 		$this->assertEquals( 'b', $site->getDbName() );

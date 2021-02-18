@@ -35,35 +35,19 @@ class EditInfo {
 	 */
 	public const OFFLAG = null;
 
-	/**
-	 * @var EditInfo::MINOR|self::NOTMINOR
-	 */
-	protected $minor = false;
+	protected bool $minor = false;
+
+	protected bool $bot = false;
+
+		protected ?int $maxlag;
+
+	protected string $summary;
 
 	/**
-	 * @var EditInfo::BOT|self::NOTBOT
-	 */
-	protected $bot = false;
-
-		/**
-		 * @var int|null
-		 */
-	protected $maxlag;
-
-	/**
-	 * @var string
-	 */
-	protected $summary;
-
-	/**
-	 * @param string $summary
-	 * @param bool $minor
-	 * @param bool $bot
-	 * @param int|null $maxlag
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct( $summary = '', $minor = self::NOTMINOR, $bot = self::NOTBOT, $maxlag = self::OFFLAG ) {
+	public function __construct( string $summary = '', bool $minor = self::NOTMINOR, bool $bot = self::NOTBOT, ?int $maxlag = self::OFFLAG ) {
 		if ( !is_string( $summary ) ) {
 			throw new InvalidArgumentException( '$summary must be a string' );
 		}
@@ -85,28 +69,25 @@ class EditInfo {
 	/**
 	 * @return EditInfo::BOT|self::NOTBOT
 	 */
-	public function getBot() {
+	public function getBot(): bool {
 		return $this->bot;
 	}
 
 	/**
 	 * @return EditInfo::MINOR|self::NOTMINOR
 	 */
-	public function getMinor() {
+	public function getMinor(): bool {
 		return $this->minor;
 	}
 
 		/**
 		 * @return int|null
 		 */
-	public function getMaxlag() {
+	public function getMaxlag(): ?int {
 		return $this->maxlag;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getSummary() {
+	public function getSummary(): string {
 		return $this->summary;
 	}
 

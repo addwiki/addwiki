@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LogListTest extends TestCase {
 
-	public function testJsonRoundTrip() {
+	public function testJsonRoundTrip(): void {
 		$logList = new LogList(
 			[
 			new Log( 1, 'ty', 'ac', '2014', 'Addshore', new PageIdentifier( null, 22 ), 'comment', [] ),
@@ -21,7 +21,7 @@ class LogListTest extends TestCase {
 			]
 		);
 		$json = $logList->jsonSerialize();
-		$json = json_decode( json_encode( $json ), true );
+		$json = json_decode( json_encode( $json, JSON_THROW_ON_ERROR ), true, 512, JSON_THROW_ON_ERROR );
 		$this->assertEquals( $logList, LogList::jsonDeserialize( $json ) );
 	}
 

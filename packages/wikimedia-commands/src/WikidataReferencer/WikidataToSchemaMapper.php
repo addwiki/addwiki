@@ -25,7 +25,7 @@ class WikidataToSchemaMapper {
 	 *
 	 * @return string[] like array( 'ItemID' => 'Schema.org_type' )
 	 */
-	public function getInstanceMap() {
+	public function getInstanceMap(): array {
 		return [
 			'Q5' => 'Person',
 			'Q571' => 'Book',
@@ -44,7 +44,7 @@ class WikidataToSchemaMapper {
 	public function getReferencerMap(
 		WikibaseFactory $wikibaseFactory,
 		SparqlQueryRunner $sparqlQueryRunner
-	) {
+	): array {
 		return [
 			'Book' => [
 				new ThingReferencer(
@@ -118,7 +118,7 @@ class WikidataToSchemaMapper {
 						'P136' => 'genre',
 					],
 					[
-						'P136' => function () use ( $sparqlQueryRunner ) {
+						'P136' => function () use ( $sparqlQueryRunner ): array {
 							$filmGenreData = $sparqlQueryRunner->getItemIdStringsAndLabelsFromInstanceOf( 'Q201658' );
 							$filmGenreRegexMap = [];
 							foreach ( $filmGenreData as $itemIdString => $label ) {

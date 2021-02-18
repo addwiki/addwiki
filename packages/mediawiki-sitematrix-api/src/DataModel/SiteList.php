@@ -13,28 +13,23 @@ class SiteList {
 	/**
 	 * @var Site[]
 	 */
-	private $sites = [];
+	private array $sites = [];
 
 	/**
 	 * @param Site[] $sites
 	 */
-	public function __construct( $sites ) {
+	public function __construct( array $sites ) {
 		$this->sites = $sites;
 	}
 
 	/**
 	 * @return Site[]
 	 */
-	public function getSiteArray() {
+	public function getSiteArray(): array {
 		return $this->sites;
 	}
 
-	/**
-	 * @param string $dbName
-	 *
-	 * @return Site|null
-	 */
-	public function getSiteFromDbName( $dbName ) {
+	public function getSiteFromDbName( string $dbName ): ?Site {
 		foreach ( $this->sites as $site ) {
 			if ( $site->getDbName() === $dbName ) {
 				return $site;
@@ -44,12 +39,7 @@ class SiteList {
 		return null;
 	}
 
-	/**
-	 * @param string $code
-	 *
-	 * @return SiteList
-	 */
-	public function getSiteListForCode( $code ) {
+	public function getSiteListForCode( string $code ): SiteList {
 		$siteList = [];
 		foreach ( $this->sites as $site ) {
 			if ( $site->getCode() === $code ) {

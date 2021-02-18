@@ -12,48 +12,32 @@ class Revision {
 	/**
 	 * @var int Id of the revision
 	 */
-	private $id;
+	private ?int $id;
 
 	/**
 	 * @var PageIdentifier of the page for the revision
 	 */
-	private $pageIdentifier;
+	private \Addwiki\Mediawiki\DataModel\PageIdentifier $pageIdentifier;
+
+	private Content $content;
+
+	private EditInfo $editInfo;
+
+	private ?string $user;
+
+	private ?string $timestamp;
 
 	/**
-	 * @var Content
-	 */
-	private $content;
-
-	/**
-	 * @var EditInfo
-	 */
-	private $editInfo;
-
-	/**
-	 * @var null|string
-	 */
-	private $user;
-
-	/**
-	 * @var null|string
-	 */
-	private $timestamp;
-
-	/**
-	 * @param Content $content
 	 * @param PageIdentifier|null $pageIdentifier
-	 * @param int|null $revId
 	 * @param EditInfo|null $editInfo
-	 * @param string|null $user
-	 * @param string|null $timestamp
 	 */
 	public function __construct(
 		Content $content,
 		PageIdentifier $pageIdentifier = null,
-		$revId = null,
+		?int $revId = null,
 		EditInfo $editInfo = null,
-		$user = null,
-		$timestamp = null
+		?string $user = null,
+		?string $timestamp = null
 		) {
 		if ( $editInfo === null ) {
 			$editInfo = new EditInfo();
@@ -69,45 +53,36 @@ class Revision {
 		$this->timestamp = $timestamp;
 	}
 
-	/**
-	 * @return Content
-	 */
-	public function getContent() {
+	public function getContent(): Content {
 		return $this->content;
 	}
 
-	/**
-	 * @return EditInfo
-	 */
-	public function getEditInfo() {
+	public function getEditInfo(): EditInfo {
 		return $this->editInfo;
 	}
 
 	/**
 	 * @return int|null
 	 */
-	public function getId() {
+	public function getId(): int {
 		return $this->id;
 	}
 
-	/**
-	 * @return PageIdentifier|null
-	 */
-	public function getPageIdentifier() {
+	public function getPageIdentifier(): \Addwiki\Mediawiki\DataModel\PageIdentifier {
 		return $this->pageIdentifier;
 	}
 
 	/**
 	 * @return null|string
 	 */
-	public function getUser() {
+	public function getUser(): ?string {
 		return $this->user;
 	}
 
 	/**
 	 * @return null|string
 	 */
-	public function getTimestamp() {
+	public function getTimestamp(): ?string {
 		return $this->timestamp;
 	}
 

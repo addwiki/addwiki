@@ -14,15 +14,18 @@ class EditInfoTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param string[]|bool[] $sum
+	 * @param string[]|bool[] $minor
+	 * @param string[]|bool[] $bot
 	 */
-	public function testValidConstruction( $sum, $minor, $bot ) {
+	public function testValidConstruction( array $sum, array $minor, array $bot ): void {
 		$flags = new EditInfo( $sum, $minor, $bot );
 		$this->assertEquals( $sum, $flags->getSummary() );
 		$this->assertEquals( $minor, $flags->getMinor() );
 		$this->assertEquals( $bot, $flags->getBot() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 		[ '', EditInfo::MINOR, EditInfo::BOT ],
 		[ '', EditInfo::MINOR, EditInfo::NOTBOT ],
@@ -34,13 +37,16 @@ class EditInfoTest extends TestCase {
 
 	/**
 	 * @dataProvider provideInvalidConstruction
+	 * @param int[] $sum
+	 * @param int[]|string[]|bool[] $minor
+	 * @param int[]|string[]|bool[] $bot
 	 */
-	public function testInvalidConstruction( $sum, $minor, $bot ) {
+	public function testInvalidConstruction( array $sum, array $minor, array $bot ): void {
 		$this->expectException( InvalidArgumentException::class );
 		new EditInfo( $sum, $minor, $bot );
 	}
 
-	public function provideInvalidConstruction() {
+	public function provideInvalidConstruction(): array {
 		return [
 		[ 1, 2, 3 ],
 		[ "foo", false, 3 ],

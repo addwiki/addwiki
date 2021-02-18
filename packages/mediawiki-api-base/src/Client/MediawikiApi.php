@@ -36,25 +36,16 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	private $isLoggedIn;
 
-	/**
-	 * @var MediawikiSession
-	 */
-	private $session;
+	private MediawikiSession $session;
 
 	/**
 	 * @var string
 	 */
 	private $version;
 
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
+	private NullLogger $logger;
 
-	/**
-	 * @var string
-	 */
-	private $apiUrl;
+	private string $apiUrl;
 
 	/**
 	 * @since 2.0
@@ -63,7 +54,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
-	public static function newFromApiEndpoint( $apiEndpoint ) {
+	public static function newFromApiEndpoint( string $apiEndpoint ): \Addwiki\Mediawiki\Api\Client\MediawikiApi {
 		return new self( $apiEndpoint );
 	}
 
@@ -78,7 +69,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *              file accessible on all Mediawiki pages
 	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
 	 */
-	public static function newFromPage( $url ) {
+	public static function newFromPage( string $url ): \Addwiki\Mediawiki\Api\Client\MediawikiApi {
 		// Set up HTTP client and HTML document.
 		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
 		$pageHtml = $tempClient->get( $url )->getBody();
@@ -96,9 +87,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		$link = ( new DOMXpath( $pageDoc ) )->query( $xpath );
 		if ( $link->length === 0 ) {
 			// Format libxml errors for display.
-			$libXmlErrorStr = array_reduce( $libXmlErrors, function ( $prevErr, $err ) {
-				return $prevErr . ', ' . $err->message . ' (line ' . $err->line . ')';
-			} );
+			$libXmlErrorStr = array_reduce( $libXmlErrors, fn( $prevErr, $err ) => $prevErr . ', ' . $err->message . ' (line ' . $err->line . ')' );
 			if ( $libXmlErrorStr ) {
 				$libXmlErrorStr = sprintf( 'In addition, libxml had the following errors: %s', $libXmlErrorStr );
 			}
@@ -121,7 +110,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @param ClientInterface|null $client Guzzle Client
 	 * @param MediawikiSession|null $session Inject a custom session here
 	 */
-	public function __construct( $apiUrl, ClientInterface $client = null,
+	public function __construct( string $apiUrl, ClientInterface $client = null,
 								 MediawikiSession $session = null ) {
 		if ( !is_string( $apiUrl ) ) {
 			throw new InvalidArgumentException( '$apiUrl must be a string' );
@@ -145,14 +134,11 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return string The API URL.
 	 */
-	public function getApiUrl() {
+	public function getApiUrl(): string {
 		return $this->apiUrl;
 	}
 
-	/**
-	 * @return ClientInterface
-	 */
-	private function getClient() {
+	private function getClient(): ClientInterface {
 		if ( $this->client === null ) {
 			$clientFactory = new ClientFactory();
 			$clientFactory->setLogger( $this->logger );
@@ -184,18 +170,14 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function getRequestAsync( Request $request ) {
+	public function getRequestAsync( Request $request ): \GuzzleHttp\Promise\PromiseInterface {
 		$promise = $this->getClient()->requestAsync(
 			'GET',
 			$this->apiUrl,
 			$this->getClientRequestOptions( $request, 'query' )
 		);
 
-		return $promise->then( function ( ResponseInterface $response ) {
-			return call_user_func( function ( ResponseInterface $response ) {
-				return $this->decodeResponse( $response );
-			}, $response );
-		} );
+		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
 	}
 
 	/**
@@ -207,18 +189,14 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function postRequestAsync( Request $request ) {
+	public function postRequestAsync( Request $request ): \GuzzleHttp\Promise\PromiseInterface {
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
 			$this->getClientRequestOptions( $request, $this->getPostRequestEncoding( $request ) )
 		);
 
-		return $promise->then( function ( ResponseInterface $response ) {
-			return call_user_func( function ( ResponseInterface $response ) {
-				return $this->decodeResponse( $response );
-			}, $response );
-		} );
+		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
 	}
 
 	/**
@@ -262,7 +240,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @throws UsageException
 	 */
 	private function decodeResponse( ResponseInterface $response ) {
-		$resultArray = json_decode( $response->getBody(), true );
+		$resultArray = json_decode( $response->getBody(), true, 512, JSON_THROW_ON_ERROR );
 
 		$this->logWarnings( $resultArray );
 		$this->throwUsageExceptions( $resultArray );
@@ -272,10 +250,8 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
 	 * @param Request $request
-	 *
-	 * @return string
 	 */
-	private function getPostRequestEncoding( Request $request ) {
+	private function getPostRequestEncoding( Request $request ): string {
 		if ( $request instanceof MultipartRequest ) {
 			return 'multipart';
 		}
@@ -288,14 +264,12 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param Request $request
 	 * @param string $paramsKey either 'query' or 'multipart'
 	 *
 	 * @throws RequestException
-	 *
 	 * @return array as needed by ClientInterface::get and ClientInterface::post
 	 */
-	private function getClientRequestOptions( Request $request, $paramsKey ) {
+	private function getClientRequestOptions( Request $request, string $paramsKey ): array {
 		$params = array_merge( $request->getParams(), [ 'format' => 'json' ] );
 		if ( $paramsKey === 'multipart' ) {
 			$params = $this->encodeMultipartParams( $request, $params );
@@ -315,15 +289,15 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
-	 * @return array
+	 * @return array<int mixed[]>
 	 */
-	private function encodeMultipartParams( Request $request, $params ) {
+	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
 		$multipartParams = ( $request instanceof MultipartRequest )
 			? $request->getMultipartParams()
 			: [];
 		return array_map(
-			function ( $name, $value ) use ( $multipartParams ) {
+			function ( $name, $value ) use ( $multipartParams ): array {
 				$partParams = [
 					'name' => $name,
 					'contents' => $value,
@@ -340,15 +314,15 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @return array
+	 * @return array<string mixed>
 	 */
-	private function getDefaultHeaders() {
+	private function getDefaultHeaders(): array {
 		return [
 			'User-Agent' => $this->getUserAgent(),
 		];
 	}
 
-	private function getUserAgent() {
+	private function getUserAgent(): string {
 		$loggedIn = $this->isLoggedin();
 		if ( $loggedIn ) {
 			return 'addwiki-mediawiki-client/' . $loggedIn;
@@ -356,10 +330,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		return 'addwiki-mediawiki-client';
 	}
 
-	/**
-	 * @param array $result
-	 */
-	private function logWarnings( $result ) {
+	private function logWarnings( array $result ): void {
 		if ( is_array( $result ) ) {
 			// Let's see if there is 'warnings' key on the first level of the array...
 			if ( $this->logWarning( $result ) ) {
@@ -382,7 +353,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return bool Whether any warning has been logged or not.
 	 */
-	protected function logWarning( $array ) {
+	protected function logWarning( array $array ): bool {
 		$found = false;
 
 		if ( !array_key_exists( 'warnings', $array ) ) {
@@ -407,11 +378,10 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param array $result
 	 *
 	 * @throws UsageException
 	 */
-	private function throwUsageExceptions( $result ) {
+	private function throwUsageExceptions( array $result ): void {
 		if ( is_array( $result ) && array_key_exists( 'error', $result ) ) {
 			throw new UsageException(
 				$result['error']['code'],
@@ -438,7 +408,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @throws UsageException
 	 * @return bool success
 	 */
-	public function login( ApiUser $apiUser ) {
+	public function login( ApiUser $apiUser ): bool {
 		$this->logger->log( LogLevel::DEBUG, 'Logging in' );
 		$credentials = $this->getLoginParams( $apiUser );
 		$result = $this->postRequest( new SimpleRequest( 'login', $credentials ) );
@@ -462,7 +432,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return string[]
 	 */
-	private function getLoginParams( ApiUser $apiUser ) {
+	private function getLoginParams( ApiUser $apiUser ): array {
 		$params = [
 			'lgname' => $apiUser->getUsername(),
 			'lgpassword' => $apiUser->getPassword(),
@@ -475,11 +445,10 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param array $result
 	 *
 	 * @throws UsageException
 	 */
-	private function throwLoginUsageException( $result ) {
+	private function throwLoginUsageException( array $result ): void {
 		$loginResult = $result['login']['result'];
 
 		throw new UsageException(
@@ -496,7 +465,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return bool success
 	 */
-	public function logout() {
+	public function logout(): bool {
 		$this->logger->log( LogLevel::DEBUG, 'Logging out' );
 		$result = $this->postRequest( new SimpleRequest( 'logout', [
 			'token' => $this->getToken()
@@ -516,7 +485,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return string
 	 */
-	public function getToken( $type = 'csrf' ) {
+	public function getToken( $type = 'csrf' ): string {
 		return $this->session->getToken( $type );
 	}
 
@@ -532,7 +501,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	/**
 	 * @return string
 	 */
-	public function getVersion() {
+	public function getVersion(): string {
 		if ( $this->version === null ) {
 			$result = $this->getRequest( new SimpleRequest( 'query', [
 				'meta' => 'siteinfo',

@@ -15,14 +15,18 @@ class SimpleRequestTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param string[]|mixed[][]|array<string, string>[] $action
+	 * @param string[]|mixed[][]|array<string, string>[] $params
+	 * @param string[]|array<string, string>[] $expected
+	 * @param string[]|array<string, string>[] $headers
 	 */
-	public function testValidConstruction( $action, $params, $expected, $headers = [] ) {
+	public function testValidConstruction( array $action, array $params, array $expected, array $headers = [] ): void {
 		$request = new SimpleRequest( $action, $params, $headers );
 		$this->assertEquals( $expected, $request->getParams() );
 		$this->assertEquals( $headers, $request->getHeaders() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 			[ 'action', [], [ 'action' => 'action' ] ],
 			[ '1123', [], [ 'action' => '1123' ] ],
@@ -35,13 +39,17 @@ class SimpleRequestTest extends TestCase {
 
 	/**
 	 * @dataProvider provideInvalidConstruction
+	 * @param mixed[][] $action
 	 */
-	public function testInvalidConstruction( $action, $params ) {
+	public function testInvalidConstruction( array $action, $params ): void {
 		$this->expectException( InvalidArgumentException::class );
 		new SimpleRequest( $action, $params );
 	}
 
-	public function provideInvalidConstruction() {
+	/**
+	 * @return mixed[][][]
+	 */
+	public function provideInvalidConstruction(): array {
 		return [
 			[ [], [] ],
 		];

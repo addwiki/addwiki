@@ -14,11 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 class FileUploaderTest extends TestCase {
 
-	/** @var MediawikiFactory */
-	protected $factory;
+	protected ?MediawikiFactory $factory;
 
-	/** @var FileUploader */
-	protected $fileUploader;
+	protected ?FileUploader $fileUploader;
 
 	/**
 	 * Create a FileUploader to use in all these tests.
@@ -35,7 +33,7 @@ class FileUploaderTest extends TestCase {
 		$api->login( $localApiUser );
 	}
 
-	public function testUpload() {
+	public function testUpload(): void {
 		$testPagename = uniqid( 'file-uploader-test-' ) . '.png';
 		$testTitle = new Title( 'File:' . $testPagename );
 
@@ -54,7 +52,7 @@ class FileUploaderTest extends TestCase {
 		$this->assertGreaterThan( 0, $testFile2->getPageIdentifier()->getId() );
 	}
 
-	public function testUploadByChunks() {
+	public function testUploadByChunks(): void {
 		$testPagename = uniqid( 'file-uploader-test-' ) . '.png';
 		$testTitle = new Title( 'File:' . $testPagename );
 

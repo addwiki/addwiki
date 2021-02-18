@@ -9,17 +9,13 @@ use InvalidArgumentException;
  */
 class File extends Page {
 
-	/**
-	 * @var string
-	 */
-	private $url;
+	private string $url;
 
 	/**
-	 * @param string $url
 	 * @param PageIdentifier|null $pageIdentifier
 	 * @param Revisions|null $revisions
 	 */
-	public function __construct( $url, PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
+	public function __construct( string $url, PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		parent::__construct( $pageIdentifier, $revisions );
 		if ( !is_string( $url ) ) {
 			throw new InvalidArgumentException( '$url must be a string' );
@@ -27,10 +23,7 @@ class File extends Page {
 		$this->url = $url;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getUrl() {
+	public function getUrl(): string {
 		return $this->url;
 	}
 

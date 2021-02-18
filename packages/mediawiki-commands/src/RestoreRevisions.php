@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RestoreRevisions extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
@@ -79,6 +79,9 @@ class RestoreRevisions extends Command {
 			);
 	}
 
+	/**
+	 * @return int|null
+	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$wiki = $input->getOption( 'wiki' );
 		$user = $input->getOption( 'user' );
@@ -122,7 +125,7 @@ class RestoreRevisions extends Command {
 			$asheaderInputOption = $input->getOption( 'asheader' );
 
 			if ( $asheaderInputOption ) {
-				if ( strstr( $currentText, $goodText ) ) {
+				if ( strstr( $currentText, (string)$goodText ) ) {
 					$goodText = $goodText . "\n\n" . trim( str_replace( $goodText, '', $currentText ) );
 				} else {
 					$goodText = $goodText . "\n\n" . $currentText;
@@ -150,6 +153,9 @@ class RestoreRevisions extends Command {
 		return null;
 	}
 
+	/**
+	 * @return mixed[]|string
+	 */
 	private function getEditSummary( $rawSummary, $revid ) {
 		return str_replace( '$revid', $revid, $rawSummary );
 	}

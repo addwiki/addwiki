@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Purge extends Command {
 
-	private $appConfig;
+	private ArrayAccess $appConfig;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;

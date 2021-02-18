@@ -17,12 +17,7 @@ use Wikibase\DataModel\Term\Fingerprint;
  */
 class DataModelUtils {
 
-	/**
-	 * @param string $url
-	 *
-	 * @return Reference
-	 */
-	public static function getReferenceForUrl( $url ) {
+	public static function getReferenceForUrl( string $url ): Reference {
 		return new Reference(
 			[
 				// Reference URL
@@ -34,7 +29,7 @@ class DataModelUtils {
 		);
 	}
 
-	public static function getCurrentTimeValue() {
+	public static function getCurrentTimeValue(): TimeValue {
 		return new TimeValue(
 			"+" . date( 'Y-m-d' ) . "T00:00:00Z",
 			0, // TODO don't assume UTC
@@ -50,7 +45,7 @@ class DataModelUtils {
 	 *
 	 * @return string[]
 	 */
-	public static function getMainTermsAsLowerCaseStrings( Fingerprint $fingerprint ) {
+	public static function getMainTermsAsLowerCaseStrings( Fingerprint $fingerprint ): array {
 		$strings = [];
 		$langsToUse = [ 'en', 'en-gb' ];
 		foreach ( $langsToUse as $lang ) {
@@ -68,13 +63,7 @@ class DataModelUtils {
 		return array_map( 'strtolower', $strings );
 	}
 
-	/**
-	 * @param Statement $statement
-	 * @param string $url
-	 *
-	 * @return bool
-	 */
-	public static function statementHasReferenceForUrlWithSameDomain( Statement $statement, $url ) {
+	public static function statementHasReferenceForUrlWithSameDomain( Statement $statement, string $url ): bool {
 		$currentReferences = $statement->getReferences();
 		foreach ( $currentReferences as $currentReference ) {
 			foreach ( $currentReference->getSnaks() as $currentReferenceSnak ) {
@@ -100,20 +89,12 @@ class DataModelUtils {
 	/**
 	 * @param string $a a URL
 	 * @param string $b a URL
-	 *
-	 * @return bool
 	 */
-	private static function urlsDomainsAreSame( $a, $b ) {
+	private static function urlsDomainsAreSame( string $a, string $b ): bool {
 		return parse_url( $a, PHP_URL_HOST ) === parse_url( $b, PHP_URL_HOST );
 	}
 
-	/**
-	 * @param SiteLinkList $siteLinkList
-	 * @param string $suffix
-	 *
-	 * @return SiteLinkList
-	 */
-	public static function getSitelinksWiteSiteIdSuffix( SiteLinkList $siteLinkList, $suffix ) {
+	public static function getSitelinksWiteSiteIdSuffix( SiteLinkList $siteLinkList, string $suffix ): SiteLinkList {
 		$filteredSiteLinkList = new SiteLinkList();
 
 		/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */

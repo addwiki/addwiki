@@ -13,10 +13,7 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class SparqlQueryRunner {
 
-	/**
-	 * @var Client
-	 */
-	private $client;
+	private \GuzzleHttp\Client $client;
 
 	/**
 	 * @param Client $guzzleClient
@@ -31,7 +28,7 @@ class SparqlQueryRunner {
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ) {
+	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ): array {
 		if ( empty( $simpleQueryParts ) ) {
 			throw new InvalidArgumentException( "Can't run a SPARQL query with no simple parts" );
 		}
@@ -56,11 +53,10 @@ class SparqlQueryRunner {
 	}
 
 	/**
-	 * @param string $query
 	 *
 	 * @return ItemId[]
 	 */
-	public function getItemIdsFromQuery( $query ) {
+	public function getItemIdsFromQuery( string $query ): array {
 		if ( !is_string( $query ) ) {
 			throw new InvalidArgumentException( "SPARQL query must be a string!" );
 		}
@@ -68,7 +64,7 @@ class SparqlQueryRunner {
 		$sparqlResponse = $this->client->get(
 			'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' . urlencode( $query )
 		);
-		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
+		$sparqlArray = json_decode( $sparqlResponse->getBody(), true, 512, JSON_THROW_ON_ERROR );
 
 		$itemIds = [];
 		foreach ( $sparqlArray['results']['bindings'] as $binding ) {
@@ -78,7 +74,10 @@ class SparqlQueryRunner {
 		return $itemIds;
 	}
 
-	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ) {
+	/**
+	 * @return mixed[]
+	 */
+	public function getItemIdStringsAndLabelsFromInstanceOf( $instanceItemIdString ): array {
 		// TODO fix this ugliness
 		$query = "PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -93,7 +92,7 @@ SELECT ?item ?itemLabel WHERE {
 		$sparqlResponse = $this->client->get(
 			'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' . urlencode( $query )
 		);
-		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
+		$sparqlArray = json_decode( $sparqlResponse->getBody(), true, 512, JSON_THROW_ON_ERROR );
 
 		$data = [];
 		foreach ( $sparqlArray['results']['bindings'] as $binding ) {

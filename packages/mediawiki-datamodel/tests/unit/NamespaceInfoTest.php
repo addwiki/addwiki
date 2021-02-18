@@ -13,16 +13,11 @@ use PHPUnit\Framework\TestCase;
 class NamespaceInfoTest extends TestCase {
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param int $id
-	 * @param string $canonicalName
-	 * @param string $localName
-	 * @param string $caseHandling
 	 * @param null $defaultContentModel
-	 * @param array $aliases
 	 */
-	public function testValidConstruction( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null,
-		$aliases = []
-	) {
+	public function testValidConstruction( int $id, string $canonicalName, string $localName, string $caseHandling, $defaultContentModel = null,
+		array $aliases = []
+	): void {
 		$namespace = new NamespaceInfo( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel, $aliases );
 		$this->assertSame( $id, $namespace->getId() );
 		$this->assertSame( $canonicalName, $namespace->getCanonicalName() );
@@ -32,7 +27,7 @@ class NamespaceInfoTest extends TestCase {
 		$this->assertSame( $aliases, $namespace->getAliases() );
 	}
 
-	public function provideValidConstruction() {
+	public function provideValidConstruction(): array {
 		return [
 		[ -2, 'Media', 'Media', 'first-letter' ],
 		[ 0, '', '', 'first-letter' ],
@@ -43,23 +38,23 @@ class NamespaceInfoTest extends TestCase {
 	}
 
 	/**
-	 * @param mixed $id
-	 * @param mixed $canonicalName
-	 * @param mixed $localName
-	 * @param mixed $caseHandling
+	 * @param float[]|string[] $id
+	 * @param string[] $canonicalName
+	 * @param int[]|string[]|null[] $localName
+	 * @param int[]|string[]|null[] $caseHandling
 	 * @param null $defaultContentModel
-	 * @param array $aliases
 	 *
 	 * @dataProvider provideInvalidConstruction
+	 * @param int[]|string[]|null[] $aliases
 	 */
-	public function testInvalidConstruction( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel = null,
-		$aliases = []
-	) {
+	public function testInvalidConstruction( array $id, array $canonicalName, array $localName, array $caseHandling, $defaultContentModel = null,
+		array $aliases = []
+	): void {
 		$this->expectException( InvalidArgumentException::class );
 		new NamespaceInfo( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel, $aliases );
 	}
 
-	public function provideInvalidConstruction() {
+	public function provideInvalidConstruction(): array {
 		return [
 		[ 0.5, 'Media', 'Media', 'first-letter' ],
 		[ '0', '', '', 'first-letter' ],

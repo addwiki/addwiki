@@ -22,12 +22,9 @@ class PageGetter extends Service {
 	/**
 	 * @since 0.2
 	 *
-	 * @param int $id
-	 * @param array $extraParams
 	 *
-	 * @return Page
 	 */
-	public function getFromRevisionId( $id, array $extraParams = [] ) {
+	public function getFromRevisionId( int $id, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -44,10 +41,8 @@ class PageGetter extends Service {
 	 *
 	 * @param string|Title $title
 	 * @param array $extraParams
-	 *
-	 * @return Page
 	 */
-	public function getFromTitle( $title, array $extraParams = [] ) {
+	public function getFromTitle( $title, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
 		if ( $title instanceof Title ) {
 			$title = $title->getTitle();
 		}
@@ -65,12 +60,9 @@ class PageGetter extends Service {
 	/**
 	 * @since 0.2
 	 *
-	 * @param int $id
-	 * @param array $extraParams
 	 *
-	 * @return Page
 	 */
-	public function getFromPageId( $id, array $extraParams = [] ) {
+	public function getFromPageId( int $id, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -89,7 +81,7 @@ class PageGetter extends Service {
 	 * @param array $extraParams
 	 *
 	 * @throws RuntimeException
-	 * @return Page
+	 * @return \Addwiki\Mediawiki\DataModel\Page|void
 	 */
 	public function getFromPageIdentifier(
 		PageIdentifier $pageIdentifier,
@@ -110,10 +102,8 @@ class PageGetter extends Service {
 	 *
 	 * @param Page $page
 	 * @param array $extraParams
-	 *
-	 * @return Page
 	 */
-	public function getFromPage( Page $page, array $extraParams = [] ) {
+	public function getFromPage( Page $page, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -135,10 +125,8 @@ class PageGetter extends Service {
 	 *
 	 * @param Revision $revision
 	 * @param array $extraParams
-	 *
-	 * @return Page
 	 */
-	public function getFromRevision( Revision $revision, array $extraParams = [] ) {
+	public function getFromRevision( Revision $revision, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -162,13 +150,11 @@ class PageGetter extends Service {
 	}
 
 	/**
-	 * @param array $additionalParams
 	 *
-	 * @param array $extraParams
 	 *
-	 * @return array
+	 * @return mixed[]
 	 */
-	private function getQuery( $additionalParams, array $extraParams = [] ) {
+	private function getQuery( array $additionalParams, array $extraParams = [] ): array {
 		$base = [
 			'prop' => 'revisions|info|pageprops',
 			'rvprop' => 'ids|flags|timestamp|user|size|sha1|comment|content|tags',
@@ -178,16 +164,11 @@ class PageGetter extends Service {
 		return array_merge( $extraParams, $base, $additionalParams );
 	}
 
-	/**
-	 * @param array $array
-	 *
-	 * @return Revisions
-	 */
-	private function getRevisionsFromResult( $array ) {
+	private function getRevisionsFromResult( array $array ): Revisions {
 		$revisions = new Revisions();
 		$pageid = $array['pageid'];
 		foreach ( $array['revisions'] as $revision ) {
-			$revision['comment'] = $revision['comment'] ?? '';
+			$revision['comment'] ??= '';
 			$revisions->addRevision(
 				new Revision(
 					$this->getContent( $array['contentmodel'], $revision['*'] ),
@@ -208,22 +189,14 @@ class PageGetter extends Service {
 	}
 
 	/**
-	 * @param string $model
 	 * @param string $content returned from the API
-	 *
 	 * @throws RuntimeException
-	 * @return Content
 	 */
-	private function getContent( $model, $content ) {
+	private function getContent( string $model, string $content ): Content {
 		return new Content( $content, $model );
 	}
 
-	/**
-	 * @param array $array
-	 *
-	 * @return Page
-	 */
-	private function newPageFromResult( $array ) {
+	private function newPageFromResult( array $array ): \Addwiki\Mediawiki\DataModel\Page {
 		if ( array_key_exists( 'pageid', $array ) ) {
 			$pageid = $array['pageid'];
 			$revisions = $this->getRevisionsFromResult( $array );

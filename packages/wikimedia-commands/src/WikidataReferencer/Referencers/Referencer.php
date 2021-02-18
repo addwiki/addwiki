@@ -11,12 +11,9 @@ use Wikibase\DataModel\Entity\Item;
 interface Referencer {
 
 	/**
-	 * @param MicroData $microData
-	 * @param Item $item
-	 * @param string $sourceUrl
 	 *
 	 * @return int the number of references added
 	 */
-	public function addReferences( MicroData $microData, $item, $sourceUrl );
+	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int;
 
 }

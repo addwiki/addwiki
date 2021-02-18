@@ -54,7 +54,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/packages',
     ]);
 
-    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_72);
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_74);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
 
     $parameters->set(Option::SETS, [
@@ -70,8 +70,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         SetList::PHP_70,
         SetList::PHP_71,
         SetList::PHP_72,
-        // TODO use below set when adding type declarations
-        //SetList::TYPE_DECLARATION,
+        SetList::PHP_73,
+        SetList::PHP_74,
+        SetList::TYPE_DECLARATION,
         ]);
 
         // Manual tweak of SetList::CODING_STYLE https://github.com/rectorphp/rector/blob/master/config/set/coding-style.php

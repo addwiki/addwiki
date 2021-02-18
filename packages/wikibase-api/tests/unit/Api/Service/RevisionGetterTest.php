@@ -34,12 +34,15 @@ class RevisionGetterTest extends TestCase {
 		return $this->createMock( Deserializer::class );
 	}
 
-	public function testValidConstructionWorks() {
+	public function testValidConstructionWorks(): void {
 		new RevisionGetter( $this->createMockApi(), $this->createMockDeserializer() );
 		$this->assertTrue( true );
 	}
 
-	public function provideIds() {
+	/**
+	 * @return string[][]|ItemId[][]
+	 */
+	public function provideIds(): array {
 		return [
 			[ 'Q1' ],
 			[ ItemId::newFromNumber( 1 ) ],
@@ -48,8 +51,9 @@ class RevisionGetterTest extends TestCase {
 
 	/**
 	 * @dataProvider provideIds
+	 * @param string[] $id
 	 */
-	public function testGetFromId( $id ) {
+	public function testGetFromId( array $id ): void {
 		$api = $this->createMockApi();
 		$api->expects( $this->once() )
 			->method( 'getRequest' )

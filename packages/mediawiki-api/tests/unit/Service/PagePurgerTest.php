@@ -18,6 +18,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PagePurgerTest extends TestCase {
 
+	/**
+	 * @return MediawikiApi|MockObject
+	 */
 	private function getMockApi() {
 		/** @var MediawikiApi|MockObject $mock */
 		$mock = $this->getMockBuilder( MediawikiApi::class )
@@ -26,12 +29,12 @@ class PagePurgerTest extends TestCase {
 		return $mock;
 	}
 
-	public function testValidConstruction() {
+	public function testValidConstruction(): void {
 		new PagePurger( $this->getMockApi() );
 		$this->assertTrue( true );
 	}
 
-	public function testPurgePage() {
+	public function testPurgePage(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
@@ -56,7 +59,7 @@ class PagePurgerTest extends TestCase {
 		$this->assertTrue( $service->purge( $page ) );
 	}
 
-	public function testIncorrectPurgePage() {
+	public function testIncorrectPurgePage(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
@@ -85,7 +88,7 @@ class PagePurgerTest extends TestCase {
 		$this->assertFalse( $service->purge( $page ) );
 	}
 
-	public function testPurgePages() {
+	public function testPurgePages(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
@@ -128,7 +131,7 @@ class PagePurgerTest extends TestCase {
 			$this->assertEquals( $service->purgePages( $pages ), $pages );
 	}
 
-	public function testIncorrectPurgePages() {
+	public function testIncorrectPurgePages(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
 			->method( 'postRequest' )

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Question\Question;
 
 class Setup extends Command {
 
-	private $appConfig;
+	private AppConfig $appConfig;
 
 	public function __construct( AppConfig $appConfig ) {
 		parent::__construct( null );
@@ -87,10 +87,7 @@ class Setup extends Command {
 		$output->writeln( "Setup complete" );
 	}
 
-	/**
-	 * @return QuestionHelper
-	 */
-	private function getQuestionHelper() {
+	private function getQuestionHelper(): QuestionHelper {
 		return $this->getHelper( 'question' );
 	}
 }
