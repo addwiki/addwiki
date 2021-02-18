@@ -45,7 +45,7 @@ class PageListGetter extends Service {
 	 * Get all pages that link to the given page.
 	 *
 	 * @link https://www.mediawiki.org/wiki/API:Linkshere
-	 * 
+	 *
 	 * @param string $pageName The page name
 	 * @param string[] $extraParams Any extra parameters to use
 	 *                 glhprop, glhnamespace, glhshow, glhlimit
