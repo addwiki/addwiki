@@ -28,6 +28,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
 	 * Should be accessed through getClient
+	 * @var ClientInterface|null
 	 */
 	private ?ClientInterface $client = null;
 
