@@ -5,6 +5,7 @@
 - Installable with 7.4+ (including PHP8)
 - Typing added throughout
 - PSR4 namespacing. Now in `Addwiki\Mediawiki\Ext\Flow`
+- Removed `Post` class from the `DataModel` as it was not yet used.
 
 ## Version 2.8 (16 February 2021)
 
