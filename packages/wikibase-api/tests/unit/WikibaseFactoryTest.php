@@ -54,14 +54,12 @@ class WikibaseFactoryTest extends TestCase {
 
 	/**
 	 * @dataProvider provideMethodsAndClasses
-	 * @param string[] $method
-	 * @param string[] $class
 	 */
-	public function testNewFactoryObject( array $method, array $class ): void {
+	public function testNewFactoryObject( string $method, string $class ): void {
 		/** @var Serializer $dvSerializer */
-		$dvSerializer = $this->createMock( \Serializers\Serializer::class );
+		$dvSerializer = $this->createMock( Serializer::class );
 		/** @var Deserializer $dvDeserializer */
-		$dvDeserializer = $this->createMock( \Deserializers\Deserializer::class );
+		$dvDeserializer = $this->createMock( Deserializer::class );
 
 		$factory = new WikibaseFactory( $this->createMock( MediawikiApi::class ), $dvDeserializer, $dvSerializer );
 

@@ -8,7 +8,6 @@ use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\UsageException;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -35,29 +34,10 @@ class MediawikiApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param string[] $apiLocation
 	 */
-	public function testValidConstruction( array $apiLocation ): void {
+	public function testValidConstruction( string $apiLocation ): void {
 		new MediawikiApi( $apiLocation );
 		$this->assertTrue( true );
-	}
-
-	public function provideInvalidConstruction(): array {
-		return [
-			[ null ],
-			[ 12_345_678 ],
-			[ [] ],
-			[ new stdClass() ],
-		];
-	}
-
-	/**
-	 * @dataProvider provideInvalidConstruction
-	 * @param null[] $apiLocation
-	 */
-	public function testInvalidConstruction( array $apiLocation ): void {
-		$this->expectException( InvalidArgumentException::class );
-		new MediawikiApi( $apiLocation );
 	}
 
 	/**
@@ -74,7 +54,7 @@ class MediawikiApiTest extends TestCase {
 		$mock = $this->createMock( ResponseInterface::class );
 		$mock
 			->method( 'getBody' )
-			->willReturn( json_encode( $responseValue, JSON_THROW_ON_ERROR ) );
+			->willReturn( json_encode( $responseValue ) );
 		return $mock;
 	}
 
@@ -134,11 +114,8 @@ class MediawikiApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideActionsParamsResults
-	 * @param string[]|array<string, string>[] $expectedResult
-	 * @param string[]|array<string, string>[] $action
-	 * @param string[]|array<int|string, int|string|mixed[]>[] $params
 	 */
-	public function testGetActionReturnsResult( array $expectedResult, array $action, array $params = [] ): void {
+	public function testGetActionReturnsResult( array $expectedResult, string $action, array $params = [] ): void {
 		$client = $this->getMockClient();
 		$params = array_merge( [ 'action' => $action ], $params );
 		$client->expects( $this->once() )
@@ -154,11 +131,8 @@ class MediawikiApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideActionsParamsResults
-	 * @param string[]|array<string, string>[] $expectedResult
-	 * @param string[]|array<string, string>[] $action
-	 * @param string[]|array<int|string, int|string|mixed[]>[] $params
 	 */
-	public function testPostActionReturnsResult( array $expectedResult, array $action, array $params = [] ): void {
+	public function testPostActionReturnsResult( array $expectedResult, string $action, array $params = [] ): void {
 		$client = $this->getMockClient();
 		$params = array_merge( [ 'action' => $action ], $params );
 		$client->expects( $this->once() )
@@ -210,9 +184,6 @@ class MediawikiApiTest extends TestCase {
 		$this->assertEquals( [ 'success ' => 1 ], $result );
 	}
 
-	/**
-	 * @return string[][]|array<int[]|string int[]|string[]|mixed[]>[][]|array<string, string>[][]
-	 */
 	public function provideActionsParamsResults(): array {
 		return [
 			[ [ 'key' => 'value' ], 'logout' ],
@@ -337,10 +308,8 @@ class MediawikiApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideVersions
-	 * @param string[] $apiValue
-	 * @param string[] $expectedVersion
 	 */
-	public function testGetVersion( array $apiValue, array $expectedVersion ): void {
+	public function testGetVersion( string $apiValue, string $expectedVersion ): void {
 		$client = $this->getMockClient();
 		$params = [ 'action' => 'query', 'meta' => 'siteinfo', 'continue' => '' ];
 		$client->expects( $this->exactly( 1 ) )

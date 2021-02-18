@@ -13,11 +13,8 @@ class PageIdentifierTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param bool[]|null[] $title
-	 * @param Title[]|bool[]|null[] $pageid
-	 * @param Title[]|bool[]|null[] $identifiesPage
 	 */
-	public function testValidConstruction( array $title, array $pageid, array $identifiesPage ): void {
+	public function testValidConstruction( ?Title $title, ?int $pageid, bool $identifiesPage ): void {
 		$pageIdentifier = new PageIdentifier( $title, $pageid );
 		if ( is_string( $title ) ) {
 			$this->assertEquals( new Title( $title ), $pageIdentifier->getTitle() );

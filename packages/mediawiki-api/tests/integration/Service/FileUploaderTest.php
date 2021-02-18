@@ -44,7 +44,7 @@ class FileUploaderTest extends TestCase {
 		// Upload a file.
 		$testFilename = dirname( __DIR__, 2 ) . '/fixtures/blue ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ.png';
 		$uploaded = $this->fileUploader->upload( $testPagename, $testFilename, 'Testing',
-			null, null, true );
+			'', null, true );
 		$this->assertTrue( $uploaded );
 
 		// Get the file again, and check that it exists this time.

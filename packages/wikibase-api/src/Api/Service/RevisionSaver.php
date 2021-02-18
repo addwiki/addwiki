@@ -55,7 +55,7 @@ class RevisionSaver {
 		$serialized = $this->entitySerializer->serialize( $entity );
 
 		$params = [
-			'data' => json_encode( $serialized, JSON_THROW_ON_ERROR )
+			'data' => json_encode( $serialized )
 		];
 
 		$revId = $revision->getId();

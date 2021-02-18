@@ -18,9 +18,9 @@ class Pages {
 	private array $pages = [];
 
 	/**
-	 * @param Page[] $pages
+	 * @param Page[]|Pages $pages
 	 */
-	public function __construct( array $pages = [] ) {
+	public function __construct( $pages = [] ) {
 		$this->pages = [];
 		$this->addPages( $pages );
 	}
@@ -42,9 +42,6 @@ class Pages {
 		}
 	}
 
-	/**
-	 * @param Page $page
-	 */
 	public function addPage( Page $page ): void {
 		$this->pages[$page->getId()] = $page;
 	}
@@ -53,9 +50,6 @@ class Pages {
 		return array_key_exists( $id, $this->pages );
 	}
 
-	/**
-	 * @param Page $page
-	 */
 	public function hasPage( Page $page ): bool {
 		return array_key_exists( $page->getId(), $this->pages );
 	}
@@ -63,18 +57,14 @@ class Pages {
 	/**
 	 * @return Page|null Page or null if there is no page
 	 */
-	public function getLatest(): ?\Addwiki\Mediawiki\DataModel\Page {
+	public function getLatest(): ?Page {
 		if ( empty( $this->pages ) ) {
 			return null;
 		}
 		return $this->pages[ max( array_keys( $this->pages ) ) ];
 	}
 
-	/**
-	 *
-	 * @throws RuntimeException
-	 */
-	public function get( int $pageid ): \Addwiki\Mediawiki\DataModel\Page {
+	public function get( int $pageid ): Page {
 		if ( $this->hasPageWithId( $pageid ) ) {
 			return $this->pages[$pageid];
 		}

@@ -17,10 +17,8 @@ class PagesTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param Page[][] $input
-	 * @param array<int, Page>[]|Page[][] $expected
 	 */
-	public function testValidConstruction( array $input, array $expected ): void {
+	public function testValidConstruction( $input, array $expected ): void {
 		$pages = new Pages( $input );
 		$this->assertEquals( $expected, $pages->toArray() );
 	}

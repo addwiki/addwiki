@@ -67,7 +67,7 @@ class SparqlQueryRunner {
 		$sparqlResponse = $this->client->get(
 			$this->sparqlEndpoint . '?format=json&query=' . urlencode( $query )
 		);
-		$sparqlArray = json_decode( $sparqlResponse->getBody(), true, 512, JSON_THROW_ON_ERROR );
+		$sparqlArray = json_decode( $sparqlResponse->getBody(), true );
 
 		$itemIds = [];
 		foreach ( $sparqlArray['results']['bindings'] as $binding ) {

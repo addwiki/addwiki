@@ -72,10 +72,8 @@ class MediawikiFactoryTest extends TestCase {
 
 	/**
 	 * @dataProvider provideFactoryMethodsTest
-	 * @param string[] $class
-	 * @param string[] $method
 	 */
-	public function testFactoryMethod( array $class, array $method ): void {
+	public function testFactoryMethod( string $class, string $method ): void {
 		$factory = new MediawikiFactory( $this->getMockMediawikiApi() );
 		$this->assertInstanceOf( $class, $factory->$method() );
 	}

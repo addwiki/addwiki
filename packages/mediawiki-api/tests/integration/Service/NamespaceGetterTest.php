@@ -83,6 +83,6 @@ class NamespaceGetterTest extends TestCase {
 	}
 
 	private function getNamespaceFixture() {
-		return json_decode( file_get_contents( __DIR__ . '/../../fixtures/namespaces.json' ), true, 512, JSON_THROW_ON_ERROR );
+		return json_decode( file_get_contents( __DIR__ . '/../../fixtures/namespaces.json' ), true );
 	}
 }

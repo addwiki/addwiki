@@ -19,7 +19,7 @@ class Title implements JsonSerializable {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( string $title, int $ns = 0 ) {
-		if ( !is_string( $title ) ) {
+		if ( !is_string( $title ) || empty( $title ) ) {
 			throw new InvalidArgumentException( '$title must be a string' );
 		}
 		if ( !is_int( $ns ) ) {

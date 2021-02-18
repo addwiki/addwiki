@@ -16,10 +16,10 @@ class RevisionsTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param Revision[][] $input
+	 * @param Revision[]|Revisions $input
 	 * @param array<int, Revision>[]|Revision[][] $expected
 	 */
-	public function testValidConstruction( array $input, array $expected ): void {
+	public function testValidConstruction( $input, array $expected ): void {
 		$revisions = new Revisions( $input );
 		$this->assertEquals( $expected, $revisions->toArray() );
 	}

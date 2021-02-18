@@ -17,7 +17,7 @@ class User {
 
 	private int $editcount;
 
-	private string $registration;
+	private ?string $registration;
 
 	/**
 	 * @var array
@@ -38,7 +38,7 @@ class User {
 	 * @throws InvalidArgumentException
 	 * @param mixed[] $rights
 	 */
-	public function __construct( string $name, int $id, int $editcount, string $registration, array $groups, array $rights, string $gender ) {
+	public function __construct( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ) {
 		if ( !is_string( $name ) || empty( $name ) ) {
 			throw new InvalidArgumentException( '$name must be a string and can not be empty' );
 		}
@@ -92,7 +92,7 @@ class User {
 		return $this->name;
 	}
 
-	public function getRegistration(): string {
+	public function getRegistration(): ?string {
 		return $this->registration;
 	}
 

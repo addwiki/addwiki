@@ -35,10 +35,8 @@ class MiddlewareFactory implements LoggerAwareInterface {
 	 * @private
 	 *
 	 * @param bool $delay default to true, can be false to speed up tests
-	 *
-	 * @return callable|void
 	 */
-	public function retry( bool $delay = true ) {
+	public function retry( bool $delay = true ) : callable {
 		if ( $delay ) {
 			return Middleware::retry( $this->newRetryDecider(), $this->getRetryDelay() );
 		} else {
@@ -92,7 +90,7 @@ class MiddlewareFactory implements LoggerAwareInterface {
 			}
 
 			if ( $response !== null ) {
-				$data = json_decode( $response->getBody(), true, 512, JSON_THROW_ON_ERROR );
+				$data = json_decode( $response->getBody(), true );
 
 				// Retry on server errors
 				if ( $response->getStatusCode() >= 500 ) {

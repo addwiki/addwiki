@@ -117,12 +117,12 @@ class PageListGetter extends Service {
 	 * Run a query to completion.
 	 *
 	 * @param string[] $params Query parameters
-	 * @param string $contName Result subelement name for continue details
+	 * @param string|null $contName Result subelement name for continue details
 	 * @param string $resName Result element name for main results array
 	 * @param string $pageIdName Result element name for page ID
 	 * @param bool $cont Whether to continue the query, using multiple requests
 	 */
-	protected function runQuery( array $params, string $contName, string $resName, string $pageIdName = 'pageid', bool $cont = true ): Pages {
+	protected function runQuery( array $params, ?string $contName, string $resName, string $pageIdName = 'pageid', bool $cont = true ): Pages {
 		$pages = new Pages();
 		$negativeId = -1;
 

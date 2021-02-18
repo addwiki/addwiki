@@ -32,7 +32,7 @@ class UsageException extends Exception {
 		$this->rawMessage = $message;
 		$message = 'Code: ' . $apiCode . PHP_EOL .
 			'Message: ' . $message . PHP_EOL .
-			'Result: ' . json_encode( $result, JSON_THROW_ON_ERROR );
+			'Result: ' . json_encode( $result );
 		parent::__construct( $message, 0, null );
 	}
 

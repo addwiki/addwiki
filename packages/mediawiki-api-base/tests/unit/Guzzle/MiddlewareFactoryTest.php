@@ -72,7 +72,7 @@ class MiddlewareFactoryTest extends TestCase {
 				'error' => [
 					'info' => 'anti-abuse measure'
 				]
-			], JSON_THROW_ON_ERROR
+			]
 		);
 
 		$queue = [

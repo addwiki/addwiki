@@ -15,19 +15,14 @@ class ApiUserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param string[] $user
-	 * @param string[] $pass
 	 */
-	public function testValidConstruction( array $user, array $pass, $domain = null ): void {
+	public function testValidConstruction( string $user, string $pass, ?string $domain = null ): void {
 		$apiUser = new ApiUser( $user, $pass, $domain );
 		$this->assertSame( $user, $apiUser->getUsername() );
 		$this->assertSame( $pass, $apiUser->getPassword() );
 		$this->assertSame( $domain, $apiUser->getDomain() );
 	}
 
-	/**
-	 * @return string[][]
-	 */
 	public function provideValidConstruction(): array {
 		return [
 			[ 'user', 'pass' ],
@@ -37,11 +32,8 @@ class ApiUserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideInvalidConstruction
-	 * @param string[] $user
-	 * @param string[] $pass
-	 * @param string[]|null $domain
 	 */
-	public function testInvalidConstruction( array $user, array $pass, array $domain = null ): void {
+	public function testInvalidConstruction( string $user, string $pass, ?string $domain = null ): void {
 		$this->expectException( InvalidArgumentException::class );
 		 new ApiUser( $user, $pass, $domain );
 	}
@@ -51,19 +43,15 @@ class ApiUserTest extends TestCase {
 			[ 'user', '' ],
 			[ '', 'pass' ],
 			[ '', '' ],
-			[ 'user', [] ],
-			[ 'user', 455667 ],
-			[ 34567, 'pass' ],
-			[ [], 'pass' ],
-			[ 'user', 'pass', [] ],
+			[ '', '', '' ],
+			[ 'aaa', 'aaa', '' ],
 		];
 	}
 
 	/**
 	 * @dataProvider provideTestEquals
-	 * @param ApiUser[]|bool[] $shouldEqual
 	 */
-	public function testEquals( ApiUser $user1, ApiUser $user2, array $shouldEqual ): void {
+	public function testEquals( ApiUser $user1, ApiUser $user2, bool $shouldEqual ): void {
 		$this->assertSame( $shouldEqual, $user1->equals( $user2 ) );
 		$this->assertSame( $shouldEqual, $user2->equals( $user1 ) );
 	}

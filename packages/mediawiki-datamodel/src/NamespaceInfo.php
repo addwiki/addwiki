@@ -22,13 +22,6 @@ class NamespaceInfo {
 
 	private array $aliases = [];
 
-	/**
-	 * NamespaceInfo constructor.
-	 *
-	 *
-	 * @throws InvalidArgumentException
-	 * @param mixed[] $aliases
-	 */
 	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {
 		if ( !is_int( $id ) ) {
 			throw new InvalidArgumentException( '$id must be an integer' );
@@ -74,7 +67,7 @@ class NamespaceInfo {
 		return $this->caseHandling;
 	}
 
-	public function getDefaultContentModel(): string {
+	public function getDefaultContentModel(): ?string {
 		return $this->defaultContentModel;
 	}
 

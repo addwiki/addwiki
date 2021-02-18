@@ -7,7 +7,6 @@ use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,14 +17,8 @@ class RevisionTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
-	 * @param Content&MockObject[]|null[] $content
-	 * @param Content&MockObject[]|PageIdentifier[]|null[] $pageIdentifier
-	 * @param int[]|Content&MockObject[]|PageIdentifier[]|null[] $id
-	 * @param int[]|Content&MockObject[]|EditInfo&MockObject[]|PageIdentifier[]|null[] $editInfo
-	 * @param int[]|string[]|Content&MockObject[]|EditInfo&MockObject[]|PageIdentifier[]|null[] $user
-	 * @param int[]|string[]|Content&MockObject[]|EditInfo&MockObject[]|PageIdentifier[] $timestamp
 	 */
-	public function testValidConstruction( array $content, array $pageIdentifier, array $id, array $editInfo, array $user, array $timestamp ): void {
+	public function testValidConstruction( Content $content, ?PageIdentifier $pageIdentifier, ?int $id, ?EditInfo $editInfo, ?string $user, ?string $timestamp ): void {
 		$rev = new Revision( $content, $pageIdentifier, $id, $editInfo, $user, $timestamp );
 		$this->assertEquals( $content, $rev->getContent() );
 		if ( $pageIdentifier !== null ) {

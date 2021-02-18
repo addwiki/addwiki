@@ -23,7 +23,7 @@ class MediawikiSession implements LoggerAwareInterface {
 	 */
 	private bool $usePre125TokensModule = false;
 
-	private NullLogger $logger;
+	private LoggerInterface $logger;
 
 	/**
 	 * @param MediawikiApi $api The API object to use for this session.

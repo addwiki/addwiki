@@ -36,6 +36,9 @@ class ApiUser {
 		if ( empty( $username ) || empty( $password ) ) {
 			throw new InvalidArgumentException( 'Username and Password are not allowed to be empty' );
 		}
+		if ( $domain !== null && empty( $domain ) ) {
+			throw new InvalidArgumentException( 'Domain is not allowed to be an empty string' );
+		}
 		$this->username = $username;
 		$this->password = $password;
 		$this->domain   = $domain;
@@ -58,7 +61,7 @@ class ApiUser {
 	/**
 	 * @since 0.1
 	 */
-	public function getDomain(): string {
+	public function getDomain(): ?string {
 		return $this->domain;
 	}
 

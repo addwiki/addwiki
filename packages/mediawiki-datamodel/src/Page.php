@@ -42,7 +42,7 @@ class Page {
 		return $this->pageIdentifier->getTitle();
 	}
 
-	public function getPageIdentifier(): PageIdentifier {
+	public function getPageIdentifier(): ?PageIdentifier {
 		return $this->pageIdentifier;
 	}
 

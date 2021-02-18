@@ -40,9 +40,9 @@ class ValueFormatter {
 		}
 
 		$params = [
-			'datavalue' => json_encode( $this->dataValueSerializer->serialize( $value ), JSON_THROW_ON_ERROR ),
+			'datavalue' => json_encode( $this->dataValueSerializer->serialize( $value ) ),
 			'datatype' => $dataTypeId,
-			'options' => json_encode( $options->getOptions(), JSON_THROW_ON_ERROR ),
+			'options' => json_encode( $options->getOptions() ),
 		];
 
 		$result = $this->api->getRequest( new SimpleRequest( 'wbformatvalue', $params ) );

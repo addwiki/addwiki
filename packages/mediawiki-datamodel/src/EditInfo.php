@@ -11,7 +11,6 @@ use InvalidArgumentException;
  */
 class EditInfo {
 
-	// minor flags
 	/**
 	 * @var bool
 	 */
@@ -20,7 +19,7 @@ class EditInfo {
 	 * @var bool
 	 */
 	public const NOTMINOR = false;
-	// bot flags
+
 	/**
 	 * @var bool
 	 */
@@ -29,7 +28,7 @@ class EditInfo {
 	 * @var bool
 	 */
 	public const NOTBOT = false;
-	// maxlag flags
+
 	/**
 	 * @var null
 	 */
@@ -44,7 +43,6 @@ class EditInfo {
 	protected string $summary;
 
 	/**
-	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( string $summary = '', bool $minor = self::NOTMINOR, bool $bot = self::NOTBOT, ?int $maxlag = self::OFFLAG ) {

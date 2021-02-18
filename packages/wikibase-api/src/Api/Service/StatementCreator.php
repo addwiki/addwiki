@@ -60,7 +60,7 @@ class StatementCreator {
 		];
 		if ( $mainSnak instanceof PropertyValueSnak ) {
 			$serializedDataValue = $this->dataValueSerializer->serialize( $mainSnak->getDataValue() );
-			$params['value'] = json_encode( $serializedDataValue['value'], JSON_THROW_ON_ERROR );
+			$params['value'] = json_encode( $serializedDataValue['value'] );
 		}
 
 		$result = $this->api->postRequest( 'wbcreateclaim', $params, $editInfo );

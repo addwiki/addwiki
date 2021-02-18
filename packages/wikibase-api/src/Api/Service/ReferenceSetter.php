@@ -58,8 +58,8 @@ class ReferenceSetter {
 
 		$params = [
 			'statement' => $guid,
-			'snaks' => json_encode( $referenceSerialization['snaks'], JSON_THROW_ON_ERROR ),
-			'snaks-order' => json_encode( $referenceSerialization['snaks-order'], JSON_THROW_ON_ERROR ),
+			'snaks' => json_encode( $referenceSerialization['snaks'] ),
+			'snaks-order' => json_encode( $referenceSerialization['snaks-order'] ),
 		];
 
 		if ( $targetReference !== null ) {

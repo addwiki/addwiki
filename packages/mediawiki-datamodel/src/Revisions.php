@@ -18,9 +18,9 @@ class Revisions {
 	private array $revisions = [];
 
 	/**
-	 * @param Revisions[] $revisions
+	 * @param Revisions[]|Revisions $revisions
 	 */
-	public function __construct( array $revisions = [] ) {
+	public function __construct( $revisions = [] ) {
 		$this->revisions = [];
 		$this->addRevisions( $revisions );
 	}

@@ -51,9 +51,9 @@ class RevisionGetterTest extends TestCase {
 
 	/**
 	 * @dataProvider provideIds
-	 * @param string[] $id
+	 * @param string[][]|ItemId[][] $id
 	 */
-	public function testGetFromId( array $id ): void {
+	public function testGetFromId( $id ): void {
 		$api = $this->createMockApi();
 		$api->expects( $this->once() )
 			->method( 'getRequest' )

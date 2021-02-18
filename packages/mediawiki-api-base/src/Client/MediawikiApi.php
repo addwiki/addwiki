@@ -43,7 +43,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	private $version;
 
-	private NullLogger $logger;
+	private LoggerInterface $logger;
 
 	private string $apiUrl;
 
@@ -240,7 +240,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @throws UsageException
 	 */
 	private function decodeResponse( ResponseInterface $response ) {
-		$resultArray = json_decode( $response->getBody(), true, 512, JSON_THROW_ON_ERROR );
+		$resultArray = json_decode( $response->getBody(), true );
 
 		$this->logWarnings( $resultArray );
 		$this->throwUsageExceptions( $resultArray );
@@ -330,7 +330,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		return 'addwiki-mediawiki-client';
 	}
 
-	private function logWarnings( array $result ): void {
+	private function logWarnings( $result ): void {
 		if ( is_array( $result ) ) {
 			// Let's see if there is 'warnings' key on the first level of the array...
 			if ( $this->logWarning( $result ) ) {
@@ -378,10 +378,9 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @throws UsageException
 	 */
-	private function throwUsageExceptions( array $result ): void {
+	private function throwUsageExceptions( $result ): void {
 		if ( is_array( $result ) && array_key_exists( 'error', $result ) ) {
 			throw new UsageException(
 				$result['error']['code'],

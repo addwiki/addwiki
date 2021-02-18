@@ -21,7 +21,7 @@ class LogListTest extends TestCase {
 			]
 		);
 		$json = $logList->jsonSerialize();
-		$json = json_decode( json_encode( $json, JSON_THROW_ON_ERROR ), true, 512, JSON_THROW_ON_ERROR );
+		$json = json_decode( json_encode( $json ), true );
 		$this->assertEquals( $logList, LogList::jsonDeserialize( $json ) );
 	}
 
