@@ -8,8 +8,6 @@ use Wikibase\DataModel\Entity\EntityId;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class RedirectCreator {
 

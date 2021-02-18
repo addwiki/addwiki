@@ -12,9 +12,6 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Statement\Statement;
 use Wikibase\DataModel\Term\Fingerprint;
 
-/**
- * @author Addshore
- */
 class DataModelUtils {
 
 	public static function getReferenceForUrl( string $url ): Reference {

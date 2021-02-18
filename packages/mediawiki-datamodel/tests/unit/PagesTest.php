@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\Pages
- * @author Addshore
  */
 class PagesTest extends TestCase {
 

@@ -35,8 +35,6 @@ use Wikibase\DataModel\SerializerFactory;
 use Wikibase\DataModel\Services\Lookup\EntityRetrievingTermLookup;
 
 /**
- * @author Addshore
- *
  * @access public
  */
 class WikibaseFactory {

@@ -4,9 +4,6 @@ namespace Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData;
 
 use stdClass;
 
-/**
- * @author Addshore
- */
 class MicroData {
 
 	/**

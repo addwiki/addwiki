@@ -9,9 +9,6 @@ use Wikibase\DataModel\Services\Lookup\PropertyLookup;
 
 /**
  * @access private
- *
- * @author Thomas Pellissier Tanon
- * @author Addshore
  */
 class PropertyApiLookup implements PropertyLookup {
 

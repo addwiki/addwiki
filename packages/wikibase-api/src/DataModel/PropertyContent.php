@@ -5,9 +5,6 @@ namespace Addwiki\Wikibase\DataModel;
 use Addwiki\Mediawiki\DataModel\Content;
 use Wikibase\DataModel\Entity\Property;
 
-/**
- * @author Addshore
- */
 class PropertyContent extends Content {
 
 	/**

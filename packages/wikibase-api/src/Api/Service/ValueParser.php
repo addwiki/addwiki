@@ -11,9 +11,6 @@ use RuntimeException;
 
 /**
  * @access private
- *
- * @author Addshore
- * @author Thomas Arrow
  */
 class ValueParser {
 

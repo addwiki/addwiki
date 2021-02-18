@@ -5,9 +5,6 @@ namespace Addwiki\Wikibase\DataModel;
 use Addwiki\Mediawiki\DataModel\Content;
 use Wikibase\DataModel\Entity\Item;
 
-/**
- * @author Addshore
- */
 class ItemContent extends Content {
 
 	/**

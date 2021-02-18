@@ -14,8 +14,6 @@ use Wikibase\DataModel\Snak\Snak;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class StatementCreator {
 

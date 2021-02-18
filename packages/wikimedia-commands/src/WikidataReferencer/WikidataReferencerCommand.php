@@ -33,9 +33,6 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
-/**
- * @author Addshore
- */
 class WikidataReferencerCommand extends Command {
 
 	private ArrayAccess $appConfig;

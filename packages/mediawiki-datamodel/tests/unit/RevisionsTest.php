@@ -9,8 +9,7 @@ use Addwiki\Mediawiki\DataModel\Revisions;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Addwiki\Mediawiki\DataModel\Revisions
- * @author Addshore
+ * @covers \Addwiki\Mediawiki\DataModel\RevisionSaver
  */
 class RevisionsTest extends TestCase {
 

@@ -13,8 +13,6 @@ use Wikibase\DataModel\Term\Term;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class DescriptionSetter {
 

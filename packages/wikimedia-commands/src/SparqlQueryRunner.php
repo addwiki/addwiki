@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**
- * @author Addshore
  * @todo factor this out into some library?
  */
 class SparqlQueryRunner {

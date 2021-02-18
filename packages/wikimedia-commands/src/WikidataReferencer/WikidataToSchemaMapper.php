@@ -9,13 +9,10 @@ use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\MultiTextReference
 use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\ThingReferencer;
 
 /**
- * Class containing detail of what types of items the script recognises and will try to reference
+ * Class containing detail of what types of items the script recognizes and will try to reference
  * as well as how to try and reference them.
  *
  * All details withing this class are essentially mappings between Wikidata.org and Schema.org
- *
- * @author Addshore
- * @author Ainali
  */
 class WikidataToSchemaMapper {
 

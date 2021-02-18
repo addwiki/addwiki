@@ -10,8 +10,6 @@ use Serializers\Serializer;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class ValueFormatter {
 

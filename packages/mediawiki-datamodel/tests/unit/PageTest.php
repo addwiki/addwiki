@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\Page
- * @author Addshore
  */
 class PageTest extends TestCase {
 

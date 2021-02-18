@@ -7,8 +7,6 @@ use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class EntitySearcher {
 

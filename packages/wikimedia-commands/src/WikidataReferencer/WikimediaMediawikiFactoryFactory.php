@@ -8,9 +8,6 @@ use Addwiki\Mediawiki\Api\MediawikiFactory;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 
-/**
- * @author Addshore
- */
 class WikimediaMediawikiFactoryFactory {
 
 	private Client $client;

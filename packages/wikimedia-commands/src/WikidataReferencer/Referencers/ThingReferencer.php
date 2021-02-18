@@ -15,9 +15,6 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\InMemoryEntityLookup;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 
-/**
- * @author Addshore
- */
 class ThingReferencer implements Referencer {
 
 	private WikibaseFactory $wikibaseFactory;

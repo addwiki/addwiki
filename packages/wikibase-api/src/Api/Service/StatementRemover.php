@@ -10,8 +10,6 @@ use Wikibase\DataModel\Statement\StatementGuid;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class StatementRemover {
 

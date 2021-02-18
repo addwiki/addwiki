@@ -10,8 +10,6 @@ use Addwiki\Mediawiki\DataModel\Title;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class PageDeleter extends Service {
 

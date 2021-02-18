@@ -19,8 +19,6 @@ use Wikibase\DataModel\SiteLink;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class RevisionsGetter {
 

@@ -10,8 +10,6 @@ use Wikibase\DataModel\Entity\ItemId;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class ItemMerger {
 

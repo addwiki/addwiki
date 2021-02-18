@@ -13,8 +13,6 @@ use Wikibase\DataModel\Term\AliasGroup;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class AliasGroupSetter {
 

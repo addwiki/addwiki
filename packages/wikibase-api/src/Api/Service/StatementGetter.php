@@ -9,8 +9,6 @@ use Wikibase\DataModel\Statement\Statement;
 
 /**
  * @access private
- *
- * @author Addshore
  */
 class StatementGetter {
 

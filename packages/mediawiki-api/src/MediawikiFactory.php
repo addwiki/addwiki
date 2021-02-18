@@ -30,8 +30,6 @@ use Addwiki\Mediawiki\Api\Service\UserRightsChanger;
 
 /**
  * @access public
- *
- * @author Addshore
  */
 class MediawikiFactory {
 

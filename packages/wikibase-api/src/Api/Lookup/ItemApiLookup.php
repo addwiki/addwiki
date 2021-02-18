@@ -9,9 +9,6 @@ use Wikibase\DataModel\Services\Lookup\ItemLookup;
 
 /**
  * @access private
- *
- * @author Thomas Pellissier Tanon
- * @author Addshore
  */
 class ItemApiLookup implements ItemLookup {
 

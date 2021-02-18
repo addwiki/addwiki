@@ -5,9 +5,6 @@ namespace Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroData;
 use Wikibase\DataModel\Entity\Item;
 
-/**
- * @author Addshore
- */
 interface Referencer {
 
 	/**

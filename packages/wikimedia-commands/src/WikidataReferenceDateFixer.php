@@ -23,9 +23,6 @@ use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\SnakList;
 
-/**
- * @author Addshore
- */
 class WikidataReferenceDateFixer extends Command {
 
 	private ArrayAccess $appConfig;
