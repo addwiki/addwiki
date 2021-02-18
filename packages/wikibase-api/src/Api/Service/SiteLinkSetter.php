@@ -25,8 +25,6 @@ class SiteLinkSetter {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param SiteLink $siteLink
 	 * @param EntityId|Item|Property|SiteLink $target
 	 * @param EditInfo|null $editInfo

@@ -21,7 +21,6 @@ class BadgeIdsGetter {
 	}
 
 	/**
-	 * @since 0.5
 	 * @return ItemId[]
 	 */
 	public function get(): array {

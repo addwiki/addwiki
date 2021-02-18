@@ -29,8 +29,6 @@ class ReferenceSetter {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param Reference $reference new reference value
 	 * @param Statement|StatementGuid|string $statement Statement object or GUID which has the reference
 	 * @param Reference|string|null $targetReference target (old) reference of hash

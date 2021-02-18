@@ -25,16 +25,10 @@ class Title implements JsonSerializable {
 		$this->ns = $ns;
 	}
 
-	/**
-	 * @since 0.1
-	 */
 	public function getNs(): int {
 		return $this->ns;
 	}
 
-	/**
-	 * @since 0.6
-	 */
 	public function getText(): string {
 		return $this->title;
 	}

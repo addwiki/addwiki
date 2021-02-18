@@ -27,8 +27,6 @@ class StatementSetter {
 	}
 
 	/**
-	 * @since 0.5
-	 *
 	 * @param Statement $statement
 	 * @param EditInfo|null $editInfo
 	 *

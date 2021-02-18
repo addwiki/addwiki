@@ -21,8 +21,6 @@ class EntityDocumentSaver {
 	}
 
 	/**
-	 * @since 0.7
-	 *
 	 * @param EntityDocument $entityDocument
 	 * @param EditInfo $editInfo
 	 *

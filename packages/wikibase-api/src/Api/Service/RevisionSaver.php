@@ -35,7 +35,6 @@ class RevisionSaver {
 	}
 
 	/**
-	 * @since 0.1
 	 * @param Revision $revision
 	 * @param EditInfo|null $editInfo
 	 *

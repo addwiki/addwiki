@@ -21,7 +21,6 @@ class SiteLinkLinker {
 	}
 
 	/**
-	 * @since 0.2
 	 * @param SiteLink $toSiteLink
 	 * @param SiteLink $fromSiteLink
 	 * @param EditInfo|null $editInfo

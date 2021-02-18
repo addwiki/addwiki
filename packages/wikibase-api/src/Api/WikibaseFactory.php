@@ -56,9 +56,6 @@ class WikibaseFactory {
 		$this->dataValueSerializer = $dvSerializer;
 	}
 
-	/**
-	 * @since 0.1
-	 */
 	public function newRevisionSaver(): RevisionSaver {
 		return new RevisionSaver(
 			$this->newWikibaseApi(),
@@ -67,9 +64,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.1
-	 */
 	public function newRevisionGetter(): RevisionGetter {
 		return new RevisionGetter(
 			$this->api,
@@ -77,9 +71,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.4
-	 */
 	public function newRevisionsGetter(): RevisionsGetter {
 		return new RevisionsGetter(
 			$this->api,
@@ -87,9 +78,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newValueParser(): ValueParser {
 		return new ValueParser(
 			$this->api,
@@ -97,9 +85,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newValueFormatter(): ValueFormatter {
 		return new ValueFormatter(
 			$this->api,
@@ -107,44 +92,26 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newItemMerger(): ItemMerger {
 		return new ItemMerger( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newAliasGroupSetter(): AliasGroupSetter {
 		return new AliasGroupSetter( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newDescriptionSetter(): DescriptionSetter {
 		return new DescriptionSetter( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newLabelSetter(): LabelSetter {
 		return new LabelSetter( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newReferenceRemover(): ReferenceRemover {
 		return new ReferenceRemover( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newReferenceSetter(): ReferenceSetter {
 		return new ReferenceSetter(
 			$this->newWikibaseApi(),
@@ -152,30 +119,18 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newSiteLinkLinker(): SiteLinkLinker {
 		return new SiteLinkLinker( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.2
-	 */
 	public function newSiteLinkSetter(): SiteLinkSetter {
 		return new SiteLinkSetter( $this->newWikibaseApi() );
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newBadgeIdsGetter(): BadgeIdsGetter {
 		return new BadgeIdsGetter( $this->api );
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newRedirectCreator(): RedirectCreator {
 		return new RedirectCreator( $this->newWikibaseApi() );
 	}
@@ -191,9 +146,6 @@ class WikibaseFactory {
 		return new SerializerFactory( $this->dataValueSerializer );
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newStatementGetter(): StatementGetter {
 		return new StatementGetter(
 			$this->api,
@@ -201,9 +153,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newStatementSetter(): StatementSetter {
 		return new StatementSetter(
 			$this->newWikibaseApi(),
@@ -211,9 +160,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newStatementCreator(): StatementCreator {
 		return new StatementCreator(
 			$this->newWikibaseApi(),
@@ -221,9 +167,6 @@ class WikibaseFactory {
 		);
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function newStatementRemover(): StatementRemover {
 		return new StatementRemover( $this->newWikibaseApi() );
 	}
@@ -232,44 +175,26 @@ class WikibaseFactory {
 		return new WikibaseApi( $this->api );
 	}
 
-	/**
-	 * @since 0.7
-	 */
 	public function newEntityLookup(): EntityApiLookup {
 		return new EntityApiLookup( $this->newRevisionGetter() );
 	}
 
-	/**
-	 * @since 0.7
-	 */
 	public function newItemLookup(): ItemApiLookup {
 		return new ItemApiLookup( $this->newEntityLookup() );
 	}
 
-	/**
-	 * @since 0.7
-	 */
 	public function newPropertyLookup(): PropertyApiLookup {
 		return new PropertyApiLookup( $this->newEntityLookup() );
 	}
 
-	/**
-	 * @since 0.7
-	 */
 	public function newTermLookup(): EntityRetrievingTermLookup {
 		return new EntityRetrievingTermLookup( $this->newEntityLookup() );
 	}
 
-	/**
-	 * @since 0.7
-	 */
 	public function newEntityDocumentSaver(): EntityDocumentSaver {
 		return new EntityDocumentSaver( $this->newRevisionSaver() );
 	}
 
-	/**
-	 * @since 0.8
-	 */
 	public function newEntitySearcher(): EntitySearcher {
 		return new EntitySearcher( $this->api );
 	}

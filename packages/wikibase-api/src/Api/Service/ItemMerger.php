@@ -23,7 +23,6 @@ class ItemMerger {
 	}
 
 	/**
-	 * @since 0.2
 	 * @param Item|ItemId|string $from
 	 * @param Item|ItemId|string $to
 	 * @param EditInfo|null $editInfo

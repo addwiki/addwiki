@@ -28,8 +28,6 @@ class ValueParser {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param string|string[] $inputValues one or more
 	 * @param string $parser Id of the ValueParser to use
 	 *
@@ -40,8 +38,6 @@ class ValueParser {
 	}
 
 	/**
-	 * @since 0.7
-	 *
 	 * @param string|string[] $inputValues one or more
 	 * @param string $parser Id of the ValueParser to use
 	 *

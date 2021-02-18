@@ -24,8 +24,6 @@ class ReferenceRemover {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param Reference|string $reference Reference object or hash
 	 * @param Statement|StatementGuid|string $target Statement object or GUID
 	 * @param EditInfo|null $editInfo

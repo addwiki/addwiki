@@ -23,8 +23,6 @@ class StatementRemover {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param Statement|StatementGuid|string $statement Statement object or GUID
 	 * @param EditInfo|null $editInfo
 	 *

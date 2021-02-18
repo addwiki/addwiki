@@ -20,8 +20,6 @@ class EntitySearcher {
 	}
 
 	/**
-	 * @since 0.8
-	 *
 	 * @return string[] EntityIds
 	 */
 	public function search( string $entityType, string $string, string $language ): array {

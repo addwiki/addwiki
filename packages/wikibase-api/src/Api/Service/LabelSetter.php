@@ -26,8 +26,6 @@ class LabelSetter {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param Term $label
 	 * @param EntityId|Item|Property|SiteLink $target
 	 * @param EditInfo|null $editInfo

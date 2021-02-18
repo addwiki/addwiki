@@ -27,10 +27,7 @@ class ValueFormatter {
 	}
 
 	/**
-	 * @since 0.2
-	 *
 	 * @param GenericOptions|null $options
-	 *
 	 */
 	public function format( DataValue $value, string $dataTypeId, GenericOptions $options = null ): string {
 		if ( $options === null ) {
