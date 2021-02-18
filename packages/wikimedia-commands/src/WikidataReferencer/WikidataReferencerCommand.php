@@ -8,21 +8,11 @@ use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Title;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Api\WikimediaFactory;
 use Addwiki\Wikimedia\Commands\SparqlQueryRunner;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData\MicroDataExtractor;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\Referencer;
 use ArrayAccess;
-use DataValues\BooleanValue;
-use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
-use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
@@ -115,24 +105,7 @@ class WikidataReferencerCommand extends Command {
 		$this->externalLinkClient = $guzzleClient;
 
 		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $guzzleClient );
-		$this->wikibaseFactory = new WikibaseFactory(
-			$this->wikibaseApi,
-			new DataValueDeserializer(
-				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => QuantityValue::class,
-					'time' => TimeValue::class,
-					'wikibase-entityid' => EntityIdValue::class,
-				]
-			),
-			new DataValueSerializer()
-		);
+		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 
 		$mapper = new WikidataToSchemaMapper();
 		$this->instanceMap = $mapper->getInstanceMap();

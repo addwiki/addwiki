@@ -7,20 +7,12 @@ use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Topics\Covid19\WHOReports;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Api\WikimediaFactory;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\EffectiveUrlMiddleware;
 use ArrayAccess;
-use DataValues\BooleanValue;
-use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
 use DataValues\QuantityValue;
-use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnboundedQuantityValue;
-use DataValues\UnknownValue;
 use DateTime;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -65,24 +57,7 @@ class ImportWHOReportValueCommand extends Command {
 		$guzzleClient = $clientFactory->getClient();
 
 		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $guzzleClient );
-		$this->wikibaseFactory = new WikibaseFactory(
-			$this->wikibaseApi,
-			new DataValueDeserializer(
-				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => \DataValues\QuantityValue::class,
-					'time' => TimeValue::class,
-					'wikibase-entityid' => EntityIdValue::class,
-				]
-			),
-			new DataValueSerializer()
-		);
+		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 	}
 
 	protected function configure() {

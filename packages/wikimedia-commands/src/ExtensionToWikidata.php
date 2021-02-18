@@ -9,19 +9,8 @@ use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
-use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Api\WikimediaFactory;
 use ArrayAccess;
-use DataValues\BooleanValue;
-use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
-use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -104,24 +93,7 @@ class ExtensionToWikidata extends Command {
 			}
 		}
 
-		$targetWbFactory = new WikibaseFactory(
-			$targetApi,
-			new DataValueDeserializer(
-				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => QuantityValue::class,
-					'time' => TimeValue::class,
-					'wikibase-entityid' => EntityIdValue::class,
-				]
-			),
-			new DataValueSerializer()
-		);
+		$targetWbFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 
 		// Create an item if there is no item yet!
 		if ( $itemIdString === null ) {

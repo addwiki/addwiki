@@ -48,12 +48,15 @@ class WikimediaFactory {
 	/**
 	 * @since 0.1
 	 *
-	 * @param string $domain eg. 'en.wikipedia.org'
+	 * @param string $domain eg. 'wikidata.org'
 	 *
 	 * @return WikibaseFactory
 	 */
 	public function newWikibaseFactoryForDomain( $domain ) {
-		if ( strstr( $domain, 'wikidata.org' ) == true ) {
+		if (
+			strstr( $domain, 'wikidata.org' ) === true ||
+			strstr( $domain, 'commons.wikimedia.org' ) === true
+			) {
 			$dvDeserializer = new DataValueDeserializer(
 					[
 						// data-values/data-values
@@ -85,6 +88,22 @@ class WikimediaFactory {
 			$dvDeserializer,
 			$dvSerializer
 		);
+	}
+
+	/**
+	 * @since 3.0
+	 * @return WikibaseFactory
+	 */
+	public function newWikidataWikibaseFactory() {
+		return $this->newWikibaseFactoryForDomain( 'wikidata.org' );
+	}
+
+	/**
+	 * @since 3.0
+	 * @return WikibaseFactory
+	 */
+	public function newCommonsWikibaseFactory() {
+		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org' );
 	}
 
 }
