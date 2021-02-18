@@ -18,7 +18,7 @@ use Wikibase\DataModel\Term\AliasGroup;
  */
 class AliasGroupSetter {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

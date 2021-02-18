@@ -15,7 +15,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class MultiTextReferencer implements Referencer {
 
-	private \Addwiki\Wikibase\Api\WikibaseFactory $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var string[]

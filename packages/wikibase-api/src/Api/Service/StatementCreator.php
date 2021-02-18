@@ -19,7 +19,7 @@ use Wikibase\DataModel\Snak\Snak;
  */
 class StatementCreator {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	private \Serializers\Serializer $dataValueSerializer;
 

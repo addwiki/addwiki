@@ -14,7 +14,7 @@ use Wikibase\DataModel\Statement\Statement;
  */
 class StatementGetter {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	private \Deserializers\Deserializer $statementDeserializer;
 

@@ -11,7 +11,7 @@ use Exception;
  */
 class CategoryLoopException extends Exception {
 
-	protected ?\Addwiki\Mediawiki\DataModel\Pages $categoryPath = null;
+	protected ?Pages $categoryPath = null;
 
 	/**
 	 * @param Pages $path
@@ -25,7 +25,7 @@ class CategoryLoopException extends Exception {
 	 * child page of the last item.
 	 * @return Pages The set of category Pages that comprise the category loop.
 	 */
-	public function getCategoryPath(): \Addwiki\Mediawiki\DataModel\Pages {
+	public function getCategoryPath(): Pages {
 		return $this->categoryPath;
 	}
 

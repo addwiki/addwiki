@@ -17,7 +17,7 @@ use RuntimeException;
  */
 class ValueParser {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	private \Deserializers\Deserializer $dataValueDeserializer;
 

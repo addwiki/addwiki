@@ -24,7 +24,7 @@ use Wikibase\DataModel\SiteLink;
  */
 class RevisionsGetter {
 
-	protected \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	protected MediawikiApi $api;
 
 	private \Deserializers\Deserializer $entityDeserializer;
 

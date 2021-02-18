@@ -47,7 +47,7 @@ class CategoryTraverserTest extends TestCase {
 	 * @param string $content The wikitext to save to the page.
 	 * @return Page The saved Page.
 	 */
-	protected function savePage( string $title, string $content ): \Addwiki\Mediawiki\DataModel\Page {
+	protected function savePage( string $title, string $content ): Page {
 		$pageIdentifier = new PageIdentifier( new Title( $title ) );
 		$revision = new Revision( new Content( $content ), $pageIdentifier );
 		$this->factory->newRevisionSaver()->save( $revision );

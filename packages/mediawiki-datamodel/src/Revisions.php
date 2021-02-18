@@ -63,7 +63,7 @@ class Revisions {
 	/**
 	 * @return Revision|null Revision or null if there is no revision
 	 */
-	public function getLatest(): ?\Addwiki\Mediawiki\DataModel\Revision {
+	public function getLatest(): ?Revision {
 		if ( empty( $this->revisions ) ) {
 			return null;
 		}
@@ -75,7 +75,7 @@ class Revisions {
 	 * @throws RuntimeException
 	 * @throws InvalidArgumentException
 	 */
-	public function get( int $revid ): \Addwiki\Mediawiki\DataModel\Revision {
+	public function get( int $revid ): Revision {
 		if ( !is_int( $revid ) ) {
 			throw new InvalidArgumentException( '$revid needs to be an int' );
 		}

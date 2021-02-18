@@ -56,7 +56,7 @@ class PageIdentifier implements JsonSerializable {
 		return $array;
 	}
 
-	public static function jsonDeserialize( array $array ): \Addwiki\Mediawiki\DataModel\PageIdentifier {
+	public static function jsonDeserialize( array $array ): PageIdentifier {
 		return new self(
 		isset( $array['title'] ) ? Title::jsonDeserialize( $array['title'] ) : null,
 		$array['id'] ?? null

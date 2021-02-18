@@ -22,7 +22,7 @@ use Exception;
  */
 class TestEnvironment {
 
-	public static function newDefault(): \Addwiki\Wikibase\Tests\Integration\TestEnvironment {
+	public static function newDefault(): TestEnvironment {
 		return new self();
 	}
 

@@ -18,7 +18,7 @@ class TestEnvironment {
 	 */
 	public $apiUrl;
 	public string $pageUrl;
-	private \Addwiki\Mediawiki\Api\MediawikiFactory $factory;
+	private MediawikiFactory $factory;
 
 	protected MediawikiApi $api;
 
@@ -26,7 +26,7 @@ class TestEnvironment {
 	 * Get a new TestEnvironment.
 	 * This is identical to calling self::__construct() but is useful for fluent construction.
 	 */
-	public static function newInstance(): \Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment {
+	public static function newInstance(): TestEnvironment {
 		return new self();
 	}
 
@@ -69,7 +69,7 @@ class TestEnvironment {
 	 *
 	 * @return MediawikiFactory The factory instance.
 	 */
-	public function getFactory(): \Addwiki\Mediawiki\Api\MediawikiFactory {
+	public function getFactory(): MediawikiFactory {
 		return $this->factory;
 	}
 

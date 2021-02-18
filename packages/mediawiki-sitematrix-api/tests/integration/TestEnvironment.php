@@ -10,7 +10,7 @@ use Addwiki\Mediawiki\Api\MediawikiFactory;
  */
 class TestEnvironment {
 
-	public static function newDefault(): \Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration\TestEnvironment {
+	public static function newDefault(): TestEnvironment {
 		return new self();
 	}
 

@@ -13,7 +13,7 @@ use Wikibase\DataModel\Services\Lookup\EntityLookup;
  */
 class EntityApiLookup implements EntityLookup {
 
-	private \Addwiki\Wikibase\Api\Service\RevisionGetter $revisionGetter;
+	private RevisionGetter $revisionGetter;
 
 	/**
 	 * @param RevisionGetter $revisionGetter

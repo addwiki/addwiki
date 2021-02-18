@@ -33,7 +33,7 @@ class Redirect implements JsonSerializable {
 		];
 	}
 
-	public static function jsonDeserialize( array $json ): \Addwiki\Mediawiki\DataModel\Redirect {
+	public static function jsonDeserialize( array $json ): Redirect {
 		return new self(
 		Title::jsonDeserialize( $json['from'] ),
 		Title::jsonDeserialize( $json['to'] )

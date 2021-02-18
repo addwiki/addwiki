@@ -35,7 +35,7 @@ use Addwiki\Mediawiki\Api\Service\UserRightsChanger;
  */
 class MediawikiFactory {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api

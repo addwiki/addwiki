@@ -22,7 +22,7 @@ class BaseTestEnvironment {
 	 * Get a new BaseTestEnvironment.
 	 * This is identical to calling self::__construct() but is useful for fluent construction.
 	 */
-	public static function newInstance(): \Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment {
+	public static function newInstance(): BaseTestEnvironment {
 		return new self();
 	}
 

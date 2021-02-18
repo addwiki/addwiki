@@ -112,7 +112,7 @@ class Log implements JsonSerializable {
 		];
 	}
 
-	public static function jsonDeserialize( array $json ): \Addwiki\Mediawiki\DataModel\Log {
+	public static function jsonDeserialize( array $json ): Log {
 		return new self(
 		$json['id'],
 		$json['type'],

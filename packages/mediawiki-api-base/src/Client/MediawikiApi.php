@@ -54,7 +54,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
-	public static function newFromApiEndpoint( string $apiEndpoint ): \Addwiki\Mediawiki\Api\Client\MediawikiApi {
+	public static function newFromApiEndpoint( string $apiEndpoint ): MediawikiApi {
 		return new self( $apiEndpoint );
 	}
 
@@ -69,7 +69,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *              file accessible on all Mediawiki pages
 	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
 	 */
-	public static function newFromPage( string $url ): \Addwiki\Mediawiki\Api\Client\MediawikiApi {
+	public static function newFromPage( string $url ): MediawikiApi {
 		// Set up HTTP client and HTML document.
 		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
 		$pageHtml = $tempClient->get( $url )->getBody();
@@ -170,7 +170,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function getRequestAsync( Request $request ): \GuzzleHttp\Promise\PromiseInterface {
+	public function getRequestAsync( Request $request ): PromiseInterface {
 		$promise = $this->getClient()->requestAsync(
 			'GET',
 			$this->apiUrl,
@@ -189,7 +189,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function postRequestAsync( Request $request ): \GuzzleHttp\Promise\PromiseInterface {
+	public function postRequestAsync( Request $request ): PromiseInterface {
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,

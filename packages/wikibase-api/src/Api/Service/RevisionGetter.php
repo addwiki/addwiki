@@ -22,7 +22,7 @@ use Wikibase\DataModel\SiteLink;
  */
 class RevisionGetter {
 
-	protected \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	protected MediawikiApi $api;
 
 	protected \Deserializers\Deserializer $entityDeserializer;
 

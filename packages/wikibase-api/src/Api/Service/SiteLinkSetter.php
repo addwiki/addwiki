@@ -17,7 +17,7 @@ use Wikibase\DataModel\SiteLink;
  */
 class SiteLinkSetter {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

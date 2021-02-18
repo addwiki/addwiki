@@ -15,7 +15,7 @@ use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
  */
 class SiteListGetter {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api

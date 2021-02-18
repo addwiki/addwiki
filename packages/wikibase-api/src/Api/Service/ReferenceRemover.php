@@ -16,7 +16,7 @@ use Wikibase\DataModel\Statement\StatementGuid;
  */
 class ReferenceRemover {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

@@ -15,7 +15,7 @@ use Wikibase\DataModel\Statement\StatementGuid;
  */
 class StatementRemover {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

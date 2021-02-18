@@ -20,7 +20,7 @@ use Wikibase\DataModel\Entity\Property;
  */
 class RevisionSaver {
 
-	protected \Addwiki\Wikibase\Api\WikibaseApi $api;
+	protected WikibaseApi $api;
 
 	private \Deserializers\Deserializer $entityDeserializer;
 

@@ -18,7 +18,7 @@ use Wikibase\DataModel\Term\Term;
  */
 class DescriptionSetter {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

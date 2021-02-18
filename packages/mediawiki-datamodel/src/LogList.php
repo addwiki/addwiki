@@ -64,7 +64,7 @@ class LogList implements JsonSerializable {
 	/**
 	 * @return Log|null Log or null if there is no log
 	 */
-	public function getLatest(): ?\Addwiki\Mediawiki\DataModel\Log {
+	public function getLatest(): ?Log {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
@@ -75,7 +75,7 @@ class LogList implements JsonSerializable {
 	 * @since 0.6
 	 * @return Log|null Log or null if there is no log
 	 */
-	public function getOldest(): ?\Addwiki\Mediawiki\DataModel\Log {
+	public function getOldest(): ?Log {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
@@ -93,7 +93,7 @@ class LogList implements JsonSerializable {
 	 *
 	 * @throws RuntimeException
 	 */
-	public function get( int $id ): \Addwiki\Mediawiki\DataModel\Log {
+	public function get( int $id ): Log {
 		if ( $this->hasLogWithId( $id ) ) {
 			return $this->logs[$id];
 		}
@@ -109,7 +109,7 @@ class LogList implements JsonSerializable {
 
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-	 * @return \Addwiki\Mediawiki\DataModel\Log[]
+	 * @return Log[]
 	 */
 	public function jsonSerialize() {
 		return $this->toArray();

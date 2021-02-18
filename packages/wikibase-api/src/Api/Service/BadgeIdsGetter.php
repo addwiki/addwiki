@@ -13,7 +13,7 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class BadgeIdsGetter {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api

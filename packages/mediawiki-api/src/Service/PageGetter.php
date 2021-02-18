@@ -21,10 +21,8 @@ class PageGetter extends Service {
 
 	/**
 	 * @since 0.2
-	 *
-	 *
 	 */
-	public function getFromRevisionId( int $id, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
+	public function getFromRevisionId( int $id, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -42,7 +40,7 @@ class PageGetter extends Service {
 	 * @param string|Title $title
 	 * @param array $extraParams
 	 */
-	public function getFromTitle( $title, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
+	public function getFromTitle( $title, array $extraParams = [] ): Page {
 		if ( $title instanceof Title ) {
 			$title = $title->getTitle();
 		}
@@ -59,10 +57,8 @@ class PageGetter extends Service {
 
 	/**
 	 * @since 0.2
-	 *
-	 *
 	 */
-	public function getFromPageId( int $id, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
+	public function getFromPageId( int $id, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -81,7 +77,7 @@ class PageGetter extends Service {
 	 * @param array $extraParams
 	 *
 	 * @throws RuntimeException
-	 * @return \Addwiki\Mediawiki\DataModel\Page|void
+	 * @return Page|void
 	 */
 	public function getFromPageIdentifier(
 		PageIdentifier $pageIdentifier,
@@ -103,7 +99,7 @@ class PageGetter extends Service {
 	 * @param Page $page
 	 * @param array $extraParams
 	 */
-	public function getFromPage( Page $page, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
+	public function getFromPage( Page $page, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -126,7 +122,7 @@ class PageGetter extends Service {
 	 * @param Revision $revision
 	 * @param array $extraParams
 	 */
-	public function getFromRevision( Revision $revision, array $extraParams = [] ): \Addwiki\Mediawiki\DataModel\Page {
+	public function getFromRevision( Revision $revision, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
 				new SimpleRequest(
@@ -196,7 +192,7 @@ class PageGetter extends Service {
 		return new Content( $content, $model );
 	}
 
-	private function newPageFromResult( array $array ): \Addwiki\Mediawiki\DataModel\Page {
+	private function newPageFromResult( array $array ): Page {
 		if ( array_key_exists( 'pageid', $array ) ) {
 			$pageid = $array['pageid'];
 			$revisions = $this->getRevisionsFromResult( $array );

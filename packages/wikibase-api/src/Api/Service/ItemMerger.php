@@ -15,7 +15,7 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class ItemMerger {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

@@ -13,7 +13,7 @@ use Wikibase\DataModel\SiteLink;
  */
 class SiteLinkLinker {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

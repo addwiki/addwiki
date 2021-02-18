@@ -61,7 +61,7 @@ class Title implements JsonSerializable {
 		];
 	}
 
-	public static function jsonDeserialize( array $json ): \Addwiki\Mediawiki\DataModel\Title {
+	public static function jsonDeserialize( array $json ): Title {
 		return new self( $json['title'], $json['ns'] );
 	}
 

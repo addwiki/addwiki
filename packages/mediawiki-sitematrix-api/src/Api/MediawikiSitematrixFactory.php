@@ -12,7 +12,7 @@ use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
  */
 class MediawikiSitematrixFactory {
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	/**
 	 * @param MediawikiApi $api

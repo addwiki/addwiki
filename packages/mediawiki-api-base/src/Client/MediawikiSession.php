@@ -16,7 +16,7 @@ class MediawikiSession implements LoggerAwareInterface {
 
 	private array $tokens = [];
 
-	private \Addwiki\Mediawiki\Api\Client\MediawikiApi $api;
+	private MediawikiApi $api;
 
 	/**
 	 * @var bool if this session is running against mediawiki version pre 1.25

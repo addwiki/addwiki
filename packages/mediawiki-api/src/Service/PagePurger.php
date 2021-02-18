@@ -60,7 +60,7 @@ class PagePurger extends Service {
 	 *
 	 * @return Pages the pages that have been purged successfully
 	 */
-	public function purgePages( Pages $pages ): \Addwiki\Mediawiki\DataModel\Pages {
+	public function purgePages( Pages $pages ): Pages {
 		$pagesArray = $pages->toArray();
 		$pagesIds = [];
 

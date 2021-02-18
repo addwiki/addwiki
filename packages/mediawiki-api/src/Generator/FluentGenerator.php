@@ -23,7 +23,7 @@ class FluentGenerator implements ApiGenerator {
 	 *
 	 *
 	 */
-	public static function factory( string $name ): \Addwiki\Mediawiki\Api\Generator\FluentGenerator {
+	public static function factory( string $name ): FluentGenerator {
 		return new self( $name );
 	}
 

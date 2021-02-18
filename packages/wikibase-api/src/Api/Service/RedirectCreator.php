@@ -13,7 +13,7 @@ use Wikibase\DataModel\Entity\EntityId;
  */
 class RedirectCreator {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	/**
 	 * @param WikibaseApi $api

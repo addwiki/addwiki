@@ -20,7 +20,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
  */
 class ThingReferencer implements Referencer {
 
-	private \Addwiki\Wikibase\Api\WikibaseFactory $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var callable[]

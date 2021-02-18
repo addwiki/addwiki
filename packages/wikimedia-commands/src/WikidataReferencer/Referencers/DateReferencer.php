@@ -20,7 +20,7 @@ use Wikibase\DataModel\Snak\PropertyValueSnak;
 
 class DateReferencer implements Referencer {
 
-	private \Addwiki\Wikibase\Api\WikibaseFactory $wikibaseFactory;
+	private WikibaseFactory $wikibaseFactory;
 
 	/**
 	 * @var string[]

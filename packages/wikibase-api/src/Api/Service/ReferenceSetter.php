@@ -17,7 +17,7 @@ use Wikibase\DataModel\Statement\StatementGuid;
  */
 class ReferenceSetter {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	private \Serializers\Serializer $referenceSerializer;
 

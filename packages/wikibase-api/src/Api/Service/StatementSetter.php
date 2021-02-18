@@ -15,7 +15,7 @@ use Wikibase\DataModel\Statement\Statement;
  */
 class StatementSetter {
 
-	private \Addwiki\Wikibase\Api\WikibaseApi $api;
+	private WikibaseApi $api;
 
 	private \Serializers\Serializer $statementSerializer;
 
