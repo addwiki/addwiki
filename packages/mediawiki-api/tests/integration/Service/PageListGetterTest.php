@@ -19,7 +19,7 @@ class PageListGetterTest extends TestCase {
 
 	private string $nonemptyCatName = 'Category:Test category';
 
-	private ?PageListGetter $pageListGetter;
+	private ?PageListGetter $pageListGetter = null;
 
 	/**
 	 * Set up some test categories and pages.

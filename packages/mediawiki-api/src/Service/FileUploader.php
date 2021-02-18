@@ -13,7 +13,7 @@ use Exception;
  */
 class FileUploader extends Service {
 
-	protected ?int $chunkSize;
+	protected ?int $chunkSize = null;
 
 	/**
 	 * Set the chunk size used for chunked uploading.
@@ -75,7 +75,7 @@ class FileUploader extends Service {
 			// Normal single-request upload.
 			$params['filesize'] = filesize( $location );
 			$params['file'] = fopen( $location, 'r' );
-			if ( isset( $this->chunkSize ) && $this->chunkSize > 0 ) {
+			if ( $this->chunkSize !== null && $this->chunkSize > 0 ) {
 				// Chunked upload.
 				$params = $this->uploadByChunks( $params );
 			}

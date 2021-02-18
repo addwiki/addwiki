@@ -14,9 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 class FileUploaderTest extends TestCase {
 
-	protected ?MediawikiFactory $factory;
+	protected ?MediawikiFactory $factory = null;
 
-	protected ?FileUploader $fileUploader;
+	protected ?FileUploader $fileUploader = null;
 
 	/**
 	 * Create a FileUploader to use in all these tests.

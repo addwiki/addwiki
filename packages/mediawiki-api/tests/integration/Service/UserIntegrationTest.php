@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserIntegrationTest extends TestCase {
 
-	private static ?ApiUser $localApiUser;
+	private static ?ApiUser $localApiUser = null;
 
 	public static function setUpBeforeClass(): void {
 		parent::setUpBeforeClass();

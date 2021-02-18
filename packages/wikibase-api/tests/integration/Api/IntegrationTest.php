@@ -22,7 +22,7 @@ class IntegrationTest extends TestCase {
 
 	private static ItemId $itemId;
 
-	private static ?Item $localItem;
+	private static ?Item $localItem = null;
 
 	public static function setUpBeforeClass() : void {
 		parent::setUpBeforeClass();

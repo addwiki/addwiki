@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PageIntegrationTest extends TestCase {
 
-	private static ?PageIdentifier $localPageIdentifier;
+	private static ?PageIdentifier $localPageIdentifier = null;
 
 	public static function setUpBeforeClass(): void {
 		parent::setUpBeforeClass();

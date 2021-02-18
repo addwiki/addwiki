@@ -16,7 +16,7 @@ class AppConfig implements ArrayAccess {
 	private string $path;
 
 	private $data;
-	private ?bool $isLoaded;
+	private ?bool $isLoaded = null;
 
 	public function __construct( $pwd ) {
 		$this->configDirectory = $pwd . '/config';

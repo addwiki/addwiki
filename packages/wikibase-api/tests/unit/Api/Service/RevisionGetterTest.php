@@ -39,9 +39,6 @@ class RevisionGetterTest extends TestCase {
 		$this->assertTrue( true );
 	}
 
-	/**
-	 * @return string[][]|ItemId[][]
-	 */
 	public function provideIds(): array {
 		return [
 			[ 'Q1' ],
@@ -51,7 +48,6 @@ class RevisionGetterTest extends TestCase {
 
 	/**
 	 * @dataProvider provideIds
-	 * @param string[][]|ItemId[][] $id
 	 */
 	public function testGetFromId( $id ): void {
 		$api = $this->createMockApi();

@@ -139,7 +139,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	private function getClient(): ClientInterface {
-		if ( $this->client === null ) {
+		if ( !$this->client instanceof Client ) {
 			$clientFactory = new ClientFactory();
 			$clientFactory->setLogger( $this->logger );
 			$this->client = $clientFactory->getClient();

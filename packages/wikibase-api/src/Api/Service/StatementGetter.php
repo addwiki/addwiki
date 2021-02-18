@@ -27,6 +27,7 @@ class StatementGetter {
 		$this->statementDeserializer = $statementDeserializer;
 	}
 
+	/** @noRector \Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector */
 	public function getFromGuid( string $guid ): Statement {
 		$params = [
 			'claim' => $guid,

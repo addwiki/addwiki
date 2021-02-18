@@ -12,7 +12,7 @@ namespace Addwiki\Mediawiki\Api\Generator;
 class FluentGenerator implements ApiGenerator {
 
 	private string $name;
-	private ?array $params;
+	private ?array $params = null;
 
 	public function __construct( string $name ) {
 		$this->name = $name;

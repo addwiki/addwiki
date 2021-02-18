@@ -15,11 +15,11 @@ use PHPUnit\Framework\TestCase;
 
 class CategoryTraverserTest extends TestCase {
 
-	protected ?TestEnvironment $testEnvironment;
+	protected ?TestEnvironment $testEnvironment = null;
 
-	protected ?MediawikiFactory $factory;
+	protected ?MediawikiFactory $factory = null;
 
-	protected ?CategoryTraverser $traverser;
+	protected ?CategoryTraverser $traverser = null;
 
 	protected function setUp(): void {
 		parent::setUp();

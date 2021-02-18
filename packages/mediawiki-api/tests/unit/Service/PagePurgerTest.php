@@ -41,11 +41,10 @@ class PagePurgerTest extends TestCase {
 			->with(
 				$this->isInstanceOf( SimpleRequest::class )
 			)
-			->will( $this->returnValue(
-			[
+			->willReturn( [
 				"batchcomplete" => "",
 				"purge" => [ [ "ns" => 0, "title" => "Foo", "purged" => "" ] ]
-			] ) );
+			] );
 
 		$service = new PagePurger( $api );
 
@@ -66,7 +65,7 @@ class PagePurgerTest extends TestCase {
 			->with(
 				$this->isInstanceOf( SimpleRequest::class )
 			)
-			->will( $this->returnValue( [
+			->willReturn( [
 				"batchcomplete" => "",
 				"purge" =>
 					[ [
@@ -74,7 +73,7 @@ class PagePurgerTest extends TestCase {
 						"title" => "This page really does not exist",
 						"missing" => ""
 					] ]
-			] ) );
+			] );
 
 		$service = new PagePurger( $api );
 
@@ -95,8 +94,7 @@ class PagePurgerTest extends TestCase {
 			->with(
 				$this->isInstanceOf( SimpleRequest::class )
 			)
-			->will( $this->returnValue(
-				[
+			->willReturn( [
 					"batchcomplete" => "",
 					"purge" => [
 						[
@@ -110,8 +108,7 @@ class PagePurgerTest extends TestCase {
 							"purged" => ""
 						],
 				]
-			]
-			) );
+			] );
 
 		$service = new PagePurger( $api );
 
@@ -138,8 +135,7 @@ class PagePurgerTest extends TestCase {
 			->with(
 				$this->isInstanceOf( SimpleRequest::class )
 			)
-			->will( $this->returnValue(
-				[
+			->willReturn( [
 				"batchcomplete" => "",
 				"purge" => [
 					[
@@ -158,8 +154,7 @@ class PagePurgerTest extends TestCase {
 						"missing" => ""
 					],
 				]
-			]
-			) );
+			] );
 
 		$service = new PagePurger( $api );
 

@@ -38,11 +38,11 @@ class WikibaseEntityStatementRemover extends Command {
 
 	private ArrayAccess $appConfig;
 
-	private ?WikibaseFactory $wikibaseFactory;
+	private ?WikibaseFactory $wikibaseFactory = null;
 
-	private ?MediawikiApi $wikibaseApi;
+	private ?MediawikiApi $wikibaseApi = null;
 
-	private ?SparqlQueryRunner $sparqlQueryRunner;
+	private ?SparqlQueryRunner $sparqlQueryRunner = null;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;

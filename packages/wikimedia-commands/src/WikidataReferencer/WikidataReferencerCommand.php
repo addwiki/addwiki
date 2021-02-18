@@ -40,15 +40,15 @@ class WikidataReferencerCommand extends Command {
 
 	private ArrayAccess $appConfig;
 
-	private ?SparqlQueryRunner $sparqlQueryRunner;
+	private ?SparqlQueryRunner $sparqlQueryRunner = null;
 
-	private ?WikibaseFactory $wikibaseFactory;
+	private ?WikibaseFactory $wikibaseFactory = null;
 
-	private ?MediawikiApi $wikibaseApi;
+	private ?MediawikiApi $wikibaseApi = null;
 
-	private ?WikimediaMediawikiFactoryFactory $wmFactoryFactory;
+	private ?WikimediaMediawikiFactoryFactory $wmFactoryFactory = null;
 
-	private ?MicroDataExtractor $microDataExtractor;
+	private ?MicroDataExtractor $microDataExtractor = null;
 
 	/**
 	 * @var Referencer[] 'type' => Referencer[]
@@ -60,9 +60,9 @@ class WikidataReferencerCommand extends Command {
 	 */
 	private array $instanceMap = [];
 
-	private ?Client $externalLinkClient;
+	private ?Client $externalLinkClient = null;
 
-	private ?string $tmpDir;
+	private ?string $tmpDir = null;
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;

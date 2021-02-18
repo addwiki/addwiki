@@ -11,7 +11,7 @@ use Exception;
  */
 class CategoryLoopException extends Exception {
 
-	protected ?\Addwiki\Mediawiki\DataModel\Pages $categoryPath;
+	protected ?\Addwiki\Mediawiki\DataModel\Pages $categoryPath = null;
 
 	/**
 	 * @param Pages $path
