@@ -12,5 +12,4 @@
 	<arg name="encoding" value="utf8"/>
 	<exclude-pattern>vendor/</exclude-pattern>
 	<exclude-pattern>packages/</exclude-pattern>
-	<exclude-pattern>packages-dev/</exclude-pattern>
 </ruleset>

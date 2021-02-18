@@ -47,13 +47,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // paths to refactor; solid alternative to CLI arguments
     $parameters->set(Option::PATHS, [
         __DIR__ . '/packages',
-        __DIR__ . '/packages-dev',
         ]);
 
     // Rector relies on autoload setup of your project; Composer autoload is included by default; to add more:
     $parameters->set(Option::AUTOLOAD_PATHS, [
         __DIR__ . '/packages',
-        __DIR__ . '/packages-dev',
     ]);
 
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_72);

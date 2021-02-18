@@ -22,9 +22,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $packageDirs = [
         __DIR__ . '/packages'
     ];
-    if( !getenv( 'MONOREPO_NO_DEV' ) ) {
-        $packageDirs[] = __DIR__ . '/packages-dev';
-    }
     $parameters->set(Option::PACKAGE_DIRECTORIES, $packageDirs);
 
 	$services = $containerConfigurator->services();
