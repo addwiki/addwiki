@@ -19,12 +19,8 @@ class StatementCreator {
 
 	private WikibaseApi $api;
 
-	private \Serializers\Serializer $dataValueSerializer;
+	private Serializer $dataValueSerializer;
 
-	/**
-	 * @param WikibaseApi $api
-	 * @param Serializer $dataValueSerializer
-	 */
 	public function __construct( WikibaseApi $api, Serializer $dataValueSerializer ) {
 		$this->api = $api;
 		$this->dataValueSerializer = $dataValueSerializer;

@@ -19,15 +19,9 @@ use Wikibase\DataModel\Entity\Property;
 class RevisionSaver {
 
 	protected WikibaseApi $api;
-
-	private \Deserializers\Deserializer $entityDeserializer;
-
+	private Deserializer $entityDeserializer;
 	private Serializer $entitySerializer;
 
-	/**
-	 * @param WikibaseApi $api
-	 * @param Deserializer $entityDeserializer
-	 */
 	public function __construct( WikibaseApi $api, Deserializer $entityDeserializer, Serializer $entitySerializer ) {
 		$this->api = $api;
 		$this->entityDeserializer = $entityDeserializer;

@@ -13,9 +13,6 @@ class BadgeIdsGetter {
 
 	private MediawikiApi $api;
 
-	/**
-	 * @param MediawikiApi $api
-	 */
 	public function __construct( MediawikiApi $api ) {
 		$this->api = $api;
 	}

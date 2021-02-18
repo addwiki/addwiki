@@ -17,12 +17,8 @@ class ReferenceSetter {
 
 	private WikibaseApi $api;
 
-	private \Serializers\Serializer $referenceSerializer;
+	private Serializer $referenceSerializer;
 
-	/**
-	 * @param WikibaseApi $api
-	 * @param Serializer $referenceSerializer
-	 */
 	public function __construct( WikibaseApi $api, Serializer $referenceSerializer ) {
 		$this->api = $api;
 		$this->referenceSerializer = $referenceSerializer;

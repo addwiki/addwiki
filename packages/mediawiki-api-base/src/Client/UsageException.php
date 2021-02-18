@@ -15,7 +15,7 @@ class UsageException extends Exception {
 	 * @param string $message The API error message.
 	 * @param array $result the result the exception was generated from
 	 */
-	public function __construct( $apiCode = '', $message = '', $result = [] ) {
+	public function __construct( string $apiCode = '', string $message = '', $result = [] ) {
 		$this->apiCode = $apiCode;
 		$this->result = $result;
 		$this->rawMessage = $message;

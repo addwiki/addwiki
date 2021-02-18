@@ -13,9 +13,6 @@ class EntityApiLookup implements EntityLookup {
 
 	private RevisionGetter $revisionGetter;
 
-	/**
-	 * @param RevisionGetter $revisionGetter
-	 */
 	public function __construct( RevisionGetter $revisionGetter ) {
 		$this->revisionGetter = $revisionGetter;
 	}

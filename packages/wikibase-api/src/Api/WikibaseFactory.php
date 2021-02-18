@@ -40,16 +40,9 @@ use Wikibase\DataModel\Services\Lookup\EntityRetrievingTermLookup;
 class WikibaseFactory {
 
 	private MediawikiApi $api;
+	private Deserializer $dataValueDeserializer;
+	private Serializer $dataValueSerializer;
 
-	private \Deserializers\Deserializer $dataValueDeserializer;
-
-	private \Serializers\Serializer $dataValueSerializer;
-
-	/**
-	 * @param MediawikiApi $api
-	 * @param Deserializer $dvDeserializer
-	 * @param Serializer $dvSerializer
-	 */
 	public function __construct( MediawikiApi $api, Deserializer $dvDeserializer, Serializer $dvSerializer ) {
 		$this->api = $api;
 		$this->dataValueDeserializer = $dvDeserializer;

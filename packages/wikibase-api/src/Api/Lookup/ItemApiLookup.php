@@ -12,11 +12,8 @@ use Wikibase\DataModel\Services\Lookup\ItemLookup;
  */
 class ItemApiLookup implements ItemLookup {
 
-	private \Wikibase\DataModel\Services\Lookup\EntityLookup $entityLookup;
+	private EntityLookup $entityLookup;
 
-	/**
-	 * @param EntityLookup $entityLookup
-	 */
 	public function __construct( EntityLookup $entityLookup ) {
 		$this->entityLookup = $entityLookup;
 	}

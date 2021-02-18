@@ -12,11 +12,8 @@ use Wikibase\DataModel\Services\Lookup\PropertyLookup;
  */
 class PropertyApiLookup implements PropertyLookup {
 
-	private \Wikibase\DataModel\Services\Lookup\EntityLookup $entityLookup;
+	private EntityLookup $entityLookup;
 
-	/**
-	 * @param EntityLookup $entityLookup
-	 */
 	public function __construct( EntityLookup $entityLookup ) {
 		$this->entityLookup = $entityLookup;
 	}

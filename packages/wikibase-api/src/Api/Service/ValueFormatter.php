@@ -15,12 +15,8 @@ class ValueFormatter {
 
 	private MediawikiApi $api;
 
-	private \Serializers\Serializer $dataValueSerializer;
+	private Serializer $dataValueSerializer;
 
-	/**
-	 * @param MediawikiApi $api
-	 * @param Serializer $dataValueSerializer
-	 */
 	public function __construct( MediawikiApi $api, Serializer $dataValueSerializer ) {
 		$this->api = $api;
 		$this->dataValueSerializer = $dataValueSerializer;

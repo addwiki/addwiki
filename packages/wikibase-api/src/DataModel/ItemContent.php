@@ -12,9 +12,6 @@ class ItemContent extends Content {
 	 */
 	public const MODEL = 'wikibase-item';
 
-	/**
-	 * @param Item $item
-	 */
 	public function __construct( Item $item ) {
 		parent::__construct( $item, self::MODEL );
 	}

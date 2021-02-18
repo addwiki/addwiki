@@ -24,12 +24,8 @@ class RevisionsGetter {
 
 	protected MediawikiApi $api;
 
-	private \Deserializers\Deserializer $entityDeserializer;
+	private Deserializer $entityDeserializer;
 
-	/**
-	 * @param MediawikiApi $api
-	 * @param Deserializer $entityDeserializer
-	 */
 	public function __construct( MediawikiApi $api, Deserializer $entityDeserializer ) {
 		$this->api = $api;
 		$this->entityDeserializer = $entityDeserializer;

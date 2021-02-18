@@ -12,11 +12,8 @@ use Wikibase\DataModel\Entity\ItemId;
  */
 class SparqlQueryRunner {
 
-	private \GuzzleHttp\Client $client;
+	private Client $client;
 
-	/**
-	 * @param Client $guzzleClient
-	 */
 	public function __construct( Client $guzzleClient ) {
 		$this->client = $guzzleClient;
 	}

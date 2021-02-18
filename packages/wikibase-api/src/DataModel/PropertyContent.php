@@ -12,9 +12,6 @@ class PropertyContent extends Content {
 	 */
 	public const MODEL = 'wikibase-property';
 
-	/**
-	 * @param Property $property
-	 */
 	public function __construct( Property $property ) {
 		parent::__construct( $property, self::MODEL );
 	}
