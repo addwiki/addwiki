@@ -9,24 +9,15 @@ use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
 
 /**
  * @access private
- *
- * @author Addshore
- * @author Tarrow
  */
 class SiteListGetter {
 
 	private MediawikiApi $api;
 
-	/**
-	 * @param MediawikiApi $api
-	 */
 	public function __construct( MediawikiApi $api ) {
 		$this->api = $api;
 	}
 
-	/**
-	 * @since 0.1
-	 */
 	public function getSiteList(): SiteList {
 		$sitematrixResult = $this->api->getRequest( new SimpleRequest( 'sitematrix' ) );
 		unset( $sitematrixResult['sitematrix']['count'] );

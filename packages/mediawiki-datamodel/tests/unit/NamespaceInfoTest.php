@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\NamespaceInfo
- * @author gbirke
  */
 class NamespaceInfoTest extends TestCase {
 

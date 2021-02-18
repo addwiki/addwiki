@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\Revision
- * @author Addshore
  */
 class RevisionTest extends TestCase {
 

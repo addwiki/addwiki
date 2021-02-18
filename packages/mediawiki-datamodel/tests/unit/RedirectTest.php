@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\Redirect
- * @author Addshore
  */
 class RedirectTest extends TestCase {
 

@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\EditInfo
- * @author Addshore
  */
 class EditInfoTest extends TestCase {
 

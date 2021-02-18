@@ -4,9 +4,6 @@ namespace Addwiki\Wikimedia\Commands\WikidataReferencer\MicroData;
 
 use linclark\MicrodataPHP\MicrodataPhp;
 
-/**
- * @author Addshore
- */
 class MicroDataExtractor {
 
 	/**

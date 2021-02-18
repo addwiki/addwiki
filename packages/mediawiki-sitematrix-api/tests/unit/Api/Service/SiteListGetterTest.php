@@ -11,9 +11,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Addshore
- * @author Tarrow
- *
  * @covers Mediawiki\Sitematrix\Api\Service\SiteListGetter
  */
 class SiteListGetterTest extends TestCase {

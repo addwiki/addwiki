@@ -29,9 +29,6 @@ use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
 
 /**
- * @author Addshore
- * @author Lucie-Aimée Kaffee
- *
  * @todo convert this script to be not wikidata specific....
  */
 class WikibaseEntityStatementRemover extends Command {

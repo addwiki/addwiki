@@ -8,8 +8,6 @@ use RuntimeException;
 
 /**
  * Represents a collection of Log classes
- *
- * @author Addshore
  */
 class LogList implements JsonSerializable {
 
@@ -72,7 +70,6 @@ class LogList implements JsonSerializable {
 	}
 
 	/**
-	 * @since 0.6
 	 * @return Log|null Log or null if there is no log
 	 */
 	public function getOldest(): ?Log {
@@ -82,9 +79,6 @@ class LogList implements JsonSerializable {
 		return $this->logs[ min( array_keys( $this->logs ) ) ];
 	}
 
-	/**
-	 * @since 0.6
-	 */
 	public function isEmpty(): bool {
 		return empty( $this->logs );
 	}

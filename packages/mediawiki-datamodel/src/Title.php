@@ -5,19 +5,11 @@ namespace Addwiki\Mediawiki\DataModel;
 use InvalidArgumentException;
 use JsonSerializable;
 
-/**
- * @author Addshore
- */
 class Title implements JsonSerializable {
 
 	private string $title;
-
 	private int $ns;
 
-	/**
-	 *
-	 * @throws InvalidArgumentException
-	 */
 	public function __construct( string $title, int $ns = 0 ) {
 		if ( !is_string( $title ) || empty( $title ) ) {
 			throw new InvalidArgumentException( '$title must be a string' );
@@ -29,16 +21,10 @@ class Title implements JsonSerializable {
 		$this->ns = $ns;
 	}
 
-	/**
-	 * @since 0.1
-	 */
 	public function getNs(): int {
 		return $this->ns;
 	}
 
-	/**
-	 * @since 0.6
-	 */
 	public function getText(): string {
 		return $this->title;
 	}

@@ -5,21 +5,15 @@ namespace Addwiki\Mediawiki\DataModel;
 use InvalidArgumentException;
 
 /**
- * Class representing metadata about a MediaWiki namespace
- *
- * @author gbirke
+ * Represents metadata about a MediaWiki namespace
  */
 class NamespaceInfo {
+
 	private int $id;
-
 	private string $canonicalName;
-
 	private string $localName;
-
 	private string $caseHandling;
-
 	private ?string $defaultContentModel;
-
 	private array $aliases = [];
 
 	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {

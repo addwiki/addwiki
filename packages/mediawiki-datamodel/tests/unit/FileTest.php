@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\File
- * @author Addshore
  */
 class FileTest extends TestCase {
 

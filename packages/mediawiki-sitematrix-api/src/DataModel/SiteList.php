@@ -2,12 +2,6 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\DataModel;
 
-/**
- * @since 0.1
- *
- * @author Addshore
- * @author Tarrow
- */
 class SiteList {
 
 	/**

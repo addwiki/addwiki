@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\User
- * @author Addshore
  */
 class UserTest extends TestCase {
 

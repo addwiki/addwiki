@@ -6,8 +6,6 @@ use InvalidArgumentException;
 
 /**
  * Represents flags that can be used when edits are made
- *
- * @author Addshore
  */
 class EditInfo {
 
@@ -35,16 +33,10 @@ class EditInfo {
 	public const OFFLAG = null;
 
 	protected bool $minor = false;
-
 	protected bool $bot = false;
-
-		protected ?int $maxlag;
-
+	protected ?int $maxlag;
 	protected string $summary;
 
-	/**
-	 * @throws InvalidArgumentException
-	 */
 	public function __construct( string $summary = '', bool $minor = self::NOTMINOR, bool $bot = self::NOTBOT, ?int $maxlag = self::OFFLAG ) {
 		if ( !is_string( $summary ) ) {
 			throw new InvalidArgumentException( '$summary must be a string' );
@@ -65,22 +57,22 @@ class EditInfo {
 	}
 
 	/**
-	 * @return EditInfo::BOT|self::NOTBOT
+	 * @return EditInfo::BOT|EditInfo::NOTBOT
 	 */
 	public function getBot(): bool {
 		return $this->bot;
 	}
 
 	/**
-	 * @return EditInfo::MINOR|self::NOTMINOR
+	 * @return EditInfo::MINOR|EditInfo::NOTMINOR
 	 */
 	public function getMinor(): bool {
 		return $this->minor;
 	}
 
-		/**
-		 * @return int|null
-		 */
+	/**
+	 * @return int|null
+	 */
 	public function getMaxlag(): ?int {
 		return $this->maxlag;
 	}

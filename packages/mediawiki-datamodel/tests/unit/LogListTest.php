@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\LogList
- * @author Addshore
  */
 class LogListTest extends TestCase {
 

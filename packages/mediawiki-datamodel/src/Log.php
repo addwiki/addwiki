@@ -4,25 +4,15 @@ namespace Addwiki\Mediawiki\DataModel;
 
 use JsonSerializable;
 
-/**
- * @since 0.5
- */
 class Log implements JsonSerializable {
 
 	private int $id;
-
 	private string $type;
-
 	private string $action;
-
 	private string $timestamp;
-
 	private string $user;
-
 	private string $comment;
-
 	private PageIdentifier $pageIdentifier;
-
 	private array $details = [];
 
 	/**
@@ -39,59 +29,34 @@ class Log implements JsonSerializable {
 		$this->details = $details;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getUser(): string {
 		return $this->user;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getAction(): string {
 		return $this->action;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getComment(): string {
 		return $this->comment;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getId(): int {
 		return $this->id;
 	}
 
-	/**
-	 * @since 0.6
-	 */
 	public function getPageIdentifier(): PageIdentifier {
 		return $this->pageIdentifier;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getTimestamp(): string {
 		return $this->timestamp;
 	}
 
-	/**
-	 * @since 0.5
-	 */
 	public function getType(): string {
 		return $this->type;
 	}
 
-	/**
-	 * @since 0.5
-	 * @return mixed[]
-	 */
 	public function getDetails(): array {
 		return $this->details;
 	}

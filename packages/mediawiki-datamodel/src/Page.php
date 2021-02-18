@@ -2,20 +2,11 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 class Page {
 
 	private Revisions $revisions;
-
 	private ?PageIdentifier $pageIdentifier;
 
-	/**
-	 * @param PageIdentifier|null $pageIdentifier
-	 * @param Revisions|null $revisions
-	 *
-	 * @throws InvalidArgumentException
-	 */
 	public function __construct( PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		if ( $revisions === null ) {
 			$revisions = new Revisions();

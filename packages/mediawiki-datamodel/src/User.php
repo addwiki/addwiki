@@ -6,26 +6,15 @@ use InvalidArgumentException;
 
 /**
  * Represents a mediawiki user
- *
- * @author Addshore
  */
 class User {
 
 	private string $name;
-
 	private int $id;
-
 	private int $editcount;
-
 	private ?string $registration;
-
-	/**
-	 * @var array
-	 */
-	private $groups = [];
-
+	private array $groups = [];
 	private array $rights = [];
-
 	private string $gender;
 
 	/**

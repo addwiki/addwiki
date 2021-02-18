@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Addwiki\Mediawiki\DataModel\Title
- * @author Addshore
  */
 class TitleTest extends TestCase {
 

@@ -4,21 +4,14 @@ namespace Addwiki\Mediawiki\DataModel;
 
 /**
  * Representation of a version of content
- *
- * @author Addshore
  */
 class Revision {
 
 	private Content $content;
-
 	private PageIdentifier $pageIdentifier;
-
 	private ?int $id;
-
 	private EditInfo $editInfo;
-
 	private ?string $user;
-
 	private ?string $timestamp;
 
 	public function __construct(

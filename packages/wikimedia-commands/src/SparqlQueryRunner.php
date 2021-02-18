@@ -8,16 +8,12 @@ use InvalidArgumentException;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**
- * @author Addshore
  * @todo factor this out into some library?
  */
 class SparqlQueryRunner {
 
-	private \GuzzleHttp\Client $client;
+	private Client $client;
 
-	/**
-	 * @param Client $guzzleClient
-	 */
 	public function __construct( Client $guzzleClient ) {
 		$this->client = $guzzleClient;
 	}
