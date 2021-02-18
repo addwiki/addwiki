@@ -79,9 +79,6 @@ class RestoreRevisions extends Command {
 			);
 	}
 
-	/**
-	 * @return int|null
-	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$wiki = $input->getOption( 'wiki' );
 		$user = $input->getOption( 'user' );
@@ -101,7 +98,7 @@ class RestoreRevisions extends Command {
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
-			return -1;
+			return 1;
 		}
 
 		$mwFactory = new MediawikiFactory( $api );
@@ -120,7 +117,7 @@ class RestoreRevisions extends Command {
 
 			if ( $goodText === $currentText ) {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
-				return null;
+				return 0;
 			}
 			$asheaderInputOption = $input->getOption( 'asheader' );
 
@@ -150,7 +147,7 @@ class RestoreRevisions extends Command {
 			}
 		}
 
-		return null;
+		return 0;
 	}
 
 	/**

@@ -29,19 +29,18 @@ class SetDefaultUser extends Command {
 			);
 	}
 
-	/**
-	 * @return int|void
-	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$code = $input->getArgument( 'code' );
 		$appConfigHasUser = $this->appConfig->has( 'users.' . $code );
 
 		if ( !$appConfigHasUser ) {
 			$output->writeln( sprintf( 'No user with the code %s found', $code ) );
-			return -1;
+			return 1;
 		}
 
 		$this->appConfig->set( 'defaults.user', $code );
 		$output->writeln( sprintf( 'Default user set to: %s', $code ) );
+
+		return 0;
 	}
 }

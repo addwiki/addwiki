@@ -85,6 +85,7 @@ class Setup extends Command {
 		}
 
 		$output->writeln( "Setup complete" );
+		return 0;
 	}
 
 	private function getQuestionHelper(): QuestionHelper {

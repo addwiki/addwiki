@@ -78,6 +78,7 @@ class Purge extends Command {
 		}
 
 		$output->writeln( 'Done' );
+		return 0;
 	}
 
 }

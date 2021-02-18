@@ -72,9 +72,6 @@ class WikidataReferenceDateFixer extends Command {
 			);
 	}
 
-	/**
-	 * @return int
-	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		// Get options
 		$user = $input->getOption( 'user' );
@@ -118,7 +115,7 @@ class WikidataReferenceDateFixer extends Command {
 			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in to wikidata wiki' );
-			return -1;
+			return 1;
 		}
 
 		$itemLookup = $this->wikibaseFactory->newItemLookup();

@@ -5,6 +5,7 @@
 - Installable with 7.4+ (including PHP8)
 - Typing added throughout
 - PSR4 namespacing. Now in `Addwiki\Cli`
+- Fixed various command exit codes
 
 ## Version 2.8 (16 February 2021)
 

@@ -73,9 +73,6 @@ class EditPage extends Command {
 			);
 	}
 
-	/**
-	 * @return int
-	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$wiki = $input->getOption( 'wiki' );
 		$user = $input->getOption( 'user' );
@@ -106,7 +103,7 @@ class EditPage extends Command {
 		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
 		if ( !$loggedIn ) {
 			$output->writeln( 'Failed to log in' );
-			return -1;
+			return 1;
 		}
 
 		$mwFactory = new MediawikiFactory( $api );
