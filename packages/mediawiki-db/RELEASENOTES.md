@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- PSR4 namespacing. Now in `Addwiki\Mediawiki\Db`
 - Fix issue in `DatabaseUserGetter::getUser`
 - Fix class usage issues in `MediawikiDbFactory`
 

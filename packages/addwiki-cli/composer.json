@@ -20,8 +20,8 @@
     },
     "require": {
         "php": ">=7.3",
-        "addwiki/mediawiki-commands": "^2.8",
-        "addwiki/wikimedia-commands": "^2.8",
+        "addwiki/mediawiki-commands": "^3.0",
+        "addwiki/wikimedia-commands": "^3.0",
         "symfony/console": "~4.0",
         "symfony/yaml": "~4.0"
     },
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Addwiki\\": "src/"
+            "Addwiki\\Cli\\": "src/"
         }
     },
     "bin": [
@@ -41,7 +41,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

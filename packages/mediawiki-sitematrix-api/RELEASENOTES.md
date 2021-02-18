@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- PSR4 namespacing. Now in `Addwiki\Mediawiki\Ext\Sitematrix`
 - Fix class usage issue in `MediawikiSitematrixFactory`
 
 ## Version 2.8 (16 February 2021)

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mediawiki\Sitematrix\Api\Test;
+namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration;
 
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\MediawikiFactory;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 /**
  * @author Addshore

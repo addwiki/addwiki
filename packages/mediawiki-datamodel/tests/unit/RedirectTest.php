@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use Mediawiki\DataModel\Redirect;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\DataModel\Redirect;
+use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\Redirect
+ * @covers \Addwiki\Mediawiki\DataModel\Redirect
  * @author Addshore
  */
 class RedirectTest extends TestCase {

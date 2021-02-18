@@ -1,9 +1,13 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataCovid19;
+namespace Addwiki\Wikimedia\Commands\WikidataCovid19;
 
-use Addwiki\Commands\Wikimedia\WikidataReferencer\EffectiveUrlMiddleware;
+use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Topics\Covid19\WHOReports;
+use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\EffectiveUrlMiddleware;
 use ArrayAccess;
 use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
@@ -18,15 +22,11 @@ use DataValues\TimeValue;
 use DataValues\UnboundedQuantityValue;
 use DataValues\UnknownValue;
 use DateTime;
-use Mediawiki\Api\ApiUser;
-use Mediawiki\Api\Guzzle\ClientFactory;
-use Mediawiki\Api\MediawikiApi;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wikibase\Api\WikibaseFactory;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;

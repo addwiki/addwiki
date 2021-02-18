@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\DataModel;
+namespace Addwiki\Mediawiki\DataModel;
 
 /**
  * Representation of a version of content

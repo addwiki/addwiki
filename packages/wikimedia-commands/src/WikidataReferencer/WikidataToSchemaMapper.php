@@ -1,12 +1,12 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataReferencer;
+namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
-use Addwiki\Commands\Wikimedia\SparqlQueryRunner;
-use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\DateReferencer;
-use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\MultiTextReferencer;
-use Addwiki\Commands\Wikimedia\WikidataReferencer\Referencers\ThingReferencer;
-use Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Commands\SparqlQueryRunner;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\DateReferencer;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\MultiTextReferencer;
+use Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers\ThingReferencer;
 
 /**
  * Class containing detail of what types of items the script recognises and will try to reference

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
+use Addwiki\Mediawiki\DataModel\EditInfo;
 use InvalidArgumentException;
-use Mediawiki\DataModel\EditInfo;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\EditInfo
+ * @covers \Addwiki\Mediawiki\DataModel\EditInfo
  * @author Addshore
  */
 class EditInfoTest extends TestCase {

@@ -24,7 +24,7 @@
     },
     "require": {
         "php": ">=7.3",
-        "addwiki/mediawiki-api-base": "^2.8"
+        "addwiki/mediawiki-api-base": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~9",
@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\Sitematrix\\": "src/"
+            "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "src/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

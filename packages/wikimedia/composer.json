@@ -20,9 +20,9 @@
     },
     "require": {
         "php": ">=7.3",
-        "addwiki/mediawiki-api": "^2.8",
-        "addwiki/mediawiki-api-base": "^2.8",
-        "addwiki/wikibase-api": "^2.8",
+        "addwiki/mediawiki-api": "^3.0",
+        "addwiki/mediawiki-api-base": "^3.0",
+        "addwiki/wikibase-api": "^3.0",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
         "data-values/geo": "~4.0",
@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Wikimedia\\Api\\": "src/"
+            "Addwiki\\Wikimedia\\": "src/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

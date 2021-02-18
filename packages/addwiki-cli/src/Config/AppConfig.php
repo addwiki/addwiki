@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Config;
+namespace Addwiki\Cli\Config;
 
 use ArrayAccess;
 use LogicException;

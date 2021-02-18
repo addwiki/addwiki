@@ -21,11 +21,11 @@
     "require": {
         "php": ">=7.3",
         "ext-curl": "*",
-        "addwiki/mediawiki-api": "^2.8",
-        "addwiki/mediawiki-api-base": "^2.8",
-        "addwiki/mediawiki-datamodel": "^2.8",
-        "addwiki/topic-covid-19": "^2.8",
-        "addwiki/wikibase-api": "^2.8",
+        "addwiki/mediawiki-api": "^3.0",
+        "addwiki/mediawiki-api-base": "^3.0",
+        "addwiki/mediawiki-datamodel": "^3.0",
+        "addwiki/topic-covid-19": "^3.0",
+        "addwiki/wikibase-api": "^3.0",
         "benestar/asparagus": "~0.4",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
@@ -46,7 +46,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Addwiki\\Commands\\Wikimedia\\": "src/"
+            "Addwiki\\Wikimedia\\Commands\\": "src/"
         },
         "files": [
             "addCommands.php"
@@ -54,7 +54,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

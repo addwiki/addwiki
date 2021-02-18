@@ -1,12 +1,12 @@
 <?php
 
-namespace Mediawiki\Db\Service;
+namespace Addwiki\Mediawiki\Db\Service;
 
+use Addwiki\Mediawiki\DataModel\Log;
+use Addwiki\Mediawiki\DataModel\LogList;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Title;
 use FluentPDO;
-use Mediawiki\DataModel\Log;
-use Mediawiki\DataModel\LogList;
-use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Title;
 use PDO;
 
 /**

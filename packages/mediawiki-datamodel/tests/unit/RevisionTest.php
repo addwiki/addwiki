@@ -1,16 +1,16 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use Mediawiki\DataModel\Content;
-use Mediawiki\DataModel\EditInfo;
-use Mediawiki\DataModel\PageIdentifier;
-use Mediawiki\DataModel\Revision;
-use Mediawiki\DataModel\Title;
+use Addwiki\Mediawiki\DataModel\Content;
+use Addwiki\Mediawiki\DataModel\EditInfo;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Revision;
+use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\Revision
+ * @covers \Addwiki\Mediawiki\DataModel\Revision
  * @author Addshore
  */
 class RevisionTest extends TestCase {

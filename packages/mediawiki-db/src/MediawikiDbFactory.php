@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediawiki\Db;
+namespace Addwiki\Mediawiki\Db;
 
-use Mediawiki\Db\Service\DatabaseLogListGetter;
-use Mediawiki\Db\Service\DatabaseUserGetter;
-use Mediawiki\Db\Service\PageFileExtensionListGetter;
-use Mediawiki\Db\Service\RedirectListGetter;
+use Addwiki\Mediawiki\Db\Service\DatabaseLogListGetter;
+use Addwiki\Mediawiki\Db\Service\DatabaseUserGetter;
+use Addwiki\Mediawiki\Db\Service\PageFileExtensionListGetter;
+use Addwiki\Mediawiki\Db\Service\RedirectListGetter;
 use PDO;
 
 class MediawikiDbFactory {

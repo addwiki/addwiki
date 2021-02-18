@@ -7,8 +7,8 @@ This means that for some lists of pages a great many requests will be sent, and 
 To use it, first get a new PageListGetter object from the factory:
 
 ```php
-$api = new \Mediawiki\Api\MediawikiApi( 'http://localhost/w/api.php' );
-$services = new \Mediawiki\Api\MediawikiFactory( $api );
+$api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
+$services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 $pageListGetter = $services->newPageListGetter();
 ```
 

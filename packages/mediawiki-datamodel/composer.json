@@ -31,17 +31,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\DataModel\\": "src/"
+            "Addwiki\\Mediawiki\\DataModel\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mediawiki\\DataModel\\Test\\": "tests/unit/"
+            "Addwiki\\Mediawiki\\DataModel\\Tests\\Unit\\": "tests/unit/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

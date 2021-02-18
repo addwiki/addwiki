@@ -1,8 +1,8 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use Mediawiki\DataModel\Content;
+use Addwiki\Mediawiki\DataModel\Content;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

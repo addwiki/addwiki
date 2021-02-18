@@ -1,9 +1,9 @@
 <?php
 
-namespace Mediawiki\Sitematrix\Api;
+namespace Addwiki\Mediawiki\Ext\Sitematrix\Api;
 
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Sitematrix\Api\Service\SiteListGetter;
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 
 /**
  * @access public

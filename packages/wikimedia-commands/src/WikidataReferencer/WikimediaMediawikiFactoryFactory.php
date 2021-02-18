@@ -1,11 +1,11 @@
 <?php
 
-namespace Addwiki\Commands\Wikimedia\WikidataReferencer;
+namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 use InvalidArgumentException;
-use Mediawiki\Api\Guzzle\ClientFactory;
-use Mediawiki\Api\MediawikiApi;
-use Mediawiki\Api\MediawikiFactory;
 
 /**
  * @author Addshore

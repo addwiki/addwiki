@@ -1,14 +1,14 @@
 <?php
 
-namespace Mediawiki\DataModel\Test;
+namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use Mediawiki\DataModel\Log;
-use Mediawiki\DataModel\LogList;
-use Mediawiki\DataModel\PageIdentifier;
+use Addwiki\Mediawiki\DataModel\Log;
+use Addwiki\Mediawiki\DataModel\LogList;
+use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Mediawiki\DataModel\LogList
+ * @covers \Addwiki\Mediawiki\DataModel\LogList
  * @author Addshore
  */
 class LogListTest extends TestCase {

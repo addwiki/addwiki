@@ -5,8 +5,8 @@ The Name Space Getter allows you to search for namespaces and their aliases and 
 To use it, first get a new NamespaceGetter object from the factory:
 
 ```php
-$api = new \Mediawiki\Api\MediawikiApi( 'http://localhost/w/api.php' );
-$services = new \Mediawiki\Api\MediawikiFactory( $api );
+$api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
+$services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 $namespaceGetter = $services->newNamespaceGetter();
 ```
 
@@ -31,7 +31,7 @@ If you have a page title that is not in the default namespace, you can’t pass 
 $pageName = 'User:MalReynolds';
 $nameParts = explode( ':', $pageName, 2 );
 $namespace = $namespaceGetter->getNamespaceByName( $nameParts[0] );
-$title = new \Mediawiki\DataModel\Title( $nameParts[1], $namespace->getId() );
+$title = new \Addwiki\Mediawiki\DataModel\Title( $nameParts[1], $namespace->getId() );
 $page = $services->newPageGetter()->getFromTitle( $title );
 ```
 

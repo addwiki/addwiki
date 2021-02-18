@@ -20,7 +20,7 @@
     },
     "require": {
         "php": ">=7.3",
-        "addwiki/mediawiki-datamodel": "^2.8",
+        "addwiki/mediawiki-datamodel": "^3.0",
         "lichtner/fluentpdo": "1.0.0"
     },
     "require-dev": {
@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediawiki\\Db\\": "src/"
+            "Addwiki\\Mediawiki\\Db\\": "src/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9-dev"
+            "dev-main": "3.0-dev"
         }
     },
     "minimum-stability": "dev",

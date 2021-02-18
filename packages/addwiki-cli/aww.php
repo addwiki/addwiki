@@ -1,10 +1,10 @@
 <?php
 
-use Addwiki\Commands\Config\ConfigList;
-use Addwiki\Commands\Config\SetDefaultUser;
-use Addwiki\Commands\Config\SetDefaultWiki;
-use Addwiki\Commands\Config\Setup;
-use Addwiki\Config\AppConfig;
+use Addwiki\Cli\Commands\Config\ConfigList;
+use Addwiki\Cli\Commands\Config\SetDefaultUser;
+use Addwiki\Cli\Commands\Config\SetDefaultWiki;
+use Addwiki\Cli\Commands\Config\Setup;
+use Addwiki\Cli\Config\AppConfig;
 use Symfony\Component\Console\Application;
 
 /**
