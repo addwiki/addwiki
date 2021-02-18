@@ -3,7 +3,6 @@
 namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
 use Addwiki\Mediawiki\DataModel\NamespaceInfo;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
