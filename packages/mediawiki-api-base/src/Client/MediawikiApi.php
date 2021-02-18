@@ -27,9 +27,9 @@ use SimpleXMLElement;
 class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
-	 * @var ClientInterface|null Should be accessed through getClient
+	 * Should be accessed through getClient
 	 */
-	private $client;
+	private ?ClientInterface $client = null;
 
 	/**
 	 * @var bool|string
@@ -139,7 +139,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	private function getClient(): ClientInterface {
-		if ( !$this->client instanceof Client ) {
+		if ( !$this->client instanceof ClientInterface ) {
 			$clientFactory = new ClientFactory();
 			$clientFactory->setLogger( $this->logger );
 			$this->client = $clientFactory->getClient();
