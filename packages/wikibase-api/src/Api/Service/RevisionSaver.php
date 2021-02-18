@@ -45,7 +45,7 @@ class RevisionSaver {
 	 * @throws InvalidArgumentException
 	 * @return Item|Property new version of the entity
 	 */
-	public function save( Revision $revision, EditInfo $editInfo = null ): BaseObject {
+	public function save( Revision $revision, EditInfo $editInfo = null ): object {
 		if ( !$revision->getContent()->getData() instanceof EntityDocument ) {
 			throw new RuntimeException( 'Can only save Content of EntityDocuments' );
 		}

@@ -29,7 +29,7 @@ class RevisionRollbacker extends Service {
 
 	/**
 	 *
-	 * @return array<string mixed>|array<string, string|null>
+	 * @return array <string mixed>|array<string, string|null>
 	 */
 	private function getRollbackParams( Revision $revision, ?Title $title ): array {
 		$params = [];

@@ -5,6 +5,7 @@ namespace Addwiki\Wikibase\Api\Service;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Deserializers\Deserializer;
+use Wikibase\DataModel\Statement\Statement;
 
 /**
  * @access private
@@ -26,7 +27,7 @@ class StatementGetter {
 		$this->statementDeserializer = $statementDeserializer;
 	}
 
-	public function getFromGuid( string $guid ): BaseObject {
+	public function getFromGuid( string $guid ): Statement {
 		$params = [
 			'claim' => $guid,
 		];

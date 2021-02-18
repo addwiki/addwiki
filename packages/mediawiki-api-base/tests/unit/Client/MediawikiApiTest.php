@@ -79,7 +79,7 @@ class MediawikiApiTest extends TestCase {
 	}
 
 	/**
-	 * @return array<int|string mixed[]>
+	 * @return array <int|string mixed[]>
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {
 		return [

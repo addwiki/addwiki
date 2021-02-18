@@ -26,7 +26,7 @@ class RevisionUndoer extends Service {
 	/**
 	 * @param Revision $revision
 	 *
-	 * @return array<string int|string|null>
+	 * @return array <string int|string|null>
 	 */
 	private function getParamsFromRevision( Revision $revision ): array {
 		$params = [

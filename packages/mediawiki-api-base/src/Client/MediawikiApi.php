@@ -289,7 +289,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
-	 * @return array<int mixed[]>
+	 * @return array <int mixed[]>
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
@@ -314,7 +314,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @return array<string mixed>
+	 * @return array <string mixed>
 	 */
 	private function getDefaultHeaders(): array {
 		return [
