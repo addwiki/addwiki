@@ -10,9 +10,6 @@ class File extends Page {
 
 	public function __construct( string $url, PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		parent::__construct( $pageIdentifier, $revisions );
-		if ( !is_string( $url ) ) {
-			throw new InvalidArgumentException( '$url must be a string' );
-		}
 		$this->url = $url;
 	}
 

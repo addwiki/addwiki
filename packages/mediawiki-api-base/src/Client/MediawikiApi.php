@@ -103,9 +103,6 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	public function __construct( string $apiUrl, ClientInterface $client = null,
 								 MediawikiSession $session = null ) {
-		if ( !is_string( $apiUrl ) ) {
-			throw new InvalidArgumentException( '$apiUrl must be a string' );
-		}
 		if ( $session === null ) {
 			$session = new MediawikiSession( $this );
 		}

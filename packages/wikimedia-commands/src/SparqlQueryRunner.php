@@ -53,10 +53,6 @@ class SparqlQueryRunner {
 	 * @return ItemId[]
 	 */
 	public function getItemIdsFromQuery( string $query ): array {
-		if ( !is_string( $query ) ) {
-			throw new InvalidArgumentException( "SPARQL query must be a string!" );
-		}
-
 		$sparqlResponse = $this->client->get(
 			'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' . urlencode( $query )
 		);
