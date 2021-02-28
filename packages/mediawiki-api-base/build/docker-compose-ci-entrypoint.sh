@@ -12,9 +12,20 @@ php maintenance/install.php --server="http://localhost:8877" --scriptpath= --dbt
 
 # Settings for extensions
 echo "wfLoadExtension( 'OAuth' );" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthmanageconsumer'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthviewprivate'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthupdateownconsumer'] = true;" >> LocalSettings.php
 
 # Update MediaWiki & Extensions
 php maintenance/update.php --quick
+
+## Run some needed scripts
+# Add an OAuth Consumer
+php maintenance/resetUserEmail.php --no-reset-password CIUser CIUser@addwiki.github.io
+php extensions/OAuth/maintenance/createOAuthConsumer.php --approve --callbackUrl https://CiConsumerUrl \
+	--callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.0.0 \
+	--grants highvolume --jsonOnSuccess > createOAuthConsumer.json
 
 # Run apache
 apache2-foreground

@@ -17,6 +17,10 @@ php maintenance/install.php --server="http://localhost:8877" --scriptpath= --dbt
 
 # Settings for extensions
 echo "wfLoadExtension( 'OAuth' );" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthmanageconsumer'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthviewprivate'] = true;" >> LocalSettings.php
+echo "\$wgGroupPermissions['sysop']['mwoauthupdateownconsumer'] = true;" >> LocalSettings.php
 echo "require_once \"\$IP/extensions/Wikibase/vendor/autoload.php\";" >> LocalSettings.php
 echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
 echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
@@ -28,9 +32,15 @@ echo "\$wgEnableUploads = true;" >> LocalSettings.php
 # Update MediaWiki & Extensions
 php maintenance/update.php --quick
 
-# Run some needed scripts
+## Run some needed scripts
+# Add a site for Wikibase sitelinks
 php maintenance/addSite.php mywiki default --interwiki-id --pagepath http://localhost:8877/index.php?title=\$1 --filepath http://localhost:8877/\$1
 echo "\$wgWBRepoSettings['siteLinkGroups'] = [ 'default' ];" >> LocalSettings.php
+# Add an OAuth Consumer
+php maintenance/resetUserEmail.php --no-reset-password CIUser CIUser@addwiki.github.io
+php extensions/OAuth/maintenance/createOAuthConsumer.php --approve --callbackUrl https://CiConsumerUrl \
+	--callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.0.0 \
+	--grants highvolume --jsonOnSuccess > createOAuthConsumer.json
 
 # Run apache
 apache2-foreground
