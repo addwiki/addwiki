@@ -10,6 +10,10 @@ ADD build/ /
 
 RUN chmod +x /*.sh
 
+RUN bash /download-extension.sh OAuth;\
+tar xzf OAuth.tar.gz;\
+mv Wikibase /var/www/html/extensions/OAuth
+
 RUN bash /download-extension.sh Wikibase;\
 tar xzf Wikibase.tar.gz;\
 mv Wikibase /var/www/html/extensions/Wikibase
