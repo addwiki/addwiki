@@ -2,6 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Request;
 use InvalidArgumentException;
 
 /**
@@ -48,7 +50,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
-	public function preRequestAuth(): void {
+	public function preRequestAuth( Request $request, MediawikiApi $api ): void {
 		// Nothing to do for oauth
 	}
 

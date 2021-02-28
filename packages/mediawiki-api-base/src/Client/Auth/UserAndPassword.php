@@ -2,6 +2,10 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Request;
+use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\UsageException;
 use InvalidArgumentException;
 
 /**
@@ -11,6 +15,7 @@ class UserAndPassword implements AuthMethod {
 
 	private string $password;
 	private string $username;
+	private bool $isLoggedIn = false;
 
 	public function __construct( string $username, string $password ) {
 		if ( empty( $username ) || empty( $password ) ) {
@@ -33,8 +38,54 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth(): void {
-		// TODO implement actual login?
+	public function preRequestAuth( Request $request, MediawikiApi $api ): void {
+		// Do nothing if we are already logged in OR if this is a login request (self call)
+		if ( $this->isLoggedIn || array_key_exists( 'login', $request->getParams() ) ) {
+			return;
+		}
+
+		$loginParams = [
+			'lgname' => $this->getUsername(),
+			'lgpassword' => $this->getPassword(),
+		];
+
+		// First Request
+		$result = $api->postRequest( new SimpleRequest( 'login', $loginParams ) );
+		if ( $result['login']['result'] == 'NeedToken' ) {
+			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $loginParams );
+			// Second Request
+			$result = $api->postRequest( new SimpleRequest( 'login', $params ) );
+		}
+
+		// Check for success
+		if ( $result['login']['result'] == 'Success' ) {
+			$this->isLoggedIn = true;
+			return;
+		}
+
+		$this->isLoggedIn = false;
+
+		$this->throwLoginUsageException( $result );
+	}
+
+	protected function additionalParamsForPreRequestAuthCall(): array {
+		return [];
+	}
+
+	/**
+	 * @throws UsageException
+	 */
+	private function throwLoginUsageException( array $result ): void {
+		$loginResult = $result['login']['result'];
+
+		// TODO use an Auth exception instead? (to make it easier to catch etc?)
+		throw new UsageException(
+			'login-' . $loginResult,
+			array_key_exists( 'reason', $result['login'] )
+				? $result['login']['reason']
+				: 'No Reason given',
+			$result
+		);
 	}
 
 	public function identifierForUserAgent(): ?string {

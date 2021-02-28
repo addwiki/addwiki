@@ -2,13 +2,16 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
+use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Request;
+
 interface AuthMethod {
 
 	/**
 	 * This will be called before every request to the API.
 	 * It is up to the implementations to decide if anything needs to be done here, such as a call to action=login
 	 */
-	public function preRequestAuth(): void;
+	public function preRequestAuth( Request $request, MediawikiApi $api ): void;
 
 	/**
 	 * We want to provide a useful user agent, not matter the authentication method.

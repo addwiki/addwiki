@@ -22,24 +22,18 @@ use SimpleXMLElement;
 
 class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
+	private string $apiUrl;
+	private AuthMethod $auth;
 	/**
 	 * Should be accessed through getClient
 	 * @var ClientInterface|null
 	 */
 	private ?ClientInterface $client = null;
-
-	private ?AuthMethod $loggedInAuthMethod = null;
-
 	private MediawikiSession $session;
 
-	/**
-	 * @var string
-	 */
-	private $version;
-
+	private ?AuthMethod $loggedInAuthMethod = null;
+	private ?string $version = null;
 	private LoggerInterface $logger;
-
-	private string $apiUrl;
 
 	/**
 	 * @param string $apiEndpoint e.g. https://en.wikipedia.org/w/api.php
@@ -116,6 +110,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		}
 
 		$this->apiUrl = $apiUrl;
+		$this->auth = $auth;
 		$this->client = $client;
 		$this->session = $session;
 
@@ -384,60 +379,25 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		return $this->loggedInAuthMethod instanceof AuthMethod;
 	}
 
-	public function login( AuthMethod $authMethod ): bool {
-		$this->logger->log( LogLevel::DEBUG, 'Logging in' );
-		$credentials = $this->getLoginParams( $authMethod );
-		$result = $this->postRequest( new SimpleRequest( 'login', $credentials ) );
-		if ( $result['login']['result'] == "NeedToken" ) {
-			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $credentials );
-			$result = $this->postRequest( new SimpleRequest( 'login', $params ) );
-		}
-		if ( $result['login']['result'] == "Success" ) {
-			$this->loggedInAuthMethod = $authMethod;
-			return true;
-		}
-
-		$this->loggedInAuthMethod = null;
-		$this->logger->log( LogLevel::DEBUG, 'Login failed.', $result );
-		$this->throwLoginUsageException( $result );
-		return false;
-	}
-
-	private function getLoginParams( AuthMethod $authMethod ): array {
-		if ( $authMethod instanceof UserAndPassword ) {
-			return [
-				'lgname' => $authMethod->getUsername(),
-				'lgpassword' => $authMethod->getPassword(),
-			];
-		}
-
-		if ( $authMethod instanceof UserAndPasswordWithDomain ) {
-			$params = [
-				'lgname' => $authMethod->getUsername(),
-				'lgpassword' => $authMethod->getPassword(),
-			];
-			if ( $authMethod->getDomain() !== null ) {
-				$params['lgdomain'] = $authMethod->getDomain();
-			}
-			return $params;
-		}
-
-		throw new \RuntimeException( 'Unknown AuthMethod used.' );
-	}
-
 	/**
-	 * @throws UsageException
+	 * @deprecated in 3.0, create a MediaWikiApi with an AuthMethod instead.
 	 */
-	private function throwLoginUsageException( array $result ): void {
-		$loginResult = $result['login']['result'];
-
-		throw new UsageException(
-			'login-' . $loginResult,
-			array_key_exists( 'reason', $result['login'] )
-				? $result['login']['reason']
-				: 'No Reason given',
-			$result
-		);
+	public function login( ApiUser $oldApiUser ): bool {
+		// If login is called, replace
+		if ( $this->auth instanceof NoAuth ) {
+			$this->auth = $oldApiUser;
+		} elseif ( !$this->auth->equals( $oldApiUser ) ) {
+			throw new LogicException(
+				'You are calling the login method back compat layer, but are already providing an AuthMethod to the API class...'
+			);
+		}
+		try {
+			$this->auth->preRequestAuth( new SimpleRequest( 'dummyrequest' ), $this );
+			return true;
+		} catch ( UsageException $usageException ) {
+			return false;
+		}
+		return false;
 	}
 
 	public function logout(): bool {

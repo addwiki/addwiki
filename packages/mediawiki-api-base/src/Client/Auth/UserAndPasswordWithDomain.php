@@ -8,10 +8,8 @@ use InvalidArgumentException;
  * Represents a user that can log in to the API with a password and optional domain.
  * Such as with https://www.mediawiki.org/wiki/Extension:LDAP_Authentication
  */
-class UserAndPasswordWithDomain implements AuthMethod {
+class UserAndPasswordWithDomain extends UserAndPassword implements AuthMethod {
 
-	private string $password;
-	private string $username;
 	private ?string $domain;
 
 	/**
@@ -20,37 +18,27 @@ class UserAndPasswordWithDomain implements AuthMethod {
 	 * @param string|null $domain The domain (for authentication systems that support domains).
 	 */
 	public function __construct( string $username, string $password, ?string $domain = null ) {
-		if ( empty( $username ) || empty( $password ) ) {
-			throw new InvalidArgumentException( 'Username and Password are not allowed to be empty' );
-		}
+		parent::__construct( $username, $password );
 		if ( $domain !== null && empty( $domain ) ) {
 			throw new InvalidArgumentException( 'Domain is not allowed to be an empty string' );
 		}
-		$this->username = $username;
-		$this->password = $password;
-		$this->domain   = $domain;
-	}
-
-	public function getUsername(): string {
-		return $this->username;
-	}
-
-	public function getPassword(): string {
-		return $this->password;
+		$this->domain = $domain;
 	}
 
 	public function getDomain(): ?string {
 		return $this->domain;
 	}
 
-	public function equals( UserAndPasswordWithDomain $other ): bool {
+	public function equals( UserAndPassword $other ): bool {
 		return $this->getUsername() === $other->getUsername()
 			&& $this->getPassword() === $other->getPassword()
 			&& $this->getDomain() === $other->getDomain();
 	}
 
-	public function preRequestAuth(): void {
-		// TODO implement actual login?
+	protected function additionalParamsForPreRequestAuthCall(): array {
+		return [
+			'lgdomain' => $this->getDomain()
+		];
 	}
 
 	public function identifierForUserAgent(): ?string {
