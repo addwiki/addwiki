@@ -4,6 +4,9 @@ namespace Addwiki\Mediawiki\Api\Client\Auth;
 
 use InvalidArgumentException;
 
+/**
+ * For use with plain MediaWiki logins
+ */
 class UserAndPassword implements AuthMethod {
 
 	private string $password;
@@ -26,8 +29,8 @@ class UserAndPassword implements AuthMethod {
 	}
 
 	public function equals( UserAndPassword $other ): bool {
-		return $this->username === $other->getUsername()
-			&& $this->password === $other->getPassword();
+		return $this->getUsername() === $other->getUsername()
+			&& $this->getPassword() === $other->getPassword();
 	}
 
 }
