@@ -48,4 +48,12 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
+	public function preRequestAuth(): void {
+		// Nothing to do for oauth
+	}
+
+	public function identifierForUserAgent(): ?string {
+		return 'oauth-consumer/' . $this->getConsumerKey();
+	}
+
 }

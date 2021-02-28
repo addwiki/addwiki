@@ -3,6 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Client;
 
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
@@ -97,11 +98,19 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
 	 * @param string $apiUrl The API Url
+	 * @param AuthMethod|null $auth Auth method to use. null for NoAuth
 	 * @param ClientInterface|null $client Guzzle Client
 	 * @param MediawikiSession|null $session Inject a custom session here
 	 */
-	public function __construct( string $apiUrl, ClientInterface $client = null,
-								 MediawikiSession $session = null ) {
+	public function __construct(
+		string $apiUrl,
+		AuthMethod $auth = null,
+		ClientInterface $client = null,
+		MediawikiSession $session = null
+		) {
+		if ( $auth === null ) {
+			$auth = new NoAuth();
+		}
 		if ( $session === null ) {
 			$session = new MediawikiSession( $this );
 		}
@@ -144,6 +153,12 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		$this->session->setLogger( $logger );
 	}
 
+	private function auth( Request $request ): Request {
+		// TODO if user and pass, and not already logged in, then login
+		// TODO if oauth, add header?
+		return $request;
+	}
+
 	/**
 	 * @param Request $request The GET request to send.
 	 *
@@ -152,6 +167,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
+		$request = $this->auth( $request );
 		$promise = $this->getClient()->requestAsync(
 			'GET',
 			$this->apiUrl,
@@ -169,6 +185,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
+		$request = $this->auth( $request );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
@@ -184,6 +201,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function getRequest( Request $request ) {
+		$request = $this->auth( $request );
 		$response = $this->getClient()->request(
 			'GET',
 			$this->apiUrl,
@@ -199,6 +217,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function postRequest( Request $request ) {
+		$request = $this->auth( $request );
 		$response = $this->getClient()->request(
 			'POST',
 			$this->apiUrl,

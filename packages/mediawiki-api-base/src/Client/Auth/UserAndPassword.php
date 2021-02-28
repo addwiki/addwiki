@@ -33,4 +33,12 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
+	public function preRequestAuth(): void {
+		// TODO implement actual login?
+	}
+
+	public function identifierForUserAgent(): ?string {
+		return 'user/' . $this->getUsername();
+	}
+
 }

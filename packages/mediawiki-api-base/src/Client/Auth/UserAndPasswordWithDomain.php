@@ -49,4 +49,12 @@ class UserAndPasswordWithDomain implements AuthMethod {
 			&& $this->getDomain() === $other->getDomain();
 	}
 
+	public function preRequestAuth(): void {
+		// TODO implement actual login?
+	}
+
+	public function identifierForUserAgent(): ?string {
+		return 'user/' . $this->getUsername() . '@' . $this->getDomain();
+	}
+
 }
