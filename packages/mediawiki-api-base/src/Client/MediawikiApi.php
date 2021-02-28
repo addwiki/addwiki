@@ -2,6 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Client;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use DOMDocument;
 use DOMXPath;
@@ -16,9 +19,6 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
-use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
 
 class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 

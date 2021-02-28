@@ -7,6 +7,7 @@
 - PSR4 namespacing. Now in `Addwiki\Mediawiki\Api`
 - Client classes, such as `MediaWikiApi`, moved to `Addwiki\Mediawiki\Api`
 - `ApiUser` deprecated in favour of `UserAndPassword` and `UserAndPasswordWithDomain`
+- `MediawikiApiInterface` and implementations will now only return a boolean from `isLoggedin`
 
 ## Version 2.8 (16 February 2021)
 
