@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 /**
  * Represents metadata about a MediaWiki namespace
  */

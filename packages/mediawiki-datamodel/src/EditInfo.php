@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 /**
  * Represents flags that can be used when edits are made
  */

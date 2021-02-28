@@ -4,7 +4,6 @@ namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\UsageException;
-use InvalidArgumentException;
 
 /**
  * @access private

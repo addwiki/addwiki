@@ -12,7 +12,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;

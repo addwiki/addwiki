@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 class File extends Page {
 
 	private string $url;
