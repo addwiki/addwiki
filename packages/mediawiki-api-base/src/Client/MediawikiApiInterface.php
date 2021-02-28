@@ -7,7 +7,7 @@ interface MediawikiApiInterface extends ApiRequester, AsyncApiRequester {
 	/**
 	 * @return bool
 	 */
-	public function isLoggedin(): bool;
+	public function isLoggedIn(): bool;
 
 	/**
 	 * @param ApiUser $apiUser The ApiUser to log in as.

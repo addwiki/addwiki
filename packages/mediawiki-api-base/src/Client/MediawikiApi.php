@@ -296,7 +296,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	private function getUserAgent(): string {
-		if ( $this->isLoggedin() ) {
+		if ( $this->isLoggedIn() ) {
 			if ( $this->loggedInAuthMethod instanceof UserAndPassword || $this->loggedInAuthMethod instanceof UserAndPasswordWithDomain ) {
 				return 'addwiki-mediawiki-client/' . $this->loggedInAuthMethod->getUsername();
 			}
@@ -365,7 +365,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		}
 	}
 
-	public function isLoggedin(): bool {
+	public function isLoggedIn(): bool {
 		return $this->loggedInAuthMethod instanceof AuthMethod;
 	}
 

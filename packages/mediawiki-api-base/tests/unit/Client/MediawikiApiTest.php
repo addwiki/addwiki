@@ -213,7 +213,7 @@ class MediawikiApiTest extends TestCase {
 
 		$api = new MediawikiApi( '', $client );
 		$this->assertTrue( $api->login( $user ) );
-		$this->assertSame( true, $api->isLoggedin() );
+		$this->assertSame( true, $api->isLoggedIn() );
 	}
 
 	public function testBadLoginSequence(): void {
