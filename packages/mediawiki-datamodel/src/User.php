@@ -28,23 +28,11 @@ class User {
 	 * @param mixed[] $rights
 	 */
 	public function __construct( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ) {
-		if ( !is_string( $name ) || empty( $name ) ) {
-			throw new InvalidArgumentException( '$name must be a string and can not be empty' );
-		}
-		if ( !is_int( $id ) ) {
-			throw new InvalidArgumentException( '$id must be an int' );
-		}
-		if ( !is_int( $editcount ) ) {
-			throw new InvalidArgumentException( '$editcount must be an int' );
+		if ( empty( $name ) ) {
+			throw new InvalidArgumentException( '$name must be non empty string' );
 		}
 		if ( !is_array( $groups ) || !array_key_exists( 'groups', $groups ) || !array_key_exists( 'implicitgroups', $groups ) ) {
 			throw new InvalidArgumentException( '$groups must be an array or arrays with keys "groups" and "implicitgroups"' );
-		}
-		if ( !is_array( $rights ) ) {
-			throw new InvalidArgumentException( '$rights must be an array' );
-		}
-		if ( !is_string( $gender ) ) {
-			throw new InvalidArgumentException( '$gender must be a string' );
 		}
 
 		$this->editcount = $editcount;

@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 /**
  * Represents metadata about a MediaWiki namespace
  */
@@ -17,26 +15,6 @@ class NamespaceInfo {
 	private array $aliases = [];
 
 	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {
-		if ( !is_int( $id ) ) {
-			throw new InvalidArgumentException( '$id must be an integer' );
-		}
-		if ( !is_string( $canonicalName ) ) {
-			throw new InvalidArgumentException( '$canonicalName must be a string' );
-		}
-		if ( !is_string( $localName ) ) {
-			throw new InvalidArgumentException( '$localName must be a string' );
-		}
-		if ( !is_string( $caseHandling ) ) {
-			throw new InvalidArgumentException( '$caseHandling must be a string' );
-		}
-		if ( $defaultContentModel !== null && !is_string( $defaultContentModel ) ) {
-			throw new InvalidArgumentException( '$canonicalName must be a string' );
-		}
-
-		if ( !is_array( $aliases ) ) {
-			throw new InvalidArgumentException( '$aliases must be an array' );
-		}
-
 		$this->id = $id;
 		$this->canonicalName = $canonicalName;
 		$this->localName = $localName;

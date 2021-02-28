@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\DataModel;
 
-use InvalidArgumentException;
-
 /**
  * Represents flags that can be used when edits are made
  */
@@ -38,18 +36,6 @@ class EditInfo {
 	protected string $summary;
 
 	public function __construct( string $summary = '', bool $minor = self::NOTMINOR, bool $bot = self::NOTBOT, ?int $maxlag = self::OFFLAG ) {
-		if ( !is_string( $summary ) ) {
-			throw new InvalidArgumentException( '$summary must be a string' );
-		}
-		if ( !is_bool( $minor ) ) {
-			throw new InvalidArgumentException( '$minor must be a bool' );
-		}
-		if ( !is_bool( $bot ) ) {
-			throw new InvalidArgumentException( '$bot must be a bool' );
-		}
-		if ( !is_int( $maxlag ) && $maxlag !== null ) {
-			throw new InvalidArgumentException( '$maxlag must be an integer or null' );
-		}
 		$this->summary = $summary;
 		$this->bot = $bot;
 		$this->minor = $minor;
