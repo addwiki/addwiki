@@ -298,7 +298,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	private function getUserAgent(): string {
 		if ( $this->isLoggedin() ) {
 			if ( $this->loggedInAuthMethod instanceof UserAndPassword || $this->loggedInAuthMethod instanceof UserAndPasswordWithDomain ) {
-				return 'addwiki-mediawiki-client/' . $this->loggedInAuthMethod->getUser();
+				return 'addwiki-mediawiki-client/' . $this->loggedInAuthMethod->getUsername();
 			}
 			return 'addwiki-mediawiki-client/' . 'SomeUnknownUser?';
 		}
