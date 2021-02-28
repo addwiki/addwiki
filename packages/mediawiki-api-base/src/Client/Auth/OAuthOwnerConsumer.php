@@ -2,13 +2,17 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
+use Addwiki\Mediawiki\Api\Client\HeaderWrappedRequest;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Request;
 use InvalidArgumentException;
+use MediaWiki\OAuthClient\Consumer as OAuthConsumer;
+use MediaWiki\OAuthClient\Request as OAuthRequest;
+use MediaWiki\OAuthClient\SignatureMethod\HmacSha1;
+use MediaWiki\OAuthClient\Token as OAuthToken;
 
 /**
  * For use with https://www.mediawiki.org/wiki/Extension:Oauth
- * https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
  */
 class OAuthOwnerConsumer implements AuthMethod {
 
@@ -50,8 +54,18 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
-	public function preRequestAuth( Request $request, MediawikiApi $api ): void {
-		// Nothing to do for oauth
+	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
+		return new HeaderWrappedRequest( $request, [ 'Authorization' => $this->getAuthenticationHeaderValue() ] );
+	}
+
+	private function getAuthenticationHeaderValue(): string {
+		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
+		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumeSecret() );
+		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );
+		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, 'GET', 'https://fakeurl.addwiki.github.io', [] );
+		$oauthRequest->signRequest( new HmacSha1(), $oauthConsumer, $oauthToken );
+		$fullHeader = $oauthRequest->toHeader();
+		return str_replace( 'Authorization: ', '', $fullHeader );
 	}
 
 	public function identifierForUserAgent(): ?string {

@@ -149,12 +149,6 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		$this->session->setLogger( $logger );
 	}
 
-	private function auth( Request $request ): Request {
-		// TODO if user and pass, and not already logged in, then login
-		// TODO if oauth, add header?
-		return $request;
-	}
-
 	/**
 	 * @param Request $request The GET request to send.
 	 *
@@ -163,7 +157,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
-		$request = $this->auth( $request );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'GET',
 			$this->apiUrl,
@@ -181,7 +175,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
-		$request = $this->auth( $request );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
@@ -197,7 +191,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function getRequest( Request $request ) {
-		$request = $this->auth( $request );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'GET',
 			$this->apiUrl,
@@ -213,7 +207,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function postRequest( Request $request ) {
-		$request = $this->auth( $request );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'POST',
 			$this->apiUrl,
@@ -392,13 +386,9 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 				'You are calling the login method back compat layer, but are already providing an AuthMethod to the API class...'
 			);
 		}
-		try {
-			$this->auth->preRequestAuth( new SimpleRequest( 'dummyrequest' ), $this );
-			return true;
-		} catch ( UsageException $usageException ) {
-			return false;
-		}
-		return false;
+		$this->auth->preRequestAuth( new SimpleRequest( 'dummyrequest' ), $this );
+		$this->loggedInAuthMethod = $this->auth;
+		return true;
 	}
 
 	public function logout(): bool {

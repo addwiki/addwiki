@@ -38,10 +38,13 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth( Request $request, MediawikiApi $api ): void {
+	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
 		// Do nothing if we are already logged in OR if this is a login request (self call)
-		if ( $this->isLoggedIn || array_key_exists( 'login', $request->getParams() ) ) {
-			return;
+		if (
+			$this->isLoggedIn ||
+			( array_key_exists( 'action', $request->getParams() ) && $request->getParams()['action'] === 'login' )
+		) {
+			return $request;
 		}
 
 		$loginParams = [
@@ -60,12 +63,14 @@ class UserAndPassword implements AuthMethod {
 		// Check for success
 		if ( $result['login']['result'] == 'Success' ) {
 			$this->isLoggedIn = true;
-			return;
+			return $request;
 		}
 
 		$this->isLoggedIn = false;
 
 		$this->throwLoginUsageException( $result );
+
+		return $request;
 	}
 
 	protected function additionalParamsForPreRequestAuthCall(): array {

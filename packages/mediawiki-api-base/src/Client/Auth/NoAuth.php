@@ -10,8 +10,8 @@ use Addwiki\Mediawiki\Api\Client\Request;
  */
 class NoAuth implements AuthMethod {
 
-	public function preRequestAuth( Request $request, MediawikiApi $api ): void {
-		// Nothing is ever needed here
+	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
+		return $request;
 	}
 
 	public function identifierForUserAgent(): ?string {
