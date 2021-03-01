@@ -2,17 +2,14 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Exception;
 
 class BaseTestEnvironment {
 
-	private MediawikiApi $api;
-
-	/** @var string */
-	private $apiUrl;
-
+	private string $apiUrl;
 	private string $pageUrl;
 
 	/**
@@ -45,7 +42,6 @@ class BaseTestEnvironment {
 
 		$this->apiUrl = $apiUrl;
 		$this->pageUrl = str_replace( 'api.php', 'index.php?title=Special:SpecialPages', $apiUrl );
-		$this->api = MediawikiApi::newFromApiEndpoint( $this->apiUrl );
 	}
 
 	/**
@@ -65,22 +61,23 @@ class BaseTestEnvironment {
 	/**
 	 * Get the MediawikiApi to test against
 	 */
-	public function getApi(): MediawikiApi {
-		return $this->api;
+	public function getApi( ?AuthMethod $auth = null ): MediawikiApi {
+		return new MediaWikiApi( $this->getApiUrl(), $auth );
 	}
 
 	/**
-	 * Save a wiki page.
+	 * Save a wiki page, without authentication
 	 * @param string $title The title of the page.
 	 * @param string $content The complete page text to save.
 	 */
-	public function savePage( string $title, string $content ): void {
+	public function savePageAnon( string $title, string $content ): void {
+		$api = $this->getApi();
 		$params = [
 			'title' => $title,
 			'text' => $content,
 			'md5' => md5( $content ),
-			'token' => $this->api->getToken(),
+			'token' => $api->getToken(),
 		];
-		$this->api->postRequest( new SimpleRequest( 'edit', $params ) );
+		$api->postRequest( new SimpleRequest( 'edit', $params ) );
 	}
 }

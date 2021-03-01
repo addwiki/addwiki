@@ -37,7 +37,7 @@ class CategoryTraverserTest extends TestCase {
 		foreach ( $titles as $t ) {
 			// @todo Properly delete?
 			// $deleter->deleteFromPageTitle( new Title( $t ) );
-			$this->savePage( $t, '' );
+			$this->savePageAnon( $t, '' );
 		}
 	}
 
@@ -58,13 +58,13 @@ class CategoryTraverserTest extends TestCase {
 	 * Get a list of all pages in a category or any of its descendants.
 	 */
 	public function testDescendants(): void {
-		$rootCat = $this->savePage( 'Category:Root category', '' );
-		$this->savePage( 'Category:Sub category B', '[[Category:Root category]]' );
-		$this->savePage( 'Category:Sub category C', '[[Category:Root category]]' );
-		$this->savePage( 'Test page A1', 'Testing. [[Category:Root category]]' );
-		$this->savePage( 'Test page B1', 'Testing. [[Category:Sub category B]]' );
-		$this->savePage( 'Test page B2', 'Testing. [[Category:Sub category B]]' );
-		$this->savePage( 'Test page C1', 'Testing. [[Category:Sub category C]]' );
+		$rootCat = $this->savePageAnon( 'Category:Root category', '' );
+		$this->savePageAnon( 'Category:Sub category B', '[[Category:Root category]]' );
+		$this->savePageAnon( 'Category:Sub category C', '[[Category:Root category]]' );
+		$this->savePageAnon( 'Test page A1', 'Testing. [[Category:Root category]]' );
+		$this->savePageAnon( 'Test page B1', 'Testing. [[Category:Sub category B]]' );
+		$this->savePageAnon( 'Test page B2', 'Testing. [[Category:Sub category B]]' );
+		$this->savePageAnon( 'Test page C1', 'Testing. [[Category:Sub category C]]' );
 		$this->testEnvironment->runJobs();
 
 		$callback = function ( Page $pageInfo, Page $parentCat ): void {
@@ -96,13 +96,13 @@ class CategoryTraverserTest extends TestCase {
 	 * the same page.
 	 */
 	public function testDescendantsWithMultiplePaths(): void {
-		$grandparent = $this->savePage( 'Category:Grandparent', '' );
-		$this->savePage( 'Category:Parent 1', '[[Category:Grandparent]]' );
-		$this->savePage( 'Category:Parent 2', '[[Category:Grandparent]]' );
-		$this->savePage( 'Parent 1', '[[Category:Grandparent]]' );
-		$this->savePage( 'Child 1', '[[Category:Parent 1]]' );
-		$this->savePage( 'Child 2', '[[Category:Parent 1]]' );
-		$this->savePage( 'Child 3', '[[Category:Parent 2]]' );
+		$grandparent = $this->savePageAnon( 'Category:Grandparent', '' );
+		$this->savePageAnon( 'Category:Parent 1', '[[Category:Grandparent]]' );
+		$this->savePageAnon( 'Category:Parent 2', '[[Category:Grandparent]]' );
+		$this->savePageAnon( 'Parent 1', '[[Category:Grandparent]]' );
+		$this->savePageAnon( 'Child 1', '[[Category:Parent 1]]' );
+		$this->savePageAnon( 'Child 2', '[[Category:Parent 1]]' );
+		$this->savePageAnon( 'Child 3', '[[Category:Parent 2]]' );
 		$this->testEnvironment->runJobs();
 		$decendants = $this->traverser->descend( $grandparent );
 		$this->assertCount( 4, $decendants->toArray() );
@@ -132,10 +132,10 @@ class CategoryTraverserTest extends TestCase {
 	public function testDescendantsOnlyVisitCatsOnce(): void {
 		global $wgVisitedCats;
 		$wgVisitedCats = [];
-		$catA = $this->savePage( 'Category:A cat', '' );
-		$this->savePage( 'Category:B cat', 'Testing. [[Category:A cat]]' );
-		$this->savePage( 'Category:C cat', 'Testing. [[Category:A cat]][[Category:B cat]]' );
-		$this->savePage( 'Category:D cat', 'Testing. [[Category:C cat]]' );
+		$catA = $this->savePageAnon( 'Category:A cat', '' );
+		$this->savePageAnon( 'Category:B cat', 'Testing. [[Category:A cat]]' );
+		$this->savePageAnon( 'Category:C cat', 'Testing. [[Category:A cat]][[Category:B cat]]' );
+		$this->savePageAnon( 'Category:D cat', 'Testing. [[Category:C cat]]' );
 		$this->testEnvironment->runJobs();
 		$callback = function ( Page $pageInfo, Page $parentCat ): void {
 			global $wgVisitedCats;
@@ -166,11 +166,11 @@ class CategoryTraverserTest extends TestCase {
 	 *
 	 */
 	public function testDescendIntoLoop(): void {
-		$catA = $this->savePage( 'Category:E cat', '[[Category:H cat]]' );
-		$catB = $this->savePage( 'Category:F cat', '[[Category:E cat]]' );
-		$catC = $this->savePage( 'Category:G cat', '[[Category:E cat]]' );
-		$catD = $this->savePage( 'Category:H cat', '[[Category:F cat]]' );
-		$catE = $this->savePage( 'Category:I cat', '[[Category:F cat]]' );
+		$catA = $this->savePageAnon( 'Category:E cat', '[[Category:H cat]]' );
+		$catB = $this->savePageAnon( 'Category:F cat', '[[Category:E cat]]' );
+		$catC = $this->savePageAnon( 'Category:G cat', '[[Category:E cat]]' );
+		$catD = $this->savePageAnon( 'Category:H cat', '[[Category:F cat]]' );
+		$catE = $this->savePageAnon( 'Category:I cat', '[[Category:F cat]]' );
 		$this->testEnvironment->runJobs();
 		$haveCaught = false;
 		try {
