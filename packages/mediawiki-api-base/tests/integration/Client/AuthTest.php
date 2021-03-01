@@ -33,4 +33,11 @@ class AuthTest extends TestCase {
 		$this->assertUserLoggedIn( $auth->getUsername(), $api );
 	}
 
+	public function testOAuthAuth() {
+		$env = BaseTestEnvironment::newInstance();
+		$auth = $env->getOAuthOwnerConsumerAuth();
+		$api = $env->getApi( $auth );
+		$this->assertUserLoggedIn( 'CIUser', $api );
+	}
+
 }

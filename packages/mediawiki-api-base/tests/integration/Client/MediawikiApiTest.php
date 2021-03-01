@@ -41,13 +41,13 @@ class MediawikiApiTest extends TestCase {
 		$api = $testEnv->getApi();
 
 		// Test with no duplicate IDs.
-		$testEnv->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
+		$this->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
 		$api1 = MediawikiApi::newFromPage( $wikiPageUrl );
 		$this->assertInstanceOf( MediawikiApi::class, $api1 );
 
 		// Test with duplicate ID.
 		$wikiText = '<p id="duplicated-id"></p><div id="duplicated-id"></div>';
-		$testEnv->savePage( $api, $testPageName, $wikiText );
+		$this->savePage( $api, $testPageName, $wikiText );
 		$api2 = MediawikiApi::newFromPage( $wikiPageUrl );
 		$this->assertInstanceOf( MediawikiApi::class, $api2 );
 	}

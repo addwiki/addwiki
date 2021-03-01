@@ -157,6 +157,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
+		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'GET',
@@ -175,11 +176,13 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
+		$postEncoding = $this->getPostRequestEncoding( $request );
+		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $this->getPostRequestEncoding( $request ) )
+			$this->getClientRequestOptions( $request, $postEncoding )
 		);
 
 		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
@@ -191,6 +194,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function getRequest( Request $request ) {
+		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'GET',
@@ -207,11 +211,13 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function postRequest( Request $request ) {
+		$postEncoding = $this->getPostRequestEncoding( $request );
+		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'POST',
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $this->getPostRequestEncoding( $request ) )
+			$this->getClientRequestOptions( $request, $postEncoding )
 		);
 
 		return $this->decodeResponse( $response );
@@ -251,7 +257,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return array as needed by ClientInterface::get and ClientInterface::post
 	 */
 	private function getClientRequestOptions( Request $request, string $paramsKey ): array {
-		$params = array_merge( $request->getParams(), [ 'format' => 'json' ] );
+		$params = $request->getParams();
 		if ( $paramsKey === 'multipart' ) {
 			$params = $this->encodeMultipartParams( $request, $params );
 		}

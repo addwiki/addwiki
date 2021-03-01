@@ -35,7 +35,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 		return $this->consumerKey;
 	}
 
-	public function getConsumeSecret(): string {
+	public function getConsumerSecret(): string {
 		return $this->consumerSecret;
 	}
 
@@ -49,23 +49,25 @@ class OAuthOwnerConsumer implements AuthMethod {
 
 	public function equals( OAuthOwnerConsumer $other ): bool {
 		return $this->getConsumerKey() === $other->getConsumerKey()
-			&& $this->getConsumeSecret() === $other->getConsumeSecret()
+			&& $this->getConsumerSecret() === $other->getConsumerSecret()
 			&& $this->getAccessToken() === $other->getAccessToken()
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
 	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
-		return new HeaderWrappedRequest( $request, [ 'Authorization' => $this->getAuthenticationHeaderValue() ] );
+		return new HeaderWrappedRequest( $request, [ 'Authorization' => $this->getAuthenticationHeaderValue( $request, $api ) ] );
 	}
 
-	private function getAuthenticationHeaderValue(): string {
+	private function getAuthenticationHeaderValue( Request $request, MediawikiApi $api ): string {
 		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
-		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumeSecret() );
+		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumerSecret() );
 		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );
-		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, 'GET', 'https://fakeurl.addwiki.github.io', [] );
+		// TODO don't use params when doing multipart/form-data post!
+		// TODO adjust for POST vs GET...
+		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, 'GET', $api->getApiUrl(), $request->getParams() );
 		$oauthRequest->signRequest( new HmacSha1(), $oauthConsumer, $oauthToken );
-		$fullHeader = $oauthRequest->toHeader();
-		return str_replace( 'Authorization: ', '', $fullHeader );
+		$htmlEncodedHeaderString = $oauthRequest->toHeader();
+		return str_replace( 'Authorization: ', '', $htmlEncodedHeaderString );
 	}
 
 	public function identifierForUserAgent(): ?string {

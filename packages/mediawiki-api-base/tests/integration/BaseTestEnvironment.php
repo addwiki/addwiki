@@ -3,6 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\OAuthOwnerConsumer;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Exception;
@@ -67,6 +68,13 @@ class BaseTestEnvironment {
 
 	public function getUserAndPasswordAuth(): UserAndPassword {
 		return new UserAndPassword( 'CIUser', 'LongCIPass123' );
+	}
+
+	public function getOAuthOwnerConsumerAuth(): OAuthOwnerConsumer {
+		// This file was created and is hosted by the docker-ci setup
+		$creationJsonString = file_get_contents( str_replace( 'api.php', 'createOAuthConsumer.json', $this->getApiUrl() ) );
+		$data = json_decode( $creationJsonString, true );
+		return new OAuthOwnerConsumer( $data['key'], $data['secret'], $data['accessToken'], $data['accessSecret'] );
 	}
 
 }

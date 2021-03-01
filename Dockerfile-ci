@@ -17,3 +17,8 @@ mv OAuth /var/www/html/extensions/OAuth
 RUN bash /download-extension.sh Wikibase;\
 tar xzf Wikibase.tar.gz;\
 mv Wikibase /var/www/html/extensions/Wikibase
+
+# Hack so we can add a owner only oauth consumer
+# https://gist.github.com/addshore/6b148942305b98251cd35203459feb7c
+# TODO upstream this...
+ADD https://gist.githubusercontent.com/addshore/6b148942305b98251cd35203459feb7c/raw/32efe2ba3b1a271a575eb4cae8f58991082b3af1/gistfile1.txt /var/www/html/extensions/OAuth/maintenance/addwikiAddOauth.php
