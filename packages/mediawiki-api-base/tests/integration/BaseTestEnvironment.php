@@ -3,8 +3,8 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Exception;
 
 class BaseTestEnvironment {
@@ -63,6 +63,10 @@ class BaseTestEnvironment {
 	 */
 	public function getApi( ?AuthMethod $auth = null ): MediawikiApi {
 		return new MediaWikiApi( $this->getApiUrl(), $auth );
+	}
+
+	public function getUserAndPasswordAuth(): UserAndPassword {
+		return new UserAndPassword( 'CIUser', 'LongCIPass123' );
 	}
 
 }
