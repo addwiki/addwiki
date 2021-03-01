@@ -65,19 +65,4 @@ class BaseTestEnvironment {
 		return new MediaWikiApi( $this->getApiUrl(), $auth );
 	}
 
-	/**
-	 * Save a wiki page, without authentication
-	 * @param string $title The title of the page.
-	 * @param string $content The complete page text to save.
-	 */
-	public function savePageAnon( string $title, string $content ): void {
-		$api = $this->getApi();
-		$params = [
-			'title' => $title,
-			'text' => $content,
-			'md5' => md5( $content ),
-			'token' => $api->getToken(),
-		];
-		$api->postRequest( new SimpleRequest( 'edit', $params ) );
-	}
 }
