@@ -38,7 +38,7 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
+	public function preRequestAuth( string $method, Request $request, MediawikiApi $api ): Request {
 		// Do nothing if we are already logged in OR if this is a login request (self call)
 		if (
 			$this->isLoggedIn ||

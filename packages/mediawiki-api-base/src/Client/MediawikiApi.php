@@ -158,7 +158,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( $request, $this );
+		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'GET',
 			$this->apiUrl,
@@ -178,7 +178,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	public function postRequestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
 		$postEncoding = $this->getPostRequestEncoding( $request );
-		$request = $this->auth->preRequestAuth( $request, $this );
+		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
@@ -195,7 +195,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	public function getRequest( Request $request ) {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( $request, $this );
+		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
 		$response = $this->getClient()->request(
 			'GET',
 			$this->apiUrl,
@@ -213,7 +213,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	public function postRequest( Request $request ) {
 		$request->setParam( 'format', 'json' );
 		$postEncoding = $this->getPostRequestEncoding( $request );
-		$request = $this->auth->preRequestAuth( $request, $this );
+		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
 		$response = $this->getClient()->request(
 			'POST',
 			$this->apiUrl,
@@ -392,7 +392,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 				'You are calling the login method back compat layer, but are already providing an AuthMethod to the API class...'
 			);
 		}
-		$this->auth->preRequestAuth( new SimpleRequest( 'dummyrequest' ), $this );
+		$this->auth->preRequestAuth( 'NULL', new SimpleRequest( 'dummyrequest' ), $this );
 		$this->loggedInAuthMethod = $this->auth;
 		return true;
 	}

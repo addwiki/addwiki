@@ -22,6 +22,14 @@ class AuthTest extends TestCase {
 		$this->assertArrayHasKey( 'anon', $this->getUserInfo( $api )['query']['userinfo'] );
 	}
 
+	private function getUserInfoUsingPost( MediaWikiApi $api ) : array {
+		return $api->postRequest( new SimpleRequest( 'query', [ 'meta' => 'userinfo' ] ) );
+	}
+
+	private function assertUserLoggedInUsingPost( string $expectedUser, MediawikiApi $api ) {
+		$this->assertSame( $expectedUser, $this->getUserInfo( $api )['query']['userinfo']['name'] );
+	}
+
 	public function testNoAuth() {
 		$this->assertAnon( BaseTestEnvironment::newInstance()->getApi( new NoAuth() ) );
 	}
@@ -33,11 +41,18 @@ class AuthTest extends TestCase {
 		$this->assertUserLoggedIn( $auth->getUsername(), $api );
 	}
 
-	public function testOAuthAuth() {
+	public function testOAuthAuthGet() {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getOAuthOwnerConsumerAuth();
 		$api = $env->getApi( $auth );
 		$this->assertUserLoggedIn( 'CIUser', $api );
+	}
+
+	public function testOAuthAuthPost() {
+		$env = BaseTestEnvironment::newInstance();
+		$auth = $env->getOAuthOwnerConsumerAuth();
+		$api = $env->getApi( $auth );
+		$this->assertUserLoggedInUsingPost( 'CIUser', $api );
 	}
 
 }

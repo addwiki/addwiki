@@ -53,18 +53,18 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
-	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
-		$request->setHeaders( array_merge( $request->getHeaders(), [ 'Authorization' => $this->getAuthenticationHeaderValue( $request, $api ) ] ) );
+	public function preRequestAuth( string $method, Request $request, MediawikiApi $api ): Request {
+		$request->setHeaders( array_merge( $request->getHeaders(), [ 'Authorization' => $this->getAuthenticationHeaderValue( $method, $request, $api ) ] ) );
 		return $request;
 	}
 
-	private function getAuthenticationHeaderValue( Request $request, MediawikiApi $api ): string {
+	private function getAuthenticationHeaderValue( string $method, Request $request, MediawikiApi $api ): string {
 		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
 		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumerSecret() );
 		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );
 		// TODO don't use params when doing multipart/form-data post!
 		// TODO adjust for POST vs GET...
-		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, 'GET', $api->getApiUrl(), $request->getParams() );
+		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, $method, $api->getApiUrl(), $request->getParams() );
 		$oauthRequest->signRequest( new HmacSha1(), $oauthConsumer, $oauthToken );
 		$htmlEncodedHeaderString = $oauthRequest->toHeader();
 		return str_replace( 'Authorization: ', '', $htmlEncodedHeaderString );

@@ -12,7 +12,7 @@ interface AuthMethod {
 	 * It is up to the implementations to decide if anything needs to be done here, such as other API calls, or Request modifications.
 	 * For example action=login could be called, or an Authentication header could be added.
 	 */
-	public function preRequestAuth( Request $request, MediawikiApi $api ): Request;
+	public function preRequestAuth( string $method, Request $request, MediawikiApi $api ): Request;
 
 	/**
 	 * We want to provide a useful user agent, not matter the authentication method.
