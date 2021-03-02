@@ -58,7 +58,7 @@ class MediawikiApiTest extends TestCase {
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {
 		return [
-			$paramsLocation => array_merge( $params, [ 'format' => 'json' ] ),
+			$paramsLocation => array_merge( $params, [ 'format' => 'json', 'assert' => 'anon' ] ),
 			'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ],
 		];
 	}
@@ -168,6 +168,7 @@ class MediawikiApiTest extends TestCase {
 						[ 'name' => 'filename', 'contents' => 'foo.jpg' ],
 						[ 'name' => 'file', 'contents' => $dummyFile ],
 						[ 'name' => 'format', 'contents' => 'json' ],
+						[ 'name' => 'assert', 'contents' => 'anon' ],
 					],
 					'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ],
 				]
@@ -185,66 +186,6 @@ class MediawikiApiTest extends TestCase {
 			[ [ 'key' => 'value' ], 'logout', [ 'param1' => 'v1' ] ],
 			[ [ 'key' => 'value', 'key2' => 1212, [] ], 'logout' ],
 		];
-	}
-
-	public function testLogout(): void {
-		$client = $this->getMockClient();
-		$client->method( 'request' )
-			->withConsecutive(
-				[ 'POST', null, $this->getExpectedRequestOpts( [
-					'action' => 'query',
-					'meta' => 'tokens',
-					'type' => 'csrf',
-					'continue' => ''
-				], 'form_params' ) ],
-				[ 'POST', null, $this->getExpectedRequestOpts( [
-					'action' => 'logout',
-					'token' => 'TKN-csrf'
-				], 'form_params' ) ]
-			)
-			->willReturnOnConsecutiveCalls(
-				$this->returnValue( $this->getMockResponse( [
-					'query' => [
-						'tokens' => [
-							'csrf' => 'TKN-csrf',
-						]
-					]
-				] ) ),
-				$this->returnValue( $this->getMockResponse( [] ) )
-			);
-		$api = new MediawikiApi( '', null, $client );
-
-		$this->assertTrue( $api->logout() );
-	}
-
-	public function testLogoutOnFailure(): void {
-		$client = $this->getMockClient();
-		$client->method( 'request' )
-			->withConsecutive(
-				[ 'POST', null, $this->getExpectedRequestOpts( [
-					'action' => 'query',
-					'meta' => 'tokens',
-					'type' => 'csrf',
-					'continue' => ''
-				], 'form_params' ) ],
-				[ 'POST', null, $this->getExpectedRequestOpts( [
-					'action' => 'logout',
-					'token' => 'TKN-csrf'
-				], 'form_params' ) ]
-			)
-			->willReturnOnConsecutiveCalls(
-				$this->returnValue( $this->getMockResponse( [
-					'query' => [
-						'tokens' => [
-							'csrf' => 'TKN-csrf',
-						]
-					]
-				] ) ),
-				$this->returnValue( $this->getMockResponse( null ) )
-			);
-		$api = new MediawikiApi( '', null, $client );
-
-		$this->assertFalse( $api->logout() );
 	}
 
 	/**

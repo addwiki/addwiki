@@ -82,7 +82,7 @@ class UserAndPasswordTest extends TestCase {
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {
 		return [
 			$paramsLocation => array_merge( $params, [ 'format' => 'json' ] ),
-			'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ],
+			'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client/U1' ],
 		];
 	}
 
