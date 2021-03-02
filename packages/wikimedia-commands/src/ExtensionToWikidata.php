@@ -87,7 +87,8 @@ class ExtensionToWikidata extends Command {
 			}
 		}
 
-		$targetWbFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory( new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
+		$targetAuth = new UserAndPassword( $userDetails['username'], $userDetails['password'] );
+		$targetWbFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory( $targetAuth );
 
 		// Create an item if there is no item yet!
 		if ( $itemIdString === null ) {
