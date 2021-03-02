@@ -38,11 +38,12 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
 	 * @param string $apiEndpoint e.g. https://en.wikipedia.org/w/api.php
+	 * @param AuthMethod $auth
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
-	public static function newFromApiEndpoint( string $apiEndpoint ): MediawikiApi {
-		return new self( $apiEndpoint );
+	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): MediawikiApi {
+		return new self( $apiEndpoint, $auth );
 	}
 
 	/**
@@ -51,11 +52,13 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @see https://en.wikipedia.org/wiki/Really_Simple_Discovery
 	 *
 	 * @param string $url e.g. https://en.wikipedia.org OR https://de.wikipedia.org/wiki/Berlin
+	 * @param AuthMethod $auth
+	 *
 	 * @return self returns a MediawikiApi instance using the apiEndpoint provided by the RSD
 	 *              file accessible on all Mediawiki pages
 	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
 	 */
-	public static function newFromPage( string $url ): MediawikiApi {
+	public static function newFromPage( string $url, AuthMethod $auth = null ): MediawikiApi {
 		// Set up HTTP client and HTML document.
 		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
 		$pageHtml = $tempClient->get( $url )->getBody();
@@ -88,7 +91,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 		// Then get the RSD XML, and return the API link.
 		$rsdXml = new SimpleXMLElement( $tempClient->get( $rsdUrl )->getBody() );
-		return self::newFromApiEndpoint( (string)$rsdXml->service->apis->api->attributes()->apiLink );
+		return self::newFromApiEndpoint( (string)$rsdXml->service->apis->api->attributes()->apiLink, $auth );
 	}
 
 	/**
