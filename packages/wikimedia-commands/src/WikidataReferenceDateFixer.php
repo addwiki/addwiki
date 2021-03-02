@@ -2,6 +2,8 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
@@ -21,8 +23,6 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\SnakList;
-use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class WikidataReferenceDateFixer extends Command {
 

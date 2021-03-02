@@ -2,11 +2,11 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Exception;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class TestEnvironment {
 

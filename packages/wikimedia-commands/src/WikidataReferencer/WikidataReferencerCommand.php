@@ -2,6 +2,8 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -31,8 +33,6 @@ use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Services\Lookup\ItemLookupException;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
-use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class WikidataReferencerCommand extends Command {
 

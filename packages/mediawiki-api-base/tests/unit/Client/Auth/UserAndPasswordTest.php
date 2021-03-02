@@ -3,13 +3,13 @@
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
-use GuzzleHttp\ClientInterface;
-use Psr\Http\Message\ResponseInterface;
 use Addwiki\Mediawiki\Api\Client\UsageException;
+use GuzzleHttp\ClientInterface;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @covers Mediawiki\Api\Client\Auth\UserAndPassword

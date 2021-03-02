@@ -38,7 +38,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 
 	/**
 	 * @param string $apiEndpoint e.g. https://en.wikipedia.org/w/api.php
-	 * @param AuthMethod $auth
+	 * @param AuthMethod|null $auth
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
@@ -52,7 +52,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @see https://en.wikipedia.org/wiki/Really_Simple_Discovery
 	 *
 	 * @param string $url e.g. https://en.wikipedia.org OR https://de.wikipedia.org/wiki/Berlin
-	 * @param AuthMethod $auth
+	 * @param AuthMethod|null $auth
 	 *
 	 * @return self returns a MediawikiApi instance using the apiEndpoint provided by the RSD
 	 *              file accessible on all Mediawiki pages

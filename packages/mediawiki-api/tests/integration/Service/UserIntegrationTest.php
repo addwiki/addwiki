@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use PHPUnit\Framework\TestCase;
-use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 class UserIntegrationTest extends TestCase {
 

@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikimedia\Api;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
@@ -17,7 +18,6 @@ use DataValues\StringValue;
 use DataValues\TimeValue;
 use DataValues\UnknownValue;
 use Wikibase\DataModel\Entity\EntityIdValue;
-use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 
 class WikimediaFactory {
 

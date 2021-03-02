@@ -2,7 +2,6 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\UsageException;
@@ -11,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 /**
  * @covers Mediawiki\Api\MediawikiApi

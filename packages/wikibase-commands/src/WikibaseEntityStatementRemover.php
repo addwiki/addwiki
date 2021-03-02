@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikibase\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
@@ -26,7 +27,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
-use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 
 /**
  * @todo convert this script to be not wikidata specific....

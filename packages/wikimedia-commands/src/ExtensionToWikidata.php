@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -20,7 +21,6 @@ use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\ItemId;
 use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class ExtensionToWikidata extends Command {
 

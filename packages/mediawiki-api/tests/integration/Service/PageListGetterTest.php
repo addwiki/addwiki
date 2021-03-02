@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\Api\Service\PageListGetter;
 use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -9,7 +10,6 @@ use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
-use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 /**
  * Test the \Addwiki\Addwiki\Mediawiki\Api\Service\PageListGetter class.

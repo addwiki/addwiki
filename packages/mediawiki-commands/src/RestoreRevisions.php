@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -14,7 +15,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class RestoreRevisions extends Command {
 
