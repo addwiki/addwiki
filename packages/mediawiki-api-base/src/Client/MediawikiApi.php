@@ -177,12 +177,11 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
-		$postEncoding = $this->getPostRequestEncoding( $request );
 		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $postEncoding )
+			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
 		);
 
 		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
@@ -212,12 +211,11 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 */
 	public function postRequest( Request $request ) {
 		$request->setParam( 'format', 'json' );
-		$postEncoding = $this->getPostRequestEncoding( $request );
 		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
 		$response = $this->getClient()->request(
 			'POST',
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $postEncoding )
+			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
 		);
 
 		return $this->decodeResponse( $response );
@@ -236,18 +234,6 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 		$this->throwUsageExceptions( $resultArray );
 
 		return $resultArray;
-	}
-
-	private function getPostRequestEncoding( Request $request ): string {
-		if ( $request instanceof MultipartRequest ) {
-			return 'multipart';
-		}
-		foreach ( $request->getParams() as $value ) {
-			if ( is_resource( $value ) ) {
-				return 'multipart';
-			}
-		}
-		return 'form_params';
 	}
 
 	/**

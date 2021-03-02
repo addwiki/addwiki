@@ -4,6 +4,7 @@ namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
 
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\SimpleRequest;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +28,7 @@ class AuthTest extends TestCase {
 	}
 
 	private function assertUserLoggedInUsingPost( string $expectedUser, MediawikiApi $api ) {
-		$this->assertSame( $expectedUser, $this->getUserInfo( $api )['query']['userinfo']['name'] );
+		$this->assertSame( $expectedUser, $this->getUserInfoUsingPost( $api )['query']['userinfo']['name'] );
 	}
 
 	public function testNoAuth() {
@@ -53,6 +54,15 @@ class AuthTest extends TestCase {
 		$auth = $env->getOAuthOwnerConsumerAuth();
 		$api = $env->getApi( $auth );
 		$this->assertUserLoggedInUsingPost( 'CIUser', $api );
+	}
+
+	public function testOAuthAuthPostMultipart() {
+		$env = BaseTestEnvironment::newInstance();
+		$auth = $env->getOAuthOwnerConsumerAuth();
+		$api = $env->getApi( $auth );
+		$multiRequest = new MultipartRequest();
+		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
+		$this->assertSame( 'CIUser', $api->postRequest( $multiRequest )['query']['userinfo']['name'] );
 	}
 
 }
