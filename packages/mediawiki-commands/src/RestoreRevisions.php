@@ -2,7 +2,6 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -15,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class RestoreRevisions extends Command {
 
@@ -94,12 +94,7 @@ class RestoreRevisions extends Command {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}
 
-		$api = new MediawikiApi( $wikiDetails['url'] );
-		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in' );
-			return 1;
-		}
+		$api = new MediawikiApi( $wikiDetails['url'], new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
 
 		$mwFactory = new MediawikiFactory( $api );
 		$getter = $mwFactory->newPageGetter();
