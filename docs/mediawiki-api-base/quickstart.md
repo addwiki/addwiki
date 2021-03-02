@@ -34,8 +34,8 @@ $api->logout();
 The library provides two different way of constructing requests.
 
 ```php
-use Addwiki\Mediawiki\Api\Client\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\FluentRequest;
+use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Request\FluentRequest;
 
 $purgeRequest = new SimpleRequest( 'purge', array( 'titles' => 'Berlin' ) );
 // or
