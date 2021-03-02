@@ -38,9 +38,11 @@ php maintenance/addSite.php mywiki default --interwiki-id --pagepath http://loca
 echo "\$wgWBRepoSettings['siteLinkGroups'] = [ 'default' ];" >> LocalSettings.php
 # Add an OAuth Consumer
 php maintenance/resetUserEmail.php --no-reset-password CIUser CIUser@addwiki.github.io
-php extensions/OAuth/maintenance/addwikiAddOauth.php --approve --callbackUrl https://CiConsumerUrl \
-	--callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.1.0 \
-	--grants highvolume --jsonOnSuccess > createOAuthConsumer.json
+if [ ! -f createOAuthConsumer.json ]; then
+    php extensions/OAuth/maintenance/addwikiAddOauth.php --approve --callbackUrl https://CiConsumerUrl \
+    --callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.1.0 \
+    --grants highvolume --jsonOnSuccess > createOAuthConsumer.json
+fi
 
 # Run apache
 apache2-foreground

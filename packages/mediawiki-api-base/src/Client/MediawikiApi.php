@@ -157,7 +157,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
-		$request = new JsonFormatRequest( $request );
+		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'GET',
@@ -176,8 +176,8 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
+		$request->setParam( 'format', 'json' );
 		$postEncoding = $this->getPostRequestEncoding( $request );
-		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			'POST',
@@ -194,7 +194,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function getRequest( Request $request ) {
-		$request = new JsonFormatRequest( $request );
+		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'GET',
@@ -211,8 +211,8 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function postRequest( Request $request ) {
+		$request->setParam( 'format', 'json' );
 		$postEncoding = $this->getPostRequestEncoding( $request );
-		$request = new JsonFormatRequest( $request );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			'POST',

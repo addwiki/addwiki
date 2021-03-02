@@ -18,4 +18,14 @@ interface Request {
 	 */
 	public function getHeaders(): array;
 
+	public function setAction( string $action ): self;
+
+	public function setParams( array $params ): self;
+
+	public function addParams( array $params ): self;
+
+	public function setParam( string $param, string $value ): self;
+
+	public function setHeaders( array $headers ): self;
+
 }

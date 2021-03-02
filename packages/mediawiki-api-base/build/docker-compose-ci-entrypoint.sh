@@ -23,9 +23,12 @@ php maintenance/update.php --quick
 ## Run some needed scripts
 # Add an OAuth Consumer
 php maintenance/resetUserEmail.php --no-reset-password CIUser CIUser@addwiki.github.io
-php extensions/OAuth/maintenance/addwikiAddOauth.php --approve --callbackUrl https://CiConsumerUrl \
-	--callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.1.0 \
-	--grants highvolume --jsonOnSuccess > createOAuthConsumer.json
+if [ ! -f createOAuthConsumer.json ]; then
+    php extensions/OAuth/maintenance/addwikiAddOauth.php --approve --callbackUrl https://CiConsumerUrl \
+    --callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.1.0 \
+    --grants highvolume --jsonOnSuccess > createOAuthConsumer.json
+fi
+
 
 # Run apache
 apache2-foreground

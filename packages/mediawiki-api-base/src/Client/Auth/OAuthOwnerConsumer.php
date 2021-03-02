@@ -2,7 +2,6 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\HeaderWrappedRequest;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Request;
 use InvalidArgumentException;
@@ -55,7 +54,8 @@ class OAuthOwnerConsumer implements AuthMethod {
 	}
 
 	public function preRequestAuth( Request $request, MediawikiApi $api ): Request {
-		return new HeaderWrappedRequest( $request, [ 'Authorization' => $this->getAuthenticationHeaderValue( $request, $api ) ] );
+		$request->setHeaders( array_merge( $request->getHeaders(), [ 'Authorization' => $this->getAuthenticationHeaderValue( $request, $api ) ] ) );
+		return $request;
 	}
 
 	private function getAuthenticationHeaderValue( Request $request, MediawikiApi $api ): string {
