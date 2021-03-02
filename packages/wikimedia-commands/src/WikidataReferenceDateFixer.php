@@ -2,7 +2,6 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
@@ -22,6 +21,8 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\SnakList;
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 class WikidataReferenceDateFixer extends Command {
 
@@ -35,16 +36,18 @@ class WikidataReferenceDateFixer extends Command {
 
 	public function __construct( ArrayAccess $appConfig ) {
 		$this->appConfig = $appConfig;
+		parent::__construct( null );
+	}
 
+	public function initServices( AuthMethod $auth ): void {
 		$defaultGuzzleConf = [
 			'headers' => [ 'User-Agent' => 'addwiki - Wikidata Reference Date Fixer' ]
 		];
 		$guzzleClient = new Client( $defaultGuzzleConf );
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 
-		$this->wikibaseApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
+		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $auth );
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
-		parent::__construct( null );
 	}
 
 	protected function configure() {
@@ -78,6 +81,8 @@ class WikidataReferenceDateFixer extends Command {
 		}
 		$items = $input->getOption( 'item' );
 
+		$this->initServices( new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
+
 		if ( empty( $items ) ) {
 			$output->writeln( 'Running SPARQL query to find items to check' );
 			$queryBuilder = new QueryBuilder( [
@@ -106,14 +111,6 @@ class WikidataReferenceDateFixer extends Command {
 
 		$itemIds = array_unique( $itemIds );
 		$output->writeln( 'Running for ' . count( $itemIds ) . ' items' );
-
-		// Log in to Wikidata
-		$loggedIn =
-			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in to wikidata wiki' );
-			return 1;
-		}
 
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 
