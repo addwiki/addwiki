@@ -80,7 +80,7 @@ class WikidataReferencerCommand extends Command {
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 		$this->externalLinkClient = $guzzleClient;
 
-		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $guzzleClient );
+		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', null, $guzzleClient );
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 
 		$mapper = new WikidataToSchemaMapper();

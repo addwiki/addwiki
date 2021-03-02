@@ -30,6 +30,7 @@ class WikimediaMediawikiFactoryFactory {
 				return new MediawikiFactory(
 					new MediawikiApi(
 						sprintf( 'https://%s.wikipedia.org/w/api.php', $firstPart ),
+						null,
 						$this->client
 					)
 				);

@@ -88,7 +88,7 @@ The setup in the monorepo should work for all packages.
 Run it before running integration tests.
 
 ```sh
-docker-compose -f docker-compose-ci.yml up -d
+docker-compose -f docker-compose-ci.yml up -d --build
 ```
 
 Wait for the wiki to be accessible, then run the tests:

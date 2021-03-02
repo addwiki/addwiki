@@ -34,6 +34,7 @@
         "guzzlehttp/guzzle": "~6.3|~7.0",
         "guzzlehttp/promises": "~1.0",
         "linclark/microdata-php": "~2.0",
+        "mediawiki/oauthclient": "^1.1",
         "php": ">=7.4",
         "psr/log": "~1.0",
         "serialization/serialization": "~3.2 || ~4.0",
