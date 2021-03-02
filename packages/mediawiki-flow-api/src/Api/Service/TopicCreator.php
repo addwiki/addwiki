@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Ext\Flow\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
 use Addwiki\Mediawiki\Ext\Flow\DataModel\Topic;
 
 class TopicCreator {
