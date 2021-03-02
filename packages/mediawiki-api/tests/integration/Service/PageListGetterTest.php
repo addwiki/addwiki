@@ -27,7 +27,7 @@ class PageListGetterTest extends TestCase {
 	 */
 	protected function setUp(): void {
 		$testEnvironment = TestEnvironment::newInstance();
-		$factory = new MediawikiFactory( $testEnvironment->getApi() )
+		$factory = new MediawikiFactory( $testEnvironment->getApi() );
 
 		// An empty category.
 		$emptyCat = new PageIdentifier( new Title( $this->emptyCatName ) );

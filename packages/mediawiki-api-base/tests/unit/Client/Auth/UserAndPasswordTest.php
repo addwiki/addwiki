@@ -4,7 +4,7 @@ namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\UsageException;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
