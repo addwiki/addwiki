@@ -24,7 +24,7 @@ class FileUploaderTest extends TestCase {
 	protected function setup(): void {
 		parent::setup();
 		$testEnvironment = TestEnvironment::newInstance();
-		$this->factory = $testEnvironment->getFactory();
+		$this->factory = new MediawikiFactory( testEnvironment->getApi() )
 		$this->fileUploader = $this->factory->newFileUploader();
 
 		// Log in as the sysop user (created as part of the docker-compose stuff)

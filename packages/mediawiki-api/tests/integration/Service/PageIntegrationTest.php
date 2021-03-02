@@ -8,6 +8,7 @@ use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 class PageIntegrationTest extends TestCase {
 
@@ -20,7 +21,7 @@ class PageIntegrationTest extends TestCase {
 	}
 
 	public function testCreatePage(): void {
-		$factory = TestEnvironment::newInstance()->getFactory();
+		$factory = new MediawikiFactory( TestEnvironment::newInstance()->getApi() );
 		$this->assertTrue(
 			$factory->newRevisionSaver()->save(
 				new Revision(
@@ -37,7 +38,7 @@ class PageIntegrationTest extends TestCase {
 	 * @depends testCreatePage
 	 */
 	public function testGetPageUsingTitle(): void {
-		$factory = TestEnvironment::newInstance()->getFactory();
+		$factory = new MediawikiFactory( TestEnvironment::newInstance()->getApi() );
 		$page = $factory->newPageGetter()->getFromPageIdentifier( self::$localPageIdentifier );
 		$this->assertTrue( is_int( $page->getPageIdentifier()->getId() ) );
 		$title = $page->getPageIdentifier()->getTitle();
@@ -51,7 +52,7 @@ class PageIntegrationTest extends TestCase {
 	 * @depends testGetPageUsingTitle
 	 */
 	public function testGetPageUsingId(): void {
-		$factory = TestEnvironment::newInstance()->getFactory();
+		$factory = new MediawikiFactory( TestEnvironment::newInstance()->getApi() );
 		$page = $factory->newPageGetter()->getFromPageId( self::$localPageIdentifier->getId() );
 		$this->assertEquals( self::$localPageIdentifier->getId(), $page->getPageIdentifier()->getId() );
 		$title = $page->getPageIdentifier()->getTitle();

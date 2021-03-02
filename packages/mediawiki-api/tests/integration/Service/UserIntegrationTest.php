@@ -4,6 +4,7 @@ namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
 use Addwiki\Mediawiki\Api\Tests\Integration\TestEnvironment;
 use PHPUnit\Framework\TestCase;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 class UserIntegrationTest extends TestCase {
 
@@ -14,7 +15,8 @@ class UserIntegrationTest extends TestCase {
 	public function testCreateUser(): void {
 		$strTime = strval( time() );
 
-		$factory = TestEnvironment::newInstance()->getFactory();
+		$testEnvironment = TestEnvironment::newInstance();
+		$factory = new MediawikiFactory( $testEnvironment->getApi() );
 		$createResult = $factory->newUserCreator()->create(
 			'TestUser - ' . $strTime,
 			$strTime . '-pass'

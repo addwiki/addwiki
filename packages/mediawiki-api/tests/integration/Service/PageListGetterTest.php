@@ -9,6 +9,7 @@ use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
 use PHPUnit\Framework\TestCase;
+use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 /**
  * Test the \Addwiki\Addwiki\Mediawiki\Api\Service\PageListGetter class.
@@ -26,7 +27,7 @@ class PageListGetterTest extends TestCase {
 	 */
 	protected function setUp(): void {
 		$testEnvironment = TestEnvironment::newInstance();
-		$factory = $testEnvironment->getFactory();
+		$factory = new MediawikiFactory( $testEnvironment->getApi() )
 
 		// An empty category.
 		$emptyCat = new PageIdentifier( new Title( $this->emptyCatName ) );
