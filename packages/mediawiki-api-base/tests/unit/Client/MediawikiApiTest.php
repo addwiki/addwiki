@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 
 /**
  * @covers Mediawiki\Api\MediawikiApi
@@ -186,62 +187,6 @@ class MediawikiApiTest extends TestCase {
 			[ [ 'key' => 'value' ], 'logout', [ 'param1' => 'v1' ] ],
 			[ [ 'key' => 'value', 'key2' => 1212, [] ], 'logout' ],
 		];
-	}
-
-	public function testGoodLoginSequence(): void {
-		$user = new ApiUser( 'U1', 'P1' );
-		$eq1 = [
-			'action' => 'login',
-			'lgname' => 'U1',
-			'lgpassword' => 'P1',
-		];
-		$params = array_merge( $eq1, [ 'lgtoken' => 'IamLoginTK' ] );
-
-		$client = $this->getMockClient();
-		$client->method( 'request' )
-			->withConsecutive(
-				[ 'POST', null, $this->getExpectedRequestOpts( $eq1, 'form_params' ) ],
-				[ 'POST', null, $this->getExpectedRequestOpts( $params, 'form_params' ) ]
-			)
-			->willReturnOnConsecutiveCalls(
-				$this->getMockResponse( [ 'login' => [
-					'result' => 'NeedToken',
-					'token' => 'IamLoginTK',
-				] ] ),
-				$this->getMockResponse( [ 'login' => [ 'result' => 'Success' ] ] )
-			);
-
-		$api = new MediawikiApi( '', null, $client );
-		$this->assertTrue( $api->login( $user ) );
-		$this->assertSame( true, $api->isLoggedIn() );
-	}
-
-	public function testBadLoginSequence(): void {
-		$client = $this->getMockClient();
-		$user = new ApiUser( 'U1', 'P1' );
-		$eq1 = [
-			'action' => 'login',
-			'lgname' => 'U1',
-			'lgpassword' => 'P1',
-		];
-		$params = array_merge( $eq1, [ 'lgtoken' => 'IamLoginTK' ] );
-
-		$client->method( 'request' )
-			->withConsecutive(
-				[ 'POST', null, $this->getExpectedRequestOpts( $eq1, 'form_params' ) ],
-				[ 'POST', null, $this->getExpectedRequestOpts( $params, 'form_params' ) ],
-			)
-			->willReturnOnConsecutiveCalls(
-				$this->getMockResponse( [ 'login' => [
-					'result' => 'NeedToken',
-					'token' => 'IamLoginTK',
-				] ] ),
-				$this->getMockResponse( [ 'login' => [ 'result' => 'BADTOKENorsmthin' ] ] )
-			);
-
-		$api = new MediawikiApi( '', null, $client );
-		$this->expectException( UsageException::class );
-		$api->login( $user );
 	}
 
 	public function testLogout(): void {
