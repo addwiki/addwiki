@@ -1,14 +1,17 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client;
+namespace Addwiki\Mediawiki\Api\Client\Action;
 
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
-use Addwiki\Mediawiki\Api\Client\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Request\Request;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Request\Requester;
+use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use DOMDocument;
 use DOMXPath;
@@ -22,7 +25,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
 
-class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
+class ActionApi implements Requester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
@@ -31,7 +34,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @var ClientInterface|null
 	 */
 	private ?ClientInterface $client = null;
-	private MediawikiSession $session;
+	private Tokens $session;
 
 	private ?string $version = null;
 	private LoggerInterface $logger;
@@ -42,7 +45,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
-	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): MediawikiApi {
+	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): ActionApi {
 		return new self( $apiEndpoint, $auth );
 	}
 
@@ -58,7 +61,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 *              file accessible on all Mediawiki pages
 	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
 	 */
-	public static function newFromPage( string $url, AuthMethod $auth = null ): MediawikiApi {
+	public static function newFromPage( string $url, AuthMethod $auth = null ): ActionApi {
 		// Set up HTTP client and HTML document.
 		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
 		$pageHtml = $tempClient->get( $url )->getBody();
@@ -98,19 +101,19 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @param string $apiUrl The API Url
 	 * @param AuthMethod|null $auth Auth method to use. null for NoAuth
 	 * @param ClientInterface|null $client Guzzle Client
-	 * @param MediawikiSession|null $session Inject a custom session here
+	 * @param Tokens|null $session Inject a custom session here
 	 */
 	public function __construct(
 		string $apiUrl,
 		AuthMethod $auth = null,
 		ClientInterface $client = null,
-		MediawikiSession $session = null
+		Tokens $session = null
 		) {
 		if ( $auth === null ) {
 			$auth = new NoAuth();
 		}
 		if ( $session === null ) {
-			$session = new MediawikiSession( $this );
+			$session = new Tokens( $this );
 		}
 
 		$this->apiUrl = $apiUrl;
@@ -153,72 +156,36 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param Request $request The GET request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return PromiseInterface
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function getRequestAsync( Request $request ): PromiseInterface {
+	public function requestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
-			'GET',
+			$request->getMethod(),
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, 'query' )
+			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
 		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
 	}
 
 	/**
-	 * @param Request $request The POST request to send.
-	 *
-	 * @return PromiseInterface
-	 *         Normally promising an array, though can be mixed (json_decode result)
-	 *         Can throw UsageExceptions or RejectionExceptions
-	 */
-	public function postRequestAsync( Request $request ): PromiseInterface {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
-		$promise = $this->getClient()->requestAsync(
-			'POST',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
-		);
-
-		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
-	}
-
-	/**
-	 * @param Request $request The GET request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return mixed Normally an array
 	 */
-	public function getRequest( Request $request ) {
+	public function request( Request $request ) {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
-			'GET',
+			$request->getMethod(),
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, 'query' )
-		);
-
-		return $this->decodeResponse( $response );
-	}
-
-	/**
-	 * @param Request $request The POST request to send.
-	 *
-	 * @return mixed Normally an array
-	 */
-	public function postRequest( Request $request ) {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
-		$response = $this->getClient()->request(
-			'POST',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
+			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
 		return $this->decodeResponse( $response );
@@ -228,7 +195,7 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	 * @param ResponseInterface $response
 	 *
 	 * @return mixed
-	 * @throws UsageException
+	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
 	 */
 	private function decodeResponse( ResponseInterface $response ) {
 		$resultArray = json_decode( $response->getBody(), true );
@@ -366,19 +333,19 @@ class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
 	}
 
 	public function getToken( $type = 'csrf' ): string {
-		return $this->session->getToken( $type );
+		return $this->session->get( $type );
 	}
 
 	/**
 	 * Clear all tokens stored by the API.
 	 */
-	public function clearTokens() {
-		$this->session->clearTokens();
+	public function clearTokens(): void {
+		$this->session->clear();
 	}
 
 	public function getVersion(): string {
 		if ( $this->version === null ) {
-			$result = $this->getRequest( new SimpleRequest( 'query', [
+			$result = $this->request( ActionRequest::simpleGet( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',
 			] ) );

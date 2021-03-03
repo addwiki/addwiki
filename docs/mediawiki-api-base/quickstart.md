@@ -7,7 +7,7 @@ This page provides a quick introduction to this library and introductory example
 You can get an api object by simply passing the api endpoint:
 
 ```php
-use \Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 
 $api = MediawikiApi::newFromApiEndpoint( 'https://en.wikipedia.org/w/api.php' );
 ```
@@ -15,7 +15,7 @@ $api = MediawikiApi::newFromApiEndpoint( 'https://en.wikipedia.org/w/api.php' );
 You can even just pass a page:
 
 ```php
-use \Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 
 $api = MediawikiApi::newFromPage( 'https://en.wikipedia.org/wiki/Berlin' );
 ```
@@ -34,8 +34,8 @@ $api->logout();
 The library provides two different way of constructing requests.
 
 ```php
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\Request\FluentRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\FluentRequest;
 
 $purgeRequest = new SimpleRequest( 'purge', array( 'titles' => 'Berlin' ) );
 // or

@@ -2,8 +2,8 @@
 
 namespace Addwiki\Wikimedia\Api;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use DataValues\BooleanValue;
@@ -25,8 +25,8 @@ class WikimediaFactory {
 	 * @param string $domain eg. 'en.wikipedia.org'
 	 * @param AuthMethod|null $auth
 	 */
-	public function newMediawikiApiForDomain( string $domain, AuthMethod $auth = null ): MediawikiApi {
-		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php', $auth );
+	public function newMediawikiApiForDomain( string $domain, AuthMethod $auth = null ): ActionApi {
+		return ActionApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php', $auth );
 	}
 
 	/**

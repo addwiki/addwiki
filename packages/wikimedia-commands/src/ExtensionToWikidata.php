@@ -2,8 +2,8 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -71,7 +71,7 @@ class ExtensionToWikidata extends Command {
 			throw new RuntimeException( 'No titles was set!' );
 		}
 
-		$sourceApi = new MediawikiApi( "https://www.mediawiki.org/w/api.php" );
+		$sourceApi = new ActionApi( "https://www.mediawiki.org/w/api.php" );
 
 		$sourceMwFactory = new MediawikiFactory( $sourceApi );
 		$sourceParser = $sourceMwFactory->newParser();

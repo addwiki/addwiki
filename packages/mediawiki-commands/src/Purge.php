@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -64,7 +64,7 @@ class Purge extends Command {
 
 		$wiki = $input->getOption( 'wiki' );
 		$wikiDetails = $this->appConfig->offsetGet( 'wikis.' . $wiki );
-		$api = new MediawikiApi( $wikiDetails['url'] );
+		$api = new ActionApi( $wikiDetails['url'] );
 		$mwFactory = new MediawikiFactory( $api );
 		$purger = $mwFactory->newPagePurger();
 		/** @var PageIdentifier $identifier */
