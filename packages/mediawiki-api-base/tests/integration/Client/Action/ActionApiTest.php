@@ -31,7 +31,7 @@ class ActionApiTest extends TestCase {
 		$testPageName = __METHOD__;
 		$testEnv = BaseTestEnvironment::newInstance();
 		$wikiPageUrl = str_replace( 'api.php', sprintf( 'index.php?title=%s', $testPageName ), $testEnv->getApiUrl() );
-		$api = $testEnv->getApi();
+		$api = $testEnv->getActionApi();
 
 		// Test with no duplicate IDs.
 		$this->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
@@ -56,25 +56,25 @@ class ActionApiTest extends TestCase {
 	}
 
 	public function testQueryGetResponse(): void {
-		$api = BaseTestEnvironment::newInstance()->getApi();
+		$api = BaseTestEnvironment::newInstance()->getActionApi();
 		$response = $api->request( ActionRequest::simpleGet( 'query' ) );
 		$this->assertIsArray( $response );
 	}
 
 	public function testQueryGetResponseAsync(): void {
-		$api = BaseTestEnvironment::newInstance()->getApi();
+		$api = BaseTestEnvironment::newInstance()->getActionApi();
 		$response = $api->requestAsync( ActionRequest::simpleGet( 'query' ) );
 		$this->assertIsArray( $response->wait() );
 	}
 
 	public function testQueryPostResponse(): void {
-		$api = BaseTestEnvironment::newInstance()->getApi();
+		$api = BaseTestEnvironment::newInstance()->getActionApi();
 		$response = $api->request( ActionRequest::simplePost( 'query' ) );
 		$this->assertIsArray( $response );
 	}
 
 	public function testQueryPostResponseAsync(): void {
-		$api = BaseTestEnvironment::newInstance()->getApi();
+		$api = BaseTestEnvironment::newInstance()->getActionApi();
 		$response = $api->requestAsync( ActionRequest::simplePost( 'query' ) );
 		$this->assertIsArray( $response->wait() );
 	}

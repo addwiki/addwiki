@@ -59,10 +59,7 @@ class BaseTestEnvironment {
 		return $this->pageUrl;
 	}
 
-	/**
-	 * Get the MediawikiApi to test against
-	 */
-	public function getApi( ?AuthMethod $auth = null ): ActionApi {
+	public function getActionApi( ?AuthMethod $auth = null ): ActionApi {
 		return new ActionApi( $this->getApiUrl(), $auth );
 	}
 
