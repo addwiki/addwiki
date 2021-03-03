@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use InvalidArgumentException;

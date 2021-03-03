@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use GuzzleHttp\ClientInterface;
