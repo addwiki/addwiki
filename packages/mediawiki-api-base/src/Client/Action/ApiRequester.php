@@ -3,6 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Common interface to be shared between APIs that allow making of requests.
