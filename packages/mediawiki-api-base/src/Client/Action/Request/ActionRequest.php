@@ -17,17 +17,6 @@ class ActionRequest implements Request, HasSimpleFactory, HasParameterAction {
 	use ParametersTrait;
 	use ParameterActionTrait;
 
-	/**
-	 * @deprecated in 3.0. Only introduced for back compat API methods. Use the other simple* methods...
-	 */
-	public static function simpleMethodless( string $action, array $params = [], array $headers = [] ): self {
-		$req = new self();
-		$req->setAction( $action );
-		$req->addParams( $params );
-		$req->setHeaders( $headers );
-		return $req;
-	}
-
 	public static function simpleGet( string $action, array $params = [], array $headers = [] ): self {
 		$req = new self();
 		$req->setMethod( 'GET' );

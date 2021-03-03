@@ -5,6 +5,8 @@ namespace Addwiki\Mediawiki\Api\Client\Auth;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
+use Addwiki\Mediawiki\Api\Client\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Request\Requester;
 use InvalidArgumentException;
 
 /**
@@ -37,7 +39,12 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth( string $method, ActionRequest $request, ActionApi $api ): ActionRequest {
+	public function preRequestAuth( Request $request, Requester $requester ): Request {
+		if ( !$requester instanceof ActionApi ) {
+			// TODO remove / alter this when doing REST
+			die( 'Only works with ActionApi for now' );
+		}
+
 		// Do nothing if we are already logged in
 		if ( $this->isLoggedIn ) {
 			// Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if bot.
@@ -56,11 +63,11 @@ class UserAndPassword implements AuthMethod {
 		];
 
 		// First Request
-		$result = $api->request( ActionRequest::simplePost( 'login', $loginParams ) );
+		$result = $requester->request( ActionRequest::simplePost( 'login', $loginParams ) );
 		if ( $result['login']['result'] == 'NeedToken' ) {
 			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $loginParams );
 			// Second Request
-			$result = $api->request( ActionRequest::simplePost( 'login', $params ) );
+			$result = $requester->request( ActionRequest::simplePost( 'login', $params ) );
 		}
 
 		// Check for success
@@ -81,7 +88,7 @@ class UserAndPassword implements AuthMethod {
 	}
 
 	/**
-	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
+	 * @throws UsageException
 	 */
 	private function throwLoginUsageException( array $result ): void {
 		$loginResult = $result['login']['result'];

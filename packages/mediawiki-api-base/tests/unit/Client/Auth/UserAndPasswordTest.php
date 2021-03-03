@@ -111,7 +111,7 @@ class UserAndPasswordTest extends TestCase {
 
 		$auth = new UserAndPassword( 'U1', 'P1' );
 		$api = new ActionApi( '', $auth, $client );
-		$auth->preRequestAuth( 'GET', ActionRequest::simpleMethodless( 'dummyrequest' ), $api );
+		$auth->preRequestAuth( ActionRequest::simpleGet( 'dummyrequest' ), $api );
 	}
 
 	public function testBadLoginSequence(): void {
@@ -140,7 +140,7 @@ class UserAndPasswordTest extends TestCase {
 		$auth = new UserAndPassword( 'U1', 'P1' );
 		$api = new ActionApi( '', $auth, $client );
 		$this->expectException( UsageException::class );
-		$auth->preRequestAuth( 'GET', ActionRequest::simpleMethodless( 'dummyrequest' ), $api );
+		$auth->preRequestAuth( ActionRequest::simpleGet( 'dummyrequest' ), $api );
 	}
 
 }

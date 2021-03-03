@@ -164,7 +164,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	public function requestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			$request->getMethod(),
 			$this->apiUrl,
@@ -181,7 +181,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	public function request( Request $request ) {
 		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
+		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			$request->getMethod(),
 			$this->apiUrl,
@@ -212,7 +212,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 * @throws RequestException
 	 * @return array as needed by ClientInterface::get and ClientInterface::post
 	 */
-	private function getClientRequestOptions( ActionRequest $request, string $paramsKey ): array {
+	private function getClientRequestOptions( Request $request, string $paramsKey ): array {
 		$params = $request->getParams();
 		if ( $paramsKey === 'multipart' ) {
 			$params = $this->encodeMultipartParams( $request, $params );
@@ -229,12 +229,12 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 * parameter is a new array with a 'name' and 'contents' elements (and optionally more, if the
 	 * request is a MultipartRequest).
 	 *
-	 * @param ActionRequest $request The request to which the parameters belong.
+	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
 	 * @return array <int mixed[]>
 	 */
-	private function encodeMultipartParams( ActionRequest $request, array $params ): array {
+	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
 		$multipartParams = ( $request instanceof MultipartRequest )
 			? $request->getMultipartParams()
