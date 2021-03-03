@@ -92,7 +92,7 @@ class NamespaceGetter extends Service {
 	 * @return mixed[]
 	 */
 	private function getNamespaceResult(): array {
-		return $this->api->getRequest( ActionRequest::simpleMethodless(
+		return $this->api->request( ActionRequest::simpleGet(
 			'query', [
 				'meta' => 'siteinfo',
 				'siprop' => 'namespaces|namespacealiases'

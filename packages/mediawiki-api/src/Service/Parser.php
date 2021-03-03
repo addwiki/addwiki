@@ -36,7 +36,7 @@ class Parser extends Service {
 			throw new RuntimeException( 'No way to identify page' );
 		}
 
-		$promise = $this->api->getRequestAsync( ActionRequest::simpleMethodless( 'parse', $params ) );
+		$promise = $this->api->requestAsync( ActionRequest::simpleGet( 'parse', $params ) );
 
 		return $promise->then( fn( $result ) => $result['parse'] );
 	}

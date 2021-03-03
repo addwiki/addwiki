@@ -17,8 +17,8 @@ class PageRestorer extends Service {
 	 * @param array $extraParams
 	 */
 	public function restore( Page $page, array $extraParams = [] ): bool {
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless(
+		$this->api->request(
+			ActionRequest::simplePost(
 				'undelete',
 				$this->getUndeleteParams( $page->getTitle(), $extraParams )
 			)
@@ -46,8 +46,8 @@ class PageRestorer extends Service {
 	 * @return mixed|void
 	 */
 	private function getUndeleteToken( Title $title ) {
-		$response = $this->api->postRequest(
-			ActionRequest::simpleMethodless(
+		$response = $this->api->request(
+			ActionRequest::simplePost(
 				'query', [
 				'list' => 'deletedrevs',
 				'titles' => $title->getTitle(),

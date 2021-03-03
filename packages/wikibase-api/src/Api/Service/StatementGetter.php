@@ -27,7 +27,7 @@ class StatementGetter {
 			'claim' => $guid,
 		];
 
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetclaims', $params ) );
+		$result = $this->api->request( ActionRequest::simpleGet( 'wbgetclaims', $params ) );
 		$arrayShift = array_shift( $result['claims'] );
 
 		$statementSerialization = array_shift( $arrayShift );

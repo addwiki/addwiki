@@ -31,8 +31,8 @@ class PagePurger extends Service {
 			$params = [ 'titles' => $page->getPageIdentifier()->getTitle()->getText() ];
 		}
 
-		$responseArray = $this->api->postRequest(
-			ActionRequest::simpleMethodless( 'purge', $params )
+		$responseArray = $this->api->request(
+			ActionRequest::simplePost( 'purge', $params )
 		);
 
 		// the purge response for the page
@@ -67,8 +67,8 @@ class PagePurger extends Service {
 		// ex: [111, 222, 333] => "111|222|333"
 		$pageIdsMultiple = implode( '|', $pagesIds );
 
-		$responseArray = $this->api->postRequest(
-			ActionRequest::simpleMethodless( 'purge', [ 'pageids' => $pageIdsMultiple ] )
+		$responseArray = $this->api->request(
+			ActionRequest::simplePost( 'purge', [ 'pageids' => $pageIdsMultiple ] )
 		);
 
 		// array that will hold the successfully purged pages
@@ -101,8 +101,8 @@ class PagePurger extends Service {
 	 * @param ApiGenerator $generator
 	 */
 	public function purgeGenerator( ApiGenerator $generator ): bool {
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless( 'purge', $generator->getParams() )
+		$this->api->request(
+			ActionRequest::simplePost( 'purge', $generator->getParams() )
 		);
 
 		return true;

@@ -30,7 +30,7 @@ class LogListGetter extends Service {
 			];
 
 			$newParams = array_merge( $extraParams, $params );
-			$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'query', $newParams ) );
+			$result = $this->api->request( ActionRequest::simpleGet( 'query', $newParams ) );
 
 			foreach ( $result[ 'query' ]['logevents'] as $logevent ) {
 				$logList->addLog(

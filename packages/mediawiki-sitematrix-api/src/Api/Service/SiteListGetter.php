@@ -19,7 +19,7 @@ class SiteListGetter {
 	}
 
 	public function getSiteList(): SiteList {
-		$sitematrixResult = $this->api->getRequest( ActionRequest::simpleMethodless( 'sitematrix' ) );
+		$sitematrixResult = $this->api->request( ActionRequest::simpleGet( 'sitematrix' ) );
 		unset( $sitematrixResult['sitematrix']['count'] );
 
 		$siteListArray = [];

@@ -36,7 +36,7 @@ class ValueFormatter {
 			'options' => json_encode( $options->getOptions() ),
 		];
 
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbformatvalue', $params ) );
+		$result = $this->api->request( ActionRequest::simpleGet( 'wbformatvalue', $params ) );
 		return $result['result'];
 	}
 

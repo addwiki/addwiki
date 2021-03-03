@@ -20,8 +20,8 @@ class UserRightsChanger extends Service {
 		array $remove = [],
 		array $extraParams = []
 	): bool {
-		$result = $this->api->postRequest(
-			ActionRequest::simpleMethodless(
+		$result = $this->api->request(
+			ActionRequest::simplePost(
 				'query', [
 				'list' => 'users',
 				'ustoken' => 'userrights',
@@ -41,8 +41,8 @@ class UserRightsChanger extends Service {
 			$params['remove'] = implode( '|', $remove );
 		}
 
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless( 'userrights', array_merge( $extraParams, $params ) )
+		$this->api->request(
+			ActionRequest::simplePost( 'userrights', array_merge( $extraParams, $params ) )
 		);
 
 		return true;

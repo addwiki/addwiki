@@ -192,38 +192,6 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	}
 
 	/**
-	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
-	 */
-	public function getRequestAsync( ActionRequest $request ): PromiseInterface {
-		$request->setMethod( 'GET' );
-		return $this->requestAsync( $request );
-	}
-
-	/**
-	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
-	 */
-	public function postRequestAsync( ActionRequest $request ): PromiseInterface {
-		$request->setMethod( 'POST' );
-		return $this->requestAsync( $request );
-	}
-
-	/**
-	 * @deprecated in 3.0. Set a request method and use the request method directly
-	 */
-	public function getRequest( ActionRequest $request ) {
-		$request->setMethod( 'GET' );
-		return $this->request( $request );
-	}
-
-	/**
-	 * @deprecated in 3.0. Set a request method and use the request method directly
-	 */
-	public function postRequest( ActionRequest $request ) {
-		$request->setMethod( 'POST' );
-		return $this->request( $request );
-	}
-
-	/**
 	 * @param ResponseInterface $response
 	 *
 	 * @return mixed
@@ -377,7 +345,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 
 	public function getVersion(): string {
 		if ( $this->version === null ) {
-			$result = $this->getRequest( ActionRequest::simpleMethodless( 'query', [
+			$result = $this->request( ActionRequest::simpleGet( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',
 			] ) );

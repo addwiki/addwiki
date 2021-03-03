@@ -21,8 +21,8 @@ class RevisionSaver extends Service {
 	public function save( Revision $revision, EditInfo $editInfo = null ): bool {
 		$editInfo ??= $revision->getEditInfo();
 
-		$result = $this->api->postRequest(
-			ActionRequest::simpleMethodless( 'edit', $this->getEditParams( $revision, $editInfo ) )
+		$result = $this->api->request(
+			ActionRequest::simplePost( 'edit', $this->getEditParams( $revision, $editInfo ) )
 		);
 		return ( $result['edit']['result'] == 'Success' );
 	}

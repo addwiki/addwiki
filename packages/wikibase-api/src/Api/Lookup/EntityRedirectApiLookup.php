@@ -40,7 +40,7 @@ class EntityRedirectApiLookup implements EntityRedirectLookup {
 		$entityIdSerialization = $entityId->getSerialization();
 
 		$params = [ 'ids' => $entityIdSerialization ];
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', $params ) );
+		$result = $this->api->request( ActionRequest::simpleGet( 'wbgetentities', $params ) );
 
 		$entitiesData = $result['entities'];
 		if ( !array_key_exists( $entityIdSerialization, $entitiesData ) ) {

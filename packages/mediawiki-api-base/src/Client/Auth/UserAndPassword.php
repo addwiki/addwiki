@@ -56,11 +56,11 @@ class UserAndPassword implements AuthMethod {
 		];
 
 		// First Request
-		$result = $api->postRequest( ActionRequest::simpleMethodless( 'login', $loginParams ) );
+		$result = $api->request( ActionRequest::simplePost( 'login', $loginParams ) );
 		if ( $result['login']['result'] == 'NeedToken' ) {
 			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $loginParams );
 			// Second Request
-			$result = $api->postRequest( ActionRequest::simpleMethodless( 'login', $params ) );
+			$result = $api->request( ActionRequest::simplePost( 'login', $params ) );
 		}
 
 		// Check for success

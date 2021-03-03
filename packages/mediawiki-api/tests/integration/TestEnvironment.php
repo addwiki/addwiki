@@ -71,8 +71,8 @@ class TestEnvironment {
 	 */
 	public function runJobs(): void {
 		$reqestProps = [ 'meta' => 'siteinfo', 'siprop' => 'general' ];
-		$siteInfoRequest = ActionRequest::simpleMethodless( 'query', $reqestProps );
-		$out = $this->getApi()->getRequest( $siteInfoRequest );
+		$siteInfoRequest = ActionRequest::simpleGet( 'query', $reqestProps );
+		$out = $this->getApi()->request( $siteInfoRequest );
 		$mainPageUrl = $out['query']['general']['base'];
 		$i = 0;
 		while ( $this->getJobQueueLength( $this->getApi() ) > 0 ) {
@@ -92,12 +92,12 @@ class TestEnvironment {
 	 * @todo This and TestEnvironment::runJobs() should probably not live here.
 	 */
 	public function getJobQueueLength( ActionApi $api ): int {
-		$req = ActionRequest::simpleMethodless( 'query', [
+		$req = ActionRequest::simpleGet( 'query', [
 				'meta' => 'siteinfo',
 				'siprop' => 'statistics',
 			]
 		);
-		$out = $api->getRequest( $req );
+		$out = $api->request( $req );
 		return (int)$out['query']['statistics']['jobs'];
 	}
 }

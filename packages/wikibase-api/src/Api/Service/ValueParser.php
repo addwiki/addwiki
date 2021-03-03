@@ -40,8 +40,8 @@ class ValueParser {
 	 * @return PromiseInterface of a DataValue object or array of DataValue objects with same keys as values
 	 */
 	public function parseAsync( $inputValues, string $parser ): PromiseInterface {
-		$promise = $this->api->getRequestAsync(
-			ActionRequest::simpleMethodless(
+		$promise = $this->api->requestAsync(
+			ActionRequest::simpleGet(
 				'wbparsevalue',
 				[
 					'parser' => $parser,

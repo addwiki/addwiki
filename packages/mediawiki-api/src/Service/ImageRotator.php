@@ -29,7 +29,7 @@ class ImageRotator extends Service {
 			$params['pageids'] = $file->getPageIdentifier()->getId();
 		}
 
-		$result = $this->api->postRequest( ActionRequest::simpleMethodless( 'imagerotate', $params ) );
+		$result = $this->api->request( ActionRequest::simplePost( 'imagerotate', $params ) );
 
 		// This module sometimes gives odd errors so deal with them..
 		if ( array_key_exists( 'imagerotate', $result ) ) {

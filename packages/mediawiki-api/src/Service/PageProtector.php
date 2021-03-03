@@ -38,8 +38,8 @@ class PageProtector extends Service {
 		}
 		$params['protections'] = rtrim( $protectionsString, '|' );
 
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless( 'protect', array_merge( $extraParams, $params ) )
+		$this->api->request(
+			ActionRequest::simplePost( 'protect', array_merge( $extraParams, $params ) )
 		);
 
 		return true;

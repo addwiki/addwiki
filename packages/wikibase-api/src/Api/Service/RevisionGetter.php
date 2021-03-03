@@ -37,7 +37,7 @@ class RevisionGetter {
 			$id = $id->getSerialization();
 		}
 
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', [ 'ids' => $id ] ) );
+		$result = $this->api->request( ActionRequest::simpleGet( 'wbgetentities', [ 'ids' => $id ] ) );
 		return $this->newRevisionFromResult( array_shift( $result['entities'] ) );
 	}
 
@@ -45,7 +45,7 @@ class RevisionGetter {
 	 * @param SiteLink $siteLink
 	 */
 	public function getFromSiteLink( SiteLink $siteLink ): Revision {
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless(
+		$result = $this->api->request( ActionRequest::simpleGet(
 			'wbgetentities',
 			[ 'sites' => $siteLink->getSiteId(), 'titles' => $siteLink->getPageName() ]
 		) );
@@ -53,7 +53,7 @@ class RevisionGetter {
 	}
 
 	public function getFromSiteAndTitle( string $siteId, string $title ): Revision {
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless(
+		$result = $this->api->request( ActionRequest::simpleGet(
 			'wbgetentities',
 			[ 'sites' => $siteId, 'titles' => $title ]
 		) );

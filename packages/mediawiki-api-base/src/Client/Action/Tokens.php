@@ -64,8 +64,8 @@ class Tokens implements LoggerAwareInterface {
 
 	private function reallyGetPre125Token( $type ) {
 		// Suppress deprecation warning
-		$result = @$this->api->postRequest( // @codingStandardsIgnoreLine
-			ActionRequest::simpleMethodless( 'tokens', [ 'type' => $this->getOldTokenType( $type ) ] )
+		$result = @$this->api->request( // @codingStandardsIgnoreLine
+			ActionRequest::simplePost( 'tokens', [ 'type' => $this->getOldTokenType( $type ) ] )
 		);
 		$this->tokens[$type] = array_pop( $result['tokens'] );
 
@@ -74,8 +74,8 @@ class Tokens implements LoggerAwareInterface {
 
 	private function reallyGetToken( $type ) {
 		// We suppress errors on this call so the user doesn't get get a warning that isn't their fault.
-		$result = @$this->api->postRequest( // @codingStandardsIgnoreLine
-			ActionRequest::simpleMethodless( 'query', [
+		$result = @$this->api->request( // @codingStandardsIgnoreLine
+			ActionRequest::simplePost( 'query', [
 				'meta' => 'tokens',
 				'type' => $this->getNewTokenType( $type ),
 				'continue' => '',

@@ -73,7 +73,7 @@ class ActionApiTest extends TestCase {
 		$api = new ActionApi( '', null, $client, );
 
 		try{
-			$api->getRequest( ActionRequest::simpleMethodless( 'foo' ) );
+			$api->request( ActionRequest::simpleGet( 'foo' ) );
 			$this->fail( 'No Usage Exception Thrown' );
 		}
 		catch ( UsageException $usageException ) {
@@ -95,7 +95,7 @@ class ActionApiTest extends TestCase {
 		$api = new ActionApi( '', null, $client );
 
 		try{
-			$api->postRequest( ActionRequest::simpleMethodless( 'foo' ) );
+			$api->request( ActionRequest::simplePost( 'foo' ) );
 			$this->fail( 'No Usage Exception Thrown' );
 		}
 		catch ( UsageException $e ) {
@@ -116,7 +116,7 @@ class ActionApiTest extends TestCase {
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->getRequest( ActionRequest::simpleMethodless( $action, $params ) );
+		$result = $api->request( ActionRequest::simpleGet( $action, $params ) );
 
 		$this->assertEquals( $expectedResult, $result );
 	}
@@ -133,7 +133,7 @@ class ActionApiTest extends TestCase {
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->postRequest( ActionRequest::simpleMethodless( $action, $params ) );
+		$result = $api->request( ActionRequest::simplePost( $action, $params ) );
 
 		$this->assertEquals( $expectedResult, $result );
 	}
@@ -172,7 +172,7 @@ class ActionApiTest extends TestCase {
 			)->will( $this->returnValue( $this->getMockResponse( [ 'success ' => 1 ] ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->postRequest( ActionRequest::simpleMethodless( 'upload', $params ) );
+		$result = $api->request( ActionRequest::simplePost( 'upload', $params ) );
 
 		$this->assertEquals( [ 'success ' => 1 ], $result );
 	}

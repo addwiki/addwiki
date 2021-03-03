@@ -21,7 +21,7 @@ class BadgeIdsGetter {
 	 * @return ItemId[]
 	 */
 	public function get(): array {
-		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbavailablebadges' ) );
+		$result = $this->api->request( ActionRequest::simpleGet( 'wbavailablebadges' ) );
 		$ids = [];
 		foreach ( $result['badges'] as $badgeIdString ) {
 			$ids[] = new ItemId( $badgeIdString );

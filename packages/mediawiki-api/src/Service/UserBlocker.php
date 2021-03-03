@@ -33,7 +33,7 @@ class UserBlocker extends Service {
 
 		$params = array_merge( $extraParams, $params );
 
-		$this->api->postRequest( ActionRequest::simpleMethodless( 'block', $params ) );
+		$this->api->request( ActionRequest::simplePost( 'block', $params ) );
 		return true;
 	}
 

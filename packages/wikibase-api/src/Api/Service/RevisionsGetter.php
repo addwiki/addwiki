@@ -66,14 +66,14 @@ class RevisionsGetter {
 					$gotRevisionsFromIds = true;
 				}
 				$params['titles'] = implode( '|', $siteLinkStrings );
-				$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', $params ) );
+				$result = $this->api->request( ActionRequest::simpleGet( 'wbgetentities', $params ) );
 				$resultRevisions = $this->newRevisionsFromResult( $result['entities'] );
 				$revisions->addRevisions( $resultRevisions );
 
 			}
 		} else {
 			$params = [ 'ids' => implode( '|', $entityIdStrings ) ];
-			$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', $params ) );
+			$result = $this->api->request( ActionRequest::simpleGet( 'wbgetentities', $params ) );
 			$resultRevisions = $this->newRevisionsFromResult( $result['entities'] );
 			$revisions->addRevisions( $resultRevisions );
 		}

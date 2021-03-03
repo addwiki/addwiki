@@ -17,8 +17,8 @@ class PageMover extends Service {
 	 * @param array $extraParams
 	 */
 	public function move( Page $page, Title $target, array $extraParams = [] ): bool {
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless(
+		$this->api->request(
+			ActionRequest::simplePost(
 				'move', $this->getMoveParams( $page->getId(), $target, $extraParams )
 			)
 		);
@@ -27,8 +27,8 @@ class PageMover extends Service {
 	}
 
 	public function moveFromPageId( int $pageid, Title $target, array $extraParams = [] ): bool {
-		$this->api->postRequest(
-			ActionRequest::simpleMethodless( 'move', $this->getMoveParams( $pageid, $target, $extraParams ) )
+		$this->api->request(
+			ActionRequest::simplePost( 'move', $this->getMoveParams( $pageid, $target, $extraParams ) )
 		);
 
 		return true;

@@ -11,8 +11,8 @@ use Addwiki\Mediawiki\DataModel\User;
 class UserGetter extends Service {
 
 	public function getFromUsername( string $username ): User {
-		$result = $this->api->getRequest(
-			ActionRequest::simpleMethodless(
+		$result = $this->api->request(
+			ActionRequest::simpleGet(
 				'query', [
 				'list' => 'users',
 				'ususers' => $username,

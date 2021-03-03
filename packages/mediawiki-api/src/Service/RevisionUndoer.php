@@ -14,7 +14,7 @@ class RevisionUndoer extends Service {
 	 * @param Revision $revision
 	 */
 	public function undo( Revision $revision ): bool {
-		$this->api->postRequest( ActionRequest::simpleMethodless(
+		$this->api->request( ActionRequest::simplePost(
 			'edit',
 			$this->getParamsFromRevision( $revision )
 		) );

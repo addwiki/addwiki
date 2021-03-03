@@ -15,7 +15,7 @@ class TopicCreator {
 	}
 
 	public function create( Topic $topic ): void {
-		$this->api->postRequest( ActionRequest::simpleMethodless(
+		$this->api->request( ActionRequest::simplePost(
 			'flow',
 			[
 				'submodule' => 'new-topic',

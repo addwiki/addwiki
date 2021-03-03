@@ -28,7 +28,7 @@ class WikibaseApi {
 		}
 
 		$params['token'] = $this->api->getToken();
-		return $this->api->postRequest( ActionRequest::simpleMethodless( $action, $params ) );
+		return $this->api->request( ActionRequest::simplePost( $action, $params ) );
 	}
 
 	private function getEditInfoParams( EditInfo $editInfo ): array {

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class AuthTest extends TestCase {
 
 	private function getUserInfo( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
-		return $api->getRequest( ActionRequest::simpleMethodless( 'query', [ 'meta' => 'userinfo' ] ) );
+		return $api->request( ActionRequest::simpleGet( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
 	private function assertUserLoggedIn( string $expectedUser, ActionApi $api ) {
@@ -24,7 +24,7 @@ class AuthTest extends TestCase {
 	}
 
 	private function getUserInfoUsingPost( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
-		return $api->postRequest( ActionRequest::simpleMethodless( 'query', [ 'meta' => 'userinfo' ] ) );
+		return $api->request( ActionRequest::simplePost( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
 	private function assertUserLoggedInUsingPost( string $expectedUser, \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) {
@@ -61,8 +61,9 @@ class AuthTest extends TestCase {
 		$auth = $env->getOAuthOwnerConsumerAuth();
 		$api = $env->getApi( $auth );
 		$multiRequest = new MultipartRequest();
+		$multiRequest->setMethod( 'POST' );
 		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
-		$this->assertSame( 'CIUser', $api->postRequest( $multiRequest )['query']['userinfo']['name'] );
+		$this->assertSame( 'CIUser', $api->request( $multiRequest )['query']['userinfo']['name'] );
 	}
 
 }

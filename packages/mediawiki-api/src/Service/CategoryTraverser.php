@@ -59,7 +59,7 @@ class CategoryTraverser extends Service {
 			return;
 		}
 		$params = [ 'meta' => 'siteinfo', 'siprop' => 'namespaces' ];
-		$namespaces = $this->api->getRequest( ActionRequest::simpleMethodless( 'query', $params ) );
+		$namespaces = $this->api->request( ActionRequest::simpleGet( 'query', $params ) );
 		if ( isset( $namespaces['query']['namespaces'] ) ) {
 			$this->namespaces = $namespaces['query']['namespaces'];
 		}

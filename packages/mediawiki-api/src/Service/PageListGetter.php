@@ -125,7 +125,7 @@ class PageListGetter extends Service {
 			}
 
 			// Run the actual query.
-			$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'query', $params ) );
+			$result = $this->api->request( ActionRequest::simpleGet( 'query', $params ) );
 			if ( !array_key_exists( 'query', $result ) ) {
 				return $pages;
 			}

@@ -26,7 +26,7 @@ class EntitySearcher {
 			'type' => $entityType,
 		];
 
-		$data = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbsearchentities', $params ) );
+		$data = $this->api->request( ActionRequest::simpleGet( 'wbsearchentities', $params ) );
 
 		$ids = [];
 		foreach ( $data['search'] as $searchResult ) {

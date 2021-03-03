@@ -19,7 +19,7 @@ class RevisionRestorer extends Service {
 			'ids' => $revision->getId(),
 		];
 
-		$this->api->postRequest( ActionRequest::simpleMethodless(
+		$this->api->request( ActionRequest::simplePost(
 			'revisiondelete',
 			$params
 		) );

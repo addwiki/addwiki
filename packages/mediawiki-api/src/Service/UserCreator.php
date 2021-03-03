@@ -24,7 +24,7 @@ class UserCreator extends Service {
 		}
 
 		try {
-			$result = $this->api->postRequest( ActionRequest::simpleMethodless( 'createaccount', $params ) );
+			$result = $this->api->request( ActionRequest::simplePost( 'createaccount', $params ) );
 			return $result['createaccount']['status'] === 'PASS';
 		} catch ( UsageException $usageException ) {
 			// If the above request failed, try again in the old way.
@@ -48,13 +48,13 @@ class UserCreator extends Service {
 			$newParams['email'] = $params['email'];
 		}
 		// First get the token.
-		$tokenRequest = ActionRequest::simpleMethodless( 'createaccount', $newParams );
-		$result = $this->api->postRequest( $tokenRequest );
+		$tokenRequest = ActionRequest::simplePost( 'createaccount', $newParams );
+		$result = $this->api->request( $tokenRequest );
 		if ( $result['createaccount']['result'] == 'NeedToken' ) {
 			// Then send the token to create the account.
 			$newParams['token'] = $result['createaccount']['token'];
-			$request = ActionRequest::simpleMethodless( 'createaccount', $newParams );
-			$result = $this->api->postRequest( $request );
+			$request = ActionRequest::simplePost( 'createaccount', $newParams );
+			$result = $this->api->request( $request );
 		}
 		return ( $result['createaccount']['result'] === 'Success' );
 	}
