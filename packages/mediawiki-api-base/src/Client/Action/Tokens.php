@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 
-class MediawikiSession implements LoggerAwareInterface {
+class Tokens implements LoggerAwareInterface {
 
 	private array $tokens = [];
 
@@ -45,7 +45,7 @@ class MediawikiSession implements LoggerAwareInterface {
 	 *
 	 * @param string $type The type of token to get.
 	 */
-	public function getToken( string $type = 'csrf' ): string {
+	public function get( string $type = 'csrf' ): string {
 		// If we don't already have the token that we want
 		if ( !array_key_exists( $type, $this->tokens ) ) {
 			$this->logger->log( LogLevel::DEBUG, 'Getting fresh token', [ 'type' => $type ] );
@@ -126,11 +126,8 @@ class MediawikiSession implements LoggerAwareInterface {
 		return $type;
 	}
 
-	/**
-	 * Clears all tokens stored by the api
-	 */
-	public function clearTokens(): void {
-		$this->logger->log( LogLevel::DEBUG, 'Clearing session tokens', [ 'tokens' => $this->tokens ] );
+	public function clear(): void {
+		$this->logger->log( LogLevel::DEBUG, 'Clearing current tokens', [ 'tokens' => $this->tokens ] );
 		$this->tokens = [];
 	}
 

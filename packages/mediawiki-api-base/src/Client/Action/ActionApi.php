@@ -33,7 +33,7 @@ class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface
 	 * @var ClientInterface|null
 	 */
 	private ?ClientInterface $client = null;
-	private MediawikiSession $session;
+	private Tokens $session;
 
 	private ?string $version = null;
 	private LoggerInterface $logger;
@@ -100,19 +100,19 @@ class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface
 	 * @param string $apiUrl The API Url
 	 * @param AuthMethod|null $auth Auth method to use. null for NoAuth
 	 * @param ClientInterface|null $client Guzzle Client
-	 * @param MediawikiSession|null $session Inject a custom session here
+	 * @param Tokens|null $session Inject a custom session here
 	 */
 	public function __construct(
 		string $apiUrl,
 		AuthMethod $auth = null,
 		ClientInterface $client = null,
-		MediawikiSession $session = null
+		Tokens $session = null
 		) {
 		if ( $auth === null ) {
 			$auth = new NoAuth();
 		}
 		if ( $session === null ) {
-			$session = new MediawikiSession( $this );
+			$session = new Tokens( $this );
 		}
 
 		$this->apiUrl = $apiUrl;
@@ -368,14 +368,14 @@ class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface
 	}
 
 	public function getToken( $type = 'csrf' ): string {
-		return $this->session->getToken( $type );
+		return $this->session->get( $type );
 	}
 
 	/**
 	 * Clear all tokens stored by the API.
 	 */
-	public function clearTokens() {
-		$this->session->clearTokens();
+	public function clearTokens(): void {
+		$this->session->clear();
 	}
 
 	public function getVersion(): string {
