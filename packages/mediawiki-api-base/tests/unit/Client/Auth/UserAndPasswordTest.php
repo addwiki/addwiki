@@ -4,7 +4,7 @@ namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
@@ -111,7 +111,7 @@ class UserAndPasswordTest extends TestCase {
 
 		$auth = new UserAndPassword( 'U1', 'P1' );
 		$api = new ActionApi( '', $auth, $client );
-		$auth->preRequestAuth( 'GET', new SimpleActionRequest( 'dummyrequest' ), $api );
+		$auth->preRequestAuth( 'GET', ActionRequest::simpleMethodless( 'dummyrequest' ), $api );
 	}
 
 	public function testBadLoginSequence(): void {
@@ -140,7 +140,7 @@ class UserAndPasswordTest extends TestCase {
 		$auth = new UserAndPassword( 'U1', 'P1' );
 		$api = new ActionApi( '', $auth, $client );
 		$this->expectException( UsageException::class );
-		$auth->preRequestAuth( 'GET', new SimpleActionRequest( 'dummyrequest' ), $api );
+		$auth->preRequestAuth( 'GET', ActionRequest::simpleMethodless( 'dummyrequest' ), $api );
 	}
 
 }

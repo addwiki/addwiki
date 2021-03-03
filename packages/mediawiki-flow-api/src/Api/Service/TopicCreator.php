@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Ext\Flow\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Ext\Flow\DataModel\Topic;
 
 class TopicCreator {
@@ -15,7 +15,7 @@ class TopicCreator {
 	}
 
 	public function create( Topic $topic ): void {
-		$this->api->postRequest( new SimpleActionRequest(
+		$this->api->postRequest( ActionRequest::simpleMethodless(
 			'flow',
 			[
 				'submodule' => 'new-topic',

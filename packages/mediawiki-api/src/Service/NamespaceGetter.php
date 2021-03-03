@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\NamespaceInfo;
 
 /**
@@ -92,7 +92,7 @@ class NamespaceGetter extends Service {
 	 * @return mixed[]
 	 */
 	private function getNamespaceResult(): array {
-		return $this->api->getRequest( new SimpleActionRequest(
+		return $this->api->getRequest( ActionRequest::simpleMethodless(
 			'query', [
 				'meta' => 'siteinfo',
 				'siprop' => 'namespaces|namespacealiases'

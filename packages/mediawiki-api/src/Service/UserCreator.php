@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 
 /**
  * @access private
@@ -24,7 +24,7 @@ class UserCreator extends Service {
 		}
 
 		try {
-			$result = $this->api->postRequest( new SimpleActionRequest( 'createaccount', $params ) );
+			$result = $this->api->postRequest( ActionRequest::simpleMethodless( 'createaccount', $params ) );
 			return $result['createaccount']['status'] === 'PASS';
 		} catch ( UsageException $usageException ) {
 			// If the above request failed, try again in the old way.
@@ -48,12 +48,12 @@ class UserCreator extends Service {
 			$newParams['email'] = $params['email'];
 		}
 		// First get the token.
-		$tokenRequest = new SimpleActionRequest( 'createaccount', $newParams );
+		$tokenRequest = ActionRequest::simpleMethodless( 'createaccount', $newParams );
 		$result = $this->api->postRequest( $tokenRequest );
 		if ( $result['createaccount']['result'] == 'NeedToken' ) {
 			// Then send the token to create the account.
 			$newParams['token'] = $result['createaccount']['token'];
-			$request = new SimpleActionRequest( 'createaccount', $newParams );
+			$request = ActionRequest::simpleMethodless( 'createaccount', $newParams );
 			$result = $this->api->postRequest( $request );
 		}
 		return ( $result['createaccount']['result'] === 'Success' );

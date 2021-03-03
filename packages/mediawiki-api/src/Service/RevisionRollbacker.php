@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Title;
 
@@ -17,7 +17,7 @@ class RevisionRollbacker extends Service {
 	 */
 	public function rollback( Revision $revision, Title $title = null ): bool {
 		$this->api->postRequest(
-			new SimpleActionRequest( 'rollback', $this->getRollbackParams( $revision, $title ) )
+			ActionRequest::simpleMethodless( 'rollback', $this->getRollbackParams( $revision, $title ) )
 		);
 
 		return true;
@@ -47,7 +47,7 @@ class RevisionRollbacker extends Service {
 	 */
 	private function getTokenForRevision( Revision $revision ): string {
 		$result = $this->api->postRequest(
-			new SimpleActionRequest(
+			ActionRequest::simpleMethodless(
 				'query', [
 				'prop' => 'revisions',
 				'revids' => $revision->getId(),

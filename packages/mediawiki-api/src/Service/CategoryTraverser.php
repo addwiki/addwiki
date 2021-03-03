@@ -4,7 +4,7 @@ namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\CategoryLoopException;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\Pages;
 use Addwiki\Mediawiki\DataModel\Title;
@@ -59,7 +59,7 @@ class CategoryTraverser extends Service {
 			return;
 		}
 		$params = [ 'meta' => 'siteinfo', 'siprop' => 'namespaces' ];
-		$namespaces = $this->api->getRequest( new SimpleActionRequest( 'query', $params ) );
+		$namespaces = $this->api->getRequest( ActionRequest::simpleMethodless( 'query', $params ) );
 		if ( isset( $namespaces['query']['namespaces'] ) ) {
 			$this->namespaces = $namespaces['query']['namespaces'];
 		}

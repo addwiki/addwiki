@@ -5,7 +5,6 @@ namespace Addwiki\Mediawiki\Api\Client\Auth;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use InvalidArgumentException;
 
 /**
@@ -57,11 +56,11 @@ class UserAndPassword implements AuthMethod {
 		];
 
 		// First Request
-		$result = $api->postRequest( new SimpleActionRequest( 'login', $loginParams ) );
+		$result = $api->postRequest( ActionRequest::simpleMethodless( 'login', $loginParams ) );
 		if ( $result['login']['result'] == 'NeedToken' ) {
 			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $loginParams );
 			// Second Request
-			$result = $api->postRequest( new SimpleActionRequest( 'login', $params ) );
+			$result = $api->postRequest( ActionRequest::simpleMethodless( 'login', $params ) );
 		}
 
 		// Check for success

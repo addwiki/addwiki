@@ -3,8 +3,8 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class AuthTest extends TestCase {
 
 	private function getUserInfo( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
-		return $api->getRequest( new SimpleActionRequest( 'query', [ 'meta' => 'userinfo' ] ) );
+		return $api->getRequest( ActionRequest::simpleMethodless( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
 	private function assertUserLoggedIn( string $expectedUser, ActionApi $api ) {
@@ -24,7 +24,7 @@ class AuthTest extends TestCase {
 	}
 
 	private function getUserInfoUsingPost( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
-		return $api->postRequest( new SimpleActionRequest( 'query', [ 'meta' => 'userinfo' ] ) );
+		return $api->postRequest( ActionRequest::simpleMethodless( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
 	private function assertUserLoggedInUsingPost( string $expectedUser, \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) {

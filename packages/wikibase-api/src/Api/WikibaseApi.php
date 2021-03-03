@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 
 /**
@@ -28,7 +28,7 @@ class WikibaseApi {
 		}
 
 		$params['token'] = $this->api->getToken();
-		return $this->api->postRequest( new SimpleActionRequest( $action, $params ) );
+		return $this->api->postRequest( ActionRequest::simpleMethodless( $action, $params ) );
 	}
 
 	private function getEditInfoParams( EditInfo $editInfo ): array {

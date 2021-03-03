@@ -3,14 +3,11 @@
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\Action\Tokens;
+use Addwiki\Mediawiki\Api\Client\Request\Request;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Mediawiki\Api\MediawikiSession
- */
 class TokensTest extends TestCase {
 
 	/**
@@ -32,7 +29,7 @@ class TokensTest extends TestCase {
 		$mockApi = $this->getMockApi();
 		$mockApi->expects( $this->exactly( 2 ) )
 			->method( 'postRequest' )
-			->with( $this->isInstanceOf( SimpleActionRequest::class ) )
+			->with( $this->isInstanceOf( Request::class ) )
 			->willReturn( [
 				'query' => [
 					'tokens' => [
@@ -57,7 +54,7 @@ class TokensTest extends TestCase {
 	public function testGetTokenPre125( string $tokenType ): void {
 		$mockApi = $this->getMockApi();
 		$mockApi->method( 'postRequest' )
-			->with( $this->isInstanceOf( SimpleActionRequest::class ) )
+			->with( $this->isInstanceOf( Request::class ) )
 			->willReturnOnConsecutiveCalls(
 				[
 					'warnings' => [

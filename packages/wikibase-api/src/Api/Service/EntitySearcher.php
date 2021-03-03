@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 
 /**
  * @access private
@@ -26,7 +26,7 @@ class EntitySearcher {
 			'type' => $entityType,
 		];
 
-		$data = $this->api->getRequest( new SimpleActionRequest( 'wbsearchentities', $params ) );
+		$data = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbsearchentities', $params ) );
 
 		$ids = [];
 		foreach ( $data['search'] as $searchResult ) {

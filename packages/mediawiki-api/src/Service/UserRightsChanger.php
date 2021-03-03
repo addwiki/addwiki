@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\User;
 
 /**
@@ -21,7 +21,7 @@ class UserRightsChanger extends Service {
 		array $extraParams = []
 	): bool {
 		$result = $this->api->postRequest(
-			new SimpleActionRequest(
+			ActionRequest::simpleMethodless(
 				'query', [
 				'list' => 'users',
 				'ustoken' => 'userrights',
@@ -42,7 +42,7 @@ class UserRightsChanger extends Service {
 		}
 
 		$this->api->postRequest(
-			new SimpleActionRequest( 'userrights', array_merge( $extraParams, $params ) )
+			ActionRequest::simpleMethodless( 'userrights', array_merge( $extraParams, $params ) )
 		);
 
 		return true;

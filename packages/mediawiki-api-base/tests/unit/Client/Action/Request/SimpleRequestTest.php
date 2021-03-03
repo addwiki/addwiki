@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action\Request;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use PHPUnit\Framework\TestCase;
 
 class SimpleRequestTest extends TestCase {
@@ -11,7 +11,7 @@ class SimpleRequestTest extends TestCase {
 	 * @dataProvider provideValidConstruction
 	 */
 	public function testValidConstruction( string $action, array $params, array $expected, array $headers = [] ): void {
-		$request = new SimpleActionRequest( $action, $params, $headers );
+		$request = ActionRequest::simpleMethodless( $action, $params, $headers );
 		$this->assertEquals( $expected, $request->getParams() );
 		$this->assertEquals( $headers, $request->getHeaders() );
 	}

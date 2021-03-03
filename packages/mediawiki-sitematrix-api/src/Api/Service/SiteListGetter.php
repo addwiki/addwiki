@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
 
@@ -19,7 +19,7 @@ class SiteListGetter {
 	}
 
 	public function getSiteList(): SiteList {
-		$sitematrixResult = $this->api->getRequest( new SimpleActionRequest( 'sitematrix' ) );
+		$sitematrixResult = $this->api->getRequest( ActionRequest::simpleMethodless( 'sitematrix' ) );
 		unset( $sitematrixResult['sitematrix']['count'] );
 
 		$siteListArray = [];

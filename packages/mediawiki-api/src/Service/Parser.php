@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use GuzzleHttp\Promise\PromiseInterface;
 use RuntimeException;
@@ -36,7 +36,7 @@ class Parser extends Service {
 			throw new RuntimeException( 'No way to identify page' );
 		}
 
-		$promise = $this->api->getRequestAsync( new SimpleActionRequest( 'parse', $params ) );
+		$promise = $this->api->getRequestAsync( ActionRequest::simpleMethodless( 'parse', $params ) );
 
 		return $promise->then( fn( $result ) => $result['parse'] );
 	}

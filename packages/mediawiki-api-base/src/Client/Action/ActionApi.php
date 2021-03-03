@@ -5,11 +5,11 @@ namespace Addwiki\Mediawiki\Api\Client\Action;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
+use Addwiki\Mediawiki\Api\Client\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Request\Requester;
 use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
@@ -156,13 +156,13 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param ActionRequest $request The request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return PromiseInterface
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function requestAsync( ActionRequest $request ): PromiseInterface {
+	public function requestAsync( Request $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
 		$promise = $this->getClient()->requestAsync(
@@ -175,11 +175,11 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param ActionRequest $request The request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return mixed Normally an array
 	 */
-	public function request( ActionRequest $request ) {
+	public function request( Request $request ) {
 		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
 		$response = $this->getClient()->request(
@@ -377,7 +377,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 
 	public function getVersion(): string {
 		if ( $this->version === null ) {
-			$result = $this->getRequest( new SimpleActionRequest( 'query', [
+			$result = $this->getRequest( ActionRequest::simpleMethodless( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',
 			] ) );

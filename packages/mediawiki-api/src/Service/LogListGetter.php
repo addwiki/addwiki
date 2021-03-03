@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\Log;
 use Addwiki\Mediawiki\DataModel\LogList;
 use Addwiki\Mediawiki\DataModel\Page;
@@ -30,7 +30,7 @@ class LogListGetter extends Service {
 			];
 
 			$newParams = array_merge( $extraParams, $params );
-			$result = $this->api->getRequest( new SimpleActionRequest( 'query', $newParams ) );
+			$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'query', $newParams ) );
 
 			foreach ( $result[ 'query' ]['logevents'] as $logevent ) {
 				$logList->addLog(

@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Wikibase\Api\GenericOptions;
 use DataValues\DataValue;
 use Serializers\Serializer;
@@ -36,7 +36,7 @@ class ValueFormatter {
 			'options' => json_encode( $options->getOptions() ),
 		];
 
-		$result = $this->api->getRequest( new SimpleActionRequest( 'wbformatvalue', $params ) );
+		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbformatvalue', $params ) );
 		return $result['result'];
 	}
 

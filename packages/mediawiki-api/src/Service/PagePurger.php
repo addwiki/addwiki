@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Generator\ApiGenerator;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\Pages;
@@ -32,7 +32,7 @@ class PagePurger extends Service {
 		}
 
 		$responseArray = $this->api->postRequest(
-			new SimpleActionRequest( 'purge', $params )
+			ActionRequest::simpleMethodless( 'purge', $params )
 		);
 
 		// the purge response for the page
@@ -68,7 +68,7 @@ class PagePurger extends Service {
 		$pageIdsMultiple = implode( '|', $pagesIds );
 
 		$responseArray = $this->api->postRequest(
-			new SimpleActionRequest( 'purge', [ 'pageids' => $pageIdsMultiple ] )
+			ActionRequest::simpleMethodless( 'purge', [ 'pageids' => $pageIdsMultiple ] )
 		);
 
 		// array that will hold the successfully purged pages
@@ -102,7 +102,7 @@ class PagePurger extends Service {
 	 */
 	public function purgeGenerator( ApiGenerator $generator ): bool {
 		$this->api->postRequest(
-			new SimpleActionRequest( 'purge', $generator->getParams() )
+			ActionRequest::simpleMethodless( 'purge', $generator->getParams() )
 		);
 
 		return true;

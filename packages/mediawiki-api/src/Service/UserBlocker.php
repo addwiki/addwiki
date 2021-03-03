@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\User;
 use InvalidArgumentException;
 
@@ -33,7 +33,7 @@ class UserBlocker extends Service {
 
 		$params = array_merge( $extraParams, $params );
 
-		$this->api->postRequest( new SimpleActionRequest( 'block', $params ) );
+		$this->api->postRequest( ActionRequest::simpleMethodless( 'block', $params ) );
 		return true;
 	}
 

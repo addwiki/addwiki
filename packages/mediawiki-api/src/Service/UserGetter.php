@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\User;
 
 /**
@@ -12,7 +12,7 @@ class UserGetter extends Service {
 
 	public function getFromUsername( string $username ): User {
 		$result = $this->api->getRequest(
-			new SimpleActionRequest(
+			ActionRequest::simpleMethodless(
 				'query', [
 				'list' => 'users',
 				'ususers' => $username,

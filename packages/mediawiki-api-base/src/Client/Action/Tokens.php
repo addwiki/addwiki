@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Action;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -65,7 +65,7 @@ class Tokens implements LoggerAwareInterface {
 	private function reallyGetPre125Token( $type ) {
 		// Suppress deprecation warning
 		$result = @$this->api->postRequest( // @codingStandardsIgnoreLine
-			new SimpleActionRequest( 'tokens', [ 'type' => $this->getOldTokenType( $type ) ] )
+			ActionRequest::simpleMethodless( 'tokens', [ 'type' => $this->getOldTokenType( $type ) ] )
 		);
 		$this->tokens[$type] = array_pop( $result['tokens'] );
 
@@ -75,7 +75,7 @@ class Tokens implements LoggerAwareInterface {
 	private function reallyGetToken( $type ) {
 		// We suppress errors on this call so the user doesn't get get a warning that isn't their fault.
 		$result = @$this->api->postRequest( // @codingStandardsIgnoreLine
-			new SimpleActionRequest( 'query', [
+			ActionRequest::simpleMethodless( 'query', [
 				'meta' => 'tokens',
 				'type' => $this->getNewTokenType( $type ),
 				'continue' => '',

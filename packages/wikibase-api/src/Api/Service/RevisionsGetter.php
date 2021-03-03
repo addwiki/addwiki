@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Mediawiki\DataModel\Revisions;
@@ -66,14 +66,14 @@ class RevisionsGetter {
 					$gotRevisionsFromIds = true;
 				}
 				$params['titles'] = implode( '|', $siteLinkStrings );
-				$result = $this->api->getRequest( new SimpleActionRequest( 'wbgetentities', $params ) );
+				$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', $params ) );
 				$resultRevisions = $this->newRevisionsFromResult( $result['entities'] );
 				$revisions->addRevisions( $resultRevisions );
 
 			}
 		} else {
 			$params = [ 'ids' => implode( '|', $entityIdStrings ) ];
-			$result = $this->api->getRequest( new SimpleActionRequest( 'wbgetentities', $params ) );
+			$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetentities', $params ) );
 			$resultRevisions = $this->newRevisionsFromResult( $result['entities'] );
 			$revisions->addRevisions( $resultRevisions );
 		}

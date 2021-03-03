@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Mediawiki\DataModel\Page;
@@ -20,7 +20,7 @@ class PageGetter extends Service {
 	public function getFromRevisionId( int $id, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
-				new SimpleActionRequest(
+				ActionRequest::simpleMethodless(
 					'query',
 					$this->getQuery( [ 'revids' => $id ], $extraParams )
 				)
@@ -39,7 +39,7 @@ class PageGetter extends Service {
 		}
 		$result =
 			$this->api->getRequest(
-				new SimpleActionRequest(
+				ActionRequest::simpleMethodless(
 					'query',
 					$this->getQuery( [ 'titles' => $title ], $extraParams )
 				)
@@ -51,7 +51,7 @@ class PageGetter extends Service {
 	public function getFromPageId( int $id, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
-				new SimpleActionRequest(
+				ActionRequest::simpleMethodless(
 					'query',
 					$this->getQuery( [ 'pageids' => $id ], $extraParams )
 				)
@@ -88,7 +88,7 @@ class PageGetter extends Service {
 	public function getFromPage( Page $page, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
-				new SimpleActionRequest(
+				ActionRequest::simpleMethodless(
 					'query',
 					$this->getQuery( [ 'pageids' => $page->getId() ], $extraParams )
 				)
@@ -109,7 +109,7 @@ class PageGetter extends Service {
 	public function getFromRevision( Revision $revision, array $extraParams = [] ): Page {
 		$result =
 			$this->api->getRequest(
-				new SimpleActionRequest(
+				ActionRequest::simpleMethodless(
 					'query',
 					$this->getQuery( [ 'revids' => $revision->getId() ], $extraParams )
 				)

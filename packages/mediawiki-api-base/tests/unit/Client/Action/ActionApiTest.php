@@ -4,7 +4,7 @@ namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -73,7 +73,7 @@ class ActionApiTest extends TestCase {
 		$api = new ActionApi( '', null, $client, );
 
 		try{
-			$api->getRequest( new SimpleActionRequest( 'foo' ) );
+			$api->getRequest( ActionRequest::simpleMethodless( 'foo' ) );
 			$this->fail( 'No Usage Exception Thrown' );
 		}
 		catch ( UsageException $usageException ) {
@@ -95,7 +95,7 @@ class ActionApiTest extends TestCase {
 		$api = new ActionApi( '', null, $client );
 
 		try{
-			$api->postRequest( new SimpleActionRequest( 'foo' ) );
+			$api->postRequest( ActionRequest::simpleMethodless( 'foo' ) );
 			$this->fail( 'No Usage Exception Thrown' );
 		}
 		catch ( UsageException $e ) {
@@ -116,7 +116,7 @@ class ActionApiTest extends TestCase {
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->getRequest( new SimpleActionRequest( $action, $params ) );
+		$result = $api->getRequest( ActionRequest::simpleMethodless( $action, $params ) );
 
 		$this->assertEquals( $expectedResult, $result );
 	}
@@ -133,7 +133,7 @@ class ActionApiTest extends TestCase {
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->postRequest( new SimpleActionRequest( $action, $params ) );
+		$result = $api->postRequest( ActionRequest::simpleMethodless( $action, $params ) );
 
 		$this->assertEquals( $expectedResult, $result );
 	}
@@ -172,7 +172,7 @@ class ActionApiTest extends TestCase {
 			)->will( $this->returnValue( $this->getMockResponse( [ 'success ' => 1 ] ) ) );
 		$api = new ActionApi( '', null, $client );
 
-		$result = $api->postRequest( new SimpleActionRequest( 'upload', $params ) );
+		$result = $api->postRequest( ActionRequest::simpleMethodless( 'upload', $params ) );
 
 		$this->assertEquals( [ 'success ' => 1 ], $result );
 	}

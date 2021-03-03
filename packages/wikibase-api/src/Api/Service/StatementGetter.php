@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Deserializers\Deserializer;
 use Wikibase\DataModel\Statement\Statement;
 
@@ -27,7 +27,7 @@ class StatementGetter {
 			'claim' => $guid,
 		];
 
-		$result = $this->api->getRequest( new SimpleActionRequest( 'wbgetclaims', $params ) );
+		$result = $this->api->getRequest( ActionRequest::simpleMethodless( 'wbgetclaims', $params ) );
 		$arrayShift = array_shift( $result['claims'] );
 
 		$statementSerialization = array_shift( $arrayShift );
