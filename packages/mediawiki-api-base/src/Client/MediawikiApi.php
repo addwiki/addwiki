@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
 
-class MediawikiApi implements MediawikiApiInterface, LoggerAwareInterface {
+class MediawikiApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
