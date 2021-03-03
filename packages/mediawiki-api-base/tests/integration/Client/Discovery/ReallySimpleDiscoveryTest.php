@@ -2,9 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Discovery;
 
-use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use Addwiki\Mediawiki\Api\Client\Discovery\ReallySimpleDiscovery;
+use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 
 class ReallySimpleDiscoveryTest {
 
@@ -19,7 +18,7 @@ class ReallySimpleDiscoveryTest {
 		$this->expectExceptionMessageMatches( "/Unable to find RSD URL in page.*/" );
 		// This could be any URL that doesn't contain the RSD link, load.php works just fine!
 		$nonWikiPage = str_replace( 'api.php', 'load.php', BaseTestEnvironment::newInstance()->getApiUrl() );
-		$base = ReallySimpleDiscovery::baseFromPage( $nonWikiPage);
+		$base = ReallySimpleDiscovery::baseFromPage( $nonWikiPage );
 	}
 
 	/**
