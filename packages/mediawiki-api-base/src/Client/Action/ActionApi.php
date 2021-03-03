@@ -62,7 +62,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 
 	/**
 	 * Get the API URL (the URL to which API requests are sent, usually ending in api.php).
-	 * This is useful if you've created this object via MediawikiApi::newFromPage().
+	 * This is useful if you have this object without knowing the actual api URL
 	 *
 	 * @return string The API URL.
 	 */

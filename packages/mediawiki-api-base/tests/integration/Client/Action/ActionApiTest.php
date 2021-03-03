@@ -10,41 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class ActionApiTest extends TestCase {
 
-	public function testNewFromPage(): void {
-		$api = ActionApi::newFromPage( BaseTestEnvironment::newInstance()->getPageUrl() );
-		$this->assertInstanceOf( ActionApi::class, $api );
-	}
-
-	public function testNewFromPageInvalidHtml(): void {
-		$this->expectException( RsdException::class );
-		$this->expectExceptionMessageMatches( "/Unable to find RSD URL in page.*/" );
-		// This could be any URL that doesn't contain the RSD link, load.php works just fine!
-		$nonWikiPage = str_replace( 'api.php', 'load.php', BaseTestEnvironment::newInstance()->getApiUrl() );
-		ActionApi::newFromPage( $nonWikiPage );
-	}
-
-	/**
-	 * Duplicate element IDs break DOMDocument::loadHTML
-	 * @see https://phabricator.wikimedia.org/T163527#3219833
-	 */
-	public function testNewFromPageWithDuplicateId(): void {
-		$testPageName = __METHOD__;
-		$testEnv = BaseTestEnvironment::newInstance();
-		$wikiPageUrl = str_replace( 'api.php', sprintf( 'index.php?title=%s', $testPageName ), $testEnv->getApiUrl() );
-		$api = $testEnv->getActionApi();
-
-		// Test with no duplicate IDs.
-		$this->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
-		$api1 = ActionApi::newFromPage( $wikiPageUrl );
-		$this->assertInstanceOf( ActionApi::class, $api1 );
-
-		// Test with duplicate ID.
-		$wikiText = '<p id="duplicated-id"></p><div id="duplicated-id"></div>';
-		$this->savePage( $api, $testPageName, $wikiText );
-		$api2 = ActionApi::newFromPage( $wikiPageUrl );
-		$this->assertInstanceOf( ActionApi::class, $api2 );
-	}
-
 	private function savePage( ActionApi $api, string $title, string $content ): void {
 		$params = [
 			'title' => $title,
