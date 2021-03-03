@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Wikibase\DataModel\Entity\ItemId;
 
 /**
@@ -21,7 +21,7 @@ class BadgeIdsGetter {
 	 * @return ItemId[]
 	 */
 	public function get(): array {
-		$result = $this->api->getRequest( new SimpleRequest( 'wbavailablebadges' ) );
+		$result = $this->api->getRequest( new SimpleActionRequest( 'wbavailablebadges' ) );
 		$ids = [];
 		foreach ( $result['badges'] as $badgeIdString ) {
 			$ids[] = new ItemId( $badgeIdString );

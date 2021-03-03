@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Service\NamespaceGetter;
 use Addwiki\Mediawiki\DataModel\NamespaceInfo;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -74,8 +74,8 @@ class NamespaceGetterTest extends TestCase {
 		return $api;
 	}
 
-	private function getRequest(): SimpleRequest {
-		return new SimpleRequest(
+	private function getRequest(): SimpleActionRequest {
+		return new SimpleActionRequest(
 			'query', [
 			'meta' => 'siteinfo',
 			'siprop' => 'namespaces|namespacealiases'

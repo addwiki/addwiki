@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Service\PagePurger;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -38,7 +38,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( SimpleActionRequest::class )
 			)
 			->willReturn( [
 				"batchcomplete" => "",
@@ -62,7 +62,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( SimpleActionRequest::class )
 			)
 			->willReturn( [
 				"batchcomplete" => "",
@@ -91,7 +91,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( SimpleActionRequest::class )
 			)
 			->willReturn( [
 					"batchcomplete" => "",
@@ -132,7 +132,7 @@ class PagePurgerTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'postRequest' )
 			->with(
-				$this->isInstanceOf( SimpleRequest::class )
+				$this->isInstanceOf( SimpleActionRequest::class )
 			)
 			->willReturn( [
 				"batchcomplete" => "",

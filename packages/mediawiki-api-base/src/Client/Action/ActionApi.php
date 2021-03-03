@@ -3,9 +3,9 @@
 namespace Addwiki\Mediawiki\Api\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
@@ -155,36 +155,36 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	}
 
 	/**
-	 * @param Request $request The request to send.
+	 * @param ActionRequest $request The request to send.
 	 *
 	 * @return PromiseInterface
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
 	 */
-	public function requestAsync( Request $request ): PromiseInterface {
+	public function requestAsync( ActionRequest $request ): PromiseInterface {
 		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			$request->getMethod(),
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getEncoding() )
+			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
 		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
 	}
 
 	/**
-	 * @param Request $request The request to send.
+	 * @param ActionRequest $request The request to send.
 	 *
 	 * @return mixed Normally an array
 	 */
-	public function request( Request $request ) {
+	public function request( ActionRequest $request ) {
 		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
 		$response = $this->getClient()->request(
 			$request->getMethod(),
 			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getEncoding() )
+			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
 		return $this->decodeResponse( $response );
@@ -193,7 +193,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	/**
 	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
 	 */
-	public function getRequestAsync( Request $request ): PromiseInterface {
+	public function getRequestAsync( ActionRequest $request ): PromiseInterface {
 		$request->setMethod( 'GET' );
 		return $this->requestAsync( $request );
 	}
@@ -201,7 +201,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	/**
 	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
 	 */
-	public function postRequestAsync( Request $request ): PromiseInterface {
+	public function postRequestAsync( ActionRequest $request ): PromiseInterface {
 		$request->setMethod( 'POST' );
 		return $this->requestAsync( $request );
 	}
@@ -209,7 +209,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	/**
 	 * @deprecated in 3.0. Set a request method and use the request method directly
 	 */
-	public function getRequest( Request $request ) {
+	public function getRequest( ActionRequest $request ) {
 		$request->setMethod( 'GET' );
 		return $this->request( $request );
 	}
@@ -217,7 +217,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	/**
 	 * @deprecated in 3.0. Set a request method and use the request method directly
 	 */
-	public function postRequest( Request $request ) {
+	public function postRequest( ActionRequest $request ) {
 		$request->setMethod( 'POST' );
 		return $this->request( $request );
 	}
@@ -243,7 +243,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	 * @throws RequestException
 	 * @return array as needed by ClientInterface::get and ClientInterface::post
 	 */
-	private function getClientRequestOptions( Request $request, string $paramsKey ): array {
+	private function getClientRequestOptions( ActionRequest $request, string $paramsKey ): array {
 		$params = $request->getParams();
 		if ( $paramsKey === 'multipart' ) {
 			$params = $this->encodeMultipartParams( $request, $params );
@@ -260,12 +260,12 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 	 * parameter is a new array with a 'name' and 'contents' elements (and optionally more, if the
 	 * request is a MultipartRequest).
 	 *
-	 * @param Request $request The request to which the parameters belong.
+	 * @param ActionRequest $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
 	 * @return array <int mixed[]>
 	 */
-	private function encodeMultipartParams( Request $request, array $params ): array {
+	private function encodeMultipartParams( ActionRequest $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
 		$multipartParams = ( $request instanceof MultipartRequest )
 			? $request->getMultipartParams()
@@ -376,7 +376,7 @@ class ActionApi implements ApiRequester, LoggerAwareInterface {
 
 	public function getVersion(): string {
 		if ( $this->version === null ) {
-			$result = $this->getRequest( new SimpleRequest( 'query', [
+			$result = $this->getRequest( new SimpleActionRequest( 'query', [
 				'meta' => 'siteinfo',
 				'continue' => '',
 			] ) );

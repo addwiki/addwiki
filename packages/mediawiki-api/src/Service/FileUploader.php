@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Exception;
 
 /**
@@ -82,7 +82,7 @@ class FileUploader extends Service {
 			$params['url'] = $location;
 		}
 
-		$response = $this->api->postRequest( new SimpleRequest( 'upload', $params ) );
+		$response = $this->api->postRequest( new SimpleActionRequest( 'upload', $params ) );
 		return ( $response['upload']['result'] === 'Success' );
 	}
 

@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Exception;
@@ -71,7 +71,7 @@ class TestEnvironment {
 	 */
 	public function runJobs(): void {
 		$reqestProps = [ 'meta' => 'siteinfo', 'siprop' => 'general' ];
-		$siteInfoRequest = new SimpleRequest( 'query', $reqestProps );
+		$siteInfoRequest = new SimpleActionRequest( 'query', $reqestProps );
 		$out = $this->getApi()->getRequest( $siteInfoRequest );
 		$mainPageUrl = $out['query']['general']['base'];
 		$i = 0;
@@ -92,7 +92,7 @@ class TestEnvironment {
 	 * @todo This and TestEnvironment::runJobs() should probably not live here.
 	 */
 	public function getJobQueueLength( ActionApi $api ): int {
-		$req = new SimpleRequest( 'query', [
+		$req = new SimpleActionRequest( 'query', [
 				'meta' => 'siteinfo',
 				'siprop' => 'statistics',
 			]

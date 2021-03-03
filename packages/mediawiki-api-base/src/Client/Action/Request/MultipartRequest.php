@@ -10,7 +10,7 @@ use Exception;
  *
  * @link http://docs.guzzlephp.org/en/stable/request-options.html#multipart
  */
-class MultipartRequest extends FluentRequest {
+class MultipartRequest extends ActionRequest {
 
 	protected array $multipartParams = [];
 

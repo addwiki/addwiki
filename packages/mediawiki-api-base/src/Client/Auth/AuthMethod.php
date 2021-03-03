@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 
 interface AuthMethod {
 
@@ -12,7 +12,7 @@ interface AuthMethod {
 	 * It is up to the implementations to decide if anything needs to be done here, such as other API calls, or Request modifications.
 	 * For example action=login could be called, or an Authentication header could be added.
 	 */
-	public function preRequestAuth( string $method, Request $request, ActionApi $api ): Request;
+	public function preRequestAuth( string $method, ActionRequest $request, ActionApi $api ): ActionRequest;
 
 	/**
 	 * We want to provide a useful user agent, not matter the authentication method.

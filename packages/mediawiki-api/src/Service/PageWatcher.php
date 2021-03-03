@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\DataModel\Page;
 
 /**
@@ -22,7 +22,7 @@ class PageWatcher extends Service {
 			$params['revids'] = $page->getRevisions()->getLatest()->getId();
 		}
 
-		$this->api->postRequest( new SimpleRequest( 'watch', $params ) );
+		$this->api->postRequest( new SimpleActionRequest( 'watch', $params ) );
 
 		return true;
 	}

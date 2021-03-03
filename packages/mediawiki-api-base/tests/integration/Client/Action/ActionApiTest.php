@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -52,30 +52,30 @@ class ActionApiTest extends TestCase {
 			'md5' => md5( $content ),
 			'token' => $api->getToken(),
 		];
-		$api->postRequest( new SimpleRequest( 'edit', $params ) );
+		$api->postRequest( new SimpleActionRequest( 'edit', $params ) );
 	}
 
 	public function testQueryGetResponse(): void {
 		$api = BaseTestEnvironment::newInstance()->getApi();
-		$response = $api->getRequest( new SimpleRequest( 'query' ) );
+		$response = $api->getRequest( new SimpleActionRequest( 'query' ) );
 		$this->assertIsArray( $response );
 	}
 
 	public function testQueryGetResponseAsync(): void {
 		$api = BaseTestEnvironment::newInstance()->getApi();
-		$response = $api->getRequestAsync( new SimpleRequest( 'query' ) );
+		$response = $api->getRequestAsync( new SimpleActionRequest( 'query' ) );
 		$this->assertIsArray( $response->wait() );
 	}
 
 	public function testQueryPostResponse(): void {
 		$api = BaseTestEnvironment::newInstance()->getApi();
-		$response = $api->postRequest( new SimpleRequest( 'query' ) );
+		$response = $api->postRequest( new SimpleActionRequest( 'query' ) );
 		$this->assertIsArray( $response );
 	}
 
 	public function testQueryPostResponseAsync(): void {
 		$api = BaseTestEnvironment::newInstance()->getApi();
-		$response = $api->postRequestAsync( new SimpleRequest( 'query' ) );
+		$response = $api->postRequestAsync( new SimpleActionRequest( 'query' ) );
 		$this->assertIsArray( $response->wait() );
 	}
 

@@ -4,8 +4,8 @@ namespace Addwiki\Mediawiki\Api\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use InvalidArgumentException;
 
 /**
@@ -38,7 +38,7 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth( string $method, Request $request, ActionApi $api ): Request {
+	public function preRequestAuth( string $method, ActionRequest $request, ActionApi $api ): ActionRequest {
 		// Do nothing if we are already logged in
 		if ( $this->isLoggedIn ) {
 			// Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if bot.
@@ -57,11 +57,11 @@ class UserAndPassword implements AuthMethod {
 		];
 
 		// First Request
-		$result = $api->postRequest( new SimpleRequest( 'login', $loginParams ) );
+		$result = $api->postRequest( new SimpleActionRequest( 'login', $loginParams ) );
 		if ( $result['login']['result'] == 'NeedToken' ) {
 			$params = array_merge( [ 'lgtoken' => $result['login']['token'] ], $loginParams );
 			// Second Request
-			$result = $api->postRequest( new SimpleRequest( 'login', $params ) );
+			$result = $api->postRequest( new SimpleActionRequest( 'login', $params ) );
 		}
 
 		// Check for success

@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Action;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
@@ -11,17 +11,17 @@ use GuzzleHttp\Promise\PromiseInterface;
 interface ApiRequester {
 
 	/**
-	 * @param Request $request The request to send.
+	 * @param ActionRequest $request The request to send.
 	 *
 	 * @return mixed Normally an array
 	 */
-	public function request( Request $request );
+	public function request( ActionRequest $request );
 
 	/**
-	 * @param Request $request The request to send.
+	 * @param ActionRequest $request The request to send.
 	 *
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 */
-	public function requestAsync( Request $request ): PromiseInterface;
+	public function requestAsync( ActionRequest $request ): PromiseInterface;
 
 }

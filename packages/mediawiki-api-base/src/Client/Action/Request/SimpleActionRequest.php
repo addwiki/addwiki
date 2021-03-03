@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * @deprecated in 3.0, If you want to use this just use the ActionRequestFactory methods
  */
-class SimpleRequest extends FluentRequest implements Request {
+class SimpleActionRequest extends ActionRequest {
 
 	/**
 	 * @param string $action The API action.

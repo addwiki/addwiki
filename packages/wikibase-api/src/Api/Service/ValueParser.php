@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use DataValues\DataValue;
 use Deserializers\Deserializer;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -41,7 +41,7 @@ class ValueParser {
 	 */
 	public function parseAsync( $inputValues, string $parser ): PromiseInterface {
 		$promise = $this->api->getRequestAsync(
-			new SimpleRequest(
+			new SimpleActionRequest(
 				'wbparsevalue',
 				[
 					'parser' => $parser,

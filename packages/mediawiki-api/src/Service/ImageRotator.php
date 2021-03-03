@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\DataModel\File;
 
 /**
@@ -29,7 +29,7 @@ class ImageRotator extends Service {
 			$params['pageids'] = $file->getPageIdentifier()->getId();
 		}
 
-		$result = $this->api->postRequest( new SimpleRequest( 'imagerotate', $params ) );
+		$result = $this->api->postRequest( new SimpleActionRequest( 'imagerotate', $params ) );
 
 		// This module sometimes gives odd errors so deal with them..
 		if ( array_key_exists( 'imagerotate', $result ) ) {

@@ -3,7 +3,7 @@
 namespace Addwiki\Wikibase\Tests\Unit\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Wikibase\Api\Service\RevisionGetter;
 use Addwiki\Wikibase\DataModel\ItemContent;
@@ -52,7 +52,7 @@ class RevisionGetterTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'getRequest' )
 			->with(
-				new SimpleRequest(
+				new SimpleActionRequest(
 					'wbgetentities',
 					[ 'ids' => 'Q1' ]
 				)

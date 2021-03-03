@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Mediawiki\DataModel\Revision;
 use RuntimeException;
@@ -22,7 +22,7 @@ class RevisionSaver extends Service {
 		$editInfo ??= $revision->getEditInfo();
 
 		$result = $this->api->postRequest(
-			new SimpleRequest( 'edit', $this->getEditParams( $revision, $editInfo ) )
+			new SimpleActionRequest( 'edit', $this->getEditParams( $revision, $editInfo ) )
 		);
 		return ( $result['edit']['result'] == 'Success' );
 	}

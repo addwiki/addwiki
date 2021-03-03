@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;
@@ -98,7 +98,7 @@ class SiteListGetterTest extends TestCase {
 
 		$mockApi->expects( $this->once() )
 			->method( 'getRequest' )
-			->with( new SimpleRequest( 'sitematrix' ) )
+			->with( new SimpleActionRequest( 'sitematrix' ) )
 			->willReturn( $siteMatrixArray );
 
 		$service = new SiteListGetter( $mockApi );

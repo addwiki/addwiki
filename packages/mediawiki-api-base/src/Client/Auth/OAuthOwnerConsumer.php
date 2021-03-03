@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use InvalidArgumentException;
 use MediaWiki\OAuthClient\Consumer as OAuthConsumer;
 use MediaWiki\OAuthClient\Request as OAuthRequest;
@@ -53,7 +53,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
-	public function preRequestAuth( string $method, Request $request, ActionApi $api ): Request {
+	public function preRequestAuth( string $method, ActionRequest $request, ActionApi $api ): ActionRequest {
 		// Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if bot.
 		$request->setParam( 'assert', 'user' );
 
@@ -61,11 +61,11 @@ class OAuthOwnerConsumer implements AuthMethod {
 		return $request;
 	}
 
-	private function getAuthenticationHeaderValue( string $method, Request $request, ActionApi $api ): string {
+	private function getAuthenticationHeaderValue( string $method, ActionRequest $request, ActionApi $api ): string {
 		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
 		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumerSecret() );
 		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );
-		$params = $request->getEncoding() === Request::ENCODING_MULTIPART ? [] : $request->getParams();
+		$params = $request->getParameterEncoding() === ActionRequest::ENCODING_MULTIPART ? [] : $request->getParams();
 
 		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, $method, $api->getApiUrl(), $params );
 		$oauthRequest->signRequest( new HmacSha1(), $oauthConsumer, $oauthToken );

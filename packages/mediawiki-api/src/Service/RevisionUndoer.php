@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleActionRequest;
 use Addwiki\Mediawiki\DataModel\Revision;
 
 /**
@@ -14,7 +14,7 @@ class RevisionUndoer extends Service {
 	 * @param Revision $revision
 	 */
 	public function undo( Revision $revision ): bool {
-		$this->api->postRequest( new SimpleRequest(
+		$this->api->postRequest( new SimpleActionRequest(
 			'edit',
 			$this->getParamsFromRevision( $revision )
 		) );
