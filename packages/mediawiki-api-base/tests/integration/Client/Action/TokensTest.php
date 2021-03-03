@@ -1,17 +1,14 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Action;
 
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
 
-class TokenHandlingTest extends TestCase {
+class TokensTest extends TestCase {
 
 	/**
 	 * @dataProvider provideTokenTypes
-	 *
-	 * @covers Mediawiki\Api\MediawikiApi::getToken
-	 * @covers Mediawiki\Api\MediawikiSession::getToken
 	 */
 	public function testGetAnonUserToken(): void {
 		$api = BaseTestEnvironment::newInstance()->getApi();

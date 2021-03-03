@@ -1,8 +1,10 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
+namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action\Request;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
+use Exception;
+
 use PHPUnit\Framework\TestCase;
 
 class MultipartRequestTest extends TestCase {
@@ -36,7 +38,7 @@ class MultipartRequestTest extends TestCase {
 	 */
 	public function testParamNotYetSet(): void {
 		$this->expectException(
-			"Exception",
+			Exception::class,
 			"Parameter 'testparam' is not already set on this request."
 		);
 		$request = new MultipartRequest();

@@ -1,7 +1,8 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
+namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action;
 
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class UsageExceptionTest extends TestCase {
 
 	public function testUsageExceptionWithNoParams(): void {
-		$e = new \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException();
+		$e = new UsageException();
 		$this->assertSame(
 			'Code: ' . PHP_EOL .
 			'Message: ' . PHP_EOL .
@@ -22,7 +23,7 @@ class UsageExceptionTest extends TestCase {
 	}
 
 	public function testUsageExceptionWithParams(): void {
-		$e = new \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException( 'imacode', 'imamsg', [ 'foo' => 'bar' ] );
+		$e = new UsageException( 'imacode', 'imamsg', [ 'foo' => 'bar' ] );
 		$this->assertSame( 'imacode', $e->getApiCode() );
 		$this->assertSame(
 			'Code: imacode' . PHP_EOL .

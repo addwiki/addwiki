@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
+namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;

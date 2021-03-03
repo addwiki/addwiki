@@ -1,13 +1,11 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
+namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action\Request;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\FluentRequest;
+
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Mediawiki\Api\FluentRequest
- */
 class FluentRequestTest extends TestCase {
 
 	public function testFactory(): void {
