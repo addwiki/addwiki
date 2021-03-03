@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use GuzzleHttp\Client;

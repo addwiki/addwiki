@@ -2,9 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\MediawikiSession;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiSession;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -14,15 +13,15 @@ use PHPUnit\Framework\TestCase;
 class MediawikiSessionTest extends TestCase {
 
 	/**
-	 * @return MockObject|MediawikiApi
+	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\Action\MediawikiApi
 	 */
 	private function getMockApi() {
-		return $this->createMock( MediawikiApi::class );
+		return $this->createMock( \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::class );
 	}
 
 	public function testConstruction(): void {
 		$session = new MediawikiSession( $this->getMockApi() );
-		$this->assertInstanceOf( MediawikiSession::class, $session );
+		$this->assertInstanceOf( \Addwiki\Mediawiki\Api\Client\Action\MediawikiSession::class, $session );
 	}
 
 	/**
@@ -41,7 +40,7 @@ class MediawikiSessionTest extends TestCase {
 				]
 			] );
 
-		$session = new MediawikiSession( $mockApi );
+		$session = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiSession( $mockApi );
 
 		// Although we make 2 calls to the method we assert the tokens method about is only called once
 		$this->assertEquals( 'TKN-' . $tokenType, $session->getToken() );

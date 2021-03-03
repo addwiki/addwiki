@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Request;
+namespace Addwiki\Mediawiki\Api\Client\Action\Request;
 
 class FluentRequest implements Request {
 

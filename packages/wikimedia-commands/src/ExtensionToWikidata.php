@@ -2,8 +2,8 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;

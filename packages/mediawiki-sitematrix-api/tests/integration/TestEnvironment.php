@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 class TestEnvironment {

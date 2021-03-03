@@ -2,8 +2,8 @@
 
 namespace Addwiki\Wikibase\Api\Lookup;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use BadMethodCallException;
 use Wikibase\DataModel\Entity\BasicEntityIdParser;
 use Wikibase\DataModel\Entity\EntityId;

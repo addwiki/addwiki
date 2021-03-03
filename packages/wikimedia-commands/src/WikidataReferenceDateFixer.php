@@ -2,10 +2,10 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use Addwiki\Wikimedia\Api\WikimediaFactory;

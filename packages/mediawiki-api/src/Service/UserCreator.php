@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 
 /**
  * @access private

@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\Api\Service\FileUploader;
 use Addwiki\Mediawiki\Api\Service\ImageRotator;

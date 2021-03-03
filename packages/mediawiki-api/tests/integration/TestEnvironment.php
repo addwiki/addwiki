@@ -2,9 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Exception;
 
@@ -88,7 +88,7 @@ class TestEnvironment {
 
 	/**
 	 * Get the number of jobs currently in the queue.
-	 * @param MediawikiApi $api
+	 * @param \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi $api
 	 * @todo This and TestEnvironment::runJobs() should probably not live here.
 	 */
 	public function getJobQueueLength( MediawikiApi $api ): int {

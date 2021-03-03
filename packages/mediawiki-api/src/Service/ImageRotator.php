@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\File;
 
 /**
@@ -15,7 +15,7 @@ class ImageRotator extends Service {
 	 * NOTE: This service has not been fully tested
 	 *
 	 * @param int $rotation Degrees to rotate image clockwise, One value: 90, 180, 270
-	 * @throws UsageException
+	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
 	 */
 	public function rotate( File $file, int $rotation ): bool {
 		$params = [

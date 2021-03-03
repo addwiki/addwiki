@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Tests\Integration;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;

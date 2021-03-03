@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use ArrayAccess;

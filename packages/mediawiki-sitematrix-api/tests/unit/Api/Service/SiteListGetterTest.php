@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\SiteList;

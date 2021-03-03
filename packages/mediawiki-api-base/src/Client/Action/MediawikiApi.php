@@ -1,14 +1,16 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client;
+namespace Addwiki\Mediawiki\Api\Client\Action;
 
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
-use Addwiki\Mediawiki\Api\Client\Request\MultipartRequest;
-use Addwiki\Mediawiki\Api\Client\Request\Request;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use DOMDocument;
 use DOMXPath;
@@ -228,7 +230,7 @@ class MediawikiApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterf
 	 * @param ResponseInterface $response
 	 *
 	 * @return mixed
-	 * @throws UsageException
+	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
 	 */
 	private function decodeResponse( ResponseInterface $response ) {
 		$resultArray = json_decode( $response->getBody(), true );

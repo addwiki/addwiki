@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Tests\Unit;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Wikibase\Api\Service\AliasGroupSetter;
 use Addwiki\Wikibase\Api\Service\DescriptionSetter;
 use Addwiki\Wikibase\Api\Service\ItemMerger;

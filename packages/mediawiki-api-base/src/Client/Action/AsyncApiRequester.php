@@ -1,8 +1,8 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client;
+namespace Addwiki\Mediawiki\Api\Client\Action;
 
-use Addwiki\Mediawiki\Api\Client\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 
 interface AsyncApiRequester {

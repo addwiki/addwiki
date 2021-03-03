@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +14,7 @@ class MediawikiApiTest extends TestCase {
 	 * @covers Mediawiki\Api\MediawikiApi::newFromPage
 	 */
 	public function testNewFromPage(): void {
-		$api = MediawikiApi::newFromPage( BaseTestEnvironment::newInstance()->getPageUrl() );
+		$api = \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::newFromPage( BaseTestEnvironment::newInstance()->getPageUrl() );
 		$this->assertInstanceOf( MediawikiApi::class, $api );
 	}
 
@@ -42,7 +42,7 @@ class MediawikiApiTest extends TestCase {
 
 		// Test with no duplicate IDs.
 		$this->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
-		$api1 = MediawikiApi::newFromPage( $wikiPageUrl );
+		$api1 = \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::newFromPage( $wikiPageUrl );
 		$this->assertInstanceOf( MediawikiApi::class, $api1 );
 
 		// Test with duplicate ID.

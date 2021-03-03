@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Service\CategoryTraverser;
 use Addwiki\Mediawiki\Api\Service\FileUploader;
 use Addwiki\Mediawiki\Api\Service\ImageRotator;

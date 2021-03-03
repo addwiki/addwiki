@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 
 interface AuthMethod {
 

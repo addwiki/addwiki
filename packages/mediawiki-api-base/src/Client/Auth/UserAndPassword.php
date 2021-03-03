@@ -2,10 +2,10 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\Request\Request;
-use Addwiki\Mediawiki\Api\Client\Request\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
+use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use InvalidArgumentException;
 
 /**
@@ -82,7 +82,7 @@ class UserAndPassword implements AuthMethod {
 	}
 
 	/**
-	 * @throws UsageException
+	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
 	 */
 	private function throwLoginUsageException( array $result ): void {
 		$loginResult = $result['login']['result'];

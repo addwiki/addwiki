@@ -2,8 +2,8 @@
 
 namespace Addwiki\Wikimedia\Api;
 
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use DataValues\BooleanValue;

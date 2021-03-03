@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Api;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
 use Addwiki\Wikibase\Api\Lookup\EntityApiLookup;
 use Addwiki\Wikibase\Api\Lookup\ItemApiLookup;
 use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
