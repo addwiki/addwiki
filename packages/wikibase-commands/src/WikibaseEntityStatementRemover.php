@@ -2,7 +2,8 @@
 
 namespace Addwiki\Wikibase\Commands;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
@@ -46,7 +47,7 @@ class WikibaseEntityStatementRemover extends Command {
 		parent::__construct( null );
 	}
 
-	private function setServices( $wikibaseApiUrl, $sparqlEndpoint ): void {
+	private function setServices( $wikibaseApiUrl, $sparqlEndpoint, AuthMethod $auth ): void {
 		$defaultGuzzleConf = [
 			'headers' => [ 'User-Agent' => 'addwiki - Wikibase Statement Remover' ]
 		];
@@ -56,7 +57,7 @@ class WikibaseEntityStatementRemover extends Command {
 			$sparqlEndpoint
 		);
 
-		$this->wikibaseApi = new MediawikiApi( $wikibaseApiUrl );
+		$this->wikibaseApi = new MediawikiApi( $wikibaseApiUrl, $auth );
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(
@@ -132,7 +133,7 @@ class WikibaseEntityStatementRemover extends Command {
 			throw new RuntimeException( 'SPARQL endpoint must be passed' );
 		}
 
-		$this->setServices( $wikiDetails['url'], $sparql );
+		$this->setServices( $wikiDetails['url'], $sparql, new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
 
 		$propertyString = $input->getOption( 'property' );
 		$property = new PropertyId( $propertyString );
@@ -152,13 +153,6 @@ class WikibaseEntityStatementRemover extends Command {
 			->limit( 10000 )
 			->__toString()
 		);
-
-		$loggedIn =
-			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in to wikibase wiki' );
-			return 1;
-		}
 
 		$itemLookup = $this->wikibaseFactory->newItemLookup();
 

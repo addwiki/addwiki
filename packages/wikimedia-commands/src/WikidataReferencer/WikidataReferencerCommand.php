@@ -2,7 +2,8 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -66,7 +67,7 @@ class WikidataReferencerCommand extends Command {
 		parent::__construct( null );
 	}
 
-	public function initServices(): void {
+	public function initServices( AuthMethod $auth ): void {
 		$clientFactory = new ClientFactory(
 			[
 				'middleware' => [ EffectiveUrlMiddleware::middleware() ],
@@ -80,7 +81,7 @@ class WikidataReferencerCommand extends Command {
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 		$this->externalLinkClient = $guzzleClient;
 
-		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', null, $guzzleClient );
+		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $auth, $guzzleClient );
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 
 		$mapper = new WikidataToSchemaMapper();
@@ -146,8 +147,6 @@ class WikidataReferencerCommand extends Command {
 	 * @return int
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$this->initServices();
-
 		$this->tmpDir = is_string( $input->getOption( 'tmpDir' ) ) ? $input->getOption( 'tmpDir' ) : sys_get_temp_dir();
 		if ( !is_writable( $this->tmpDir ) ) {
 			throw new RuntimeException( 'Temp dir: ' . $this->tmpDir . ' is not writable' );
@@ -174,6 +173,9 @@ class WikidataReferencerCommand extends Command {
 		$item = $input->getOption( 'item' );
 		$force = false;
 
+		// Setup services
+		$this->initServices( new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
+
 		// Get a list of ItemIds
 		if ( $item !== null ) {
 			$output->writeln( $formatter->formatSection( 'Init', 'Using item passed in item parameter' ) );
@@ -188,13 +190,6 @@ class WikidataReferencerCommand extends Command {
 		}
 		shuffle( $itemIds );
 		$output->writeln( $formatter->formatSection( 'Init', 'Got ' . count( $itemIds ) . ' items to investigate' ) );
-
-		// Log in to Wikidata
-		$loggedIn =
-			$this->wikibaseApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			throw new RuntimeException( 'Failed to log in to wikibase wiki' );
-		}
 
 		$this->executeForItemIds(
 			$output,

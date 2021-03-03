@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikimedia\Api;
 
+use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
@@ -22,22 +23,25 @@ class WikimediaFactory {
 
 	/**
 	 * @param string $domain eg. 'en.wikipedia.org'
+	 * @param AuthMethod|null $auth
 	 */
-	public function newMediawikiApiForDomain( string $domain ): MediawikiApi {
-		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php' );
+	public function newMediawikiApiForDomain( string $domain, AuthMethod $auth = null ): MediawikiApi {
+		return MediawikiApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php', $auth );
 	}
 
 	/**
 	 * @param string $domain eg. 'en.wikipedia.org'
+	 * @param AuthMethod|null $auth
 	 */
-	public function newMediawikiFactoryForDomain( string $domain ): MediawikiFactory {
-		return new MediawikiFactory( $this->newMediawikiApiForDomain( $domain ) );
+	public function newMediawikiFactoryForDomain( string $domain, AuthMethod $auth = null ): MediawikiFactory {
+		return new MediawikiFactory( $this->newMediawikiApiForDomain( $domain, $auth ) );
 	}
 
 	/**
 	 * @param string $domain eg. 'wikidata.org'
+	 * @param AuthMethod|null $auth
 	 */
-	public function newWikibaseFactoryForDomain( string $domain ): WikibaseFactory {
+	public function newWikibaseFactoryForDomain( string $domain, AuthMethod $auth = null ): WikibaseFactory {
 		if (
 			strstr( $domain, 'wikidata.org' ) === true ||
 			strstr( $domain, 'commons.wikimedia.org' ) === true
@@ -69,18 +73,18 @@ class WikimediaFactory {
 		}
 
 		return new WikibaseFactory(
-			$this->newMediawikiApiForDomain( $domain ),
+			$this->newMediawikiApiForDomain( $domain, $auth ),
 			$dvDeserializer,
 			$dvSerializer
 		);
 	}
 
-	public function newWikidataWikibaseFactory(): WikibaseFactory {
-		return $this->newWikibaseFactoryForDomain( 'wikidata.org' );
+	public function newWikidataWikibaseFactory( AuthMethod $auth = null ): WikibaseFactory {
+		return $this->newWikibaseFactoryForDomain( 'wikidata.org', $auth );
 	}
 
-	public function newCommonsWikibaseFactory(): WikibaseFactory {
-		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org' );
+	public function newCommonsWikibaseFactory( AuthMethod $auth = null ): WikibaseFactory {
+		return $this->newWikibaseFactoryForDomain( 'commons.wikimedia.org', $auth );
 	}
 
 }

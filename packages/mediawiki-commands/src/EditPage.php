@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -99,12 +99,7 @@ class EditPage extends Command {
 
 		$wiki = $input->getOption( 'wiki' );
 		$wikiDetails = $this->appConfig->offsetGet( 'wikis.' . $wiki );
-		$api = new MediawikiApi( $wikiDetails['url'] );
-		$loggedIn = $api->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in' );
-			return 1;
-		}
+		$api = new MediawikiApi( $wikiDetails['url'], new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
 
 		$mwFactory = new MediawikiFactory( $api );
 		$saver = $mwFactory->newRevisionSaver();

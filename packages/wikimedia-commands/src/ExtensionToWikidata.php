@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
-use Addwiki\Mediawiki\Api\Client\ApiUser;
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
@@ -72,12 +72,6 @@ class ExtensionToWikidata extends Command {
 		}
 
 		$sourceApi = new MediawikiApi( "https://www.mediawiki.org/w/api.php" );
-		$targetApi = new MediawikiApi( "https://www.wikidata.org/w/api.php" );
-		$loggedIn = $targetApi->login( new ApiUser( $userDetails['username'], $userDetails['password'] ) );
-		if ( !$loggedIn ) {
-			$output->writeln( 'Failed to log in to target wiki' );
-			return 1;
-		}
 
 		$sourceMwFactory = new MediawikiFactory( $sourceApi );
 		$sourceParser = $sourceMwFactory->newParser();
@@ -93,7 +87,8 @@ class ExtensionToWikidata extends Command {
 			}
 		}
 
-		$targetWbFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
+		$targetAuth = new UserAndPassword( $userDetails['username'], $userDetails['password'] );
+		$targetWbFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory( $targetAuth );
 
 		// Create an item if there is no item yet!
 		if ( $itemIdString === null ) {
