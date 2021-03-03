@@ -4,7 +4,6 @@ namespace Addwiki\Mediawiki\Api\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
@@ -164,7 +163,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	/**
 	 * Turn the normal key-value array of request parameters into a multipart array where each
 	 * parameter is a new array with a 'name' and 'contents' elements (and optionally more, if the
-	 * request is a MultipartRequest).
+	 * request has multipart params).
 	 *
 	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
@@ -173,7 +172,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
-		$multipartParams = ( $request instanceof MultipartRequest )
+		$multipartParams = ( $request->hasMultipartParams() )
 			? $request->getMultipartParams()
 			: [];
 		return array_map(

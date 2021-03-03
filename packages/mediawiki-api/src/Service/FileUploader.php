@@ -3,7 +3,6 @@
 namespace Addwiki\Mediawiki\Api\Service;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Exception;
 
 /**
@@ -103,7 +102,7 @@ class FileUploader extends Service {
 			// 1. Make the request.
 			$params['chunk'] = fread( $fileHandle, $this->chunkSize );
 			$contentDisposition = 'form-data; name="chunk"; filename="' . $params['filename'] . '"';
-			$request = MultipartRequest::factory()
+			$request = ActionRequest::factory()
 				->setMethod( 'POST' )
 				->setParams( $params )
 				->setAction( 'upload' )

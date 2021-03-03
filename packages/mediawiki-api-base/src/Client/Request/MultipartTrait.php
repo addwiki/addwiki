@@ -1,35 +1,26 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Action\Request;
+namespace Addwiki\Mediawiki\Api\Client\Request;
 
 use Exception;
 
 /**
- * A MultipartRequest is the same as a FluentRequest with additional support for setting request
+ * A MultipartTrait adds additional support for setting request
  * parameters (both normal parameters and headers) on multipart requests.
  *
  * @link http://docs.guzzlephp.org/en/stable/request-options.html#multipart
+ *
+ * Must be used in conjunction with HasParameters
  */
-class MultipartRequest extends ActionRequest {
+trait MultipartTrait {
 
-	protected array $multipartParams = [];
+	private array $multipartParams = [];
 
 	/**
-	 * Check the structure of a multipart parameter array.
-	 *
-	 * @param mixed[] $params The multipart parameters to check.
-	 *
-	 * @throws Exception
+	 * @return bool Have any multipart parameter been set?
 	 */
-	protected function checkMultipartParams( array $params ): void {
-		foreach ( $params as $key => $val ) {
-			if ( !is_array( $val ) ) {
-				throw new Exception( sprintf( "Parameter '%s' must be an array.", $key ) );
-			}
-			if ( !array_key_exists( $key, $this->getParams() ) ) {
-				throw new Exception( sprintf( "Parameter '%s' is not already set on this request.", $key ) );
-			}
-		}
+	public function hasMultipartParams(): bool {
+		return !$this->multipartParams === [];
 	}
 
 	/**
@@ -70,5 +61,23 @@ class MultipartRequest extends ActionRequest {
 	 */
 	public function getMultipartParams(): array {
 		return $this->multipartParams;
+	}
+
+	/**
+	 * Check the structure of a multipart parameter array.
+	 *
+	 * @param mixed[] $params The multipart parameters to check.
+	 *
+	 * @throws Exception
+	 */
+	private function checkMultipartParams( array $params ): void {
+		foreach ( $params as $key => $val ) {
+			if ( !is_array( $val ) ) {
+				throw new Exception( sprintf( "Parameter '%s' must be an array.", $key ) );
+			}
+			if ( !array_key_exists( $key, $this->getParams() ) ) {
+				throw new Exception( sprintf( "Parameter '%s' is not already set on this request.", $key ) );
+			}
+		}
 	}
 }

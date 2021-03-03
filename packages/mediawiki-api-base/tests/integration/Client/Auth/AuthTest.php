@@ -4,7 +4,6 @@ namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -60,9 +59,9 @@ class AuthTest extends TestCase {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getOAuthOwnerConsumerAuth();
 		$api = $env->getActionApi( $auth );
-		$multiRequest = new MultipartRequest();
+		$multiRequest = new ActionRequest();
 		$multiRequest->setMethod( 'POST' );
-		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
+		$multiRequest->setMultipartParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
 		$this->assertSame( 'CIUser', $api->request( $multiRequest )['query']['userinfo']['name'] );
 	}
 
