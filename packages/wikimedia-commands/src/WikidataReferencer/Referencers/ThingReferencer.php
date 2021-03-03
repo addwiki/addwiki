@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer\Referencers;
 
-use Addwiki\Mediawiki\Api\Client\UsageException;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use Addwiki\Wikimedia\Commands\WikidataReferencer\DataModelUtils;

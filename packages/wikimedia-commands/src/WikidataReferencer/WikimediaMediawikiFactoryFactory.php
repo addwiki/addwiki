@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use GuzzleHttp\Client;
@@ -28,7 +28,7 @@ class WikimediaMediawikiFactoryFactory {
 			if ( strlen( $firstPart ) >= 2 ) {
 				$firstPart = str_replace( '_', '-', $firstPart );
 				return new MediawikiFactory(
-					new MediawikiApi(
+					new ActionApi(
 						sprintf( 'https://%s.wikipedia.org/w/api.php', $firstPart ),
 						null,
 						$this->client

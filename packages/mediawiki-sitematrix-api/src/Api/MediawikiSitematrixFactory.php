@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Api;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 
 /**
@@ -10,9 +10,9 @@ use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
  */
 class MediawikiSitematrixFactory {
 
-	private MediawikiApi $api;
+	private ActionApi $api;
 
-	public function __construct( MediawikiApi $api ) {
+	public function __construct( ActionApi $api ) {
 		$this->api = $api;
 	}
 

@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikimedia\Commands\WikidataReferencer;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Title;
@@ -42,7 +42,7 @@ class WikidataReferencerCommand extends Command {
 
 	private ?WikibaseFactory $wikibaseFactory = null;
 
-	private ?MediawikiApi $wikibaseApi = null;
+	private ?ActionApi $wikibaseApi = null;
 
 	private ?WikimediaMediawikiFactoryFactory $wmFactoryFactory = null;
 
@@ -81,7 +81,7 @@ class WikidataReferencerCommand extends Command {
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 		$this->externalLinkClient = $guzzleClient;
 
-		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $auth, $guzzleClient );
+		$this->wikibaseApi = new ActionApi( 'https://www.wikidata.org/w/api.php', $auth, $guzzleClient );
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 
 		$mapper = new WikidataToSchemaMapper();

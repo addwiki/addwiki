@@ -2,8 +2,8 @@
 
 namespace Addwiki\Mediawiki\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Mediawiki\DataModel\Content;
 use Addwiki\Mediawiki\DataModel\EditInfo;
@@ -94,7 +94,7 @@ class RestoreRevisions extends Command {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}
 
-		$api = new MediawikiApi( $wikiDetails['url'], new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
+		$api = new ActionApi( $wikiDetails['url'], new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
 
 		$mwFactory = new MediawikiFactory( $api );
 		$getter = $mwFactory->newPageGetter();

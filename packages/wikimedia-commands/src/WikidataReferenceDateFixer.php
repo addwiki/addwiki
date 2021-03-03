@@ -2,10 +2,10 @@
 
 namespace Addwiki\Wikimedia\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\UsageException;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use Addwiki\Wikimedia\Api\WikimediaFactory;
@@ -30,7 +30,7 @@ class WikidataReferenceDateFixer extends Command {
 
 	private WikibaseFactory $wikibaseFactory;
 
-	private MediawikiApi $wikibaseApi;
+	private ActionApi $wikibaseApi;
 
 	private SparqlQueryRunner $sparqlQueryRunner;
 
@@ -46,7 +46,7 @@ class WikidataReferenceDateFixer extends Command {
 		$guzzleClient = new Client( $defaultGuzzleConf );
 		$this->sparqlQueryRunner = new SparqlQueryRunner( $guzzleClient );
 
-		$this->wikibaseApi = new MediawikiApi( 'https://www.wikidata.org/w/api.php', $auth );
+		$this->wikibaseApi = new ActionApi( 'https://www.wikidata.org/w/api.php', $auth );
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 	}
 

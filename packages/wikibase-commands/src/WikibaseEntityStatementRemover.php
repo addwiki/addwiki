@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Commands;
 
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
 use ArrayAccess;
@@ -38,7 +38,7 @@ class WikibaseEntityStatementRemover extends Command {
 
 	private ?WikibaseFactory $wikibaseFactory = null;
 
-	private ?MediawikiApi $wikibaseApi = null;
+	private ?ActionApi $wikibaseApi = null;
 
 	private ?SparqlQueryRunner $sparqlQueryRunner = null;
 
@@ -57,7 +57,7 @@ class WikibaseEntityStatementRemover extends Command {
 			$sparqlEndpoint
 		);
 
-		$this->wikibaseApi = new MediawikiApi( $wikibaseApiUrl, $auth );
+		$this->wikibaseApi = new ActionApi( $wikibaseApiUrl, $auth );
 		$this->wikibaseFactory = new WikibaseFactory(
 			$this->wikibaseApi,
 			new DataValueDeserializer(

@@ -5,7 +5,7 @@ The Name Space Getter allows you to search for namespaces and their aliases and 
 To use it, first get a new NamespaceGetter object from the factory:
 
 ```php
-$api = new \Addwiki\Mediawiki\Api\Client\MediawikiApi( 'http://localhost/w/api.php' );
+$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( 'http://localhost/w/api.php' );
 $services = new \Addwiki\Mediawiki\Api\MediawikiFactory( $api );
 $namespaceGetter = $services->newNamespaceGetter();
 ```
