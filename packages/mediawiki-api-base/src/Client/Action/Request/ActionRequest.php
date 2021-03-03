@@ -2,16 +2,14 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Action\Request;
 
-use Addwiki\Mediawiki\Api\Client\Request\HasHeaders;
-use Addwiki\Mediawiki\Api\Client\Request\HasMethod;
-use Addwiki\Mediawiki\Api\Client\Request\HasParameters;
 use Addwiki\Mediawiki\Api\Client\Request\HasSimpleFactory;
 use Addwiki\Mediawiki\Api\Client\Request\HeadersTrait;
 use Addwiki\Mediawiki\Api\Client\Request\MethodTrait;
 use Addwiki\Mediawiki\Api\Client\Request\ParametersTrait;
+use Addwiki\Mediawiki\Api\Client\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Request\SimpleFactoryTrait;
 
-class ActionRequest implements HasHeaders, HasMethod, HasParameters, HasSimpleFactory, HasParameterAction {
+class ActionRequest implements Request, HasSimpleFactory, HasParameterAction {
 
 	use SimpleFactoryTrait;
 	use MethodTrait;

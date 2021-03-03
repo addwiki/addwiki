@@ -10,6 +10,7 @@ use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
+use Addwiki\Mediawiki\Api\Client\Request\Requester;
 use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use DOMDocument;
@@ -24,7 +25,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
 
-class ActionApi implements ApiRequester, LoggerAwareInterface {
+class ActionApi implements Requester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
