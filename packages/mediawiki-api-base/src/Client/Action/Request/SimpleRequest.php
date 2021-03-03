@@ -4,6 +4,9 @@ namespace Addwiki\Mediawiki\Api\Client\Action\Request;
 
 use InvalidArgumentException;
 
+/**
+ * @deprecated in 3.0, If you want to use this just use the ActionRequestFactory methods
+ */
 class SimpleRequest extends FluentRequest implements Request {
 
 	/**

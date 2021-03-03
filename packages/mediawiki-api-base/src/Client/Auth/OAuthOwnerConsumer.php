@@ -65,7 +65,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
 		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumerSecret() );
 		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );
-		$params = $request->getPostRequestEncoding() === Request::ENCODING_MULTIPART ? [] : $request->getParams();
+		$params = $request->getEncoding() === Request::ENCODING_MULTIPART ? [] : $request->getParams();
 
 		$oauthRequest = OAuthRequest::fromConsumerAndToken( $oauthConsumer, $oauthToken, $method, $api->getApiUrl(), $params );
 		$oauthRequest->signRequest( new HmacSha1(), $oauthConsumer, $oauthToken );

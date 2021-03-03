@@ -4,8 +4,16 @@ namespace Addwiki\Mediawiki\Api\Client\Action\Request;
 
 interface Request {
 
+	public const ENCODING_QUERY = 'query';
 	public const ENCODING_MULTIPART = 'multipart';
 	public const ENCODING_FORMPARAMS = 'form_params';
+
+	/**
+	 * A HTTP Method. e.g. 'GET'
+	 */
+	public function getMethod(): string;
+
+	public function setMethod( string $method ): void;
 
 	/**
 	 * @return mixed[]
@@ -25,7 +33,7 @@ interface Request {
 	 * Infers the request encoding for POST requests from params and class used
 	 * @return string one of the ENCODING_* constants
 	 */
-	public function getPostRequestEncoding() : string;
+	public function getEncoding() : string;
 
 	public function setAction( string $action ): self;
 

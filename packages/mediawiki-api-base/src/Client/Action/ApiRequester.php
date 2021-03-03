@@ -4,20 +4,23 @@ namespace Addwiki\Mediawiki\Api\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 
+/**
+ * Common interface to be shared between APIs that allow making of requests.
+ */
 interface ApiRequester {
 
 	/**
-	 * @param Request $request The GET request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return mixed Normally an array
 	 */
-	public function getRequest( Request $request );
+	public function request( Request $request );
 
 	/**
-	 * @param Request $request The POST request to send.
+	 * @param Request $request The request to send.
 	 *
-	 * @return mixed Normally an array
+	 *         Normally promising an array, though can be mixed (json_decode result)
 	 */
-	public function postRequest( Request $request );
+	public function requestAsync( Request $request ): PromiseInterface;
 
 }

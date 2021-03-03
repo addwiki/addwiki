@@ -6,6 +6,15 @@ class FluentRequest implements Request {
 
 	private array $params = [];
 	private array $headers = [];
+	private string $method;
+
+	public function getMethod() : string {
+		return $this->method;
+	}
+
+	public function setMethod( string $method ): void {
+		$this->method = $method;
+	}
 
 	public function getParams(): array {
 		return $this->params;
@@ -15,16 +24,27 @@ class FluentRequest implements Request {
 		return $this->headers;
 	}
 
-	public function getPostRequestEncoding(): string {
-		if ( $this instanceof MultipartRequest ) {
+	public function getEncoding(): string {
+		if ( $this->getMethod() === 'GET' ) {
+			return self::ENCODING_QUERY;
+		}
+		return $this->getEncodingForPost();
+	}
+
+	private function getEncodingForPost(): string {
+		if ( $this instanceof MultipartRequest || $this->paramsIncludesResource() ) {
 			return self::ENCODING_MULTIPART;
 		}
+		return self::ENCODING_FORMPARAMS;
+	}
+
+	private function paramsIncludesResource(): bool {
 		foreach ( $this->getParams() as $value ) {
 			if ( is_resource( $value ) ) {
-				return self::ENCODING_MULTIPART;
+				return true;
 			}
 		}
-		return self::ENCODING_FORMPARAMS;
+		return false;
 	}
 
 	public static function factory() {

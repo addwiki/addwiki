@@ -24,7 +24,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
 
-class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface {
+class ActionApi implements ApiRequester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
@@ -155,75 +155,71 @@ class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface
 	}
 
 	/**
-	 * @param Request $request The GET request to send.
+	 * @param Request $request The request to send.
 	 *
 	 * @return PromiseInterface
 	 *         Normally promising an array, though can be mixed (json_decode result)
 	 *         Can throw UsageExceptions or RejectionExceptions
+	 */
+	public function requestAsync( Request $request ): PromiseInterface {
+		$request->setParam( 'format', 'json' );
+		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
+		$promise = $this->getClient()->requestAsync(
+			$request->getMethod(),
+			$this->apiUrl,
+			$this->getClientRequestOptions( $request, $request->getEncoding() )
+		);
+
+		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
+	}
+
+	/**
+	 * @param Request $request The request to send.
+	 *
+	 * @return mixed Normally an array
+	 */
+	public function request( Request $request ) {
+		$request->setParam( 'format', 'json' );
+		$request = $this->auth->preRequestAuth( $request->getMethod(), $request, $this );
+		$response = $this->getClient()->request(
+			$request->getMethod(),
+			$this->apiUrl,
+			$this->getClientRequestOptions( $request, $request->getEncoding() )
+		);
+
+		return $this->decodeResponse( $response );
+	}
+
+	/**
+	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
 	 */
 	public function getRequestAsync( Request $request ): PromiseInterface {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
-		$promise = $this->getClient()->requestAsync(
-			'GET',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, 'query' )
-		);
-
-		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
+		$request->setMethod( 'GET' );
+		return $this->requestAsync( $request );
 	}
 
 	/**
-	 * @param Request $request The POST request to send.
-	 *
-	 * @return PromiseInterface
-	 *         Normally promising an array, though can be mixed (json_decode result)
-	 *         Can throw UsageExceptions or RejectionExceptions
+	 * @deprecated in 3.0. Set a request method and use the requestAsync method directly
 	 */
 	public function postRequestAsync( Request $request ): PromiseInterface {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
-		$promise = $this->getClient()->requestAsync(
-			'POST',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
-		);
-
-		return $promise->then( fn( ResponseInterface $response ) => call_user_func( fn( ResponseInterface $response ) => $this->decodeResponse( $response ), $response ) );
+		$request->setMethod( 'POST' );
+		return $this->requestAsync( $request );
 	}
 
 	/**
-	 * @param Request $request The GET request to send.
-	 *
-	 * @return mixed Normally an array
+	 * @deprecated in 3.0. Set a request method and use the request method directly
 	 */
 	public function getRequest( Request $request ) {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'GET', $request, $this );
-		$response = $this->getClient()->request(
-			'GET',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, 'query' )
-		);
-
-		return $this->decodeResponse( $response );
+		$request->setMethod( 'GET' );
+		return $this->request( $request );
 	}
 
 	/**
-	 * @param Request $request The POST request to send.
-	 *
-	 * @return mixed Normally an array
+	 * @deprecated in 3.0. Set a request method and use the request method directly
 	 */
 	public function postRequest( Request $request ) {
-		$request->setParam( 'format', 'json' );
-		$request = $this->auth->preRequestAuth( 'POST', $request, $this );
-		$response = $this->getClient()->request(
-			'POST',
-			$this->apiUrl,
-			$this->getClientRequestOptions( $request, $request->getPostRequestEncoding() )
-		);
-
-		return $this->decodeResponse( $response );
+		$request->setMethod( 'POST' );
+		return $this->request( $request );
 	}
 
 	/**
