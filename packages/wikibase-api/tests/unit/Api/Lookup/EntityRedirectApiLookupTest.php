@@ -17,7 +17,7 @@ class EntityRedirectApiLookupTest extends TestCase {
 		/** @var ActionApi|MockObject $apiMock */
 		$apiMock = $this->createMock( ActionApi::class );
 		$apiMock->expects( $this->once() )
-			->method( 'getRequest' )
+			->method( 'request' )
 			->willReturn( [
 				'entities' => [
 					'Q404' => [

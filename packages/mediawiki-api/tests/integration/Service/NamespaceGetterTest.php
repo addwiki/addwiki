@@ -68,14 +68,14 @@ class NamespaceGetterTest extends TestCase {
 	private function getApi() {
 		$api = $this->getMockBuilder( ActionApi::class )->disableOriginalConstructor()->getMock();
 		$api
-			->method( 'getRequest' )
+			->method( 'request' )
 			->with( $this->getRequest() )
 			->willReturn( $this->getNamespaceFixture() );
 		return $api;
 	}
 
 	private function getRequest(): ActionRequest {
-		return ActionRequest::simpleMethodless(
+		return ActionRequest::simpleGet(
 			'query', [
 			'meta' => 'siteinfo',
 			'siprop' => 'namespaces|namespacealiases'

@@ -36,7 +36,7 @@ class PagePurgerTest extends TestCase {
 	public function testPurgePage(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
-			->method( 'postRequest' )
+			->method( 'request' )
 			->with(
 				$this->isInstanceOf( Request::class )
 			)
@@ -60,7 +60,7 @@ class PagePurgerTest extends TestCase {
 	public function testIncorrectPurgePage(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
-			->method( 'postRequest' )
+			->method( 'request' )
 			->with(
 				$this->isInstanceOf( Request::class )
 			)
@@ -89,7 +89,7 @@ class PagePurgerTest extends TestCase {
 	public function testPurgePages(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
-			->method( 'postRequest' )
+			->method( 'request' )
 			->with(
 				$this->isInstanceOf( Request::class )
 			)
@@ -130,7 +130,7 @@ class PagePurgerTest extends TestCase {
 	public function testIncorrectPurgePages(): void {
 		$api = $this->getMockApi();
 		$api->expects( $this->once() )
-			->method( 'postRequest' )
+			->method( 'request' )
 			->with(
 				$this->isInstanceOf( Request::class )
 			)

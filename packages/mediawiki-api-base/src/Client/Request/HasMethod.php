@@ -9,6 +9,6 @@ interface HasMethod {
 	 */
 	public function getMethod(): string;
 
-	public function setMethod( string $method ): void;
+	public function setMethod( string $method ): self;
 
 }

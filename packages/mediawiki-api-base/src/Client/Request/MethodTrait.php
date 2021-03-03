@@ -10,8 +10,9 @@ trait MethodTrait {
 		return $this->method;
 	}
 
-	public function setMethod( string $method ): void {
+	public function setMethod( string $method ): self {
 		$this->method = $method;
+		return $this;
 	}
 
 }

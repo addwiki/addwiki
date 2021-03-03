@@ -28,7 +28,7 @@ class TokensTest extends TestCase {
 	public function testGetToken( string $tokenType ): void {
 		$mockApi = $this->getMockApi();
 		$mockApi->expects( $this->exactly( 2 ) )
-			->method( 'postRequest' )
+			->method( 'request' )
 			->with( $this->isInstanceOf( Request::class ) )
 			->willReturn( [
 				'query' => [
@@ -53,7 +53,7 @@ class TokensTest extends TestCase {
 	 */
 	public function testGetTokenPre125( string $tokenType ): void {
 		$mockApi = $this->getMockApi();
-		$mockApi->method( 'postRequest' )
+		$mockApi->method( 'request' )
 			->with( $this->isInstanceOf( Request::class ) )
 			->willReturnOnConsecutiveCalls(
 				[

@@ -97,8 +97,8 @@ class SiteListGetterTest extends TestCase {
 		];
 
 		$mockApi->expects( $this->once() )
-			->method( 'getRequest' )
-			->with( ActionRequest::simpleMethodless( 'sitematrix' ) )
+			->method( 'request' )
+			->with( ActionRequest::simpleGet( 'sitematrix' ) )
 			->willReturn( $siteMatrixArray );
 
 		$service = new SiteListGetter( $mockApi );

@@ -47,9 +47,9 @@ class RevisionGetterTest extends TestCase {
 	public function testGetFromId( $id ): void {
 		$api = $this->createMockApi();
 		$api->expects( $this->once() )
-			->method( 'getRequest' )
+			->method( 'request' )
 			->with(
-				ActionRequest::simpleMethodless(
+				ActionRequest::simpleGet(
 					'wbgetentities',
 					[ 'ids' => 'Q1' ]
 				)
