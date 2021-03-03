@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use DataValues\DataValue;
 use Deserializers\Deserializer;
@@ -14,11 +14,11 @@ use RuntimeException;
  */
 class ValueParser {
 
-	private MediawikiApi $api;
+	private ActionApi $api;
 
 	private Deserializer $dataValueDeserializer;
 
-	public function __construct( MediawikiApi $api, Deserializer $dataValueDeserializer ) {
+	public function __construct( ActionApi $api, Deserializer $dataValueDeserializer ) {
 		$this->api = $api;
 		$this->dataValueDeserializer = $dataValueDeserializer;
 	}

@@ -24,7 +24,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use SimpleXMLElement;
 
-class MediawikiApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface {
+class ActionApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
@@ -44,7 +44,7 @@ class MediawikiApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterf
 	 *
 	 * @return self returns a MediawikiApi instance using $apiEndpoint
 	 */
-	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): MediawikiApi {
+	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): ActionApi {
 		return new self( $apiEndpoint, $auth );
 	}
 
@@ -60,7 +60,7 @@ class MediawikiApi implements ApiRequester, AsyncApiRequester, LoggerAwareInterf
 	 *              file accessible on all Mediawiki pages
 	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
 	 */
-	public static function newFromPage( string $url, AuthMethod $auth = null ): MediawikiApi {
+	public static function newFromPage( string $url, AuthMethod $auth = null ): ActionApi {
 		// Set up HTTP client and HTML document.
 		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
 		$pageHtml = $tempClient->get( $url )->getBody();

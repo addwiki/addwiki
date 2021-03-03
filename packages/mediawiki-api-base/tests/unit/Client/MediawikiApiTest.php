@@ -30,7 +30,7 @@ class MediawikiApiTest extends TestCase {
 	 * @dataProvider provideValidConstruction
 	 */
 	public function testValidConstruction( string $apiLocation ): void {
-		new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( $apiLocation, null );
+		new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( $apiLocation, null );
 		$this->assertTrue( true );
 	}
 
@@ -72,7 +72,7 @@ class MediawikiApiTest extends TestCase {
 					'info' => 'imamsg',
 				] ] )
 			) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client, );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client, );
 
 		try{
 			$api->getRequest( new SimpleRequest( 'foo' ) );
@@ -94,7 +94,7 @@ class MediawikiApiTest extends TestCase {
 					'info' => 'imamsg',
 				] ] )
 			) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 
 		try{
 			$api->postRequest( new SimpleRequest( 'foo' ) );
@@ -116,7 +116,7 @@ class MediawikiApiTest extends TestCase {
 			->method( 'request' )
 			->with( 'GET', null, $this->getExpectedRequestOpts( $params, 'query' ) )
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 
 		$result = $api->getRequest( new SimpleRequest( $action, $params ) );
 
@@ -133,7 +133,7 @@ class MediawikiApiTest extends TestCase {
 			->method( 'request' )
 			->with( 'POST', null, $this->getExpectedRequestOpts( $params, 'form_params' ) )
 			->will( $this->returnValue( $this->getMockResponse( $expectedResult ) ) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 
 		$result = $api->postRequest( new SimpleRequest( $action, $params ) );
 
@@ -172,7 +172,7 @@ class MediawikiApiTest extends TestCase {
 					'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ],
 				]
 			)->will( $this->returnValue( $this->getMockResponse( [ 'success ' => 1 ] ) ) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 
 		$result = $api->postRequest( new SimpleRequest( 'upload', $params ) );
 
@@ -203,7 +203,7 @@ class MediawikiApiTest extends TestCase {
 					],
 				],
 			] ) ) );
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 		$this->assertEquals( $expectedVersion, $api->getVersion() );
 	}
 
@@ -229,7 +229,7 @@ class MediawikiApiTest extends TestCase {
 		];
 
 		$client = $this->getMockClient();
-		$api = new \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi( '', null, $client );
+		$api = new \Addwiki\Mediawiki\Api\Client\Action\ActionApi( '', null, $client );
 
 		$logger = $this->createMock( LoggerInterface::class );
 		$logger

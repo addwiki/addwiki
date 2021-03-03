@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use InvalidArgumentException;
@@ -38,7 +38,7 @@ class UserAndPassword implements AuthMethod {
 			&& $this->getPassword() === $other->getPassword();
 	}
 
-	public function preRequestAuth( string $method, Request $request, MediawikiApi $api ): Request {
+	public function preRequestAuth( string $method, Request $request, ActionApi $api ): Request {
 		// Do nothing if we are already logged in
 		if ( $this->isLoggedIn ) {
 			// Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if bot.

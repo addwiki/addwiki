@@ -16,7 +16,7 @@ class MediawikiSessionTest extends TestCase {
 	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\Action\MediawikiApi
 	 */
 	private function getMockApi() {
-		return $this->createMock( \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::class );
+		return $this->createMock( \Addwiki\Mediawiki\Api\Client\Action\ActionApi::class );
 	}
 
 	public function testConstruction(): void {

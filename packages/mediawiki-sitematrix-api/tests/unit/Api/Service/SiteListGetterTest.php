@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Ext\Sitematrix\Api\Service\SiteListGetter;
 use Addwiki\Mediawiki\Ext\Sitematrix\DataModel\Site;
@@ -16,10 +16,10 @@ use PHPUnit\Framework\TestCase;
 class SiteListGetterTest extends TestCase {
 
 	/**
-	 * @return MockObject|MediawikiApi
+	 * @return MockObject|ActionApi
 	 */
 	private function getMockApi() {
-		return $this->getMockBuilder( MediawikiApi::class )
+		return $this->getMockBuilder( ActionApi::class )
 			->disableOriginalConstructor()
 			->getMock();
 	}

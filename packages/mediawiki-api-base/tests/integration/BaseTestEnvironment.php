@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\OAuthOwnerConsumer;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
@@ -62,8 +62,8 @@ class BaseTestEnvironment {
 	/**
 	 * Get the MediawikiApi to test against
 	 */
-	public function getApi( ?AuthMethod $auth = null ): MediawikiApi {
-		return new MediaWikiApi( $this->getApiUrl(), $auth );
+	public function getApi( ?AuthMethod $auth = null ): ActionApi {
+		return new ActionApi( $this->getApiUrl(), $auth );
 	}
 
 	public function getUserAndPasswordAuth(): UserAndPassword {

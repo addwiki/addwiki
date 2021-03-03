@@ -12,7 +12,7 @@ class MediawikiSession implements LoggerAwareInterface {
 
 	private array $tokens = [];
 
-	private MediawikiApi $api;
+	private ActionApi $api;
 
 	/**
 	 * @var bool if this session is running against mediawiki version pre 1.25
@@ -22,9 +22,9 @@ class MediawikiSession implements LoggerAwareInterface {
 	private LoggerInterface $logger;
 
 	/**
-	 * @param MediawikiApi $api The API object to use for this session.
+	 * @param ActionApi $api The API object to use for this session.
 	 */
-	public function __construct( MediawikiApi $api ) {
+	public function __construct( ActionApi $api ) {
 		$this->api = $api;
 		$this->logger = new NullLogger();
 	}

@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Service\NamespaceGetter;
 use Addwiki\Mediawiki\DataModel\NamespaceInfo;
@@ -63,10 +63,10 @@ class NamespaceGetterTest extends TestCase {
 	}
 
 	/**
-	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\Action\MediawikiApi
+	 * @return MockObject|\Addwiki\Mediawiki\Api\Client\Action\ActionApi
 	 */
 	private function getApi() {
-		$api = $this->getMockBuilder( MediawikiApi::class )->disableOriginalConstructor()->getMock();
+		$api = $this->getMockBuilder( ActionApi::class )->disableOriginalConstructor()->getMock();
 		$api
 			->method( 'getRequest' )
 			->with( $this->getRequest() )

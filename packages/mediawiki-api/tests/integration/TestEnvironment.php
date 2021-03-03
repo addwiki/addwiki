@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
@@ -13,8 +13,8 @@ class TestEnvironment {
 	public string $apiUrl;
 	public string $pageUrl;
 
-	protected MediawikiApi $api;
-	protected MediawikiApi $apiAuthed;
+	protected ActionApi $api;
+	protected ActionApi $apiAuthed;
 
 	/**
 	 * Get a new TestEnvironment.
@@ -46,21 +46,21 @@ class TestEnvironment {
 
 		$this->apiUrl = $apiUrl;
 		$this->pageUrl = str_replace( 'api.php', 'index.php?title=Special:SpecialPages', $apiUrl );
-		$this->api = MediawikiApi::newFromApiEndpoint( $this->apiUrl );
-		$this->apiAuthed = MediawikiApi::newFromApiEndpoint( $this->apiUrl, new UserAndPassword( 'CIUser', 'LongCIPass123' ) );
+		$this->api = ActionApi::newFromApiEndpoint( $this->apiUrl );
+		$this->apiAuthed = ActionApi::newFromApiEndpoint( $this->apiUrl, new UserAndPassword( 'CIUser', 'LongCIPass123' ) );
 	}
 
 	/**
 	 * Get the MediawikiApi to test against
 	 */
-	public function getApi(): MediawikiApi {
+	public function getApi(): ActionApi {
 		return $this->api;
 	}
 
 	/**
 	 * Get the MediawikiApi to test against (with authentication with the CI user)
 	 */
-	public function getApiAuthed(): MediawikiApi {
+	public function getApiAuthed(): ActionApi {
 		return $this->apiAuthed;
 	}
 
@@ -88,10 +88,10 @@ class TestEnvironment {
 
 	/**
 	 * Get the number of jobs currently in the queue.
-	 * @param \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi $api
+	 * @param \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api
 	 * @todo This and TestEnvironment::runJobs() should probably not live here.
 	 */
-	public function getJobQueueLength( MediawikiApi $api ): int {
+	public function getJobQueueLength( ActionApi $api ): int {
 		$req = new SimpleRequest( 'query', [
 				'meta' => 'siteinfo',
 				'siprop' => 'statistics',

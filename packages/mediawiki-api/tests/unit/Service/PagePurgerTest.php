@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Service\PagePurger;
 use Addwiki\Mediawiki\DataModel\Page;
@@ -18,11 +18,11 @@ use PHPUnit\Framework\TestCase;
 class PagePurgerTest extends TestCase {
 
 	/**
-	 * @return \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi|MockObject
+	 * @return \Addwiki\Mediawiki\Api\Client\Action\ActionApi|MockObject
 	 */
 	private function getMockApi() {
-		/** @var MediawikiApi|MockObject $mock */
-		$mock = $this->getMockBuilder( MediawikiApi::class )
+		/** @var ActionApi|MockObject $mock */
+		$mock = $this->getMockBuilder( ActionApi::class )
 			->disableOriginalConstructor()
 			->getMock();
 		return $mock;

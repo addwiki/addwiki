@@ -3,7 +3,7 @@
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use GuzzleHttp\ClientInterface;
@@ -110,7 +110,7 @@ class UserAndPasswordTest extends TestCase {
 			);
 
 		$auth = new UserAndPassword( 'U1', 'P1' );
-		$api = new MediawikiApi( '', $auth, $client );
+		$api = new ActionApi( '', $auth, $client );
 		$auth->preRequestAuth( 'GET', new SimpleRequest( 'dummyrequest' ), $api );
 	}
 
@@ -138,7 +138,7 @@ class UserAndPasswordTest extends TestCase {
 			);
 
 		$auth = new UserAndPassword( 'U1', 'P1' );
-		$api = new MediawikiApi( '', $auth, $client );
+		$api = new ActionApi( '', $auth, $client );
 		$this->expectException( UsageException::class );
 		$auth->preRequestAuth( 'GET', new SimpleRequest( 'dummyrequest' ), $api );
 	}

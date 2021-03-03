@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Deserializers\Deserializer;
 use Wikibase\DataModel\Statement\Statement;
@@ -12,11 +12,11 @@ use Wikibase\DataModel\Statement\Statement;
  */
 class StatementGetter {
 
-	private MediawikiApi $api;
+	private ActionApi $api;
 
 	private Deserializer $statementDeserializer;
 
-	public function __construct( MediawikiApi $api, Deserializer $statementDeserializer ) {
+	public function __construct( ActionApi $api, Deserializer $statementDeserializer ) {
 		$this->api = $api;
 		$this->statementDeserializer = $statementDeserializer;
 	}

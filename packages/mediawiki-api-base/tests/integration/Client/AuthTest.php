@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
@@ -11,23 +11,23 @@ use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase {
 
-	private function getUserInfo( \Addwiki\Mediawiki\Api\Client\Action\MediaWikiApi $api ) : array {
+	private function getUserInfo( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
 		return $api->getRequest( new SimpleRequest( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
-	private function assertUserLoggedIn( string $expectedUser, MediawikiApi $api ) {
+	private function assertUserLoggedIn( string $expectedUser, ActionApi $api ) {
 		$this->assertSame( $expectedUser, $this->getUserInfo( $api )['query']['userinfo']['name'] );
 	}
 
-	private function assertAnon( \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi $api ) {
+	private function assertAnon( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) {
 		$this->assertArrayHasKey( 'anon', $this->getUserInfo( $api )['query']['userinfo'] );
 	}
 
-	private function getUserInfoUsingPost( \Addwiki\Mediawiki\Api\Client\Action\MediaWikiApi $api ) : array {
+	private function getUserInfoUsingPost( \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) : array {
 		return $api->postRequest( new SimpleRequest( 'query', [ 'meta' => 'userinfo' ] ) );
 	}
 
-	private function assertUserLoggedInUsingPost( string $expectedUser, \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi $api ) {
+	private function assertUserLoggedInUsingPost( string $expectedUser, \Addwiki\Mediawiki\Api\Client\Action\ActionApi $api ) {
 		$this->assertSame( $expectedUser, $this->getUserInfoUsingPost( $api )['query']['userinfo']['name'] );
 	}
 

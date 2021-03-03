@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revision;
@@ -20,11 +20,11 @@ use Wikibase\DataModel\SiteLink;
  */
 class RevisionGetter {
 
-	protected MediawikiApi $api;
+	protected ActionApi $api;
 
 	protected Deserializer $entityDeserializer;
 
-	public function __construct( MediawikiApi $api, Deserializer $entityDeserializer ) {
+	public function __construct( ActionApi $api, Deserializer $entityDeserializer ) {
 		$this->api = $api;
 		$this->entityDeserializer = $entityDeserializer;
 	}

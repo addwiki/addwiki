@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 
 /**
@@ -10,9 +10,9 @@ use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
  */
 class EntitySearcher {
 
-	private MediawikiApi $api;
+	private ActionApi $api;
 
-	public function __construct( MediawikiApi $api ) {
+	public function __construct( ActionApi $api ) {
 		$this->api = $api;
 	}
 

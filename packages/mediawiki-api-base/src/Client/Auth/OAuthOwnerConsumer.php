@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Auth;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\Request;
 use InvalidArgumentException;
 use MediaWiki\OAuthClient\Consumer as OAuthConsumer;
@@ -53,7 +53,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 			&& $this->getAccessSecret() === $other->getAccessSecret();
 	}
 
-	public function preRequestAuth( string $method, Request $request, MediawikiApi $api ): Request {
+	public function preRequestAuth( string $method, Request $request, ActionApi $api ): Request {
 		// Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if bot.
 		$request->setParam( 'assert', 'user' );
 
@@ -61,7 +61,7 @@ class OAuthOwnerConsumer implements AuthMethod {
 		return $request;
 	}
 
-	private function getAuthenticationHeaderValue( string $method, Request $request, MediawikiApi $api ): string {
+	private function getAuthenticationHeaderValue( string $method, Request $request, ActionApi $api ): string {
 		// Taken directly from https://www.mediawiki.org/wiki/OAuth/Owner-only_consumers
 		$oauthConsumer = new OAuthConsumer( $this->getConsumerKey(), $this->getConsumerSecret() );
 		$oauthToken = new OAuthToken( $this->getAccessToken(), $this->getAccessSecret() );

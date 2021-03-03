@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Ext\Sitematrix\Test\Integration;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 
 class TestEnvironment {
@@ -14,7 +14,7 @@ class TestEnvironment {
 	private MediawikiFactory $factory;
 
 	public function __construct() {
-		$this->factory = new MediawikiFactory( new MediawikiApi( 'http://localhost/w/api.php' ) );
+		$this->factory = new MediawikiFactory( new ActionApi( 'http://localhost/w/api.php' ) );
 	}
 
 	public function getFactory(): MediawikiFactory {

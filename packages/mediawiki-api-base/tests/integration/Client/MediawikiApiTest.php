@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
@@ -14,8 +14,8 @@ class MediawikiApiTest extends TestCase {
 	 * @covers Mediawiki\Api\MediawikiApi::newFromPage
 	 */
 	public function testNewFromPage(): void {
-		$api = \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::newFromPage( BaseTestEnvironment::newInstance()->getPageUrl() );
-		$this->assertInstanceOf( MediawikiApi::class, $api );
+		$api = \Addwiki\Mediawiki\Api\Client\Action\ActionApi::newFromPage( BaseTestEnvironment::newInstance()->getPageUrl() );
+		$this->assertInstanceOf( ActionApi::class, $api );
 	}
 
 	/**
@@ -26,7 +26,7 @@ class MediawikiApiTest extends TestCase {
 		$this->expectExceptionMessageMatches( "/Unable to find RSD URL in page.*/" );
 		// This could be any URL that doesn't contain the RSD link, load.php works just fine!
 		$nonWikiPage = str_replace( 'api.php', 'load.php', BaseTestEnvironment::newInstance()->getApiUrl() );
-		MediawikiApi::newFromPage( $nonWikiPage );
+		ActionApi::newFromPage( $nonWikiPage );
 	}
 
 	/**
@@ -42,17 +42,17 @@ class MediawikiApiTest extends TestCase {
 
 		// Test with no duplicate IDs.
 		$this->savePage( $api, $testPageName, '<p id="unique-id"></p>' );
-		$api1 = \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi::newFromPage( $wikiPageUrl );
-		$this->assertInstanceOf( MediawikiApi::class, $api1 );
+		$api1 = \Addwiki\Mediawiki\Api\Client\Action\ActionApi::newFromPage( $wikiPageUrl );
+		$this->assertInstanceOf( ActionApi::class, $api1 );
 
 		// Test with duplicate ID.
 		$wikiText = '<p id="duplicated-id"></p><div id="duplicated-id"></div>';
 		$this->savePage( $api, $testPageName, $wikiText );
-		$api2 = MediawikiApi::newFromPage( $wikiPageUrl );
-		$this->assertInstanceOf( MediawikiApi::class, $api2 );
+		$api2 = ActionApi::newFromPage( $wikiPageUrl );
+		$this->assertInstanceOf( ActionApi::class, $api2 );
 	}
 
-	private function savePage( MediaWikiApi $api, string $title, string $content ): void {
+	private function savePage( ActionApi $api, string $title, string $content ): void {
 		$params = [
 			'title' => $title,
 			'text' => $content,

@@ -2,7 +2,7 @@
 
 namespace Addwiki\Wikibase\Tests\Unit\Api\Service;
 
-use Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
 use Addwiki\Mediawiki\DataModel\Revision;
 use Addwiki\Wikibase\Api\Service\RevisionGetter;
@@ -19,10 +19,10 @@ use Wikibase\DataModel\Entity\ItemId;
 class RevisionGetterTest extends TestCase {
 
 	/**
-	 * @return MockObject|MediawikiApi
+	 * @return MockObject|ActionApi
 	 */
 	private function createMockApi() {
-		return $this->createMock( MediawikiApi::class );
+		return $this->createMock( ActionApi::class );
 	}
 
 	/**
