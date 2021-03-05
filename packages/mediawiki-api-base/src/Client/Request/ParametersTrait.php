@@ -36,8 +36,9 @@ trait ParametersTrait {
 	}
 
 	private function getParameterEncodingForPost(): string {
+		$methodExists = method_exists( $this, 'hasMultipartParams' );
 		if (
-			( method_exists( $this, 'hasMultipartParams' ) && $this->hasMultipartParams() ) ||
+			( $methodExists && $this->hasMultipartParams() ) ||
 			$this->paramsIncludesResource()
 		) {
 			return self::ENCODING_MULTIPART;

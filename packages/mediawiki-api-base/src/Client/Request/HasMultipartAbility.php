@@ -12,6 +12,8 @@ interface HasMultipartAbility {
 
 	/**
 	 * @return bool Have any multipart parameter been set?
+	 * @todo rename to isMultipart ?
+	 * @todo add method to setIsMultipart
 	 */
 	public function hasMultipartParams(): bool;
 

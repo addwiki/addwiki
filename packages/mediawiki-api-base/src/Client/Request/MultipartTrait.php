@@ -20,7 +20,7 @@ trait MultipartTrait {
 	 * @return bool Have any multipart parameter been set?
 	 */
 	public function hasMultipartParams(): bool {
-		return !$this->multipartParams === [];
+		return $this->multipartParams !== [];
 	}
 
 	/**

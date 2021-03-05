@@ -81,6 +81,7 @@ class FileUploader extends Service {
 			$params['url'] = $location;
 		}
 
+		// TODO force this POST to be a multipart...!
 		$response = $this->api->request( ActionRequest::simplePost( 'upload', $params ) );
 		return ( $response['upload']['result'] === 'Success' );
 	}
