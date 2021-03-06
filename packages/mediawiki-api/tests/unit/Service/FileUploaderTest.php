@@ -2,22 +2,14 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Service;
 
-use Addwiki\Mediawiki\Api\Client\MediawikiApi;
-use Addwiki\Mediawiki\Api\Client\SimpleRequest;
-use Addwiki\Mediawiki\Api\Service\PagePurger;
-use Addwiki\Mediawiki\DataModel\Page;
-use Addwiki\Mediawiki\DataModel\PageIdentifier;
-use Addwiki\Mediawiki\DataModel\Pages;
-use Addwiki\Mediawiki\DataModel\Title;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Tokens;
+use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Service\FileUploader;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Addwiki\Mediawiki\Api\Client\Action\Tokens;
-use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
-use ReflectionObject;
-use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 
 class FileUploaderTest extends TestCase {
 
@@ -144,7 +136,10 @@ class FileUploaderTest extends TestCase {
 						$foundParts++;
 					}
 					if ( $expectedPart['name'] === 'chunk' && $expectedPart['name'] == $actualPart['name'] ) {
-						$this->assertStringContainsString( 'form-data; name="chunk"; filename="file-uploader-test-', $actualPart['headers']['Content-Disposition'] );
+						$this->assertStringContainsString(
+							'form-data; name="chunk"; filename="file-uploader-test-',
+							$actualPart['headers']['Content-Disposition']
+						);
 						$this->assertIsString( $actualPart['contents'] );
 						$foundParts++;
 					}

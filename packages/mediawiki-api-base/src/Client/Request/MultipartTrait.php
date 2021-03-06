@@ -87,7 +87,7 @@ trait MultipartTrait {
 	}
 
 	private function paramsIncludesResource(): bool {
-		if ( !$this instanceof HasParameters ){
+		if ( !$this instanceof HasParameters ) {
 			return false;
 		}
 
