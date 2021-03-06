@@ -4,11 +4,6 @@ set -x
 
 if [ ! -f entrypoint-done.txt ]; then
 
-    # Grab Wikibase
-    # TODO some test container should just be created with this in...
-    curl -LO https://extdist.wmflabs.org/dist/extensions/Wikibase-REL1_35-ea86f45.tar.gz
-    tar -xzf Wikibase-REL1_35-ea86f45.tar.gz -C extensions
-
     # Wait for the DB to be ready?
     /wait-for-it.sh $MYSQL_SERVER:3306 -t 300
     sleep 1
