@@ -22,7 +22,8 @@ trait MultipartTrait {
 	}
 
 	public function setMultipart( bool $multipart ): self {
-		return $this->isMultipart = $multipart;
+		$this->isMultipart = $multipart;
+		return $this;
 	}
 
 	/**
