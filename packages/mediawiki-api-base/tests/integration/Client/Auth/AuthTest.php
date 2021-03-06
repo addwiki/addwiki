@@ -4,7 +4,6 @@ namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Auth;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
@@ -32,35 +31,36 @@ class AuthTest extends TestCase {
 	}
 
 	public function testNoAuth() {
-		$this->assertAnon( BaseTestEnvironment::newInstance()->getApi( new NoAuth() ) );
+		$this->assertAnon( BaseTestEnvironment::newInstance()->getActionApi( new NoAuth() ) );
 	}
 
 	public function testUsernamePasswordAuth() {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getUserAndPasswordAuth();
-		$api = $env->getApi( $auth );
+		$api = $env->getActionApi( $auth );
 		$this->assertUserLoggedIn( $auth->getUsername(), $api );
 	}
 
 	public function testOAuthAuthGet() {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getOAuthOwnerConsumerAuth();
-		$api = $env->getApi( $auth );
+		$api = $env->getActionApi( $auth );
 		$this->assertUserLoggedIn( 'CIUser', $api );
 	}
 
 	public function testOAuthAuthPost() {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getOAuthOwnerConsumerAuth();
-		$api = $env->getApi( $auth );
+		$api = $env->getActionApi( $auth );
 		$this->assertUserLoggedInUsingPost( 'CIUser', $api );
 	}
 
 	public function testOAuthAuthPostMultipart() {
 		$env = BaseTestEnvironment::newInstance();
 		$auth = $env->getOAuthOwnerConsumerAuth();
-		$api = $env->getApi( $auth );
-		$multiRequest = new MultipartRequest();
+		$api = $env->getActionApi( $auth );
+		$multiRequest = new ActionRequest();
+		$multiRequest->setMultipart( true );
 		$multiRequest->setMethod( 'POST' );
 		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
 		$this->assertSame( 'CIUser', $api->request( $multiRequest )['query']['userinfo']['name'] );

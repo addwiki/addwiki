@@ -44,6 +44,10 @@
         "wikibase/data-model-serialization": "~2.0",
         "wikibase/data-model-services": "~3.0"
     },
+    "suggest": {
+        "ext-dom": "Needed if you want to discover APIs using only page URLs",
+        "ext-simplexml": "Needed if you want to discover APIs using only page URLs"
+    },
     "autoload-dev": {
         "psr-4": {
             "Addwiki\\Mediawiki\\Api\\Tests\\Integration\\": [

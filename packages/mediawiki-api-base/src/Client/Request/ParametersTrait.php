@@ -2,8 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Request;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
-
+/**
+ * Must be used in conjunction with HasMethod
+ */
 trait ParametersTrait {
 
 	private array $params = [];
@@ -27,30 +28,14 @@ trait ParametersTrait {
 		return $this;
 	}
 
-	/**
-	 * Must be used in conjunction with HasMethod
-	 */
 	public function getParameterEncoding(): string {
 		if ( $this->getMethod() === 'GET' ) {
 			return self::ENCODING_QUERY;
 		}
-		return $this->getParameterEncodingForPost();
-	}
-
-	private function getParameterEncodingForPost(): string {
-		if ( $this instanceof MultipartRequest || $this->paramsIncludesResource() ) {
+		if ( $this instanceof HasMultipartAbility && $this->isMultipart() ) {
 			return self::ENCODING_MULTIPART;
 		}
 		return self::ENCODING_FORMPARAMS;
-	}
-
-	private function paramsIncludesResource(): bool {
-		foreach ( $this->getParams() as $value ) {
-			if ( is_resource( $value ) ) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

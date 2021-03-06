@@ -2,7 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action\Request;
 
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Exception;
 
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class MultipartRequestTest extends TestCase {
 
 	public function testBasics(): void {
-		$request = new MultipartRequest();
+		$request = new ActionRequest();
 		$this->assertEquals( [], $request->getMultipartParams() );
 
 		// One parameter.
@@ -41,7 +41,7 @@ class MultipartRequestTest extends TestCase {
 			Exception::class,
 			"Parameter 'testparam' is not already set on this request."
 		);
-		$request = new MultipartRequest();
+		$request = new ActionRequest();
 		$request->addMultipartParams( [ 'testparam' => [] ] );
 	}
 }

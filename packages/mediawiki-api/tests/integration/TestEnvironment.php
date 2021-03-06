@@ -46,8 +46,8 @@ class TestEnvironment {
 
 		$this->apiUrl = $apiUrl;
 		$this->pageUrl = str_replace( 'api.php', 'index.php?title=Special:SpecialPages', $apiUrl );
-		$this->api = ActionApi::newFromApiEndpoint( $this->apiUrl );
-		$this->apiAuthed = ActionApi::newFromApiEndpoint( $this->apiUrl, new UserAndPassword( 'CIUser', 'LongCIPass123' ) );
+		$this->api = new ActionApi( $this->apiUrl );
+		$this->apiAuthed = new ActionApi( $this->apiUrl, new UserAndPassword( 'CIUser', 'LongCIPass123' ) );
 	}
 
 	/**

@@ -1,5 +1,7 @@
 # Multipart requests
 
+This has changed in 3.0, and all requests are multipartable!
+
 The MultipartRequest class can be used if you need a FluentRequest that has more parameters to be set on individual parts of a multipart request.
 
 The name is a slight misnomer, because either of the other two Request classes (SimpleRequest and FluentRequest) will also end up being multipart requests if you pass any parameters of type Resource.

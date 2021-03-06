@@ -11,7 +11,7 @@ class TokensTest extends TestCase {
 	 * @dataProvider provideTokenTypes
 	 */
 	public function testGetAnonUserToken(): void {
-		$api = BaseTestEnvironment::newInstance()->getApi();
+		$api = BaseTestEnvironment::newInstance()->getActionApi();
 		$this->assertEquals( '+\\', $api->getToken() );
 	}
 

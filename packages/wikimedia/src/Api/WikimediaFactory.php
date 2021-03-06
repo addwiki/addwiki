@@ -26,7 +26,7 @@ class WikimediaFactory {
 	 * @param AuthMethod|null $auth
 	 */
 	public function newMediawikiApiForDomain( string $domain, AuthMethod $auth = null ): ActionApi {
-		return ActionApi::newFromApiEndpoint( 'https://' . $domain . '/w/api.php', $auth );
+		return new ActionApi( 'https://' . $domain . '/w/api.php', $auth );
 	}
 
 	/**
