@@ -3,12 +3,12 @@
 namespace Addwiki\Mediawiki\Api\Tests\Integration;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Tokens;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\OAuthOwnerConsumer;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
+use Addwiki\Mediawiki\Api\Client\Rest\RestApi;
 use Exception;
-use Addwiki\Mediawiki\Api\Client\Action\RestApi;
-use Addwiki\Mediawiki\Api\Client\Action\Tokens;
 
 class BaseTestEnvironment {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Mediawiki\Api\Client\Action;
+namespace Addwiki\Mediawiki\Api\Client\Rest;
 
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Addwiki\Mediawiki\Api\Client\Action\Tokens;
+use Addwiki\Mediawiki\Api\Client\Rest\Request\HasJsonBody;
 
 class RestApi implements Requester, LoggerAwareInterface {
 
@@ -46,7 +48,7 @@ class RestApi implements Requester, LoggerAwareInterface {
 		}
 
 		if ( $tokens === null ) {
-			throw new \InvalidArgumentException( 'tokens must be set?' )
+			throw new \InvalidArgumentException( 'tokens must be set?' );
 		}
 
 		$this->apiUrl = $apiUrl;
@@ -99,7 +101,7 @@ class RestApi implements Requester, LoggerAwareInterface {
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			$request->getMethod(),
-			$this->apiUrl,
+			$this->apiUrl . $request->getPath(),
 			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
@@ -115,7 +117,7 @@ class RestApi implements Requester, LoggerAwareInterface {
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			$request->getMethod(),
-			$this->apiUrl,
+			$this->apiUrl . $request->getPath(),
 			$this->getClientRequestOptions( $request, $request->getParameterEncoding() )
 		);
 
@@ -144,10 +146,16 @@ class RestApi implements Requester, LoggerAwareInterface {
 			$params = $this->encodeMultipartParams( $request, $params );
 		}
 
-		return [
+		$options = [
 			$paramsKey => $params,
 			'headers' => array_merge( $this->getDefaultHeaders(), $request->getHeaders() ),
 		];
+
+		if ( $request instanceof HasJsonBody ) {
+			$options['json'] = $request->getJsonBody();
+		}
+
+		return $options;
 	}
 
 	/**
