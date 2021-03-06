@@ -60,11 +60,9 @@ class AuthTest extends TestCase {
 		$auth = $env->getOAuthOwnerConsumerAuth();
 		$api = $env->getActionApi( $auth );
 		$multiRequest = new ActionRequest();
+		$multiRequest->setMultipart( true );
 		$multiRequest->setMethod( 'POST' );
-		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo', 'chunk' => 1 ] );
-		$multiRequest->setMultipartParams( [
-			'chunk' => [ 'headers' => [ 'Content-Disposition' => 'inline' ] ],
-		] );
+		$multiRequest->setParams( [ 'action' => 'query', 'meta' => 'userinfo' ] );
 		$this->assertSame( 'CIUser', $api->request( $multiRequest )['query']['userinfo']['name'] );
 	}
 
