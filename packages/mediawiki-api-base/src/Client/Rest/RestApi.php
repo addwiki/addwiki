@@ -2,12 +2,14 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Rest;
 
+use Addwiki\Mediawiki\Api\Client\Action\Tokens;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
 use Addwiki\Mediawiki\Api\Client\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Request\Requester;
+use Addwiki\Mediawiki\Api\Client\Rest\Request\HasJsonBody;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
@@ -16,8 +18,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Addwiki\Mediawiki\Api\Client\Action\Tokens;
-use Addwiki\Mediawiki\Api\Client\Rest\Request\HasJsonBody;
 
 class RestApi implements Requester, LoggerAwareInterface {
 

@@ -2,10 +2,9 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Integration\Client\Action;
 
-use Addwiki\Mediawiki\Api\Client\Rest\RestApi;
+use Addwiki\Mediawiki\Api\Client\Rest\Request\RestRequest;
 use Addwiki\Mediawiki\Api\Tests\Integration\BaseTestEnvironment;
 use PHPUnit\Framework\TestCase;
-use Addwiki\Mediawiki\Api\Client\Rest\Request\RestRequest;
 
 class RestApiTest extends TestCase {
 
