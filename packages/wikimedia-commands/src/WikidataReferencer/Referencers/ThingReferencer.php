@@ -110,6 +110,7 @@ class ThingReferencer implements Referencer {
 							new EditInfo( urldecode( $sourceUrl ), EditInfo::NOTMINOR, EditInfo::BOT )
 						);
 						// NOTE: keep our in memory item copy up to date (yay such reference passing)
+						/** @psalm-suppress InvalidArgument */
 						$statement->addNewReference( $newReference->getSnaks() );
 						++$referenceCounter;
 					} catch ( UsageException $usageException ) {
