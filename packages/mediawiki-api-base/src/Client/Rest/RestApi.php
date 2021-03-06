@@ -2,8 +2,6 @@
 
 namespace Addwiki\Mediawiki\Api\Client\Action;
 
-use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
-use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
@@ -19,7 +17,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class ActionApi implements Requester, LoggerAwareInterface {
+class RestApi implements Requester, LoggerAwareInterface {
 
 	private string $apiUrl;
 	private AuthMethod $auth;
@@ -29,15 +27,13 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	private ?ClientInterface $client = null;
 	private Tokens $tokens;
-
-	private ?string $version = null;
 	private LoggerInterface $logger;
 
 	/**
 	 * @param string $apiUrl The API Url
 	 * @param AuthMethod|null $auth Auth method to use. null for NoAuth
 	 * @param ClientInterface|null $client Guzzle Client
-	 * @param Tokens|null $tokens Inject a custom tokens object here
+	 * @param Tokens|null $tokens Inject a custom tokens here
 	 */
 	public function __construct(
 		string $apiUrl,
@@ -48,8 +44,9 @@ class ActionApi implements Requester, LoggerAwareInterface {
 		if ( $auth === null ) {
 			$auth = new NoAuth();
 		}
+
 		if ( $tokens === null ) {
-			$tokens = new Tokens( $this );
+			throw new \InvalidArgumentException( 'tokens must be set?' )
 		}
 
 		$this->apiUrl = $apiUrl;
@@ -96,10 +93,9 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 *
 	 * @return PromiseInterface
 	 *         Normally promising an array, though can be mixed (json_decode result)
-	 *         Can throw UsageExceptions or RejectionExceptions
+	 *         Can throw RejectionExceptions
 	 */
 	public function requestAsync( Request $request ): PromiseInterface {
-		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$promise = $this->getClient()->requestAsync(
 			$request->getMethod(),
@@ -116,7 +112,6 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 * @return mixed Normally an array
 	 */
 	public function request( Request $request ) {
-		$request->setParam( 'format', 'json' );
 		$request = $this->auth->preRequestAuth( $request, $this );
 		$response = $this->getClient()->request(
 			$request->getMethod(),
@@ -131,14 +126,9 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 * @param ResponseInterface $response
 	 *
 	 * @return mixed
-	 * @throws \Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException
 	 */
 	private function decodeResponse( ResponseInterface $response ) {
 		$resultArray = json_decode( $response->getBody(), true );
-
-		$this->logWarnings( $resultArray );
-		$this->throwUsageExceptions( $resultArray );
-
 		return $resultArray;
 	}
 
@@ -208,66 +198,6 @@ class ActionApi implements Requester, LoggerAwareInterface {
 		return 'addwiki-mediawiki-client';
 	}
 
-	private function logWarnings( $result ): void {
-		if ( is_array( $result ) ) {
-			// Let's see if there is 'warnings' key on the first level of the array...
-			if ( $this->logWarning( $result ) ) {
-				return;
-			}
-
-			// ...if no then go one level deeper and check there for it.
-			foreach ( $result as $value ) {
-				if ( !is_array( $value ) ) {
-					continue;
-				}
-
-				$this->logWarning( $value );
-			}
-		}
-	}
-
-	/**
-	 * @param array $array Array response to look for warning in.
-	 *
-	 * @return bool Whether any warning has been logged or not.
-	 */
-	protected function logWarning( array $array ): bool {
-		$found = false;
-
-		if ( !array_key_exists( 'warnings', $array ) ) {
-			return false;
-		}
-
-		foreach ( $array['warnings'] as $module => $warningData ) {
-			// Accommodate both formatversion=2 and old-style API results
-			$logPrefix = $module . ': ';
-			if ( isset( $warningData['*'] ) ) {
-				$this->logger->warning( $logPrefix . $warningData['*'], [ 'data' => $warningData ] );
-			} elseif ( isset( $warningData['warnings'] ) ) {
-				$this->logger->warning( $logPrefix . $warningData['warnings'], [ 'data' => $warningData ] );
-			} else {
-				$this->logger->warning( $logPrefix, [ 'data' => $warningData ] );
-			}
-
-			$found = true;
-		}
-
-		return $found;
-	}
-
-	/**
-	 * @throws UsageException
-	 */
-	private function throwUsageExceptions( $result ): void {
-		if ( is_array( $result ) && array_key_exists( 'error', $result ) ) {
-			throw new UsageException(
-				$result['error']['code'],
-				$result['error']['info'],
-				$result
-			);
-		}
-	}
-
 	public function getToken( $type = 'csrf' ): string {
 		return $this->tokens->get( $type );
 	}
@@ -277,22 +207,6 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	public function clearTokens(): void {
 		$this->tokens->clear();
-	}
-
-	public function getVersion(): string {
-		if ( $this->version === null ) {
-			$result = $this->request( ActionRequest::simpleGet( 'query', [
-				'meta' => 'siteinfo',
-				'continue' => '',
-			] ) );
-			preg_match(
-				'#\d+(?:\.\d+)+#',
-				$result['query']['general']['generator'],
-				$versionParts
-			);
-			$this->version = $versionParts[0];
-		}
-		return $this->version;
 	}
 
 }
