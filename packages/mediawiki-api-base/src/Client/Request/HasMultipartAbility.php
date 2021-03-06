@@ -11,11 +11,15 @@ namespace Addwiki\Mediawiki\Api\Client\Request;
 interface HasMultipartAbility {
 
 	/**
-	 * @return bool Have any multipart parameter been set?
-	 * @todo rename to isMultipart ?
-	 * @todo add method to setIsMultipart
+	 * @return bool Is this a multipart request?
 	 */
-	public function hasMultipartParams(): bool;
+	public function isMultipart(): bool;
+
+	/**
+	 * @param bool $multipart Force the request to be a multipart request
+	 * @return $this
+	 */
+	public function setMultipart( bool $multipart ): self;
 
 	/**
 	 * Set all multipart parameters, replacing all existing ones.

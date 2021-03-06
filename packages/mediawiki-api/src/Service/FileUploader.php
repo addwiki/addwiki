@@ -82,7 +82,7 @@ class FileUploader extends Service {
 		}
 
 		// TODO force this POST to be a multipart...!
-		$response = $this->api->request( ActionRequest::simplePost( 'upload', $params ) );
+		$response = $this->api->request( ActionRequest::simplePost( 'upload', $params )->setMultipart( true ) );
 		return ( $response['upload']['result'] === 'Success' );
 	}
 

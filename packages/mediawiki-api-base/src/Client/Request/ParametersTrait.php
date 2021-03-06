@@ -32,27 +32,10 @@ trait ParametersTrait {
 		if ( $this->getMethod() === 'GET' ) {
 			return self::ENCODING_QUERY;
 		}
-		return $this->getParameterEncodingForPost();
-	}
-
-	private function getParameterEncodingForPost(): string {
-		$methodExists = method_exists( $this, 'hasMultipartParams' );
-		if (
-			( $methodExists && $this->hasMultipartParams() ) ||
-			$this->paramsIncludesResource()
-		) {
+		if ( $this instanceof HasMultipartAbility && $this->isMultipart() ) {
 			return self::ENCODING_MULTIPART;
 		}
 		return self::ENCODING_FORMPARAMS;
-	}
-
-	private function paramsIncludesResource(): bool {
-		foreach ( $this->getParams() as $value ) {
-			if ( is_resource( $value ) ) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

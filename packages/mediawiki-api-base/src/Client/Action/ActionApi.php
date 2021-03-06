@@ -172,7 +172,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
-		$multipartParams = ( $request->hasMultipartParams() )
+		$multipartParams = ( $request->isMultipart() )
 			? $request->getMultipartParams()
 			: [];
 		return array_map(

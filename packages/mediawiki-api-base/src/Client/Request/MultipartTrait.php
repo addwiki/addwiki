@@ -14,13 +14,15 @@ use Exception;
  */
 trait MultipartTrait {
 
+	private bool $isMultipart = false;
 	private array $multipartParams = [];
 
-	/**
-	 * @return bool Have any multipart parameter been set?
-	 */
-	public function hasMultipartParams(): bool {
-		return $this->multipartParams !== [];
+	public function isMultipart(): bool {
+		return $this->isMultipart || $this->paramsIncludesResource();
+	}
+
+	public function setMultipart( bool $multipart ): self {
+		return $this->isMultipart = $multipart;
 	}
 
 	/**
@@ -33,6 +35,7 @@ trait MultipartTrait {
 	 * @return $this
 	 */
 	public function setMultipartParams( array $params ): self {
+		$this->isMultipart = true;
 		$this->checkMultipartParams( $params );
 		$this->multipartParams = $params;
 		return $this;
@@ -49,6 +52,7 @@ trait MultipartTrait {
 	 * @return $this
 	 */
 	public function addMultipartParams( array $params ): self {
+		$this->isMultipart = true;
 		$this->checkMultipartParams( $params );
 		$this->multipartParams = array_merge( $this->multipartParams, $params );
 		return $this;
@@ -80,4 +84,18 @@ trait MultipartTrait {
 			}
 		}
 	}
+
+	private function paramsIncludesResource(): bool {
+		if ( !$this instanceof HasParameters ){
+			return false;
+		}
+
+		foreach ( $this->getParams() as $value ) {
+			if ( is_resource( $value ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
