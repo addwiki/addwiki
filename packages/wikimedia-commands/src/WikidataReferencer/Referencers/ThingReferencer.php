@@ -30,8 +30,8 @@ class ThingReferencer implements Referencer {
 
 	/**
 	 * @param WikibaseFactory $wikibaseFactory
-	 * @param string[] $propMap of propertyId strings to schema.org properties
-	 *          eg. 'P57' => 'director'
+	 * @param string[]|array[] $propMap of propertyId strings to schema.org properties
+	 *          eg. 'P57' => 'director' OR 'P57' => [ 'director', 'foo' ]
 	 */
 	public function __construct( WikibaseFactory $wikibaseFactory, array $propMap ) {
 		$this->wikibaseFactory = $wikibaseFactory;
