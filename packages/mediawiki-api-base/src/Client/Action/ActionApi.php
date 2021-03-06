@@ -4,18 +4,13 @@ namespace Addwiki\Mediawiki\Api\Client\Action;
 
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\MultipartRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPasswordWithDomain;
 use Addwiki\Mediawiki\Api\Client\Request\Request;
 use Addwiki\Mediawiki\Api\Client\Request\Requester;
-use Addwiki\Mediawiki\Api\Client\RsdException;
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
-use DOMDocument;
-use DOMXPath;
-use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -23,7 +18,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use SimpleXMLElement;
 
 class ActionApi implements Requester, LoggerAwareInterface {
 
@@ -38,64 +32,6 @@ class ActionApi implements Requester, LoggerAwareInterface {
 
 	private ?string $version = null;
 	private LoggerInterface $logger;
-
-	/**
-	 * @param string $apiEndpoint e.g. https://en.wikipedia.org/w/api.php
-	 * @param AuthMethod|null $auth
-	 *
-	 * @return self returns a MediawikiApi instance using $apiEndpoint
-	 */
-	public static function newFromApiEndpoint( string $apiEndpoint, AuthMethod $auth = null ): ActionApi {
-		return new self( $apiEndpoint, $auth );
-	}
-
-	/**
-	 * Create a new MediawikiApi object from a URL to any page in a MediaWiki website.
-	 *
-	 * @see https://en.wikipedia.org/wiki/Really_Simple_Discovery
-	 *
-	 * @param string $url e.g. https://en.wikipedia.org OR https://de.wikipedia.org/wiki/Berlin
-	 * @param AuthMethod|null $auth
-	 *
-	 * @return self returns a MediawikiApi instance using the apiEndpoint provided by the RSD
-	 *              file accessible on all Mediawiki pages
-	 * @throws RsdException If the RSD URL could not be found in the page's HTML.
-	 */
-	public static function newFromPage( string $url, AuthMethod $auth = null ): ActionApi {
-		// Set up HTTP client and HTML document.
-		$tempClient = new Client( [ 'headers' => [ 'User-Agent' => 'addwiki-mediawiki-client' ] ] );
-		$pageHtml = $tempClient->get( $url )->getBody();
-		$pageDoc = new DOMDocument();
-
-		// Try to load the HTML (turn off errors temporarily; most don't matter, and if they do get
-		// in the way of finding the API URL, will be reported in the RsdException below).
-		$internalErrors = libxml_use_internal_errors( true );
-		$pageDoc->loadHTML( $pageHtml );
-		$libXmlErrors = libxml_get_errors();
-		libxml_use_internal_errors( $internalErrors );
-
-		// Extract the RSD link.
-		$xpath = 'head/link[@type="application/rsd+xml"][@href]';
-		$link = ( new DOMXpath( $pageDoc ) )->query( $xpath );
-		if ( $link->length === 0 ) {
-			// Format libxml errors for display.
-			$libXmlErrorStr = array_reduce( $libXmlErrors, fn( $prevErr, $err ) => $prevErr . ', ' . $err->message . ' (line ' . $err->line . ')' );
-			if ( $libXmlErrorStr ) {
-				$libXmlErrorStr = sprintf( 'In addition, libxml had the following errors: %s', $libXmlErrorStr );
-			}
-			throw new RsdException( sprintf( 'Unable to find RSD URL in page: %s %s', $url, $libXmlErrorStr ) );
-		}
-		$linkItem = $link->item( 0 );
-		if ( ( $linkItem->attributes ) === null ) {
-			throw new RsdException( 'Unexpected RSD fetch error' );
-		}
-		/** @psalm-suppress NullReference */
-		$rsdUrl = $linkItem->attributes->getNamedItem( 'href' )->nodeValue;
-
-		// Then get the RSD XML, and return the API link.
-		$rsdXml = new SimpleXMLElement( $tempClient->get( $rsdUrl )->getBody() );
-		return self::newFromApiEndpoint( (string)$rsdXml->service->apis->api->attributes()->apiLink, $auth );
-	}
 
 	/**
 	 * @param string $apiUrl The API Url
@@ -126,7 +62,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 
 	/**
 	 * Get the API URL (the URL to which API requests are sent, usually ending in api.php).
-	 * This is useful if you've created this object via MediawikiApi::newFromPage().
+	 * This is useful if you have this object without knowing the actual api URL
 	 *
 	 * @return string The API URL.
 	 */
@@ -227,7 +163,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	/**
 	 * Turn the normal key-value array of request parameters into a multipart array where each
 	 * parameter is a new array with a 'name' and 'contents' elements (and optionally more, if the
-	 * request is a MultipartRequest).
+	 * request has multipart params).
 	 *
 	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
@@ -236,7 +172,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
-		$multipartParams = ( $request instanceof MultipartRequest )
+		$multipartParams = ( $request->isMultipart() )
 			? $request->getMultipartParams()
 			: [];
 		return array_map(
