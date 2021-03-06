@@ -5,9 +5,9 @@
 - Installable with 7.4+ (including PHP8)
 - Typing added throughout
 - PSR4 namespacing. Now in `Addwiki\Mediawiki\Api`
-- Client classes, such as `MediaWikiApi`, moved to `Addwiki\Mediawiki\Api`
+- `RestApi` added
 - `ApiUser` replaced by `UserAndPassword` and `UserAndPasswordWithDomain`
-- `MediawikiApi` constructor signature changed
+- OAuth Authentication added
 - `SimpleRequest` now extends `FluentRequest`
 - `assert` API parameter is automatically added to requests based on the auth method selected
 

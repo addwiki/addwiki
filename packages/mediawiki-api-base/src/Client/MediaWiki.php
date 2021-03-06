@@ -6,6 +6,7 @@ use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Discovery\ReallySimpleDiscovery;
+use Addwiki\Mediawiki\Api\Client\Rest\RestApi;
 
 /**
  * Client encompassing both REST and Action MediaWiki APIs
@@ -13,6 +14,7 @@ use Addwiki\Mediawiki\Api\Client\Discovery\ReallySimpleDiscovery;
 class MediaWiki {
 
 	private const ACTION_PHP = 'api.php';
+	private const REST_PHP = 'rest.php';
 
 	private string $baseUrl;
 	private AuthMethod $auth;
@@ -56,8 +58,11 @@ class MediaWiki {
 		return $this->action;
 	}
 
-	public function rest() {
-		// TODO when implementing REST
+	public function rest(): RestApi {
+		if ( !$this->rest ) {
+			$this->rest = new RestApi( $this->baseUrl . self::REST_PHP, $this->auth );
+		}
+		return $this->rest;
 	}
 
 }
