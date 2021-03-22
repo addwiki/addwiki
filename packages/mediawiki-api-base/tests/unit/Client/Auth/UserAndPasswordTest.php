@@ -2,13 +2,13 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Auth;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -87,7 +87,6 @@ class UserAndPasswordTest extends TestCase {
 	}
 
 	/**
-	 * @return array <int|string mixed[]>
 	 * @return array<int|string, mixed[]>
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {

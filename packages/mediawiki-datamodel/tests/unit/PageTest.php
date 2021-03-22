@@ -2,11 +2,11 @@
 
 namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revisions;
 use Addwiki\Mediawiki\DataModel\Title;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**

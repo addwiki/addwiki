@@ -164,7 +164,6 @@ class RestApi implements Requester, LoggerAwareInterface {
 	 * @param Request $request The request to which the parameters belong.
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
-	 * @return array <int mixed[]>
 	 * @return array<int, mixed[]>
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {

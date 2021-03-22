@@ -16,7 +16,7 @@ class Revision {
 
 	/**
 	 * @param PageIdentifier $pageIdentifier
-	 * @param EditInfo $editInfo
+	 * @param EditInfo|null $editInfo
 	 */
 	public function __construct(
 		Content $content,

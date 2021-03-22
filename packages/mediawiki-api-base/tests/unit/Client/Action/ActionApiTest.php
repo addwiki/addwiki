@@ -2,11 +2,11 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -52,7 +52,6 @@ class ActionApiTest extends TestCase {
 	}
 
 	/**
-	 * @return array <int|string mixed[]>
 	 * @return array<int|string, mixed[]>
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {

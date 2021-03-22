@@ -2,7 +2,6 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Wikibase\DataModel\Entity\EntityDocument;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -11,6 +10,7 @@ use Addwiki\Wikibase\DataModel\ItemContent;
 use Addwiki\Wikibase\DataModel\PropertyContent;
 use Deserializers\Deserializer;
 use RuntimeException;
+use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\Property;

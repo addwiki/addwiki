@@ -2,9 +2,9 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
-use Comparable;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseApi;
+use Comparable;
 use UnexpectedValueException;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Item;
