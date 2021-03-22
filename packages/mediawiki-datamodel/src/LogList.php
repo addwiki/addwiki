@@ -41,9 +41,6 @@ class LogList implements JsonSerializable {
 		}
 	}
 
-	/**
-	 * @param Log $log
-	 */
 	public function addLog( Log $log ): void {
 		$this->logs[$log->getId()] = $log;
 	}
@@ -52,9 +49,6 @@ class LogList implements JsonSerializable {
 		return array_key_exists( $id, $this->logs );
 	}
 
-	/**
-	 * @param Log $log
-	 */
 	public function hasLog( Log $log ): bool {
 		return array_key_exists( $log->getId(), $this->logs );
 	}

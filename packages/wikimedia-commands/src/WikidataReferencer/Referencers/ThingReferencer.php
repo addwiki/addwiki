@@ -29,7 +29,6 @@ class ThingReferencer implements Referencer {
 	private EntityId $lastEntityId;
 
 	/**
-	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[]|array[] $propMap of propertyId strings to schema.org properties
 	 *          eg. 'P57' => 'director' OR 'P57' => [ 'director', 'foo' ]
 	 */

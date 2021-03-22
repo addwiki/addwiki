@@ -38,7 +38,6 @@ class DataModelUtils {
 	}
 
 	/**
-	 * @param Fingerprint $fingerprint
 	 *
 	 * @return string[]
 	 */

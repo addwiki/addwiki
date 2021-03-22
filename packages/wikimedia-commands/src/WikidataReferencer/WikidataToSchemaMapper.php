@@ -33,8 +33,6 @@ class WikidataToSchemaMapper {
 	/**
 	 * This method needs to be changed to allow the script to know how to create more references.
 	 *
-	 * @param WikibaseFactory $wikibaseFactory
-	 * @param SparqlQueryRunner $sparqlQueryRunner
 	 *
 	 * @return array like array( 'Schema.org_type' => Referencer[] )
 	 */

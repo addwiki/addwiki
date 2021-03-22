@@ -42,23 +42,14 @@ class EditInfo {
 		$this->maxlag = $maxlag;
 	}
 
-	/**
-	 * @return EditInfo::BOT|EditInfo::NOTBOT
-	 */
 	public function getBot(): bool {
 		return $this->bot;
 	}
 
-	/**
-	 * @return EditInfo::MINOR|EditInfo::NOTMINOR
-	 */
 	public function getMinor(): bool {
 		return $this->minor;
 	}
 
-	/**
-	 * @return int|null
-	 */
 	public function getMaxlag(): ?int {
 		return $this->maxlag;
 	}

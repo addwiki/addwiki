@@ -30,7 +30,6 @@ class DateReferencer implements Referencer {
 	private PhpDateTimeParser $timeParser;
 
 	/**
-	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[] $propMap of propertyId strings to schema.org properties
 	 *          eg. 'P577' => 'datePublished'
 	 */
@@ -44,9 +43,6 @@ class DateReferencer implements Referencer {
 		);
 	}
 
-	/**
-	 * @return int
-	 */
 	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int {
 		$referenceCounter = 0;
 

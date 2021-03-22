@@ -40,9 +40,6 @@ class Revisions {
 		}
 	}
 
-	/**
-	 * @param Revision $revision
-	 */
 	public function addRevision( Revision $revision ): void {
 		$this->revisions[$revision->getId()] = $revision;
 	}
@@ -51,9 +48,6 @@ class Revisions {
 		return array_key_exists( $id, $this->revisions );
 	}
 
-	/**
-	 * @param Revision $revision
-	 */
 	public function hasRevision( Revision $revision ): bool {
 		return array_key_exists( $revision->getId(), $this->revisions );
 	}
