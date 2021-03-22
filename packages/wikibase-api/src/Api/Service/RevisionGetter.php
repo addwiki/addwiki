@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
+use Wikibase\DataModel\Entity\EntityDocument;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
@@ -78,7 +79,7 @@ class RevisionGetter {
 	 * @return ItemContent|PropertyContent|void
 	 * @todo this could be factored into a different class?
 	 */
-	private function getContentFromEntity( $entity ) {
+	private function getContentFromEntity( EntityDocument $entity ) {
 		switch ( $entity->getType() ) {
 			case Item::ENTITY_TYPE:
 				return new ItemContent( $entity );

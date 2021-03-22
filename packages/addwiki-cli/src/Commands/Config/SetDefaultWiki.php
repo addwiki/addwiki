@@ -17,7 +17,7 @@ class SetDefaultWiki extends Command {
 		$this->appConfig = $appConfig;
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName( 'config:set:default:wiki' )
 			->setDescription( 'Sets the default wiki to be used by scripts' )
@@ -29,7 +29,7 @@ class SetDefaultWiki extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$code = $input->getArgument( 'code' );
 		$appConfigHasWiki = $this->appConfig->has( 'wikis.' . $code );
 

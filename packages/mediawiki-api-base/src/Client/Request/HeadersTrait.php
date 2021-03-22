@@ -6,6 +6,9 @@ trait HeadersTrait {
 
 	private array $headers = [];
 
+	/**
+	 * @return mixed[]
+	 */
 	public function getHeaders(): array {
 		return $this->headers;
 	}

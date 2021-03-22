@@ -70,7 +70,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 		return $this->apiUrl;
 	}
 
-	private function getClient(): ClientInterface {
+	private function getClient(): ?ClientInterface {
 		if ( !$this->client instanceof ClientInterface ) {
 			$clientFactory = new ClientFactory();
 			$clientFactory->setLogger( $this->logger );
@@ -169,6 +169,7 @@ class ActionApi implements Requester, LoggerAwareInterface {
 	 * @param string[] $params The existing parameters. Not the same as $request->getParams().
 	 *
 	 * @return array <int mixed[]>
+	 * @return array<int, mixed[]>
 	 */
 	private function encodeMultipartParams( Request $request, array $params ): array {
 		// See if there are any multipart parameters in this request.
@@ -192,6 +193,9 @@ class ActionApi implements Requester, LoggerAwareInterface {
 		);
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	private function getDefaultHeaders(): array {
 		return [
 			'User-Agent' => $this->getUserAgent(),

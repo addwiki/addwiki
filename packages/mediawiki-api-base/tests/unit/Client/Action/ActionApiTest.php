@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client\Action;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Action\Exception\UsageException;
 use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
@@ -52,6 +53,7 @@ class ActionApiTest extends TestCase {
 
 	/**
 	 * @return array <int|string mixed[]>
+	 * @return array<int|string, mixed[]>
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {
 		return [
@@ -106,6 +108,8 @@ class ActionApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideActionsParamsResults
+	 * @param array<string, string>|int[]|array<string, mixed[]> $expectedResult
+	 * @param array<string, string> $params
 	 */
 	public function testGetActionReturnsResult( array $expectedResult, string $action, array $params = [] ): void {
 		$client = $this->getMockClient();
@@ -123,6 +127,8 @@ class ActionApiTest extends TestCase {
 
 	/**
 	 * @dataProvider provideActionsParamsResults
+	 * @param array<string, string>|int[]|array<string, mixed[]> $expectedResult
+	 * @param array<string, string> $params
 	 */
 	public function testPostActionReturnsResult( array $expectedResult, string $action, array $params = [] ): void {
 		$client = $this->getMockClient();
@@ -177,6 +183,9 @@ class ActionApiTest extends TestCase {
 		$this->assertEquals( [ 'success ' => 1 ], $result );
 	}
 
+	/**
+	 * @return array<int, array<string|array<int|string, int|string|mixed[]>>>|array<int, array<string|array<int|string, int|string|mixed[]>|array<string, string>>>
+	 */
 	public function provideActionsParamsResults(): array {
 		return [
 			[ [ 'key' => 'value' ], 'logout' ],
@@ -205,6 +214,9 @@ class ActionApiTest extends TestCase {
 		$this->assertEquals( $expectedVersion, $api->getVersion() );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideVersions(): array {
 		return [
 			[ 'MediaWiki 1.25wmf13', '1.25' ],

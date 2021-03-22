@@ -25,6 +25,9 @@ class PageIdentifierTest extends TestCase {
 		$this->assertEquals( $identifiesPage, $pageIdentifier->identifiesPage() );
 	}
 
+	/**
+	 * @return array<int, array<int|Title|bool|null>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ null, null, false ],
@@ -34,6 +37,9 @@ class PageIdentifierTest extends TestCase {
 		];
 	}
 
+	/**
+	 * @return array<int, PageIdentifier[]>
+	 */
 	public function provideRoundTripObjects(): array {
 		return [
 		[ new PageIdentifier( null, null ) ],

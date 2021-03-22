@@ -13,6 +13,7 @@ class UserAndPasswordWithDomainTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param string $domain
 	 */
 	public function testValidConstruction( string $user, string $pass, ?string $domain = null ): void {
 		$userAndPasswordWithDomain = new UserAndPasswordWithDomain( $user, $pass, $domain );
@@ -21,6 +22,9 @@ class UserAndPasswordWithDomainTest extends TestCase {
 		$this->assertSame( $domain, $userAndPasswordWithDomain->getDomain() );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 			[ 'user', 'pass' ],
@@ -30,12 +34,16 @@ class UserAndPasswordWithDomainTest extends TestCase {
 
 	/**
 	 * @dataProvider provideInvalidConstruction
+	 * @param string $domain
 	 */
 	public function testInvalidConstruction( string $user, string $pass, ?string $domain = null ): void {
 		$this->expectException( InvalidArgumentException::class );
 		 new UserAndPasswordWithDomain( $user, $pass, $domain );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideInvalidConstruction(): array {
 		return [
 			[ 'user', '' ],
@@ -54,6 +62,9 @@ class UserAndPasswordWithDomainTest extends TestCase {
 		$this->assertSame( $shouldEqual, $user2->equals( $user1 ) );
 	}
 
+	/**
+	 * @return array<int, array<UserAndPasswordWithDomain|bool>>
+	 */
 	public function provideTestEquals(): array {
 		return [
 			[ new UserAndPasswordWithDomain( 'usera', 'passa' ), new UserAndPasswordWithDomain( 'usera', 'passa' ), true ],

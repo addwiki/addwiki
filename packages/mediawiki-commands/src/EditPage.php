@@ -26,7 +26,7 @@ class EditPage extends Command {
 		parent::__construct( null );
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$defaultWiki = $this->appConfig->offsetGet( 'defaults.wiki' );
 		$defaultUser = $this->appConfig->offsetGet( 'defaults.user' );
 
@@ -73,7 +73,7 @@ class EditPage extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$wiki = $input->getOption( 'wiki' );
 		$user = $input->getOption( 'user' );
 

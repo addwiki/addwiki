@@ -12,8 +12,9 @@ class NamespaceInfoTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param string[] $aliases
 	 */
-	public function testValidConstruction( int $id, string $canonicalName, string $localName, string $caseHandling, $defaultContentModel = null,
+	public function testValidConstruction( int $id, string $canonicalName, string $localName, string $caseHandling, string $defaultContentModel = null,
 		array $aliases = []
 	): void {
 		$namespace = new NamespaceInfo( $id, $canonicalName, $localName, $caseHandling, $defaultContentModel, $aliases );

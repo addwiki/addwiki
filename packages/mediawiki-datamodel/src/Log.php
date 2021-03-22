@@ -57,6 +57,9 @@ class Log implements JsonSerializable {
 		return $this->type;
 	}
 
+	/**
+	 * @return mixed[]
+	 */
 	public function getDetails(): array {
 		return $this->details;
 	}

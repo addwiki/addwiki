@@ -17,7 +17,7 @@ class SetDefaultUser extends Command {
 		$this->appConfig = $appConfig;
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName( 'config:set:default:user' )
 			->setDescription( 'Sets the default user to be used by scripts' )
@@ -29,7 +29,7 @@ class SetDefaultUser extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$code = $input->getArgument( 'code' );
 		$appConfigHasUser = $this->appConfig->has( 'users.' . $code );
 

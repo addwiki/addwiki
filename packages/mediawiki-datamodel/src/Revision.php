@@ -14,6 +14,10 @@ class Revision {
 	private ?string $user;
 	private ?string $timestamp;
 
+	/**
+	 * @param PageIdentifier $pageIdentifier
+	 * @param EditInfo $editInfo
+	 */
 	public function __construct(
 		Content $content,
 		?PageIdentifier $pageIdentifier = null,

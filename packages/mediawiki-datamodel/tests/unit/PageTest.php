@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\DataModel\Page;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revisions;
@@ -15,6 +16,7 @@ class PageTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param null|Revisions&\Addwiki\Mediawiki\DataModel\Tests\Unit\MockObject $revisions
 	 */
 	public function testValidConstruction( ?PageIdentifier $pageIdentifier, ?Revisions $revisions ): void {
 		$page = new Page( $pageIdentifier, $revisions );
@@ -26,6 +28,9 @@ class PageTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @return array<int, array<PageIdentifier|Revisions&\Addwiki\Mediawiki\DataModel\Tests\Unit\MockObject|null>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ null, null ],

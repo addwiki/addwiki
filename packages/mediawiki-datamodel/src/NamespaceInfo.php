@@ -14,6 +14,9 @@ class NamespaceInfo {
 	private ?string $defaultContentModel;
 	private array $aliases = [];
 
+	/**
+	 * @param mixed[] $aliases
+	 */
 	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {
 		$this->id = $id;
 		$this->canonicalName = $canonicalName;

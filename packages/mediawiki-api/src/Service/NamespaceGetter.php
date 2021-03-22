@@ -15,7 +15,7 @@ class NamespaceGetter extends Service {
 	 *
 	 * @return mixed|null
 	 */
-	public function getNamespaceByCanonicalName( string $canonicalName ) {
+	public function getNamespaceByCanonicalName( string $canonicalName ): ?NamespaceInfo {
 		$result = $this->getNamespaceResult()['query'];
 		foreach ( $result['namespaces'] as $nsInfo ) {
 			if ( !empty( $nsInfo['canonical'] ) && $nsInfo['canonical'] === $canonicalName ) {
@@ -30,7 +30,7 @@ class NamespaceGetter extends Service {
 	 *
 	 * @return mixed|null
 	 */
-	public function getNamespaceByName( string $name ) {
+	public function getNamespaceByName( string $name ): ?NamespaceInfo {
 		$result = $this->getNamespaceResult()['query'];
 		foreach ( $result['namespaces'] as $nsInfo ) {
 			if ( ( !empty( $nsInfo['canonical'] ) && $nsInfo['canonical'] === $name ) ||

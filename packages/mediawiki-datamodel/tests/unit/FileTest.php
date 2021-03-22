@@ -2,6 +2,7 @@
 
 namespace Addwiki\Mediawiki\DataModel\Tests\Unit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Addwiki\Mediawiki\DataModel\File;
 use Addwiki\Mediawiki\DataModel\PageIdentifier;
 use Addwiki\Mediawiki\DataModel\Revisions;
@@ -25,6 +26,9 @@ class FileTest extends TestCase {
 		$this->assertEquals( $url, $file->getUrl() );
 	}
 
+	/**
+	 * @return array<int, string[]>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ 'http://upload.wikimedia.org/wikipedia/en/3/39/Journal_of_Geek_Studies_-_logo.jpg' ],

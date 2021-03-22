@@ -20,6 +20,9 @@ class EditInfoTest extends TestCase {
 		$this->assertEquals( $bot, $flags->getBot() );
 	}
 
+	/**
+	 * @return array<int, array<string|bool>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ '', EditInfo::MINOR, EditInfo::BOT ],

@@ -23,6 +23,9 @@ class RevisionsTest extends TestCase {
 		$this->assertEquals( $expected, $revisions->toArray() );
 	}
 
+	/**
+	 * @return array<int, array<Revisions|Revision[]|array<int, Revision>>>
+	 */
 	public function provideValidConstruction(): array {
 		$mockContent = $this->getMockBuilder( Content::class )
 			->disableOriginalConstructor()

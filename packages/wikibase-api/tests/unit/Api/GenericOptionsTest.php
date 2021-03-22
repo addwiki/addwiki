@@ -36,6 +36,9 @@ class GenericOptionsTest extends TestCase {
 		new GenericOptions( $options );
 	}
 
+	/**
+	 * @return array<int, array<int|string|GenericOptions|null>>
+	 */
 	public function setOptionProvider(): array {
 		$argLists = [];
 

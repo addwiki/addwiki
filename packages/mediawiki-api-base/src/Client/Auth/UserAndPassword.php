@@ -83,6 +83,9 @@ class UserAndPassword implements AuthMethod {
 		return $request;
 	}
 
+	/**
+	 * @return mixed[]
+	 */
 	protected function additionalParamsForPreRequestAuthCall(): array {
 		return [];
 	}

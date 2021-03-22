@@ -21,6 +21,9 @@ class TitleTest extends TestCase {
 		$this->assertEquals( $ns, $titleObj->getNs() );
 	}
 
+	/**
+	 * @return array<int, array<int|string>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ 'fooo', 0 ],
@@ -37,6 +40,9 @@ class TitleTest extends TestCase {
 		new Title( $title, $ns );
 	}
 
+	/**
+	 * @return array<int, array<int|string>>
+	 */
 	public function provideInvalidConstruction(): array {
 		return [
 		[ '', 1 ],

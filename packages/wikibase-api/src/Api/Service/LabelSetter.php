@@ -2,6 +2,7 @@
 
 namespace Addwiki\Wikibase\Api\Service;
 
+use Comparable;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseApi;
 use UnexpectedValueException;
@@ -26,7 +27,7 @@ class LabelSetter {
 	 * @param EntityId|Item|Property|SiteLink $target
 	 * @param EditInfo|null $editInfo
 	 */
-	public function set( Term $label, $target, EditInfo $editInfo = null ): bool {
+	public function set( Term $label, Comparable $target, EditInfo $editInfo = null ): bool {
 		$this->throwExceptionsOnBadTarget( $target );
 
 		$params = $this->getTargetParamsFromTarget(
@@ -64,7 +65,7 @@ class LabelSetter {
 	 *
 	 * @todo Fix duplicated code
 	 */
-	private function getEntityIdentifierFromTarget( $target ) {
+	private function getEntityIdentifierFromTarget( Comparable $target ) {
 		if ( $target instanceof Item || $target instanceof Property ) {
 			return $target->getId();
 		} else {
@@ -80,7 +81,7 @@ class LabelSetter {
 	 *
 	 * @todo Fix duplicated code
 	 */
-	private function getTargetParamsFromTarget( $target ) {
+	private function getTargetParamsFromTarget( Comparable $target ) {
 		if ( $target instanceof EntityId ) {
 			return [ 'id' => $target->getSerialization() ];
 		} elseif ( $target instanceof SiteLink ) {
