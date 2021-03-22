@@ -84,6 +84,7 @@ trait MultipartTrait {
 	}
 
 	private function paramsIncludesResource(): bool {
+		/** @noRector \Rector\DeadCode\Rector\If_\RemoveDeadInstanceOfRector */
 		if ( !$this instanceof HasParameters ) {
 			return false;
 		}
