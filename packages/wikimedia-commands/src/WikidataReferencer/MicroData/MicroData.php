@@ -53,9 +53,6 @@ class MicroData {
 		}
 	}
 
-	/**
-	 * @return null|string
-	 */
 	public function getId(): ?string {
 		return $this->id;
 	}

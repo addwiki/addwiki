@@ -35,8 +35,6 @@ class EffectiveUrlMiddleware {
 	/**
 	 * Inject effective-url header into response.
 	 *
-	 * @param RequestInterface $request
-	 * @param array $options
 	 *
 	 * @return RequestInterface
 	 */

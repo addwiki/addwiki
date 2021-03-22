@@ -19,9 +19,7 @@ class SparqlQueryRunner {
 	}
 
 	/**
-	 * @param array $simpleQueryParts
 	 *     eg. 'P1:Q2' OR 'P5:?'
-	 *
 	 * @return ItemId[]
 	 */
 	public function getItemIdsForSimpleQueryParts( array $simpleQueryParts ): array {

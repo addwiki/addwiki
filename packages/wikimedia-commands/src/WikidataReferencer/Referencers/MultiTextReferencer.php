@@ -25,7 +25,6 @@ class MultiTextReferencer implements Referencer {
 	private array $regexMap = [];
 
 	/**
-	 * @param WikibaseFactory $wikibaseFactory
 	 * @param string[] $propMap of propertyId strings to schema.org properties
 	 *          eg. 'P136' => 'genre'
 	 * @param array $regexMap of propertyId strings to array of key itemIds and value regexes
@@ -37,9 +36,6 @@ class MultiTextReferencer implements Referencer {
 		$this->regexMap = $regexMap;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function addReferences( MicroData $microData, Item $item, string $sourceUrl ): int {
 		$referenceCounter = 0;
 
