@@ -42,6 +42,9 @@ class MediawikiFactoryTest extends TestCase {
 			->getMock();
 	}
 
+	/**
+	 * @return array<int, string[]>
+	 */
 	public function provideFactoryMethodsTest(): array {
 		return [
 			[ RevisionSaver::class, 'newRevisionSaver' ],

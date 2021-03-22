@@ -23,7 +23,7 @@ class Purge extends Command {
 		parent::__construct( null );
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$defaultWiki = $this->appConfig->offsetGet( 'defaults.wiki' );
 
 		$this
@@ -50,7 +50,7 @@ class Purge extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$pageIdentifiers = [];
 		foreach ( $input->getOption( 'pageid' ) as $pageId ) {
 			$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );

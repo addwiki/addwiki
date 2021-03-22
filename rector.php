@@ -55,8 +55,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 			SetList::PHP_72,
 			SetList::PHP_73,
 			SetList::PHP_74,
-			// Disabled until https://github.com/rectorphp/rector/issues/5612 is fixed
-			//SetList::TYPE_DECLARATION,
+			SetList::TYPE_DECLARATION,
 		]
 	);
 

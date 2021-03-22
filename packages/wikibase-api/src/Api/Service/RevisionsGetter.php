@@ -12,6 +12,7 @@ use Addwiki\Wikibase\DataModel\PropertyContent;
 use Deserializers\Deserializer;
 use InvalidArgumentException;
 use RuntimeException;
+use Wikibase\DataModel\Entity\EntityDocument;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\Property;
@@ -109,7 +110,7 @@ class RevisionsGetter {
 	 * @return ItemContent|PropertyContent|void
 	 * @todo this could be factored into a different class?
 	 */
-	private function getContentFromEntity( $entity ) {
+	private function getContentFromEntity( EntityDocument $entity ) {
 		switch ( $entity->getType() ) {
 			case Item::ENTITY_TYPE:
 				return new ItemContent( $entity );

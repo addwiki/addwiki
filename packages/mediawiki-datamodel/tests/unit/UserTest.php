@@ -13,6 +13,8 @@ class UserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideValidConstruction
+	 * @param array<string, mixed[]> $groups
+	 * @param mixed[] $rights
 	 */
 	public function testValidConstruction( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ): void {
 		$user = new User( $name, $id, $editcount, $registration, $groups, $rights, $gender );
@@ -26,6 +28,9 @@ class UserTest extends TestCase {
 		$this->assertEquals( $gender, $user->getGender() );
 	}
 
+	/**
+	 * @return array<int, array<int|string|mixed[]|array<string, mixed[]>|null>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'implicitgroups' => [] ], [], 'female' ],
@@ -36,12 +41,18 @@ class UserTest extends TestCase {
 
 	/**
 	 * @dataProvider provideInvalidConstruction
+	 * @param string $registration
+	 * @param array<string, mixed[]>|mixed[] $groups
+	 * @param mixed[] $rights
 	 */
 	public function testInvalidConstruction( string $name, int $id, int $editcount, ?string $registration, array $groups, array $rights, string $gender ): void {
 		$this->expectException( InvalidArgumentException::class );
 		new User( $name, $id, $editcount, $registration, $groups, $rights, $gender );
 	}
 
+	/**
+	 * @return array<int, array<int|string|mixed[]|array<string, mixed[]>>>
+	 */
 	public function provideInvalidConstruction(): array {
 		return [
 		[ 'Username', 1, 1, 'TIMESTAMP', [ 'groups' => [], 'foo' => [] ], [], 'male' ],

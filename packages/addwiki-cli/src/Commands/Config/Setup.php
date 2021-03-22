@@ -19,13 +19,13 @@ class Setup extends Command {
 		$this->appConfig = $appConfig;
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName( 'config:setup' )
 			->setDescription( 'Easy setup of the application' );
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$questionHelper = $this->getQuestionHelper();
 
 		// Add wikis?

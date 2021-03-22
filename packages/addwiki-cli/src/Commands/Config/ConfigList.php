@@ -17,7 +17,7 @@ class ConfigList extends Command {
 		$this->appConfig = $appConfig;
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName( 'config:list' )
 			->setDescription( 'Lists items stored in the config' )
@@ -29,7 +29,7 @@ class ConfigList extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$items = $input->getArgument( 'items' );
 
 		if ( $items === 'wikis' || $items === null ) {

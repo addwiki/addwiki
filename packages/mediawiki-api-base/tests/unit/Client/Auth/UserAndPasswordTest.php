@@ -8,6 +8,7 @@ use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use GuzzleHttp\ClientInterface;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -25,6 +26,9 @@ class UserAndPasswordTest extends TestCase {
 		$this->assertSame( $pass, $userAndPassword->getPassword() );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideValidConstruction(): array {
 		return [
 			[ 'user', 'pass' ],
@@ -39,6 +43,9 @@ class UserAndPasswordTest extends TestCase {
 		 new UserAndPassword( $user, $pass, $domain );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideInvalidConstruction(): array {
 		return [
 			[ 'user', '' ],
@@ -55,6 +62,9 @@ class UserAndPasswordTest extends TestCase {
 		$this->assertSame( $shouldEqual, $user2->equals( $user1 ) );
 	}
 
+	/**
+	 * @return array<int, array<UserAndPassword|bool>>
+	 */
 	public function provideTestEquals(): array {
 		return [
 			[ new UserAndPassword( 'usera', 'passa' ), new UserAndPassword( 'usera', 'passa' ), true ],
@@ -77,7 +87,7 @@ class UserAndPasswordTest extends TestCase {
 	}
 
 	/**
-	 * @return array <int|string mixed[]>
+	 * @return array<int|string, mixed[]>
 	 */
 	private function getExpectedRequestOpts( $params, $paramsLocation ): array {
 		return [

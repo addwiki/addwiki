@@ -34,6 +34,9 @@ class RevisionGetterTest extends TestCase {
 		$this->assertTrue( true );
 	}
 
+	/**
+	 * @return array<int, array<string|ItemId>>
+	 */
 	public function provideIds(): array {
 		return [
 			[ 'Q1' ],

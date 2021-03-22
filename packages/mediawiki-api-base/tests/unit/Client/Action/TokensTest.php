@@ -77,6 +77,9 @@ class TokensTest extends TestCase {
 		$this->assertSame( 'TKN-' . $tokenType, $session->get() );
 	}
 
+	/**
+	 * @return array<int, array<string>>
+	 */
 	public function provideTokenTypes(): array {
 		return [
 			[ 'csrf' ],

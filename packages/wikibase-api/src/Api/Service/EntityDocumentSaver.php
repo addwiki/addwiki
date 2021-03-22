@@ -24,7 +24,7 @@ class EntityDocumentSaver {
 	 *
 	 * @return Item|Property
 	 */
-	public function save( EntityDocument $entityDocument, EditInfo $editInfo ) {
+	public function save( EntityDocument $entityDocument, EditInfo $editInfo ): EntityDocument {
 		return $this->revisionSaver->save( new Revision( new Content( $entityDocument ) ), $editInfo );
 	}
 

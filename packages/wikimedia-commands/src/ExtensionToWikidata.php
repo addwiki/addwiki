@@ -31,7 +31,7 @@ class ExtensionToWikidata extends Command {
 		parent::__construct( null );
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$defaultWiki = $this->appConfig->offsetGet( 'defaults.wiki' );
 		$defaultUser = $this->appConfig->offsetGet( 'defaults.user' );
 
@@ -53,7 +53,7 @@ class ExtensionToWikidata extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$user = $input->getOption( 'user' );
 
 		$userDetails = $this->appConfig->get( 'users.' . $user );

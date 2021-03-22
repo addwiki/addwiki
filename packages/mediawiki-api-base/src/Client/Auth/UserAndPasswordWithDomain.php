@@ -36,6 +36,9 @@ class UserAndPasswordWithDomain extends UserAndPassword implements AuthMethod {
 			&& $this->getDomain() === $other->getDomain();
 	}
 
+	/**
+	 * @return array<string, string>|null[]
+	 */
 	protected function additionalParamsForPreRequestAuthCall(): array {
 		return [
 			'lgdomain' => $this->getDomain()

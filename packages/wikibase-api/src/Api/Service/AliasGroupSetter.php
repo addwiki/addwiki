@@ -4,6 +4,7 @@ namespace Addwiki\Wikibase\Api\Service;
 
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseApi;
+use Comparable;
 use UnexpectedValueException;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Item;
@@ -26,7 +27,7 @@ class AliasGroupSetter {
 	 * @param EntityId|Item|Property|SiteLink $target
 	 * @param EditInfo|null $editInfo
 	 */
-	public function set( AliasGroup $aliasGroup, $target, EditInfo $editInfo = null ): bool {
+	public function set( AliasGroup $aliasGroup, Comparable $target, EditInfo $editInfo = null ): bool {
 		$this->throwExceptionsOnBadTarget( $target );
 
 		$params = $this->getTargetParamsFromTarget(
@@ -64,7 +65,7 @@ class AliasGroupSetter {
 	 *
 	 * @todo Fix duplicated code
 	 */
-	private function getEntityIdentifierFromTarget( $target ) {
+	private function getEntityIdentifierFromTarget( Comparable $target ) {
 		if ( $target instanceof Item || $target instanceof Property ) {
 			return $target->getId();
 		} else {
@@ -80,7 +81,7 @@ class AliasGroupSetter {
 	 *
 	 * @todo Fix duplicated code
 	 */
-	private function getTargetParamsFromTarget( $target ) {
+	private function getTargetParamsFromTarget( Comparable $target ) {
 		if ( $target instanceof EntityId ) {
 			return [ 'id' => $target->getSerialization() ];
 		} elseif ( $target instanceof SiteLink ) {

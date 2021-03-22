@@ -29,6 +29,9 @@ use Serializers\Serializer;
  */
 class WikibaseFactoryTest extends TestCase {
 
+	/**
+	 * @return array<int, string[]>
+	 */
 	public function provideMethodsAndClasses(): array {
 		return [
 			[ 'newAliasGroupSetter',AliasGroupSetter::class ],

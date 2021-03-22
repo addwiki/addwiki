@@ -29,7 +29,7 @@ class ClientFactory implements LoggerAwareInterface {
 		$this->logger = $logger;
 	}
 
-	public function getClient(): ?Client {
+	public function getClient(): Client {
 		if ( $this->client === null ) {
 			$this->client = $this->newClient();
 		}

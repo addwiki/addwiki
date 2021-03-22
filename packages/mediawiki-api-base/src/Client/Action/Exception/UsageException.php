@@ -29,6 +29,9 @@ class UsageException extends Exception {
 		return $this->apiCode;
 	}
 
+	/**
+	 * @return mixed[]
+	 */
 	public function getApiResult(): array {
 		return $this->result;
 	}

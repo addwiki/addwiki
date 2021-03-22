@@ -45,7 +45,7 @@ class WikidataReferenceDateFixer extends Command {
 		$this->wikibaseFactory = ( new WikimediaFactory() )->newWikidataWikibaseFactory();
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$defaultUser = $this->appConfig->offsetGet( 'defaults.user' );
 
 		$this
@@ -67,7 +67,7 @@ class WikidataReferenceDateFixer extends Command {
 			);
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		// Get options
 		$user = $input->getOption( 'user' );
 		$userDetails = $this->appConfig->offsetGet( 'users.' . $user );

@@ -20,7 +20,7 @@ class ContentTest extends TestCase {
 	}
 
 	/**
-	 * @return string[][]|stdClass[][]|null[][]
+	 * @return array<int, array<string|stdClass|null>>
 	 */
 	public function provideValidConstruction(): array {
 		return [

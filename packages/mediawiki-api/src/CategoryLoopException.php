@@ -22,7 +22,7 @@ class CategoryLoopException extends Exception {
 	 * child page of the last item.
 	 * @return Pages The set of category Pages that comprise the category loop.
 	 */
-	public function getCategoryPath(): Pages {
+	public function getCategoryPath(): ?Pages {
 		return $this->categoryPath;
 	}
 

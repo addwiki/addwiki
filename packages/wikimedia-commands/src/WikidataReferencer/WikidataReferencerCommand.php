@@ -87,7 +87,7 @@ class WikidataReferencerCommand extends Command {
 		);
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$defaultUser = $this->appConfig->offsetGet( 'defaults.user' );
 
 		$this
@@ -138,10 +138,7 @@ class WikidataReferencerCommand extends Command {
 		return $link;
 	}
 
-	/**
-	 * @return int
-	 */
-	protected function execute( InputInterface $input, OutputInterface $output ) {
+	protected function execute( InputInterface $input, OutputInterface $output ): int {
 		$this->tmpDir = is_string( $input->getOption( 'tmpDir' ) ) ? $input->getOption( 'tmpDir' ) : sys_get_temp_dir();
 		if ( !is_writable( $this->tmpDir ) ) {
 			throw new RuntimeException( 'Temp dir: ' . $this->tmpDir . ' is not writable' );

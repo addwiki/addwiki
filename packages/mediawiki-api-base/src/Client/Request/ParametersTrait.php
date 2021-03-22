@@ -9,6 +9,9 @@ trait ParametersTrait {
 
 	private array $params = [];
 
+	/**
+	 * @return mixed[]
+	 */
 	public function getParams(): array {
 		return $this->params;
 	}

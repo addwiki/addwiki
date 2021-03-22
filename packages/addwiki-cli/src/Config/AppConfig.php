@@ -87,6 +87,9 @@ class AppConfig implements ArrayAccess {
 		return empty( $this->data );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function offsetExists( $offset ) {
 		return $this->has( $offset );
 	}
