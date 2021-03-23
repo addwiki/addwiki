@@ -38,8 +38,8 @@
         "php": ">=7.4",
         "psr/log": "~1.0",
         "serialization/serialization": "~3.2||~4.0",
-        "symfony/console": "~4.0",
-        "symfony/yaml": "~4.0",
+        "symfony/console": "~4.0||~5.0",
+        "symfony/yaml": "~4.0||~5.0",
         "wikibase/data-model": "~9.2||~8.0",
         "wikibase/data-model-serialization": "~2.0",
         "wikibase/data-model-services": "~3.0"
