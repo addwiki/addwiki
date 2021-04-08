@@ -127,7 +127,6 @@ class CategoryTraverserTest extends TestCase {
 	 *    C
 	 *    |
 	 *    D
-	 *
 	 */
 	public function testDescendantsOnlyVisitCatsOnce(): void {
 		global $wgVisitedCats;
@@ -163,7 +162,6 @@ class CategoryTraverserTest extends TestCase {
 	 *    H    I
 	 *    |
 	 *    E    <-- throw an Exception when we get to this repetition
-	 *
 	 */
 	public function testDescendIntoLoop(): void {
 		$catA = $this->savePage( 'Category:E cat', '[[Category:H cat]]' );

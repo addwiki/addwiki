@@ -17,7 +17,6 @@ class FluentGenerator implements ApiGenerator {
 	/**
 	 * Convenience method for using this fluidly
 	 *
-	 *
 	 */
 	public static function factory( string $name ): FluentGenerator {
 		return new self( $name );
