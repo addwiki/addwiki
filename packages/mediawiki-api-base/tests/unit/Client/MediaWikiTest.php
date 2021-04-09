@@ -2,10 +2,10 @@
 
 namespace Addwiki\Mediawiki\Api\Tests\Unit\Client;
 
-use PHPUnit\Framework\TestCase;
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\MediaWiki;
 use Addwiki\Mediawiki\Api\Client\Rest\RestApi;
+use PHPUnit\Framework\TestCase;
 
 class MediaWikiTest extends TestCase {
 

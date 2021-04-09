@@ -3,11 +3,11 @@
 namespace Addwiki\Mediawiki\Api\Client;
 
 use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
+use Addwiki\Mediawiki\Api\Client\Action\Tokens;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\NoAuth;
 use Addwiki\Mediawiki\Api\Client\Discovery\ReallySimpleDiscovery;
 use Addwiki\Mediawiki\Api\Client\Rest\RestApi;
-use Addwiki\Mediawiki\Api\Client\Action\Tokens;
 
 /**
  * Client encompassing both REST and Action MediaWiki APIs
@@ -58,14 +58,14 @@ class MediaWiki {
 	}
 
 	public function action(): ActionApi {
-		if ( !isset($this->action) ) {
+		if ( !isset( $this->action ) ) {
 			$this->action = new ActionApi( $this->baseUrl . self::ACTION_PHP, $this->auth );
 		}
 		return $this->action;
 	}
 
 	public function rest(): RestApi {
-		if ( !isset($this->rest) ) {
+		if ( !isset( $this->rest ) ) {
 			// TODO perhaps use the same Tokens object between the 2 APIs
 			$this->rest = new RestApi( $this->baseUrl . self::REST_PHP, $this->auth, null, new Tokens( $this->action() ) );
 		}
