@@ -165,6 +165,10 @@ class CategoryTraverserTest extends TestCase {
 	 */
 	public function testDescendIntoLoop(): void {
 		$catA = $this->savePage( 'Category:E cat', '[[Category:H cat]]' );
+		$this->savePage( 'Category:F cat', '[[Category:E cat]]' );
+		$this->savePage( 'Category:G cat', '[[Category:E cat]]' );
+		$this->savePage( 'Category:H cat', '[[Category:F cat]]' );
+		$this->savePage( 'Category:I cat', '[[Category:F cat]]' );
 		$this->testEnvironment->runJobs();
 		$haveCaught = false;
 		try {
