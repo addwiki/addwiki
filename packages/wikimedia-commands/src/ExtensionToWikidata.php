@@ -32,7 +32,6 @@ class ExtensionToWikidata extends Command {
 	}
 
 	protected function configure() {
-		$defaultWiki = $this->appConfig->offsetGet( 'defaults.wiki' );
 		$defaultUser = $this->appConfig->offsetGet( 'defaults.user' );
 
 		$this
