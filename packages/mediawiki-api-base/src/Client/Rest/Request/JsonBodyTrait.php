@@ -4,7 +4,7 @@ namespace Addwiki\Mediawiki\Api\Client\Rest\Request;
 
 trait JsonBodyTrait {
 
-	private $body = null;
+	private $body;
 
 	public function setJsonBody( array $body ): self {
 		$this->body = $body;

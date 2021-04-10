@@ -33,7 +33,6 @@ class CategoryTraverserTest extends TestCase {
 	 * @param string[] $titles The titles to delete.
 	 */
 	public function deletePages( array $titles ): void {
-		$deleter = $this->factory->newPageDeleter();
 		foreach ( $titles as $t ) {
 			// @todo Properly delete?
 			// $deleter->deleteFromPageTitle( new Title( $t ) );
@@ -167,10 +166,6 @@ class CategoryTraverserTest extends TestCase {
 	 */
 	public function testDescendIntoLoop(): void {
 		$catA = $this->savePage( 'Category:E cat', '[[Category:H cat]]' );
-		$catB = $this->savePage( 'Category:F cat', '[[Category:E cat]]' );
-		$catC = $this->savePage( 'Category:G cat', '[[Category:E cat]]' );
-		$catD = $this->savePage( 'Category:H cat', '[[Category:F cat]]' );
-		$catE = $this->savePage( 'Category:I cat', '[[Category:F cat]]' );
 		$this->testEnvironment->runJobs();
 		$haveCaught = false;
 		try {
