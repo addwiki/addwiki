@@ -49,7 +49,8 @@ jobs:
                 name: Create pull-request
                 uses: peter-evans/create-pull-request@v3
                 with:
-                    token: ${{ secrets.GITHUB_TOKEN }}
+                    author: "addwiki-ci <ci@addwiki.github.io>"
+                    token: ${{ secrets.ACCESS_TOKEN }}
                     commit-message: "[automated] ${{ matrix.actions.name }}"
                     base: 'main'
                     branch: ${{ matrix.actions.branch }}
