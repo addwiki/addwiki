@@ -14,7 +14,7 @@ $categoryTraverser = $services->newCategoryTraverser();
 
 // Get the root category.
 $rootCatIdent = new PageIdentifier( new Title( 'Category:Categories' ) );
-$rootCat = $this->factory->newPageGetter()->getFromPageIdentifier( $pageIdentifier );
+$rootCat = $services->newPageGetter()->getFromPageIdentifier( $pageIdentifier );
 
 // Get all pages.
 $allPages = $categoryTraverser->descend( $rootCat );
