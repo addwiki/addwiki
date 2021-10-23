@@ -10,8 +10,3 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-- package-ecosystem: composer
-  directory: "/"
-  schedule:
-    interval: "daily"
-  open-pull-requests-limit: 10
