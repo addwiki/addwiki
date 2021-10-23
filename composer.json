@@ -97,7 +97,7 @@
         "phpunit/phpunit": "~9",
         "rector/rector": "^0.10.0",
         "symplify/easy-ci": "9.3.4",
-        "symplify/monorepo-builder": "9.4.63",
+        "symplify/monorepo-builder": "9.4.70",
         "vimeo/psalm": "^4.6"
     },
     "repositories": [
