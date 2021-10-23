@@ -27,7 +27,7 @@
         "data-values/data-values": "~2.0",
         "data-values/geo": "~4.0",
         "data-values/interfaces": "~0.2.0||~0.1.5",
-        "data-values/number": "~0.10.0",
+        "data-values/number": "~0.11.1",
         "data-values/serialization": "~1.0",
         "data-values/time": "~1.0",
         "ext-curl": "*",
