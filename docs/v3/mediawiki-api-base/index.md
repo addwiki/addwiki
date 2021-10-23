@@ -1,6 +1,6 @@
 # mediawiki-api-base
 
-addwiki/mediawiki-api-base is a PHP HTTP client wrapped around guzzle that makes it easy to interest with a MediaWiki installation.
+addwiki/mediawiki-api-base is a PHP HTTP client wrapped around guzzle that makes it easy to interact with a MediaWiki installation.
 
 1. Uses PSR-3 interfaces for logging
 2. Handles Mediawiki login, sessions, cookies and tokens

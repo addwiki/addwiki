@@ -1,6 +1,6 @@
 # addwiki - monorepo
 
-Addwiki is a collection of PHP libraries, packages and applications created for interatcting wit MediaWiki, Wikibase, Wikimedia and more.
+Addwiki is a collection of PHP libraries, packages and applications created for interacting with MediaWiki, Wikibase, Wikimedia and more.
 
 To dive in take a look at the [docs site](https://addwiki.github.io/).
 
@@ -9,7 +9,7 @@ If you want to submit code patches to any of the repositories, then this is the 
 ## Packages
 
 All packages exist in the `/packages` directory.
-Every package also exists in it's own read only git repository, can be used separately and is installable via composer.
+Every package also exists in its own read only git repository, can be used separately and is installable via composer.
 
 **Most popular:**
 
