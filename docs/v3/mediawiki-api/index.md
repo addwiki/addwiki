@@ -4,7 +4,7 @@ Welcome to the documentation for the addwiki/mediawiki-api package! This is part
 
 ## Requirements
 
-PHP 7.2+
+PHP 7.4+
 Various other addwiki libraries
 
 ## Contributing

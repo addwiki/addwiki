@@ -5,7 +5,7 @@
 The recommended way to install this library is with Composer. Composer is a dependency management tool for PHP that allows you to declare the dependencies your project needs and installs them into your project.
 
 ```sh
-composer require addwiki/mediawiki-api-base:~2.0
+composer require addwiki/mediawiki-api-base:~3.0
 ```
 
 Alternatively, you can specify addwiki/mediawiki-api-base as a dependency in your project’s existing composer.json file:
@@ -13,7 +13,7 @@ Alternatively, you can specify addwiki/mediawiki-api-base as a dependency in you
 ```json
 {
    "require": {
-      "addwiki/mediawiki-api-base": "~2.0"
+      "addwiki/mediawiki-api-base": "~3.0"
    }
 }
 ```
@@ -28,12 +28,12 @@ You can find out more on how to install Composer, configure autoloading, and oth
 
 ## Bleeding edge
 
-During your development, you can keep up with the latest changes on the master branch by setting the version requirement for addwiki/mediawiki-api-base to `~2.0@dev`.
+During your development, you can keep up with the latest changes on the master branch by setting the version requirement for addwiki/mediawiki-api-base to `~3.0@dev`.
 
 ```json
 {
    "require": {
-      "addwiki/mediawiki-api-base": "~2.0@dev"
+      "addwiki/mediawiki-api-base": "~3.0@dev"
    }
 }
 ```

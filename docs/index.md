@@ -6,7 +6,7 @@ Find everything on [Packagist](https://packagist.org/packages/addwiki/)
 
 ## [Version 3](./v3)
 
-Currently under development version.
+Latest released version.
 
 Key Features:
 
@@ -15,8 +15,6 @@ Key Features:
 - PHP 7 features (like typing)
 
 ## [Version 2](./v2)
-
-Currently released version.
 
 `2.6` was the first release from the Mono Repo.
 

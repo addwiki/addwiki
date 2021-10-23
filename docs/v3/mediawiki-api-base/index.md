@@ -10,8 +10,8 @@ addwiki/mediawiki-api-base is a PHP HTTP client wrapped around guzzle that makes
 
 ## Requirements
 
-PHP 7.2+
-Guzzle HTTP library ~6.0
+PHP 7.4+
+Guzzle HTTP library ~6.0/~7.0
 
 ## Contributing
 
