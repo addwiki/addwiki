@@ -91,7 +91,7 @@
     ],
     "require-dev": {
         "data-values/validators": "~0.1.0",
-        "mediawiki/mediawiki-codesniffer": "~35.0",
+        "mediawiki/mediawiki-codesniffer": "~38.0",
         "monolog/monolog": "^1.23",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpunit/phpunit": "~9",
