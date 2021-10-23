@@ -21,11 +21,11 @@
     "require": {
         "php": ">=7.4",
         "ext-curl": "*",
-        "addwiki/mediawiki-api": "^3.0",
-        "addwiki/mediawiki-api-base": "^3.0",
-        "addwiki/mediawiki-datamodel": "^3.0",
-        "addwiki/wikibase-api": "^3.0",
-        "addwiki/wikimedia": "^3.0",
+        "addwiki/mediawiki-api": "^3.1",
+        "addwiki/mediawiki-api-base": "^3.1",
+        "addwiki/mediawiki-datamodel": "^3.1",
+        "addwiki/wikibase-api": "^3.1",
+        "addwiki/wikimedia": "^3.1",
         "benestar/asparagus": "~0.4",
         "guzzlehttp/guzzle": "~6.3||~7.0",
         "linclark/microdata-php": "~2.0",
@@ -48,7 +48,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.0-dev"
+            "dev-main": "3.1-dev"
         }
     },
     "minimum-stability": "dev",

@@ -20,9 +20,9 @@
     },
     "require": {
         "php": ">=7.4",
-        "addwiki/mediawiki-api": "^3.0",
-        "addwiki/mediawiki-api-base": "^3.0",
-        "addwiki/mediawiki-datamodel": "^3.0",
+        "addwiki/mediawiki-api": "^3.1",
+        "addwiki/mediawiki-api-base": "^3.1",
+        "addwiki/mediawiki-datamodel": "^3.1",
         "symfony/console": "~4.0||~5.0"
     },
     "require-dev": {
@@ -40,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.0-dev"
+            "dev-main": "3.1-dev"
         }
     },
     "minimum-stability": "dev",

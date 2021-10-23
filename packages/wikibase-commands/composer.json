@@ -20,10 +20,10 @@
     },
     "require": {
         "php": ">=7.4",
-        "addwiki/mediawiki-api": "^3.0",
-        "addwiki/mediawiki-api-base": "^3.0",
-        "addwiki/mediawiki-datamodel": "^3.0",
-        "addwiki/wikibase-api": "^3.0",
+        "addwiki/mediawiki-api": "^3.1",
+        "addwiki/mediawiki-api-base": "^3.1",
+        "addwiki/mediawiki-datamodel": "^3.1",
+        "addwiki/wikibase-api": "^3.1",
         "benestar/asparagus": "~0.4",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
@@ -50,7 +50,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.0-dev"
+            "dev-main": "3.1-dev"
         }
     },
     "minimum-stability": "dev",

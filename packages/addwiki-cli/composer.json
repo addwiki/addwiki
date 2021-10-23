@@ -20,8 +20,8 @@
     },
     "require": {
         "php": ">=7.4",
-        "addwiki/mediawiki-commands": "^3.0",
-        "addwiki/wikimedia-commands": "^3.0",
+        "addwiki/mediawiki-commands": "^3.1",
+        "addwiki/wikimedia-commands": "^3.1",
         "symfony/console": "~4.0||~5.0",
         "symfony/yaml": "~4.0||~5.0"
     },
@@ -41,7 +41,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "3.0-dev"
+            "dev-main": "3.1-dev"
         }
     },
     "minimum-stability": "dev",
