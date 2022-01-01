@@ -20,6 +20,8 @@ jobs:
 
             # required for matrix of packages set
             -   uses: shivammathur/setup-php@v2
+                env:
+                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 with:
                     php-version: 7.4
                     coverage: none
