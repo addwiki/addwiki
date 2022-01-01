@@ -1,0 +1,31 @@
+name: Validate monorepo
+
+on:
+    pull_request: null
+    push:
+        branches:
+            - main
+        tags:
+            - '*'
+
+env:
+    # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
+    COMPOSER_ROOT_VERSION: "dev-main"
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    coverage: none
+
+            -
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--ignore-platform-req php"
+
+            -   run: composer validate-monorepo
