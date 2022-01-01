@@ -6,6 +6,7 @@ use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikibase\DataModel\DataModelFactory;
 use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Geo\Values\GlobeCoordinateValue;
@@ -35,6 +36,27 @@ class WikimediaFactory {
 	 */
 	public function newMediawikiFactoryForDomain( string $domain, AuthMethod $auth = null ): MediawikiFactory {
 		return new MediawikiFactory( $this->newMediawikiApiForDomain( $domain, $auth ) );
+	}
+
+	private function domainFromURL( string $url ): string {
+		$parsed = parse_url( $url );
+		return $parsed['host'];
+	}
+
+	/**
+	 * @param string $url eg.'https://en.wikipedia.org/w/api.php'
+	 * @param AuthMethod|null $auth
+	 */
+	public function newMediawikiApiForURL( string $url, AuthMethod $auth = null ): ActionApi {
+		return $this->newMediawikiApiForDomain( $this->domainFromURL( $url ), $auth );
+	}
+
+	/**
+	 * @param string $url eg.'https://www.wikidata.org/w/api.php'
+	 * @param AuthMethod|null $auth
+	 */
+	public function newWikibaseFactoryForURL( string $url, AuthMethod $auth = null ): WikibaseFactory {
+		return $this->newWikibaseFactoryForDomain( $this->domainFromURL( $url ), $auth );
 	}
 
 	/**
@@ -67,8 +89,10 @@ class WikimediaFactory {
 
 		return new WikibaseFactory(
 			$this->newMediawikiApiForDomain( $domain, $auth ),
-			$dvDeserializer,
-			$dvSerializer
+			new DataModelFactory(
+				$dvDeserializer,
+				$dvSerializer
+			)
 		);
 	}
 

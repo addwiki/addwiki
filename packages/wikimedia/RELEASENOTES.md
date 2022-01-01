@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- ...
+- Added `WikimediaFactory::newMediawikiApiForURL`
+- Added `WikimediaFactory::newWikibaseFactoryForURL`
 
 ## Version 3.0 (23 October 2021)
 
