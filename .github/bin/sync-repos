@@ -36,6 +36,12 @@ gh api --method PATCH repos/addwiki/wikibase-api \
     --field has_issues='false'\
     --field has_projects='false'\
     --field has_wiki='false'
+gh api --method PATCH repos/addwiki/wikibase-datamodel \
+    --field description='Library with services for interacting with the Wikibase DataModel, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
+    --field homepage='https://addwiki.github.io/'\
+    --field has_issues='false'\
+    --field has_projects='false'\
+    --field has_wiki='false'
 gh api --method PATCH repos/addwiki/mediawiki-sitematrix-api \
     --field description='Library for interacting with the SiteMatrix extension, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
     --field homepage='https://addwiki.github.io/'\
