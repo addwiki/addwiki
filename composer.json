@@ -15,7 +15,8 @@
             "Addwiki\\Mediawiki\\DataModel\\": "packages/mediawiki-datamodel/src/",
             "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
             "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
-            "Addwiki\\Wikibase\\": "packages/wikibase-api/src/",
+            "Addwiki\\Wikibase\\Api\\": "packages/wikibase-api/src/",
+            "Addwiki\\Wikibase\\DataModel\\": "packages/wikibase-datamodel/src/",
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
             "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/"
