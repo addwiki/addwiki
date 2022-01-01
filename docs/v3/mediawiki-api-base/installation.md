@@ -33,7 +33,7 @@ During your development, you can keep up with the latest changes on the master b
 ```json
 {
    "require": {
-      "addwiki/mediawiki-api-base": "~3.0@dev"
+      "addwiki/mediawiki-api-base": "~3.1@dev"
    }
 }
 ```
