@@ -12,11 +12,11 @@ module.exports = {
         activeHeaderLinks: false, // Default: true
         nav: [
             {
-                text: 'V3 (unreleased)',
+                text: 'V3 (latest)',
                 link: '/v3/',
             },
             {
-                text: 'V2 (current)',
+                text: 'V2 (legacy)',
                 link: '/v2/',
             },
             {
