@@ -36,6 +36,7 @@ class WikimediaMediawikiFactoryFactory {
 				);
 			}
 		}
+
 		throw new InvalidArgumentException( __CLASS__ . ' cannot create factories for given wikicode' );
 	}
 

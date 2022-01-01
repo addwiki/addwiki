@@ -10,6 +10,7 @@ class MicroData {
 	 * @var int
 	 */
 	public const PROP_STRING = 1;
+
 	/**
 	 * @var int
 	 */
@@ -38,6 +39,7 @@ class MicroData {
 		if ( $object === null ) {
 			return;
 		}
+
 		if ( property_exists( $object, 'properties' ) && $object->properties !== null ) {
 			foreach ( $object->properties as $name => $values ) {
 				foreach ( $values as $value ) {
@@ -45,9 +47,11 @@ class MicroData {
 				}
 			}
 		}
+
 		if ( property_exists( $object, 'type' ) && $object->type !== null ) {
 			$this->types = $object->type;
 		}
+
 		if ( property_exists( $object, 'id' ) && $object->id !== null ) {
 			$this->id = $object->id;
 		}
@@ -88,6 +92,7 @@ class MicroData {
 				}
 			}
 		}
+
 		return $properties;
 	}
 
@@ -103,6 +108,7 @@ class MicroData {
 				}
 			}
 		}
+
 		return null;
 	}
 
@@ -123,9 +129,11 @@ class MicroData {
 		if ( $type === null ) {
 			return true;
 		}
+
 		if ( $type === self::PROP_STRING && is_string( $property ) ) {
 			return true;
 		}
+
 		return $type === self::PROP_DATA && $property instanceof self;
 	}
 

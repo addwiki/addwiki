@@ -50,12 +50,14 @@ class DataModelUtils {
 			} catch ( Exception $exception ) {
 
 			}
+
 			try{
 				$strings = array_merge( $strings, $fingerprint->getAliasGroup( $lang )->getAliases() );
 			} catch ( Exception $e ) {
 				// Ignore!
 			}
 		}
+
 		return array_map( 'strtolower', $strings );
 	}
 

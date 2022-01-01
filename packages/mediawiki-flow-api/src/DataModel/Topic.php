@@ -5,7 +5,9 @@ namespace Addwiki\Mediawiki\Ext\Flow\DataModel;
 class Topic {
 
 	private string $pageName;
+
 	private string $header;
+
 	private string $content;
 
 	public function __construct( string $pageName, string $header, string $content ) {

@@ -33,9 +33,11 @@ class LogList implements JsonSerializable {
 		if ( !is_array( $logs ) && !$logs instanceof LogList ) {
 			throw new InvalidArgumentException( '$logs needs to either be an array or a LogList object' );
 		}
+
 		if ( $logs instanceof LogList ) {
 			$logs = $logs->toArray();
 		}
+
 		foreach ( $logs as $log ) {
 			$this->addLog( $log );
 		}
@@ -60,6 +62,7 @@ class LogList implements JsonSerializable {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
+
 		return $this->logs[ max( array_keys( $this->logs ) ) ];
 	}
 
@@ -70,6 +73,7 @@ class LogList implements JsonSerializable {
 		if ( empty( $this->logs ) ) {
 			return null;
 		}
+
 		return $this->logs[ min( array_keys( $this->logs ) ) ];
 	}
 
@@ -85,6 +89,7 @@ class LogList implements JsonSerializable {
 		if ( $this->hasLogWithId( $id ) ) {
 			return $this->logs[$id];
 		}
+
 		throw new RuntimeException( 'No such Log loaded in LogList object' );
 	}
 
@@ -108,6 +113,7 @@ class LogList implements JsonSerializable {
 		foreach ( $json as $logJson ) {
 			$self->addLog( Log::jsonDeserialize( $logJson ) );
 		}
+
 		return $self;
 	}
 }

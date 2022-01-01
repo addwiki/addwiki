@@ -40,6 +40,7 @@ class ThingReferencer implements Referencer {
 			if ( is_string( $schemaPropertyStrings ) ) {
 				$schemaPropertyStrings = [ $schemaPropertyStrings ];
 			}
+
 			foreach ( $schemaPropertyStrings as $schemaPropertyString ) {
 				$this->callbackMap[$propertyIdSerialization] = function ( MicroData $microData ) use ( $schemaPropertyString ): array {
 					$values = [];
@@ -48,6 +49,7 @@ class ThingReferencer implements Referencer {
 							$values[] = $value;
 						}
 					}
+
 					return $values;
 				};
 			}

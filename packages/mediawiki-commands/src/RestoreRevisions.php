@@ -90,6 +90,7 @@ class RestoreRevisions extends Command {
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
+
 		if ( $wikiDetails === null ) {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}
@@ -114,6 +115,7 @@ class RestoreRevisions extends Command {
 				$output->writeln( 'Page already has same content as revision: ' . $revid );
 				return 0;
 			}
+
 			$asheaderInputOption = $input->getOption( 'asheader' );
 
 			if ( $asheaderInputOption ) {

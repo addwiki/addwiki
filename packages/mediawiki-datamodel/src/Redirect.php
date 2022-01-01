@@ -7,6 +7,7 @@ use JsonSerializable;
 class Redirect implements JsonSerializable {
 
 	private Title $from;
+
 	private Title $to;
 
 	public function __construct( Title $from, Title $to ) {

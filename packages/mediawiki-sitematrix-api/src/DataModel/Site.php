@@ -5,8 +5,11 @@ namespace Addwiki\Mediawiki\Ext\Sitematrix\DataModel;
 class Site {
 
 	private string $url;
+
 	private string $dbname;
+
 	private string $code;
+
 	private string $sitename;
 
 	/**

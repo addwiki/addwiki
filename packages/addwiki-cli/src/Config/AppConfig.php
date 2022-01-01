@@ -9,10 +9,13 @@ use Symfony\Component\Yaml\Yaml;
 class AppConfig implements ArrayAccess {
 
 	private string $configDirectory;
+
 	private string $configFilename = 'aww.yml';
+
 	private string $path;
 
 	private $data;
+
 	private ?bool $isLoaded = null;
 
 	public function __construct( $pwd ) {
@@ -28,6 +31,7 @@ class AppConfig implements ArrayAccess {
 		if ( $data === null ) {
 			$data = [];
 		}
+
 		$this->data = $data;
 	}
 
@@ -58,6 +62,7 @@ class AppConfig implements ArrayAccess {
 			}
 
 		}
+
 		throw new LogicException();
 	}
 
@@ -66,6 +71,7 @@ class AppConfig implements ArrayAccess {
 		foreach ( explode( '.', $name ) as $key ) {
 			$temp = &$temp[$key];
 		}
+
 		$temp = $value;
 		unset( $temp );
 

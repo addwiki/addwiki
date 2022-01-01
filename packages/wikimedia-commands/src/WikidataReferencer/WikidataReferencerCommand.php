@@ -125,9 +125,11 @@ class WikidataReferencerCommand extends Command {
 		if ( strpos( $link, '//' ) === 0 ) {
 			$link = 'http' . $link;
 		}
+
 		if ( strpos( $link, '#' ) !== false ) {
 			$link = strstr( $link, '#', true );
 		}
+
 		$link = trim( $link, '/' );
 
 		// Normalize some domain specific stuff
@@ -164,6 +166,7 @@ class WikidataReferencerCommand extends Command {
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
+
 		$sparqlQueryParts = $input->getOption( 'sparql' );
 		$item = $input->getOption( 'item' );
 		$force = false;
@@ -183,6 +186,7 @@ class WikidataReferencerCommand extends Command {
 		} else {
 			throw new RuntimeException( 'You must pass an instance id or an item' );
 		}
+
 		shuffle( $itemIds );
 		$output->writeln( $formatter->formatSection( 'Init', 'Got ' . count( $itemIds ) . ' items to investigate' ) );
 
@@ -213,6 +217,7 @@ class WikidataReferencerCommand extends Command {
 			if ( $loopCounter % 10 != 0 ) {
 				$processedItemIdStrings = $this->getProcessedItemIdStrings();
 			}
+
 			if ( !$force && in_array( $itemId->getSerialization(), $processedItemIdStrings ) ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Already processed' ) );
 				continue;
@@ -245,6 +250,7 @@ class WikidataReferencerCommand extends Command {
 					}
 				}
 			}
+
 			if ( empty( $types ) ) {
 				$output->writeln( $formatter->formatSection( $itemIdString, 'Didn\t find any useful instance of statements', 'comment' ) );
 				continue;
@@ -273,6 +279,7 @@ class WikidataReferencerCommand extends Command {
 				$parsePromises[$siteId] = $sourceParser->parsePageAsync( $pageIdentifier );
 				$parseProgressBar->advance();
 			}
+
 			$links = [];
 			foreach ( $parsePromises as $promise ) {
 				try {
@@ -293,6 +300,7 @@ class WikidataReferencerCommand extends Command {
 					// Ignore failed requests
 				}
 			}
+
 			$parseProgressBar->finish();
 			$output->writeln( '' );
 
@@ -348,6 +356,7 @@ class WikidataReferencerCommand extends Command {
 									}
 								}
 							}
+
 							if ( $referencesAddedFromLink > 0 ) {
 								$externalLinkProgressBar->clear();
 								$output->write( "\x0D" );
@@ -356,6 +365,7 @@ class WikidataReferencerCommand extends Command {
 							}
 
 						}
+
 						$externalLinkProgressBar->advance(); // 2nd advance point
 					},
 
@@ -383,6 +393,7 @@ class WikidataReferencerCommand extends Command {
 		if ( file_exists( $path ) ) {
 			return explode( PHP_EOL, file_get_contents( $path ) );
 		}
+
 		return [];
 	}
 

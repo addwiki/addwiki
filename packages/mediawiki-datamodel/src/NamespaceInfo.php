@@ -8,10 +8,15 @@ namespace Addwiki\Mediawiki\DataModel;
 class NamespaceInfo {
 
 	private int $id;
+
 	private string $canonicalName;
+
 	private string $localName;
+
 	private string $caseHandling;
+
 	private ?string $defaultContentModel;
+
 	private array $aliases = [];
 
 	public function __construct( int $id, string $canonicalName, string $localName, string $caseHandling, ?string $defaultContentModel = null, array $aliases = [] ) {

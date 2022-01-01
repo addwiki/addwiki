@@ -13,6 +13,7 @@ use Wikibase\DataModel\Entity\ItemId;
 class SparqlQueryRunner {
 
 	private Client $client;
+
 	private string $sparqlEndpoint;
 
 	/**

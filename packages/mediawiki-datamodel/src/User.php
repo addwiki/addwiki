@@ -10,11 +10,17 @@ use InvalidArgumentException;
 class User {
 
 	private string $name;
+
 	private int $id;
+
 	private int $editcount;
+
 	private ?string $registration;
+
 	private array $groups = [];
+
 	private array $rights = [];
+
 	private string $gender;
 
 	/**
@@ -31,6 +37,7 @@ class User {
 		if ( empty( $name ) ) {
 			throw new InvalidArgumentException( '$name must be non empty string' );
 		}
+
 		if ( !is_array( $groups ) || !array_key_exists( 'groups', $groups ) || !array_key_exists( 'implicitgroups', $groups ) ) {
 			throw new InvalidArgumentException( '$groups must be an array or arrays with keys "groups" and "implicitgroups"' );
 		}

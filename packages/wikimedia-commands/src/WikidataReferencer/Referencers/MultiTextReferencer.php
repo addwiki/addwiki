@@ -48,6 +48,7 @@ class MultiTextReferencer implements Referencer {
 				if ( strstr( $propertyValue, '//' ) ) {
 					continue;
 				}
+
 				$values[] = $propertyValue;
 			}
 

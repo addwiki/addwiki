@@ -74,6 +74,7 @@ class WikidataReferenceDateFixer extends Command {
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
+
 		$items = $input->getOption( 'item' );
 
 		$this->initServices( new UserAndPassword( $userDetails['username'], $userDetails['password'] ) );
@@ -173,6 +174,7 @@ class WikidataReferenceDateFixer extends Command {
 					}
 				}
 			}
+
 			$output->writeln( '' );
 		}
 
@@ -210,6 +212,7 @@ class WikidataReferenceDateFixer extends Command {
 			if ( strstr( $timestamp, $year ) ) {
 				return $timestamp;
 			}
+
 			--$year;
 		}
 

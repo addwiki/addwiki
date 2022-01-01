@@ -7,10 +7,9 @@ use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Rector\Core\ValueObject\PhpVersion;
 
-use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayParamDocTypeRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\CodingStyle\Rector\Function_\CamelCaseFunctionNamingToUnderscoreRector;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters = $containerConfigurator->parameters();
@@ -37,28 +36,24 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(
 		Option::AUTO_IMPORT_NAMES, true);
 
-	$parameters->set(
-		Option::SETS,
-		[
-			SetList::CODING_STYLE,
-			SetList::CODE_QUALITY,
-			SetList::CODE_QUALITY_STRICT,
-			SetList::DEAD_CODE,
-			SetList::PHPUNIT_90,
-			SetList::PHPUNIT_91,
-			SetList::PHPUNIT_CODE_QUALITY,
-			SetList::PHPUNIT_EXCEPTION,
-			SetList::PHPUNIT_MOCK,
-			SetList::PSR_4,
-			SetList::PHP_70,
-			SetList::PHP_71,
-			SetList::PHP_72,
-			SetList::PHP_73,
-			SetList::PHP_74,
-			// Disabled until https://github.com/rectorphp/rector/issues/5612 is fixed
-			//SetList::TYPE_DECLARATION,
-		]
-	);
+	$containerConfigurator->import(SetList::CODING_STYLE);
+	$containerConfigurator->import(SetList::CODE_QUALITY);
+	$containerConfigurator->import(SetList::CODE_QUALITY_STRICT);
+	$containerConfigurator->import(SetList::DEAD_CODE);
+	$containerConfigurator->import(SetList::PSR_4);
+	$containerConfigurator->import(SetList::PHP_70);
+	$containerConfigurator->import(SetList::PHP_71);
+	$containerConfigurator->import(SetList::PHP_72);
+	$containerConfigurator->import(SetList::PHP_73);
+	$containerConfigurator->import(SetList::PHP_74);
+	// Disabled until https://github.com/rectorphp/rector/issues/5612 is fixed
+	//$containerConfigurator->import(SetList::TYPE_DECLARATION);
+
+	$containerConfigurator->import(PHPUnitSetList::PHPUNIT_90);
+	$containerConfigurator->import(PHPUnitSetList::PHPUNIT_91);
+	$containerConfigurator->import(PHPUnitSetList::PHPUNIT_CODE_QUALITY);
+	$containerConfigurator->import(PHPUnitSetList::PHPUNIT_EXCEPTION);
+	$containerConfigurator->import(PHPUnitSetList::PHPUNIT_MOCK);
 
 	$parameters->set(
 		Option::SKIP,

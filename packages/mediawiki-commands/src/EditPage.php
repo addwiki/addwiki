@@ -83,6 +83,7 @@ class EditPage extends Command {
 		if ( $userDetails === null ) {
 			throw new RuntimeException( 'User not found in config' );
 		}
+
 		if ( $wikiDetails === null ) {
 			throw new RuntimeException( 'Wiki not found in config' );
 		}

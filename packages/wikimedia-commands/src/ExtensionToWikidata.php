@@ -114,6 +114,7 @@ class ExtensionToWikidata extends Command {
 				}
 			}
 		}
+
 		if ( !$hasInstanceOfExtension ) {
 			$output->writeln( "Creating instance of Statement" );
 			$targetWbFactory->newStatementCreator()->create(
@@ -137,6 +138,7 @@ class ExtensionToWikidata extends Command {
 				}
 			}
 		}
+
 		if ( $extensionLicenseItemIdString !== null ) {
 			$output->writeln( "Creating Licence Statement" );
 			$statementCreator = $targetWbFactory->newStatementCreator();

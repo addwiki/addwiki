@@ -32,9 +32,11 @@ class Pages {
 		if ( !is_array( $pages ) && !$pages instanceof Pages ) {
 			throw new InvalidArgumentException( '$pages needs to either be an array or a Pages object' );
 		}
+
 		if ( $pages instanceof Pages ) {
 			$pages = $pages->toArray();
 		}
+
 		foreach ( $pages as $page ) {
 			$this->addPage( $page );
 		}
@@ -59,6 +61,7 @@ class Pages {
 		if ( empty( $this->pages ) ) {
 			return null;
 		}
+
 		return $this->pages[ max( array_keys( $this->pages ) ) ];
 	}
 
@@ -66,6 +69,7 @@ class Pages {
 		if ( $this->hasPageWithId( $pageid ) ) {
 			return $this->pages[$pageid];
 		}
+
 		throw new RuntimeException( 'No such page loaded in Pages object' );
 	}
 
