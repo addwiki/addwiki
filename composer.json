@@ -16,14 +16,15 @@
             "Addwiki\\Mediawiki\\Ext\\Flow\\": "packages/mediawiki-flow-api/src/",
             "Addwiki\\Mediawiki\\Ext\\Sitematrix\\": "packages/mediawiki-sitematrix-api/src/",
             "Addwiki\\Wikibase\\Api\\": "packages/wikibase-api/src/",
-            "Addwiki\\Wikibase\\DataModel\\": "packages/wikibase-datamodel/src/",
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
+            "Addwiki\\Wikibase\\DataModel\\": "packages/wikibase-datamodel/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
             "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/"
         }
     },
     "require": {
         "benestar/asparagus": "~0.4",
+        "composer/semver": "^3.2",
         "data-values/common": "~0.4.0",
         "data-values/data-values": "~2.0",
         "data-values/geo": "~4.0",
@@ -43,8 +44,7 @@
         "symfony/yaml": "~4.0||~5.0",
         "wikibase/data-model": "~9.2||~8.0",
         "wikibase/data-model-serialization": "~2.0",
-        "wikibase/data-model-services": "~3.0",
-        "composer/semver": "^3.2"
+        "wikibase/data-model-services": "~3.0"
     },
     "suggest": {
         "ext-dom": "Needed if you want to discover APIs using only page URLs",
@@ -61,8 +61,9 @@
                 "packages/mediawiki-api/tests/unit/"
             ],
             "Addwiki\\Mediawiki\\DataModel\\Tests\\Unit\\": "packages/mediawiki-datamodel/tests/unit/",
-            "Addwiki\\Wikibase\\Tests\\Integration\\": "packages/wikibase-api/tests/integration/",
-            "Addwiki\\Wikibase\\Tests\\Unit\\": "packages/wikibase-api/tests/unit/"
+            "Addwiki\\Wikibase\\Api\\Tests\\Integration\\": "packages/wikibase-api/tests/integration/",
+            "Addwiki\\Wikibase\\Api\\Tests\\Unit\\": "packages/wikibase-api/tests/unit/",
+            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "packages/wikibase-datamodel/tests/unit/"
         }
     },
     "name": "addwiki/addwiki",
@@ -76,6 +77,7 @@
         "addwiki/mediawiki-sitematrix-api": "3.0.0",
         "addwiki/wikibase-api": "3.0.0",
         "addwiki/wikibase-commands": "3.0.0",
+        "addwiki/wikibase-datamodel": "3.0.0",
         "addwiki/wikimedia": "3.0.0",
         "addwiki/wikimedia-commands": "3.0.0"
     },

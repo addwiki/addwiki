@@ -14,9 +14,12 @@ Every package also exists in its own read only git repository, can be used separ
 **Most popular:**
 
 - [mediawiki-api-base](https://github.com/addwiki/mediawiki-api-base)
-- [mediawiki-datamodel](https://github.com/addwiki/mediawiki-datamodel)
 - [mediawiki-api](https://github.com/addwiki/mediawiki-api)
 - [wikibase-api](https://github.com/addwiki/wikibase-api)
+
+**Behind the scenes:**
+- [mediawiki-datamodel](https://github.com/addwiki/mediawiki-datamodel)
+- [wikibase-datamodel](https://github.com/addwiki/wikibase-datamodel)
 
 **WIP CLI:**
 

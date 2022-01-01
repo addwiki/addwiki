@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Addwiki\\Wikibase\\DataModel": "src/"
+            "Addwiki\\Wikibase\\DataModel\\": "src/"
         }
     },
     "autoload-dev": {
