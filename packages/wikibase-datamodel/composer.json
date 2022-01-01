@@ -1,0 +1,51 @@
+{
+    "name": "addwiki/wikibase-datamodel",
+    "type": "library",
+    "description": "A Wikibase datamodel",
+    "keywords": ["MediaWiki", "Wikibase", "Wikidata", "datamodel"],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Addshore"
+        }
+    ],
+    "scripts": {
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "phpunit": "phpunit tests",
+        "phpunit-unit": "phpunit tests/unit",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit"
+        ]
+    },
+    "require": {
+        "php": ">=7.4",
+        "addwiki/mediawiki-datamodel": "^3.1",
+        "wikibase/data-model": "~9.2||~8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "mediawiki/mediawiki-codesniffer": "~35.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Addwiki\\Wikibase\\DataModel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "tests/unit/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "3.1-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

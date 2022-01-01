@@ -1,6 +1,6 @@
 <?php
 
-namespace Addwiki\Wikibase\Tests\Unit\DataModel;
+namespace Addwiki\Wikibase\DataModel\Tests\Unit;
 
 use Addwiki\Wikibase\DataModel\PropertyContent;
 use PHPUnit\Framework\TestCase;
