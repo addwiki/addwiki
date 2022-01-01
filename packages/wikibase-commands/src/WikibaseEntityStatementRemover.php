@@ -7,26 +7,15 @@ use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
 use Addwiki\Mediawiki\DataModel\EditInfo;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikimedia\Api\WikimediaFactory;
 use ArrayAccess;
 use Asparagus\QueryBuilder;
-use DataValues\BooleanValue;
-use DataValues\Deserializers\DataValueDeserializer;
-use DataValues\Geo\Values\GlobeCoordinateValue;
-use DataValues\MonolingualTextValue;
-use DataValues\MultilingualTextValue;
-use DataValues\NumberValue;
-use DataValues\QuantityValue;
-use DataValues\Serializers\DataValueSerializer;
-use DataValues\StringValue;
-use DataValues\TimeValue;
-use DataValues\UnknownValue;
 use GuzzleHttp\Client;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wikibase\DataModel\Entity\EntityIdValue;
 use Wikibase\DataModel\Entity\PropertyId;
 
 /**
@@ -57,26 +46,11 @@ class WikibaseEntityStatementRemover extends Command {
 			$sparqlEndpoint
 		);
 
-		$this->wikibaseApi = new ActionApi( $wikibaseApiUrl, $auth );
-		$this->wikibaseFactory = new WikibaseFactory(
-			$this->wikibaseApi,
-			new DataValueDeserializer(
-				// TODO note: this list will not be the same for all wikibases... fixme!!!
-				[
-					'boolean' => BooleanValue::class,
-					'number' => NumberValue::class,
-					'string' => StringValue::class,
-					'unknown' => UnknownValue::class,
-					'globecoordinate' => GlobeCoordinateValue::class,
-					'monolingualtext' => MonolingualTextValue::class,
-					'multilingualtext' => MultilingualTextValue::class,
-					'quantity' => QuantityValue::class,
-					'time' => TimeValue::class,
-					'wikibase-entityid' => EntityIdValue::class,
-				]
-			),
-			new DataValueSerializer()
-		);
+		// Make some assumptions for now that this will be run on Wikimedia sites?
+		// Otherwise some more advanced dynamic configuration might be needed?
+		$wmFactory = new WikimediaFactory();
+		$this->wikibaseApi = $wmFactory->newMediawikiApiForURL( $wikibaseApiUrl, $auth );
+		$this->wikibaseFactor = $wmFactory->newWikibaseFactoryForURL( $wikibaseApiUrl, $auth );
 	}
 
 	protected function configure() {
