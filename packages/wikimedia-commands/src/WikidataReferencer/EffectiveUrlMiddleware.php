@@ -56,7 +56,7 @@ class EffectiveUrlMiddleware {
 	 * @param string $headerName The header name to use for storing effective url
 	 */
 	public static function middleware( string $headerName = 'X-GUZZLE-EFFECTIVE-URL' ): callable {
-		return function ( callable $handler ) use ( &$headerName ) {
+		return static function ( callable $handler ) use ( &$headerName ) {
 			return new static( $handler, $headerName );
 		};
 	}

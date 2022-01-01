@@ -369,7 +369,7 @@ class WikidataReferencerCommand extends Command {
 						$externalLinkProgressBar->advance(); // 2nd advance point
 					},
 
-					'rejected' => function () use ( $externalLinkProgressBar ): void {
+					'rejected' => static function () use ( $externalLinkProgressBar ): void {
 						// TODO add this to some kind of verbose log?
 						$externalLinkProgressBar->advance(); // 1st advance point
 					},

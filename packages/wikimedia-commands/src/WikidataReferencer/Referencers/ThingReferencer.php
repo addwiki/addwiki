@@ -42,7 +42,7 @@ class ThingReferencer implements Referencer {
 			}
 
 			foreach ( $schemaPropertyStrings as $schemaPropertyString ) {
-				$this->callbackMap[$propertyIdSerialization] = function ( MicroData $microData ) use ( $schemaPropertyString ): array {
+				$this->callbackMap[$propertyIdSerialization] = static function ( MicroData $microData ) use ( $schemaPropertyString ): array {
 					$values = [];
 					foreach ( $microData->getProperty( $schemaPropertyString, MicroData::PROP_DATA ) as $innerMicrodata ) {
 						foreach ( $innerMicrodata->getProperty( 'name', MicroData::PROP_STRING ) as $value ) {
