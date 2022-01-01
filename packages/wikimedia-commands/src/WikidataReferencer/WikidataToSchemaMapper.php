@@ -113,7 +113,7 @@ class WikidataToSchemaMapper {
 						'P136' => 'genre',
 					],
 					[
-						'P136' => function () use ( $sparqlQueryRunner ): array {
+						'P136' => static function () use ( $sparqlQueryRunner ): array {
 							$filmGenreData = $sparqlQueryRunner->getItemIdStringsAndLabelsFromInstanceOf( 'Q201658' );
 							$filmGenreRegexMap = [];
 							foreach ( $filmGenreData as $itemIdString => $label ) {
