@@ -32,6 +32,7 @@ class RevisionTest extends TestCase {
 		} else {
 			$this->assertInstanceOf( EditInfo::class, $rev->getEditInfo() );
 		}
+
 		$this->assertEquals( $user, $rev->getUser() );
 		$this->assertEquals( $timestamp, $rev->getTimestamp() );
 	}

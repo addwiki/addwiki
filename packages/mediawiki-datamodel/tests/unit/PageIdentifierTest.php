@@ -21,6 +21,7 @@ class PageIdentifierTest extends TestCase {
 		} else {
 			$this->assertEquals( $title, $pageIdentifier->getTitle() );
 		}
+
 		$this->assertEquals( $pageid, $pageIdentifier->getId() );
 		$this->assertEquals( $identifiesPage, $pageIdentifier->identifiesPage() );
 	}

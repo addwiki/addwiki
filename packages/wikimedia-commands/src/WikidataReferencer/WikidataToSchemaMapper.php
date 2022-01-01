@@ -122,6 +122,7 @@ class WikidataToSchemaMapper {
 								} else {
 									$regex = '/^' . $label . '( film)?' . '$/i';
 								}
+
 								$regex = preg_replace( '#science ?fiction#i', '(science ?fiction|sci-fi)', $regex );
 								$filmGenreRegexMap[$itemIdString] = $regex;
 							}

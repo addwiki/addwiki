@@ -55,9 +55,11 @@ class Purge extends Command {
 		foreach ( $input->getOption( 'pageid' ) as $pageId ) {
 			$pageIdentifiers[] = new PageIdentifier( null, (int)$pageId );
 		}
+
 		foreach ( $input->getOption( 'title' ) as $title ) {
 			$pageIdentifiers[] = new PageIdentifier( new Title( $title ) );
 		}
+
 		if ( empty( $pageIdentifiers ) ) {
 			throw new RuntimeException( 'No titles or pageids were set!' );
 		}
@@ -74,6 +76,7 @@ class Purge extends Command {
 			} elseif ( $identifier->getTitle() != null ) {
 				$output->writeln( 'Purging page with title ' . $identifier->getTitle()->getText() );
 			}
+
 			$purger->purge( new Page( $identifier ) );
 		}
 

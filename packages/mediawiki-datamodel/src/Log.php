@@ -7,12 +7,19 @@ use JsonSerializable;
 class Log implements JsonSerializable {
 
 	private int $id;
+
 	private string $type;
+
 	private string $action;
+
 	private string $timestamp;
+
 	private string $user;
+
 	private string $comment;
+
 	private PageIdentifier $pageIdentifier;
+
 	private array $details = [];
 
 	/**

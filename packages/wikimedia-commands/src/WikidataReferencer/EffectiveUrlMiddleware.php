@@ -19,6 +19,7 @@ class EffectiveUrlMiddleware {
 	 * @var callable
 	 */
 	protected $nextHandler;
+
 	protected string $headerName;
 
 	/**

@@ -32,9 +32,11 @@ class Revisions {
 		if ( !is_array( $revisions ) && !$revisions instanceof Revisions ) {
 			throw new InvalidArgumentException( '$revisions needs to either be an array or a Revisions object' );
 		}
+
 		if ( $revisions instanceof Revisions ) {
 			$revisions = $revisions->toArray();
 		}
+
 		foreach ( $revisions as $revision ) {
 			$this->addRevision( $revision );
 		}
@@ -59,6 +61,7 @@ class Revisions {
 		if ( empty( $this->revisions ) ) {
 			return null;
 		}
+
 		return $this->revisions[ max( array_keys( $this->revisions ) ) ];
 	}
 
@@ -71,9 +74,11 @@ class Revisions {
 		if ( !is_int( $revid ) ) {
 			throw new InvalidArgumentException( '$revid needs to be an int' );
 		}
+
 		if ( $this->hasRevisionWithId( $revid ) ) {
 			return $this->revisions[$revid];
 		}
+
 		throw new RuntimeException( 'No such revision loaded in Revisions object' );
 	}
 

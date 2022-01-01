@@ -19,6 +19,7 @@ class MicroDataExtractor {
 		foreach ( $data->items as $microData ) {
 			$microDatas[] = new MicroData( $microData );
 		}
+
 		return $microDatas;
 	}
 

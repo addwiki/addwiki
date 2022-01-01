@@ -8,10 +8,15 @@ namespace Addwiki\Mediawiki\DataModel;
 class Revision {
 
 	private Content $content;
+
 	private PageIdentifier $pageIdentifier;
+
 	private ?int $id;
+
 	private EditInfo $editInfo;
+
 	private ?string $user;
+
 	private ?string $timestamp;
 
 	public function __construct(
@@ -25,9 +30,11 @@ class Revision {
 		if ( $editInfo === null ) {
 			$editInfo = new EditInfo();
 		}
+
 		if ( $pageIdentifier === null ) {
 			$pageIdentifier = new PageIdentifier();
 		}
+
 		$this->content = $content;
 		$this->pageIdentifier = $pageIdentifier;
 		$this->id = $id;

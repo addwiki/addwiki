@@ -11,6 +11,7 @@ class EditInfo {
 	 * @var bool
 	 */
 	public const MINOR = true;
+
 	/**
 	 * @var bool
 	 */
@@ -20,6 +21,7 @@ class EditInfo {
 	 * @var bool
 	 */
 	public const BOT = true;
+
 	/**
 	 * @var bool
 	 */
@@ -31,8 +33,11 @@ class EditInfo {
 	public const OFFLAG = null;
 
 	protected bool $minor = false;
+
 	protected bool $bot = false;
+
 	protected ?int $maxlag;
+
 	protected string $summary;
 
 	public function __construct( string $summary = '', bool $minor = self::NOTMINOR, bool $bot = self::NOTBOT, ?int $maxlag = self::OFFLAG ) {

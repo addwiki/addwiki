@@ -8,12 +8,14 @@ use JsonSerializable;
 class Title implements JsonSerializable {
 
 	private string $title;
+
 	private int $ns;
 
 	public function __construct( string $title, int $ns = 0 ) {
 		if ( empty( $title ) ) {
 			throw new InvalidArgumentException( '$title must be a non empty string' );
 		}
+
 		$this->title = $title;
 		$this->ns = $ns;
 	}

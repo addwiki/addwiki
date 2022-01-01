@@ -51,9 +51,11 @@ class Content {
 				return sha1( serialize( $data ) );
 			}
 		}
+
 		if ( is_string( $data ) ) {
 			return sha1( $data );
 		}
+
 		throw new LogicException( "Cant get hash for data of type: " . gettype( $data ) );
 	}
 

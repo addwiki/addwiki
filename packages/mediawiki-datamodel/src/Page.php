@@ -5,12 +5,14 @@ namespace Addwiki\Mediawiki\DataModel;
 class Page {
 
 	private Revisions $revisions;
+
 	private ?PageIdentifier $pageIdentifier;
 
 	public function __construct( PageIdentifier $pageIdentifier = null, Revisions $revisions = null ) {
 		if ( $revisions === null ) {
 			$revisions = new Revisions();
 		}
+
 		$this->revisions = $revisions;
 		$this->pageIdentifier = $pageIdentifier;
 	}
