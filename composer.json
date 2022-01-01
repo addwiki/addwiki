@@ -19,7 +19,8 @@
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
             "Addwiki\\Wikibase\\DataModel\\": "packages/wikibase-datamodel/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
-            "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/"
+            "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/",
+            "Wikibase\\MediaInfo\\": "packages/wikibase-datamodel/lib/wikibase/media-info/src/"
         }
     },
     "require": {
@@ -102,12 +103,17 @@
         "rector/rector": "^0.11.60",
         "symplify/easy-ci": "9.3.4",
         "symplify/monorepo-builder": "9.4.70",
-        "vimeo/psalm": "^4.6"
+        "vimeo/psalm": "^4.6",
+        "wikibase/media-info": "dev-master#d86d961a0eb0c28e9b5d8ce600c64a9dae973533"
     },
     "repositories": [
         {
             "type": "path",
             "url": "packages/*"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/wikimedia/mediawiki-extensions-WikibaseMediaInfo.git"
         }
     ],
     "scripts": {

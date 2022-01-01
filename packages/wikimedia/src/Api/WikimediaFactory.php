@@ -6,6 +6,7 @@ use Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 use Addwiki\Mediawiki\Api\Client\Auth\AuthMethod;
 use Addwiki\Mediawiki\Api\MediawikiFactory;
 use Addwiki\Wikibase\Api\WikibaseFactory;
+use Addwiki\Wikibase\DataModel\DataModelFactory;
 use DataValues\BooleanValue;
 use DataValues\Deserializers\DataValueDeserializer;
 use DataValues\Geo\Values\GlobeCoordinateValue;
@@ -88,8 +89,10 @@ class WikimediaFactory {
 
 		return new WikibaseFactory(
 			$this->newMediawikiApiForDomain( $domain, $auth ),
-			$dvDeserializer,
-			$dvSerializer
+			new DataModelFactory(
+				$dvDeserializer,
+				$dvSerializer
+			)
 		);
 	}
 

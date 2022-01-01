@@ -21,3 +21,12 @@ Use composer to install the library and all its dependencies:
 ```php
 require_once( __DIR__ . '/vendor/autoload.php' );
 ```
+
+## External Libraries
+
+Some code, such as `MediaInfo` realted code is pulled in from MediaWiki extensions and can be found in the `/lib` directory.
+This is because this code is not availible as a library, but there is little point in rewriting it...
+
+This code can be updated using the `sync-copied-files` composer command.
+
+- MediaInfo is pinned at `d86d961a0eb0c28e9b5d8ce600c64a9dae973533` which is just before the 2021 DataModel changes, which this library is not yet adapted for.
