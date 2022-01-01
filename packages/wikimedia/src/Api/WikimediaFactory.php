@@ -42,35 +42,28 @@ class WikimediaFactory {
 	 * @param AuthMethod|null $auth
 	 */
 	public function newWikibaseFactoryForDomain( string $domain, AuthMethod $auth = null ): WikibaseFactory {
-		if (
-			strstr( $domain, 'wikidata.org' ) === true ||
-			strstr( $domain, 'commons.wikimedia.org' ) === true
-			) {
-			$dvDeserializer = new DataValueDeserializer(
-					[
-						// data-values/data-values
-						'boolean' => BooleanValue::class,
-						'number' => NumberValue::class,
-						'string' => StringValue::class,
-						'unknown' => UnknownValue::class,
-						// data-values/geo
-						'globecoordinate' => GlobeCoordinateValue::class,
-						// data-values/common
-						'monolingualtext' => MonolingualTextValue::class,
-						'multilingualtext' => MultilingualTextValue::class,
-						// data-values/number
-						'quantity' => QuantityValue::class,
-						// data-values/time
-						'time' => TimeValue::class,
-						// wikibase/data-model
-						'wikibase-entityid' => EntityIdValue::class,
-					]
-				);
-			$dvSerializer = new DataValueSerializer();
-		} else {
-			$dvDeserializer = new DataValueDeserializer();
-			$dvSerializer = new DataValueSerializer();
-		}
+		// Assume that all Wikibases have the same data values deployed...
+		$dvDeserializer = new DataValueDeserializer(
+				[
+					// data-values/data-values
+					'boolean' => BooleanValue::class,
+					'number' => NumberValue::class,
+					'string' => StringValue::class,
+					'unknown' => UnknownValue::class,
+					// data-values/geo
+					'globecoordinate' => GlobeCoordinateValue::class,
+					// data-values/common
+					'monolingualtext' => MonolingualTextValue::class,
+					'multilingualtext' => MultilingualTextValue::class,
+					// data-values/number
+					'quantity' => QuantityValue::class,
+					// data-values/time
+					'time' => TimeValue::class,
+					// wikibase/data-model
+					'wikibase-entityid' => EntityIdValue::class,
+				]
+			);
+		$dvSerializer = new DataValueSerializer();
 
 		return new WikibaseFactory(
 			$this->newMediawikiApiForDomain( $domain, $auth ),
