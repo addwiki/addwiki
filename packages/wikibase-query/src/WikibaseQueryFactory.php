@@ -28,7 +28,7 @@ class WikibaseQueryFactory {
 	private function getClient(): ClientInterface {
 		if ( !$this->client instanceof ClientInterface ) {
 			$clientFactory = new ClientFactory();
-			//$clientFactory->setLogger( $this->logger );
+			// $clientFactory->setLogger( $this->logger );
 			$this->client = $clientFactory->getClient();
 		}
 
