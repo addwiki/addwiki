@@ -18,6 +18,7 @@
             "Addwiki\\Wikibase\\Api\\": "packages/wikibase-api/src/",
             "Addwiki\\Wikibase\\Commands\\": "packages/wikibase-commands/src/",
             "Addwiki\\Wikibase\\DataModel\\": "packages/wikibase-datamodel/src/",
+            "Addwiki\\Wikibase\\Query\\": "packages/wikibase-query/src/",
             "Addwiki\\Wikimedia\\": "packages/wikimedia/src/",
             "Addwiki\\Wikimedia\\Commands\\": "packages/wikimedia-commands/src/",
             "Wikibase\\MediaInfo\\": "packages/wikibase-datamodel/lib/wikibase/media-info/src/"
@@ -64,7 +65,8 @@
             "Addwiki\\Mediawiki\\DataModel\\Tests\\Unit\\": "packages/mediawiki-datamodel/tests/unit/",
             "Addwiki\\Wikibase\\Api\\Tests\\Integration\\": "packages/wikibase-api/tests/integration/",
             "Addwiki\\Wikibase\\Api\\Tests\\Unit\\": "packages/wikibase-api/tests/unit/",
-            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "packages/wikibase-datamodel/tests/unit/"
+            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "packages/wikibase-datamodel/tests/unit/",
+            "Addwiki\\Wikibase\\Query\\Tests\\Unit\\": "packages/wikibase-query/tests/unit/"
         }
     },
     "name": "addwiki/addwiki",
@@ -79,6 +81,7 @@
         "addwiki/wikibase-api": "3.0.0",
         "addwiki/wikibase-commands": "3.0.0",
         "addwiki/wikibase-datamodel": "3.0.0",
+        "addwiki/wikibase-query": "self.version",
         "addwiki/wikimedia": "3.0.0",
         "addwiki/wikimedia-commands": "3.0.0"
     },
