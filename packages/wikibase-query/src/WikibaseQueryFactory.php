@@ -3,8 +3,8 @@
 namespace Addwiki\Wikibase\Query;
 
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
-use GuzzleHttp\ClientInterface;
 use Addwiki\Wikibase\Query\Service\SimpleQueryService;
+use GuzzleHttp\ClientInterface;
 
 /**
  * @access public
@@ -43,7 +43,7 @@ class WikibaseQueryFactory {
 		return new QueryBuilderFactory( $this->prefixMapping );
 	}
 
-	public function newSimpleQueryService() : SimpleQueryService {
+	public function newSimpleQueryService(): SimpleQueryService {
 		return new SimpleQueryService( $this->newWikibaseQueryService(), $this->newQueryBuilderFactory() );
 	}
 
