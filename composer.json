@@ -105,17 +105,12 @@
         "rector/rector": "^0.11.60",
         "symplify/easy-ci": "9.3.4",
         "symplify/monorepo-builder": "9.4.70",
-        "vimeo/psalm": "^4.6",
-        "wikibase/media-info": "dev-master#d86d961a0eb0c28e9b5d8ce600c64a9dae973533"
+        "vimeo/psalm": "^4.6"
     },
     "repositories": [
         {
             "type": "path",
             "url": "packages/*"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/wikimedia/mediawiki-extensions-WikibaseMediaInfo.git"
         }
     ],
     "scripts": {
