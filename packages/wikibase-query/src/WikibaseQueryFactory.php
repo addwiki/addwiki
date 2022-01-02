@@ -3,8 +3,8 @@
 namespace Addwiki\Wikibase\Query;
 
 use Addwiki\Mediawiki\Api\Guzzle\ClientFactory;
-use Addwiki\Wikibase\Commands\SparqlQueryRunner;
 use GuzzleHttp\ClientInterface;
+use Addwiki\Wikibase\Query\Service\SimpleQueryService;
 
 /**
  * @access public
@@ -35,12 +35,16 @@ class WikibaseQueryFactory {
 		return $this->client;
 	}
 
-	public function newSparqlQueryRunner(): SparqlQueryRunner {
-		return new SparqlQueryRunner( $this->getClient(), $this->endpoint );
+	public function newWikibaseQueryService(): WikibaseQueryService {
+		return new WikibaseQueryService( $this->getClient(), $this->endpoint );
 	}
 
 	public function newQueryBuilderFactory(): QueryBuilderFactory {
 		return new QueryBuilderFactory( $this->prefixMapping );
+	}
+
+	public function newSimpleQueryService() : SimpleQueryService {
+		return new SimpleQueryService( $this->newWikibaseQueryService(), $this->newQueryBuilderFactory() );
 	}
 
 }
