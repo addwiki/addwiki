@@ -1,0 +1,42 @@
+{
+    "name": "addwiki/wikibase-query",
+    "type": "library",
+    "description": "Wikibase Query library",
+    "keywords": ["MediaWiki", "Wikibase", "Wikidata", "Query", "API", "SPARQL"],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Addshore"
+        }
+    ],
+    "scripts": {
+        "lint": "parallel-lint . --exclude vendor",
+        "phpcs": "phpcs -ps",
+        "fix": "phpcbf",
+        "test": [
+            "@lint",
+            "@phpcs"
+        ]
+    },
+    "require": {
+        "php": ">=7.4",
+        "benestar/asparagus": "~0.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "mediawiki/mediawiki-codesniffer": "~38.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Addwiki\\Wikibase\\Query\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "3.1-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
