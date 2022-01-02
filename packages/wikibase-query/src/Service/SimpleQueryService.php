@@ -22,7 +22,7 @@ class SimpleQueryService {
 	}
 
 	/**
-	 * @param string[] $simpleQuery eg. 'P1:Q2' OR 'P5:?'
+	 * @param string[] $simpleQuery eg. 'P31:Q765' OR 'P10:?'
 	 * @return string[] string entitiy ids
 	 */
 	public function query( array $simpleQuery ): array {
@@ -35,7 +35,7 @@ class SimpleQueryService {
 		foreach ( $simpleQuery as $key => $simpleQueryPart ) {
 			[ $propertyIdString, $entityIdString ] = explode( ':', $simpleQueryPart );
 			if ( $entityIdString == '?' ) {
-				$queryBuilder->where( '?item', sprintf( 'wdt:%s', $propertyIdString ), '?' . str_repeat( 'z', $key ) );
+				$queryBuilder->where( '?item', sprintf( 'wdt:%s', $propertyIdString ), '?' . str_repeat( 'z', $key + 1 ) );
 			} else {
 				$queryBuilder->where( '?item', sprintf( 'wdt:%s', $propertyIdString ), sprintf( 'wd:%s', $entityIdString ) );
 			}

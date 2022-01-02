@@ -11,3 +11,19 @@ Issue tracker: https://github.com/addwiki/addwiki/issues
 Use composer to install the library and all its dependencies:
 
     composer require "addwiki/wikibase-query:~3.0"
+
+## Examples
+
+Use the `SimpleQueryService` with wikidata.
+
+```php
+use Addwiki\Wikibase\Query\WikibaseQueryFactory;
+use Addwiki\Wikibase\Query\PrefixSets;
+
+$factory = new WikibaseQueryFactory(
+    "https://query.wikidata.org/sparql",
+    PrefixSets::WIKIDATA
+);
+
+$r = $factory->newSimpleQueryService()->query(["P31:Q1"]);
+```
