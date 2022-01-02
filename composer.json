@@ -65,8 +65,7 @@
             "Addwiki\\Mediawiki\\DataModel\\Tests\\Unit\\": "packages/mediawiki-datamodel/tests/unit/",
             "Addwiki\\Wikibase\\Api\\Tests\\Integration\\": "packages/wikibase-api/tests/integration/",
             "Addwiki\\Wikibase\\Api\\Tests\\Unit\\": "packages/wikibase-api/tests/unit/",
-            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "packages/wikibase-datamodel/tests/unit/",
-            "Addwiki\\Wikibase\\Query\\Tests\\Unit\\": "packages/wikibase-query/tests/unit/"
+            "Addwiki\\Wikibase\\DataModel\\Tests\\Unit\\": "packages/wikibase-datamodel/tests/unit/"
         }
     },
     "name": "addwiki/addwiki",

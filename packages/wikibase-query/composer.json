@@ -13,12 +13,9 @@
         "lint": "parallel-lint . --exclude vendor",
         "phpcs": "phpcs -ps",
         "fix": "phpcbf",
-        "phpunit": "phpunit tests",
-        "phpunit-unit": "phpunit tests/unit",
         "test": [
             "@lint",
-            "@phpcs",
-            "@phpunit"
+            "@phpcs"
         ]
     },
     "require": {
@@ -33,11 +30,6 @@
     "autoload": {
         "psr-4": {
             "Addwiki\\Wikibase\\Query\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Addwiki\\Wikibase\\Query\\Tests\\Unit\\": "tests/unit/"
         }
     },
     "extra": {
