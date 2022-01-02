@@ -1,6 +1,7 @@
 <?php
 
 namespace Addwiki\Wikibase\Query;
+
 use Asparagus\QueryBuilder;
 
 /**
@@ -8,14 +9,14 @@ use Asparagus\QueryBuilder;
  */
 class QueryBuilderFactory {
 
-    private $prefixMapping;
+	private $prefixMapping;
 
-    public function __construct( array $prefixMapping ) {
-        $this->prefixMapping = $prefixMapping;
-    }
+	public function __construct( array $prefixMapping ) {
+		$this->prefixMapping = $prefixMapping;
+	}
 
-    public function newQueryBuilder(): QueryBuilder {
-        return new QueryBuilder( $this->prefixMapping );
-    }
+	public function newQueryBuilder(): QueryBuilder {
+		return new QueryBuilder( $this->prefixMapping );
+	}
 
 }

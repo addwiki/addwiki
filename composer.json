@@ -81,7 +81,7 @@
         "addwiki/wikibase-api": "3.0.0",
         "addwiki/wikibase-commands": "3.0.0",
         "addwiki/wikibase-datamodel": "3.0.0",
-        "addwiki/wikibase-query": "self.version",
+        "addwiki/wikibase-query": "3.0.0",
         "addwiki/wikimedia": "3.0.0",
         "addwiki/wikimedia-commands": "3.0.0"
     },

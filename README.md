@@ -33,6 +33,7 @@ Every package also exists in its own read only git repository, can be used separ
 - [wikimedia](https://github.com/addwiki/wikimedia)
 - [mediawiki-sitematrix-api](https://github.com/addwiki/mediawiki-sitematrix-api)
 - [mediawiki-flow-api](https://github.com/addwiki/mediawiki-flow-api)
+- [wikibase-query](https://github.com/addwiki/wikibase-query)
 
 ## Using the monorepo
 

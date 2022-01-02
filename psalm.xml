@@ -15,6 +15,7 @@
         <directory name="packages/mediawiki-flow-api/src" />
         <directory name="packages/mediawiki-sitematrix-api/src" />
         <directory name="packages/wikibase-api/src" />
+        <directory name="packages/wikibase-query/src" />
         <directory name="packages/wikibase-datamodel/src" />
         <directory name="packages/wikibase-commands/src" />
         <directory name="packages/wikimedia-commands/src" />
