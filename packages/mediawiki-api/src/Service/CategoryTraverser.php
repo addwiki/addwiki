@@ -144,8 +144,8 @@ class CategoryTraverser extends Service {
 						$descendants->addPages( $newDescendants );
 					}
 					// Re-set the path.
-				} else {
 					$currentPath = new Pages();
+				} else {
 					// If it's a page, add it to the list and carry on.
 					$descendants->addPage( $member );
 					$this->call( self::CALLBACK_PAGE, [ $member, $rootCat ] );
