@@ -20,7 +20,7 @@ class CategoryTraverser extends Service {
 
 	/**
 	 * If a category callback returns false, then that category will not be descended into
-	 * 
+	 *
 	 * @var int
 	 */
 	public const CALLBACK_CATEGORY = 10;
@@ -162,11 +162,11 @@ class CategoryTraverser extends Service {
 	 * @param mixed[] $params The parameters to pass to the callback function.
 	 * @return null|bool false if one of the callbacks returned false, otherwise null.
 	 */
-	protected function call( int $type, array $params ) : ?bool {
+	protected function call( int $type, array $params ): ?bool {
 		if ( !isset( $this->callbacks[$type] ) ) {
 			return null;
 		}
-		
+
 		$return = null;
 		foreach ( $this->callbacks[$type] as $callback ) {
 			if ( is_callable( $callback ) ) {
