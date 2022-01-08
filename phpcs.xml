@@ -8,6 +8,7 @@
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers" />
 		<exclude name="MediaWiki.PHP71Features.VoidReturnType.NotAllowed" />
+		<exclude name="MediaWiki.Usage.ForbiddenFunctions.assert" />
 		<exclude name="Squiz.Scope.MethodScope.Missing" />
 	</rule>
 	<file>.</file>
