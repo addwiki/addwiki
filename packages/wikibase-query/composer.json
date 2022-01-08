@@ -13,13 +13,17 @@
         "lint": "parallel-lint . --exclude vendor",
         "phpcs": "phpcs -ps",
         "fix": "phpcbf",
+        "phpunit": "phpunit tests",
+        "phpunit-unit": "phpunit tests/unit",
         "test": [
             "@lint",
-            "@phpcs"
+            "@phpcs",
+            "@phpunit"
         ]
     },
     "require": {
         "php": ">=7.4",
+        "guzzlehttp/guzzle": "~6.3||~7.0",
         "benestar/asparagus": "~0.4"
     },
     "require-dev": {
