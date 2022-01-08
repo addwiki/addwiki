@@ -23,6 +23,7 @@
     },
     "require": {
         "php": ">=7.4",
+        "guzzlehttp/guzzle": "~6.3||~7.0",
         "benestar/asparagus": "~0.4"
     },
     "require-dev": {
