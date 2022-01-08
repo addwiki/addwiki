@@ -22,6 +22,7 @@ use Wikibase\DataModel\Entity\PropertyId;
 use Wikibase\DataModel\Reference;
 use Wikibase\DataModel\Snak\PropertyValueSnak;
 use Wikibase\DataModel\Snak\SnakList;
+use Wikibase\DataModel\Entity\Item;
 
 class WikidataReferenceDateFixer extends Command {
 
@@ -113,6 +114,8 @@ class WikidataReferenceDateFixer extends Command {
 		foreach ( $itemIds as $itemId ) {
 			$output->write( $itemId->getSerialization() . ' ' );
 			$item = $itemLookup->getItemForId( $itemId );
+
+			assert( $item instanceof Item );
 
 			/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
 			/** @psalm-suppress UndefinedDocblockClass */

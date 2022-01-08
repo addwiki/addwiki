@@ -92,6 +92,8 @@ class ThingReferencer implements Referencer {
 						$this->inMemoryEntityLookup->addEntity( $valueItem );
 					}
 
+					assert( $valueItem instanceof Item );
+
 					if ( !in_array( strtolower( $value ), DataModelUtils::getMainTermsAsLowerCaseStrings( $valueItem->getFingerprint() ) ) ) {
 						continue; // Ignore things that don't appear to have the correct value
 					}
