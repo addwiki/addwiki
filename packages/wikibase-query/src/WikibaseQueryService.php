@@ -39,9 +39,9 @@ class WikibaseQueryService {
 	 *
 	 * @param array $queryResult From the query() method
 	 * @param string[] $namedValues The keys of the value to extract, if your query has "?item" this would be "item" eg. [ 'item', 'item2' ]
-	 * @return string[] The extracted values eg. [ [ 'item' => 'Q123', 'item2' => 'Q513' ], [ 'item' => 'Q999', 'item2' => 'Q500' ] ]
+	 * @return array[] The extracted values eg. [ [ 'item' => 'Q123', 'item2' => 'Q513' ], [ 'item' => 'Q999', 'item2' => 'Q500' ] ]
 	 */
-	public function getConceptSuffixesFromQueryResultMulti( array $queryResult, array $namedValues ) {
+	public function getConceptSuffixesFromQueryResultMulti( array $queryResult, array $namedValues ): array {
 		$map = [];
 		foreach ( $queryResult['results']['bindings'] as $binding ) {
 			$values = [];
@@ -64,7 +64,7 @@ class WikibaseQueryService {
 	 * @param string $namedValue The key of the value to extract, if your query has "?item" this would be "item"
 	 * @return string[] The extracted values eg. ['Q123', 'Q456']
 	 */
-	public function getConceptSuffixesFromQueryResult( array $queryResult, string $namedValue ) {
+	public function getConceptSuffixesFromQueryResult( array $queryResult, string $namedValue ): array {
 		$ids = [];
 		foreach ( $queryResult['results']['bindings'] as $binding ) {
 			if ( array_key_exists( $namedValue, $binding ) ) {
