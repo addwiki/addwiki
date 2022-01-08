@@ -16,6 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Wikibase\DataModel\Entity\Item;
 use Wikibase\DataModel\Entity\PropertyId;
 
 /**
@@ -134,6 +135,7 @@ class WikibaseEntityStatementRemover extends Command {
 
 		foreach ( $itemIds as $itemId ) {
 			$item = $itemLookup->getItemForId( $itemId );
+			assert( $item instanceof Item );
 
 			/** Suppressions can be removed once https://github.com/wmde/WikibaseDataModel/pull/838 is released */
 			/** @psalm-suppress UndefinedDocblockClass */

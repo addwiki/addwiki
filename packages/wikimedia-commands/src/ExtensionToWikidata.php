@@ -102,6 +102,8 @@ class ExtensionToWikidata extends Command {
 			$item = $targetWbFactory->newItemLookup()->getItemForId( new ItemId( $itemIdString ) );
 		}
 
+		assert( $item instanceof Item );
+
 		// Add instance of if not already there
 		$hasInstanceOfExtension = false;
 		foreach ( $item->getStatements()->getByPropertyId( new PropertyId( 'P31' ) )->getMainSnaks() as $mainSnak ) {
