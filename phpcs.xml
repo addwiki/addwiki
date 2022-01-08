@@ -8,7 +8,6 @@
 		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationProtected" />
 		<exclude name="MediaWiki.Commenting.MissingCovers.MissingCovers" />
 		<exclude name="MediaWiki.PHP71Features.VoidReturnType.NotAllowed" />
-		<exclude name="Squiz.Scope.MethodScope.Missing" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php,php5,inc"/>
