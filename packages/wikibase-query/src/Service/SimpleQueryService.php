@@ -41,27 +41,8 @@ class SimpleQueryService {
 			}
 		}
 
-		return $this->getIdsFromQuery( $queryBuilder->__toString() );
-	}
-
-	/**
-	 * @return string[]
-	 */
-	private function getIdsFromQuery( string $query ): array {
-		$sparqlArray = $this->wikibaseQueryService->query( $query );
-
-		$ids = [];
-		foreach ( $sparqlArray['results']['bindings'] as $binding ) {
-			$ids[] = $this->getLastPartOfUrlPath( $binding['item']['value'] );
-		}
-
-		return $ids;
-	}
-
-	private function getLastPartOfUrlPath( string $urlPath ): string {
-		// Assume that the last part is always the ID?
-		$parts = explode( '/', $urlPath );
-		return end( $parts );
+		$queryResult = $this->wikibaseQueryService->query( $queryBuilder->__toString() );
+		return $this->wikibaseQueryService->getConceptSuffixesFromQueryResult( $queryResult, 'item' );
 	}
 
 }

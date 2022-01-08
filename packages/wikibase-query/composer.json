@@ -13,9 +13,12 @@
         "lint": "parallel-lint . --exclude vendor",
         "phpcs": "phpcs -ps",
         "fix": "phpcbf",
+        "phpunit": "phpunit tests",
+        "phpunit-unit": "phpunit tests/unit",
         "test": [
             "@lint",
-            "@phpcs"
+            "@phpcs",
+            "@phpunit"
         ]
     },
     "require": {
