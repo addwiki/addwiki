@@ -10,6 +10,6 @@
     "url": "git+https://github.com/addwiki/addwiki.git"
   },
   "devDependencies": {
-    "vuepress": "^1.9.5"
+    "vuepress": "^1.9.6"
   }
 }
