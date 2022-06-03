@@ -16,7 +16,7 @@ jobs:
 
         steps:
             -
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
 
             # required for matrix of packages set
             -   uses: shivammathur/setup-php@v2
@@ -49,7 +49,7 @@ jobs:
 
         steps:
             -
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
 
             # see https://github.com/WyriHaximus/github-action-get-previous-tag
             -
