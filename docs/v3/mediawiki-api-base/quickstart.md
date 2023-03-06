@@ -7,26 +7,30 @@ This page provides a quick introduction to this library and introductory example
 You can get an api object by simply passing the api endpoint:
 
 ```php
-use \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use \Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 
-$api = MediawikiApi::newFromApiEndpoint( 'https://en.wikipedia.org/w/api.php' );
+$api = ActionApi::newFromApiEndpoint( 'https://en.wikipedia.org/w/api.php' );
 ```
 
 You can even just pass a page:
 
 ```php
-use \Addwiki\Mediawiki\Api\Client\Action\MediawikiApi;
+use \Addwiki\Mediawiki\Api\Client\Action\ActionApi;
 
-$api = MediawikiApi::newFromPage( 'https://en.wikipedia.org/wiki/Berlin' );
+$api = ActionApi::newFromPage( 'https://en.wikipedia.org/wiki/Berlin' );
 ```
 
 ## Logging in and out
 
-```php
-use \Addwiki\Mediawiki\Api\Client\ApiUser;
+To log in:
 
-$api->login( new ApiUser( 'username', 'password' ) );
-$api->logout();
+```php
+use Addwiki\Mediawiki\Api\Client\Auth\UserAndPassword;
+use Addwiki\Mediawiki\Api\Client\MediaWiki;
+
+$userAndPassword = new UserAndPassword( 'username', 'password' );
+$api = MediaWiki::newFromEndpoint( 'https://en.wikipedia.org/w/api.php', $userAndPassword );
+// Subsequent API calls will be authenticated.
 ```
 
 ## Making request objects
@@ -34,25 +38,23 @@ $api->logout();
 The library provides two different way of constructing requests.
 
 ```php
-use Addwiki\Mediawiki\Api\Client\Action\Request\SimpleRequest;
-use Addwiki\Mediawiki\Api\Client\Action\Request\FluentRequest;
+use Addwiki\Mediawiki\Api\Client\Action\Request\ActionRequest;
 
-$purgeRequest = new SimpleRequest( 'purge', array( 'titles' => 'Berlin' ) );
+$purgeRequest = new ActionRequest::simplePost( 'purge', [ 'titles' => 'Berlin' ] );
 // or
-$purgeRequest = FluentRequest::factory()->setAction( 'purge' )->setParam( 'titles', 'Berlin' );
+$purgeRequest = ActionRequest::factory()->setMethod( 'POST' )->setAction( 'purge' )->setParam( 'titles', 'Berlin' );
 ```
 
 ## Sending requests
 
 ```php
-$api->postRequest( $purgeRequest );
+$api->action()->request( $purgeRequest );
 
-$queryResponse = $api->getRequest( FluentRequest::factory()->setAction( 'query' )->setParam( 'meta', 'siteinfo' ) );
+$queryResponse = $api->action()->request( ActionRequest::factory()->setMethod( 'GET' )->setAction( 'query' )->setParam( 'meta', 'siteinfo' ) );
 
-try{
-    $api->postRequest( new SimpleRequest( 'FooBarBaz' ) );
-}
-catch ( UsageException $e ) {
+try {
+    $api->action()->request( ActionRequest::simpleGet( 'FooBarBaz' ) );
+} catch ( UsageException $e ) {
     echo "The api returned an error!";
 }
 ```
