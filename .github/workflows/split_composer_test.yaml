@@ -9,39 +9,26 @@ env:
     COMPOSER_ROOT_VERSION: "dev-main"
 
 jobs:
-    provide_packages_json:
-        name: Collect packages names
-        # see json juggling: https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#example-6
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v3
-
-            -   uses: shivammathur/setup-php@v2
-                env:
-                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                with:
-                    php-version: 8.2
-                    coverage: none
-
-            -   uses: "ramsey/composer-install@v3"
-
-            # get package json list
-            -
-                id: output_data
-                run: echo "::set-output name=matrix::$(vendor/bin/monorepo-builder packages-json)"
-
-        outputs:
-            matrix: ${{ steps.output_data.outputs.matrix }}
-
     split_tests:
-        needs: provide_packages_json
-
         runs-on: ubuntu-latest
 
         strategy:
             fail-fast: false
             matrix:
-                package: ${{ fromJson(needs.provide_packages_json.outputs.matrix )}}
+                package:
+                    - addwiki-cli
+                    - mediawiki-api
+                    - mediawiki-api-base
+                    - mediawiki-commands
+                    - mediawiki-datamodel
+                    - mediawiki-flow-api
+                    - mediawiki-sitematrix-api
+                    - wikibase-api
+                    - wikibase-commands
+                    - wikibase-datamodel
+                    - wikibase-query
+                    - wikimedia
+                    - wikimedia-commands
 
         name: Split Tests of ${{ matrix.package }}
 
