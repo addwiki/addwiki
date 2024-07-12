@@ -36,6 +36,7 @@ foreach( $dirs as $dir ) {
     // Extract the part of the template command that starts with " DIR" and has the rest of a path after it
     // use this to check with $dir, if the template dir then actually exists
     $templateDir = substr($templateCommand, strpos($templateCommand, 'DIR'));
+    $templateDir = explode(' ', $templateDir)[0];
     $templateDir = str_replace('DIR', $dir, $templateDir);
     if(!file_exists($templateDir)) {
         echo "\033[0;33m" . "Directory does not exist: " . "\033[0;36m" . $templateDir . "\033[0m" . PHP_EOL;
