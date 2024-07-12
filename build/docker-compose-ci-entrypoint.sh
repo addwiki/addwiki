@@ -19,7 +19,7 @@ if [ ! -f entrypoint-done.txt ]; then
     echo "\$wgGroupPermissions['sysop']['mwoauthviewprivate'] = true;" >> LocalSettings.php
     echo "\$wgGroupPermissions['sysop']['mwoauthupdateownconsumer'] = true;" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/vendor/autoload.php\";" >> LocalSettings.php
-    echo "require_once \"\$IP/extensions/Wikibase/repo/Wikibase.php\";" >> LocalSettings.php
+    echo "wfLoadExtension( 'WikibaseRepository', \"\$IP/extensions/Wikibase/extension-repo.json\" );" >> LocalSettings.php
     echo "require_once \"\$IP/extensions/Wikibase/repo/ExampleSettings.php\";" >> LocalSettings.php
 
     # Settings to make testing easier
@@ -38,6 +38,10 @@ if [ ! -f entrypoint-done.txt ]; then
     php extensions/OAuth/maintenance/addwikiAddOauth.php --approve --callbackUrl https://CiConsumerUrl \
     --callbackIsPrefix true --user CIUser --name CIConsumer --description CIConsumer --version 1.1.0 \
     --grants highvolume --jsonOnSuccess > createOAuthConsumer.json
+    cat createOAuthConsumer.json
+
+    # Hide depreaction warnings from MediaWiki output
+    echo "error_reporting(0);" >> LocalSettings.php
 
     # Mark the entrypoint as having run!
     echo "entrypoint done!" > entrypoint-done.txt
