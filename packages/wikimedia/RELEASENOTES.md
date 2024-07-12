@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Installatble with PHP 8.1+
 - Added `WikimediaFactory::newMediawikiApiForURL`
 - Added `WikimediaFactory::newWikibaseFactoryForURL`
 
