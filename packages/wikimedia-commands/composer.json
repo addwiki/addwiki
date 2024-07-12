@@ -19,7 +19,7 @@
         ]
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "ext-curl": "*",
         "addwiki/mediawiki-api": "^3.1",
         "addwiki/mediawiki-api-base": "^3.1",
@@ -31,7 +31,7 @@
         "linclark/microdata-php": "~2.0",
         "symfony/console": "~4.0||~5.0",
         "wikibase/data-model": "~9.2||~8.0",
-        "wikibase/data-model-services": "~3.0"
+        "wikibase/data-model-services": "~4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~9",

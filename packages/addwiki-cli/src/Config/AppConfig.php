@@ -6,6 +6,9 @@ use ArrayAccess;
 use LogicException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class AppConfig implements ArrayAccess {
 
 	private string $configDirectory;
@@ -48,6 +51,9 @@ class AppConfig implements ArrayAccess {
 	public function get( $name, $default = null ) {
 		$this->loadIfNotLoaded();
 
+		/**
+		 * @psalm-suppress UnsupportedPropertyReferenceUsage
+		 */
 		$temp = &$this->data;
 		$paths = explode( '.', $name );
 		foreach ( $paths as $i => $key ) {
@@ -67,6 +73,9 @@ class AppConfig implements ArrayAccess {
 	}
 
 	public function set( $name, $value ): void {
+		/**
+		 * @psalm-suppress UnsupportedPropertyReferenceUsage
+		 */
 		$temp = &$this->data;
 		foreach ( explode( '.', $name ) as $key ) {
 			$temp = &$temp[$key];
@@ -93,19 +102,19 @@ class AppConfig implements ArrayAccess {
 		return empty( $this->data );
 	}
 
-	public function offsetExists( $offset ) {
+	public function offsetExists( $offset ): bool {
 		return $this->has( $offset );
 	}
 
-	public function offsetGet( $offset ) {
+	public function offsetGet( $offset ): mixed {
 		return $this->get( $offset );
 	}
 
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		$this->set( $offset, $value );
 	}
 
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ): void {
 		$this->set( $offset, null );
 	}
 

@@ -104,7 +104,7 @@ class LogList implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return Log[]
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return $this->toArray();
 	}
 

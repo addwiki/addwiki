@@ -71,7 +71,7 @@ class Log implements JsonSerializable {
 	/**
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 		'id' => $this->id,
 		'type' => $this->type,
