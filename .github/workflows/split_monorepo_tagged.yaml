@@ -10,6 +10,7 @@ on:
 jobs:
     split_monorepo_tagged:
         name: Split tagged ${{ matrix.package }}
+        concurrency: split_tagged_${{ matrix.package }}
 
         runs-on: ubuntu-latest
         strategy:

@@ -11,6 +11,7 @@ jobs:
 
     split_monorepo:
         name: Split tagged ${{ matrix.package }}
+        concurrency: split_${{ matrix.package }}
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
