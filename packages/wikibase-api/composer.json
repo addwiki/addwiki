@@ -30,7 +30,7 @@
         "serialization/serialization": "~3.2||~4.0",
         "wikibase/data-model": "~9.2||~8.0",
         "wikibase/data-model-serialization": "~2.0",
-        "wikibase/data-model-services": "~3.0"
+        "wikibase/data-model-services": "~4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~9",
