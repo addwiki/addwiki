@@ -39,7 +39,7 @@ class Title implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array [ 'title' => string, 'ns' => int ]
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 		'title' => $this->title,
 		'ns' => $this->ns,

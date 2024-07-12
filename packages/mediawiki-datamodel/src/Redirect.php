@@ -27,7 +27,7 @@ class Redirect implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array <string mixed>
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 		'from' => $this->from->jsonSerialize(),
 		'to' => $this->to->jsonSerialize(),

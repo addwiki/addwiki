@@ -39,7 +39,7 @@ class PageIdentifier implements JsonSerializable {
 	 * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
 	 * @return array <string mixed>
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		$array = [];
 		if ( $this->id !== null ) {
 			$array['id'] = $this->id;
