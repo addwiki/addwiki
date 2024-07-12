@@ -114,7 +114,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/wikimedia/mediawiki-extensions-WikibaseMediaInfo.git"
+            "url": "https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo"
         }
     ],
     "scripts": {
