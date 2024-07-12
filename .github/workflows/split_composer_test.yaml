@@ -23,7 +23,7 @@ jobs:
                     php-version: 8.2
                     coverage: none
 
-            -   uses: "ramsey/composer-install@v1"
+            -   uses: "ramsey/composer-install@v3"
 
             # get package json list
             -
@@ -55,7 +55,7 @@ jobs:
                     php-version: 8.2
                     coverage: none
 
-            -   uses: "ramsey/composer-install@v1"
+            -   uses: "ramsey/composer-install@v3"
 
             -   run: vendor/bin/monorepo-builder localize-composer-paths packages/${{ matrix.package }}/composer.json --ansi
 
