@@ -8,44 +8,27 @@ on:
             - '*'
 
 jobs:
-    provide_packages_json_tagged:
-        name: Collect packages names
-        # see json juggling: https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#example-6
-        # see https://stackoverflow.com/a/62953566/1348344
-        runs-on: ubuntu-latest
-
-        steps:
-            -
-                uses: actions/checkout@v3
-
-            # required for matrix of packages set
-            -   uses: shivammathur/setup-php@v2
-                env:
-                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                with:
-                    php-version: 8.2
-                    coverage: none
-
-            -   uses: "ramsey/composer-install@v3"
-
-            # get package json list
-            -
-                id: output_data
-                run: echo "::set-output name=matrix::$(vendor/bin/monorepo-builder packages-json)"
-
-        # this step is needed, so the output gets to the next defined job
-        outputs:
-            matrix: ${{ steps.output_data.outputs.matrix }}
-
     split_monorepo_tagged:
         name: Split tagged ${{ matrix.package }}
-        needs: provide_packages_json_tagged
 
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
-                package: ${{fromJson(needs.provide_packages_json_tagged.outputs.matrix)}}
+                package:
+                    - addwiki-cli
+                    - mediawiki-api
+                    - mediawiki-api-base
+                    - mediawiki-commands
+                    - mediawiki-datamodel
+                    - mediawiki-flow-api
+                    - mediawiki-sitematrix-api
+                    - wikibase-api
+                    - wikibase-commands
+                    - wikibase-datamodel
+                    - wikibase-query
+                    - wikimedia
+                    - wikimedia-commands
 
         steps:
             -
@@ -59,7 +42,7 @@ jobs:
             -
                 # Uses an action in the root directory
                 name: Monorepo Split of ${{ matrix.package }}
-                uses: symplify/github-action-monorepo-split@2.1
+                uses: symplify/github-action-monorepo-split@v2.3.0
                 env:
                     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
                 with:

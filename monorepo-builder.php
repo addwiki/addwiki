@@ -29,7 +29,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     # release workers - in order to execute
     $services->set(UpdateReplaceReleaseWorker::class);
     $services->set(SetCurrentMutualDependenciesReleaseWorker::class);
-	// TODO modify our workflor to work with this?
+	// TODO modify our workflow to work with this?
 	// Change "Unreleased" in `CHANGELOG.md` to "2.7.0 - 2021-02-15"
     //$services->set(AddTagToChangelogReleaseWorker::class);
     $services->set(TagVersionReleaseWorker::class);
