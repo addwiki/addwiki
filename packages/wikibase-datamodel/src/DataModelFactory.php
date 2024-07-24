@@ -6,11 +6,12 @@ use Deserializers\Deserializer;
 use Deserializers\DispatchingDeserializer;
 use Serializers\DispatchingSerializer;
 use Serializers\Serializer;
-use Wikibase\DataModel\DeserializerFactory;
+use Wikibase\DataModel\Deserializers\DeserializerFactory;
 use Wikibase\DataModel\Entity\DispatchingEntityIdParser;
 use Wikibase\DataModel\Entity\ItemId;
-use Wikibase\DataModel\Entity\PropertyId;
-use Wikibase\DataModel\SerializerFactory;
+use Wikibase\DataModel\Entity\NumericPropertyId;
+use Wikibase\DataModel\Serializers\SerializerFactory;
+use Wikibase\DataModel\Services\Lookup\InMemoryDataTypeLookup;
 use Wikibase\MediaInfo\DataModel\MediaInfoId;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoDeserializer;
 use Wikibase\MediaInfo\DataModel\Serialization\MediaInfoSerializer;
@@ -44,7 +45,10 @@ class DataModelFactory {
 	private function newDefaultDataModelDeserializerFactory(): DeserializerFactory {
 		return new DeserializerFactory(
 			$this->dataValueDeserializer,
-			$this->newEntityIdParser()
+			$this->newEntityIdParser(),
+			new InMemoryDataTypeLookup(),
+			[],
+			[]
 		);
 	}
 
@@ -54,8 +58,8 @@ class DataModelFactory {
 			ItemId::PATTERN => static function ( $serialization ) {
 				return new ItemId( $serialization );
 			},
-			PropertyId::PATTERN => static function ( $serialization ) {
-				return new PropertyId( $serialization );
+			NumericPropertyId::PATTERN => static function ( $serialization ) {
+				return new NumericPropertyId( $serialization );
 			},
 			// The MediaInfo extension
 			MediaInfoId::PATTERN => static function ( $serialization ) {
