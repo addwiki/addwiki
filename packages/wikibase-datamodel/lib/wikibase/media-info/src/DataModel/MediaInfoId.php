@@ -81,11 +81,11 @@ class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 	/**
 	 * @see Serializable::unserialize
 	 *
-	 * @param array $value
+	 * @param array $serialized
 	 */
-	public function __unserialize( array $value ): void {
-		$this->__construct( $value['serialization'] ?? '' );
-		if ( $this->serialization !== $value['serialization'] ) {
+	public function __unserialize( array $serialized ): void {
+		$this->__construct( $serialized['serialization'] ?? '' );
+		if ( $this->serialization !== $serialized['serialization'] ) {
 			throw new InvalidArgumentException( '$value contained invalid serialization' );
 		}
 	}
