@@ -71,7 +71,7 @@ class MediaInfo
 	}
 
 	/**
-	 * @return EntityId|null
+	 * @return MediaInfoId|null
 	 */
 	public function getId() {
 		return $this->id;
