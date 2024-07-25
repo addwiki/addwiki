@@ -33,7 +33,7 @@ jobs:
         name: Split Tests of ${{ matrix.package }}
 
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v4
 
             -   uses: shivammathur/setup-php@v2
                 env:
