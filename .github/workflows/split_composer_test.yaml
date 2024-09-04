@@ -48,10 +48,10 @@ jobs:
 
             -   run: composer update --no-progress --ansi --working-dir packages/${{ matrix.package }}
 
-            -   name: Run CI docker-compose if present
+            -   name: Run CI docker compose if present
                 if: ${{ matrix.package == 'mediawiki-api-base' || matrix.package == 'mediawiki-api' || matrix.package == 'wikibase-api' }}
-                run: 'docker-compose --file docker-compose-ci.yml up -d'
-            -   name: Wait for docker-compose to be ready (if needed)
+                run: 'docker compose --file docker-compose-ci.yml up -d'
+            -   name: Wait for docker compose to be ready (if needed)
                 if: ${{ matrix.package == 'mediawiki-api-base' || matrix.package == 'mediawiki-api' || matrix.package == 'wikibase-api' }}
                 run: 'build/docker-compose-ci-wait.sh'
 

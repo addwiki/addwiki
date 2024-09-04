@@ -87,12 +87,12 @@ Run phpunit unit tests on a single package:
 vendor/bin/phpunit packages/mediawiki-api-base/tests/unit
 ```
 
-Integration tests are facilitated by `docker-composer-ci.yml` files which are currently kept in sync manually.
+Integration tests are facilitated by `docker-compose-ci.yml` files which are currently kept in sync manually.
 The setup in the monorepo should work for all packages.
 Run it before running integration tests.
 
 ```sh
-docker-compose -f docker-compose-ci.yml up -d --build
+docker compose -f docker-compose-ci.yml up -d --build
 ```
 
 Wait for the wiki to be accessible, then run the tests:
