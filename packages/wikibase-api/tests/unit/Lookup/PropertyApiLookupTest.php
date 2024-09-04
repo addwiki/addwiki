@@ -6,7 +6,7 @@ use Addwiki\Wikibase\Api\Lookup\PropertyApiLookup;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Wikibase\DataModel\Entity\Property;
-use Wikibase\DataModel\Entity\PropertyId;
+use Wikibase\DataModel\Entity\NumericPropertyId;
 use Wikibase\DataModel\Services\Lookup\EntityLookup;
 
 /**
@@ -15,19 +15,19 @@ use Wikibase\DataModel\Services\Lookup\EntityLookup;
 class PropertyApiLookupTest extends TestCase {
 
 	public function testGetPropertyForId(): void {
-		$property = new Property( new PropertyId( 'P42' ), null, 'string' );
+		$property = new Property( new NumericPropertyId( 'P42' ), null, 'string' );
 
 		/** @var EntityLookup|MockObject $lookupMock */
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
-			->with( new PropertyId( 'P42' ) )
+			->with( new NumericPropertyId( 'P42' ) )
 			->willReturn( $property );
 
 		$propertyApiLookup = new PropertyApiLookup( $lookupMock );
 		$this->assertEquals(
 			$property,
-			$propertyApiLookup->getPropertyForId( new PropertyId( 'P42' ) )
+			$propertyApiLookup->getPropertyForId( new NumericPropertyId( 'P42' ) )
 		);
 	}
 
@@ -36,12 +36,12 @@ class PropertyApiLookupTest extends TestCase {
 		$lookupMock = $this->createMock( EntityLookup::class );
 		$lookupMock->expects( $this->once() )
 			->method( 'getEntity' )
-			->with( $this->equalTo( new PropertyId( 'P42' ) ) )
+			->with( $this->equalTo( new NumericPropertyId( 'P42' ) ) )
 			->will( $this->returnValue( null ) );
 
 		$propertyApiLookup = new PropertyApiLookup( $lookupMock );
 
-		$result = $propertyApiLookup->getPropertyForId( new PropertyId( 'P42' ) );
+		$result = $propertyApiLookup->getPropertyForId( new NumericPropertyId( 'P42' ) );
 		$this->assertNull( $result );
 	}
 }
