@@ -21,13 +21,6 @@ Every package also exists in its own read only git repository, can be used separ
 - [mediawiki-datamodel](https://github.com/addwiki/mediawiki-datamodel)
 - [wikibase-datamodel](https://github.com/addwiki/wikibase-datamodel)
 
-**WIP CLI:**
-
-- [addwiki-cli](https://github.com/addwiki/addwiki-cli)
-- [mediawiki-commands](https://github.com/addwiki/mediawiki-commands)
-- [wikibase-commands](https://github.com/addwiki/wikibase-commands)
-- [wikimedia-commands](https://github.com/addwiki/wikimedia-commands)
-
 **Other WIP:**
 
 - [wikimedia](https://github.com/addwiki/wikimedia)

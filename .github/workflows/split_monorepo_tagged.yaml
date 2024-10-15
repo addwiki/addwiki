@@ -17,19 +17,15 @@ jobs:
             fail-fast: false
             matrix:
                 package:
-                    - addwiki-cli
                     - mediawiki-api
                     - mediawiki-api-base
-                    - mediawiki-commands
                     - mediawiki-datamodel
                     - mediawiki-flow-api
                     - mediawiki-sitematrix-api
                     - wikibase-api
-                    - wikibase-commands
                     - wikibase-datamodel
                     - wikibase-query
                     - wikimedia
-                    - wikimedia-commands
 
         steps:
             -

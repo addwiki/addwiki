@@ -67,24 +67,6 @@ gh api --method PATCH repos/addwiki/addwiki-cli \
     --field has_issues='false'\
     --field has_projects='false'\
     --field has_wiki='false'
-gh api --method PATCH repos/addwiki/mediawiki-commands \
-    --field description='MediaWiki focused CLI commands, for use with addwiki-cli, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
-    --field homepage='https://addwiki.github.io/'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
-gh api --method PATCH repos/addwiki/wikibase-commands \
-    --field description='Wikibase focused CLI commands, for use with addwiki-cli, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
-    --field homepage='https://addwiki.github.io/'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
-gh api --method PATCH repos/addwiki/wikimedia-commands \
-    --field description='Wikimedia focused CLI commands, for use with addwiki-cli, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
-    --field homepage='https://addwiki.github.io/'\
-    --field has_issues='false'\
-    --field has_projects='false'\
-    --field has_wiki='false'
 gh api --method PATCH repos/addwiki/wikimedia \
     --field description='Convenience library for using addwiki code with Wikimedia projects, [READ-ONLY] split from https://github.com/addwiki/addwiki'\
     --field homepage='https://addwiki.github.io/'\
@@ -107,3 +89,6 @@ gh api --method PATCH repos/addwiki/addwiki.github.io \
 #addwiki/readthedocs
 #addwiki/guzzle-mediawiki-client
 #addwiki/guzzle-mediawiki-client-generator
+#addwiki/wikimedia-commands
+#addwiki/mediawiki-commands
+#addwiki/wikibase-commands
