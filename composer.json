@@ -27,7 +27,7 @@
         "data-values/time": "~1.0",
         "ext-curl": "*",
         "guzzlehttp/guzzle": "~6.3||~7.0",
-        "guzzlehttp/promises": "~1.0",
+        "guzzlehttp/promises": "~2.0",
         "linclark/microdata-php": "~2.0",
         "mediawiki/oauthclient": "^2.1",
         "php": ">=8.1",
