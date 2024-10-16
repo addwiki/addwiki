@@ -5,6 +5,7 @@ namespace Wikibase\MediaInfo\DataModel;
 use InvalidArgumentException;
 use Wikibase\DataModel\Entity\EntityId;
 use Wikibase\DataModel\Entity\Int32EntityId;
+use Wikibase\DataModel\Entity\SerializableEntityId;
 
 /**
  * Identifier for media info entities, containing a numeric id prefixed by 'M'.
@@ -15,7 +16,7 @@ use Wikibase\DataModel\Entity\Int32EntityId;
  * @author Bene* < benestar.wikimedia@gmail.com >
  * @author Thiemo Kreuz
  */
-class MediaInfoId extends EntityId implements Int32EntityId {
+class MediaInfoId extends SerializableEntityId implements Int32EntityId {
 
 	public const PATTERN = '/^M[1-9]\d{0,9}\z/i';
 
@@ -25,14 +26,15 @@ class MediaInfoId extends EntityId implements Int32EntityId {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct( $idSerialization ) {
-		$parts = self::splitSerialization( $idSerialization );
-		$this->assertValidIdFormat( $parts[2] );
-		parent::__construct( self::joinSerialization(
-			[ $parts[0], $parts[1], strtoupper( $parts[2] ) ]
-		) );
+		$this->assertValidIdFormat( $idSerialization );
+		parent::__construct( strtoupper( $idSerialization ) );
 	}
 
-	private function assertValidIdFormat( $idSerialization ) {
+	/**
+	 * @param $idSerialization
+	 * @return void
+	 */
+	private function assertValidIdFormat( $idSerialization ): void {
 		if ( !is_string( $idSerialization ) ) {
 			throw new InvalidArgumentException( '$idSerialization must be a string' );
 		}
@@ -54,9 +56,8 @@ class MediaInfoId extends EntityId implements Int32EntityId {
 	 *
 	 * @return int Guaranteed to be a unique integer in the range [1..2147483647].
 	 */
-	public function getNumericId() {
-		$serializationParts = self::splitSerialization( $this->serialization );
-		return (int)substr( $serializationParts[2], 1 );
+	public function getNumericId(): int {
+		return (int)substr( $this->serialization, 1 );
 	}
 
 	/**
@@ -64,29 +65,29 @@ class MediaInfoId extends EntityId implements Int32EntityId {
 	 *
 	 * @return string
 	 */
-	public function getEntityType() {
+	public function getEntityType(): string {
 		return 'mediainfo';
 	}
 
 	/**
 	 * @see Serializable::serialize
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function serialize() {
-		return $this->serialization;
+	public function __serialize(): array {
+		return [ 'serialization' => $this->serialization ];
 	}
 
 	/**
 	 * @see Serializable::unserialize
 	 *
-	 * @param string $value
+	 * @param array $serialized
 	 */
-	public function unserialize( $value ) {
-		$this->serialization = $value;
-		list( $this->repositoryName, $this->localPart ) = self::extractRepositoryNameAndLocalPart(
-			$value
-		);
+	public function __unserialize( array $serialized ): void {
+		$this->__construct( $serialized['serialization'] ?? '' );
+		if ( $this->serialization !== $serialized['serialization'] ) {
+			throw new InvalidArgumentException( '$value contained invalid serialization' );
+		}
 	}
 
 }
